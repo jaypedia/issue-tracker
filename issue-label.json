@@ -1,0 +1,77 @@
+[
+  {
+    "name": "⚙ Setting",
+    "color": "e3dede",
+    "description": "Development environment settings"
+  },
+  {
+    "name": "✨ Feature",
+    "color": "a2eeef",
+    "description": "New features"
+  },
+  {
+    "name": "🌏 Deploy",
+    "color": "C2E0C6",
+    "description": "Deployment"
+  },
+  {
+    "name": "🎨 Design",
+    "color": "FEF2C0",
+    "description": "Styling"
+  },
+  {
+    "name": "🐞 BugFix",
+    "color": "d73a4a",
+    "description": "Something isn't working"
+  },
+  {
+    "name": "💻 CrossBrowsing",
+    "color": "C5DEF5",
+    "description": "Browser compatibility"
+  },
+  {
+    "name": "📃 Documentation",
+    "color": "1D76DB",
+    "description": "Improvements or additions to documentation"
+  },
+  {
+    "name": "📬 API",
+    "color": "D4C5F9",
+    "description": "Server API"
+  },
+  {
+    "name": "🔨 Refactor",
+    "color": "f29a4e",
+    "description": "Code refactoring"
+  },
+  {
+    "name": "🙋‍♂️ Question",
+    "color": "9ED447",
+    "description": "Further information is requested"
+  },
+  {
+    "name": "🥰 Accessibility",
+    "color": "facfcf",
+    "description": "Web accessibility"
+  },
+  {
+    "name": "✅ Test",
+    "color": "ccffc4",
+    "description": "Testing(storybook, jest...)"
+  },
+  {
+    "name": "BE",
+    "color": "000000",
+    "description": "Backend label"
+  },
+  {
+    "name": "FE",
+    "color": "ffffff",
+    "description": "Frontend label"
+  },
+  {
+    "name": "🧊 EPIC",
+    "color": "23026B",
+    "description": "The largest unit of work"
+  }
+]

@@ -35,6 +35,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve('public', './index.html'),
+      favicon: path.resolve('src', 'assets', './favicon.svg'),
     }),
     new webpack.ProvidePlugin({ React: 'react' }),
     new ReactRefreshWebpackPlugin(),

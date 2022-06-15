@@ -1,6 +1,18 @@
 import { color } from './color';
 
-export const DARK = {
+export interface ColorType {
+  headerBg: string;
+  bg: string;
+  cellBg: string;
+  text: string;
+  primary: string;
+}
+
+interface ThemeType {
+  color: ColorType;
+}
+
+export const DARK: ThemeType = {
   color: {
     headerBg: color.grey[600],
     bg: color.black,
@@ -10,7 +22,7 @@ export const DARK = {
   },
 };
 
-export const LIGHT = {
+export const LIGHT: ThemeType = {
   color: {
     headerBg: color.grey[100],
     bg: color.white,
@@ -19,5 +31,3 @@ export const LIGHT = {
     primary: color.primary[200],
   },
 };
-
-export type ThemeColorsType = typeof LIGHT.color;

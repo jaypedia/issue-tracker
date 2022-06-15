@@ -1,12 +1,14 @@
 import { createGlobalStyle, DefaultTheme } from 'styled-components';
 
+import fonts from '@/assets/fonts';
 import Normalize from '@/styles/Normalize';
 
 const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
   ${Normalize}
+  ${fonts}
 
   * {
-    font-family: ${({ theme }) => theme.font.family};
+    font-family: 'Noto Sans', sans-serif;
     box-sizing: border-box;
     margin: 0;
     padding: 0;

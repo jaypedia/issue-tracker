@@ -1,11 +1,19 @@
-import { color } from './color';
+import { COLOR } from './color';
 
 export interface ColorType {
   headerBg: string;
   bg: string;
   cellBg: string;
   text: string;
-  primary: string;
+  primary: {
+    [key: string]: string;
+  };
+  error: {
+    [key: string]: string;
+  };
+  success: {
+    [key: string]: string;
+  };
 }
 
 interface ThemeType {
@@ -14,20 +22,24 @@ interface ThemeType {
 
 export const DARK: ThemeType = {
   color: {
-    headerBg: color.grey[600],
-    bg: color.black,
-    cellBg: color.grey[500],
-    text: color.white,
-    primary: color.primary[200],
+    headerBg: COLOR.grey[600],
+    bg: COLOR.black,
+    cellBg: COLOR.grey[500],
+    text: COLOR.white,
+    primary: COLOR.primary,
+    error: COLOR.error,
+    success: COLOR.success,
   },
 };
 
 export const LIGHT: ThemeType = {
   color: {
-    headerBg: color.grey[100],
-    bg: color.white,
-    cellBg: color.white,
-    text: color.black,
-    primary: color.primary[200],
+    headerBg: COLOR.grey[100],
+    bg: COLOR.white,
+    cellBg: COLOR.white,
+    text: COLOR.black,
+    primary: COLOR.primary,
+    error: COLOR.error,
+    success: COLOR.success,
   },
 };

@@ -19,7 +19,7 @@ const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
   body {
     color: ${({ theme }) => theme.color.text};
     background: ${({ theme }) => theme.color.bg};
-    transition: background 0.2s ease-in, color 0.2s ease-in;
+    /* TODO: [Issue#17] transition: background 0.2s ease-in, color 0.2s ease-in; */
   }
   
   button,

@@ -39,6 +39,9 @@ const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
     text-decoration: none;
     color: inherit;
     cursor: pointer;
+    :focus {
+      outline: none;
+    }
   }
   
   ul,

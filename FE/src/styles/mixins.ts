@@ -9,34 +9,39 @@ export const mixins = {
         `,
 };
 
-type FontWeight = 400 | 500 | 700;
+export type FontWeight = 400 | 500 | 700;
 
-export const displayFont = (fontWeight: FontWeight) => `
+export interface FontMixinType {
+  [key: string]: (fontWeight: FontWeight) => string;
+}
+
+export const FONT_MIXIN: FontMixinType = {
+  display: (fontWeight: FontWeight) => `
   font-size: ${font.size.display};
   line-height: ${font.lineHeight.display};
   font-weight: ${fontWeight};
-`;
-
-export const largeFont = (fontWeight: FontWeight) => `
+`,
+  large: (fontWeight: FontWeight) => `
   font-size: ${font.size.large};
   line-height: ${font.lineHeight.large};
   font-weight: ${fontWeight};
-`;
+`,
 
-export const mediumFont = (fontWeight: FontWeight) => `
+  medium: (fontWeight: FontWeight) => `
   font-size: ${font.size.medium};
   line-height: ${font.lineHeight.medium};
   font-weight: ${fontWeight};
-`;
+`,
 
-export const smallFont = (fontWeight: FontWeight) => `
+  small: (fontWeight: FontWeight) => `
   font-size: ${font.size.small};
   line-height: ${font.lineHeight.small};
   font-weight: ${fontWeight};
-`;
+`,
 
-export const xSmallFont = (fontWeight: FontWeight) => `
+  xSmall: (fontWeight: FontWeight) => `
   font-size: ${font.size.xSmall};
   line-height: ${font.lineHeight.xSmall};
   font-weight: ${fontWeight};
-`;
+`,
+};

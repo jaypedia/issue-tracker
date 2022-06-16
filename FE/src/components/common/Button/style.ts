@@ -5,7 +5,7 @@ import { FONT_MIXIN } from '@/styles/mixins';
 
 export type ButtonStyleProps = {
   btnSize: 'large' | 'medium' | 'small';
-  btnColor: 'primary' | 'grey';
+  btnColor: 'primary' | 'grey' | 'black';
 };
 
 const PrimaryStyle = `
@@ -46,9 +46,25 @@ const GreyStyle = `
   }
 `;
 
+const blackStyle = `
+  color: ${COLOR.white};
+  border: 1px solid ${COLOR.white};
+  background-color: #000;
+  transition: background .2s;
+
+  :hover {
+    background-color: ${COLOR.black};
+  }
+
+  :focus {
+    border: 2px solid ${COLOR.grey[500]};
+  }
+`;
+
 const btnColorObj = {
   primary: PrimaryStyle,
   grey: GreyStyle,
+  black: blackStyle,
 };
 
 const largeStyle = `

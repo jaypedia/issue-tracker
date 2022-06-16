@@ -10,9 +10,9 @@ import { DARK, LIGHT } from '@/styles/theme';
 
 const isUserSystemModeDark =
   window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+export const defaultTheme = isUserSystemModeDark ? DARK : LIGHT;
 
 const App = () => {
-  const defaultTheme = isUserSystemModeDark ? DARK : LIGHT;
   const [theme, setTheme] = useState(defaultTheme);
   const isLight = theme === LIGHT;
 

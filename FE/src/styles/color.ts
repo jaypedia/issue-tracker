@@ -21,6 +21,7 @@ export const COLOR = {
     400: '#6E7191',
     500: '#4E4B66',
     600: '#2A2748',
+    700: '#14142B',
   },
   black: '#0A071B',
   white: '#FEFEFE',

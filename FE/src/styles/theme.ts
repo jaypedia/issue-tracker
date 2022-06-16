@@ -3,6 +3,7 @@ import { COLOR } from './color';
 export interface ColorType {
   headerBg: string;
   bg: string;
+  inputBg: string;
   cellBg: string;
   text: string;
   primary: {
@@ -25,6 +26,7 @@ export const DARK: ThemeType = {
     headerBg: COLOR.grey[600],
     bg: COLOR.black,
     cellBg: COLOR.grey[500],
+    inputBg: COLOR.grey[700],
     text: COLOR.white,
     primary: COLOR.primary,
     error: COLOR.error,
@@ -37,6 +39,7 @@ export const LIGHT: ThemeType = {
     headerBg: COLOR.grey[100],
     bg: COLOR.white,
     cellBg: COLOR.white,
+    inputBg: COLOR.grey[100],
     text: COLOR.black,
     primary: COLOR.primary,
     error: COLOR.error,

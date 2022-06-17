@@ -1,13 +1,14 @@
 import * as S from './style';
 import { ButtonStyleProps } from './style';
 
-interface ButtonProps extends ButtonStyleProps {
+type ButtonProps = ButtonStyleProps & {
   text: string;
-}
+  type?: 'button' | 'submit' | 'reset' | undefined;
+};
 
-const Button = ({ size, isStandard = true, text }: ButtonProps) => {
+const Button = ({ btnSize, btnColor, text, type }: ButtonProps) => {
   return (
-    <S.Button size={size} isStandard={isStandard}>
+    <S.Button btnSize={btnSize} btnColor={btnColor} type={type}>
       {text}
     </S.Button>
   );

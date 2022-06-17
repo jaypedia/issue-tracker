@@ -40,7 +40,7 @@
             "position": "before"
           }
         ],
-        "pathGroupsExcludedImportTypes": ["react"],
+        // "pathGroupsExcludedImportTypes": ["styled-components"],
         "newlines-between": "always",
         "alphabetize": {
           "order": "asc",

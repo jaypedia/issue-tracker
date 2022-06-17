@@ -1,12 +1,16 @@
 import { createGlobalStyle, DefaultTheme } from 'styled-components';
 
+import { font } from './font';
+
+import fonts from '@/assets/fonts';
 import Normalize from '@/styles/Normalize';
 
 const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
   ${Normalize}
+  ${fonts}
 
   * {
-    font-family: ${({ theme }) => theme.font.family};
+    font-family: ${font.family};
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -15,7 +19,7 @@ const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
   body {
     color: ${({ theme }) => theme.color.text};
     background: ${({ theme }) => theme.color.bg};
-    transition: background 0.2s ease-in, color 0.2s ease-in;
+    /* TODO: [Issue#17] transition: background 0.2s ease-in, color 0.2s ease-in; */
   }
   
   button,
@@ -35,6 +39,9 @@ const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
     text-decoration: none;
     color: inherit;
     cursor: pointer;
+    :focus {
+      outline: none;
+    }
   }
   
   ul,

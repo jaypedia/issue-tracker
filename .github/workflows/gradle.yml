@@ -1,0 +1,61 @@
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: [ dev-BE ]
+  pull_request:
+    branches: [ dev-BE ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # JDK11로 gradle 빌드
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Insert data source information into application-deploy.yml
+        run: |
+          sed -i "s|datasource_url|$DATASOURCE_URL|g" ./src/main/resources/application-deploy.yml
+          sed -i "s|datasource_username|$DATASOURCE_USERNAME|g" ./src/main/resources/application-deploy.yml
+          sed -i "s|datasource_password|$DATASOURCE_PASSWORD|g" ./src/main/resources/application-deploy.yml
+
+        env:
+          DATASOURCE_URL : ${{ secrets.DATASOURCE_URL }}
+          DATASOURCE_USERNAME : ${{ secrets.DATASOURCE_USERNAME }}
+          DATASOURCE_PASSWORD : ${{ secrets.DATASOURCE_PASSWORD }}
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      # 도커 빌드(도커 이미지 생성)
+      - name: Docker build
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/issue-tracker:1.0 .
+          docker push ${{ secrets.DOCKER_USERNAME }}/issue-tracker:1.0
+          docker rmi ${{ secrets.DOCKER_USERNAME }}/issue-tracker:1.0
+
+      # 도커 이미지 배포 및 실행(EC2 ubuntu20.04로 배포)
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AWS_HOST_DNS }} #(생성한 인스턴스의 DNS주소)
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }} #(인스턴스를 생성할 때 다운받은 pem키안에 값을 모두 복사해서 붙여넣기)
+          envs: GITHUB_SHA
+          script: |
+            sudo docker ps -a -q --filter "name=github-action-test" | grep -q . && docker stop issue-tracker && docker rm issue-tracker | true
+            sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/issue-tracker:1.0
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/issue-tracker:1.0
+            sudo docker run -d -p 80:8080 -e PROFILES=deploy --name issue-tracker ${{ secrets.DOCKER_USERNAME }}/issue-tracker:1.0
+            sudo docker rmi -f $(docker images -f "dangling=true" -q) || true

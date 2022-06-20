@@ -1,6 +1,5 @@
 const { merge } = require('webpack-merge');
 const { argv } = require('yargs');
-
 const commonConfig = require('./webpack/common');
 
 module.exports = () => {

@@ -8,11 +8,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx|js|jsx)$/,
-        exclude: /node_modules/,
-        use: ['babel-loader'],
-      },
-      {
         test: /\.(sa|sc|c)ss$/i,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },

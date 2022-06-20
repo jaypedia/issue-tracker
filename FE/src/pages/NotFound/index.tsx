@@ -7,7 +7,7 @@ const NotFound = () => {
   return (
     <S.NotFoundWrapper>
       <S.NotFoundText>Sorry, Page Not Found</S.NotFoundText>
-      <CustomLink path="/" component={<Button size="small" isStandard text="Home" />} />
+      <CustomLink path="/" component={<Button btnSize="small" btnColor="primary" text="Home" />} />
     </S.NotFoundWrapper>
   );
 };

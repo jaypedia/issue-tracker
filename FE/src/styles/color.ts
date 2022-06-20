@@ -1,4 +1,4 @@
-export const color = {
+export const COLOR = {
   primary: {
     100: '#C9C0FA',
     200: '#715FF3',
@@ -15,12 +15,13 @@ export const color = {
     300: '#00A028',
   },
   grey: {
-    100: '#D9DBE9',
+    100: '#EFF0F6',
     200: '#D9DBE9',
     300: '#A0A3BD',
     400: '#6E7191',
     500: '#4E4B66',
     600: '#2A2748',
+    700: '#14142B',
   },
   black: '#0A071B',
   white: '#FEFEFE',

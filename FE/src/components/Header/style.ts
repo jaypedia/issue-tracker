@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { InnerConatiner } from '@/styles/common';
+import { InnerContainer } from '@/styles/common';
 import { mixins } from '@/styles/mixins';
 
 const HeaderWrapper = styled.div`
@@ -8,7 +8,7 @@ const HeaderWrapper = styled.div`
   padding: 15px 0;
 `;
 
-const InnerFlex = styled(InnerConatiner)`
+const InnerFlex = styled(InnerContainer)`
   ${mixins.flexBox({ justifyContent: 'space-between' })}
 `;
 

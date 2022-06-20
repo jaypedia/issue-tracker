@@ -1,14 +1,12 @@
 package team20.issuetracker.login.oauth;
 
-import team20.issuetracker.login.oauth.dto.UserProfile;
-
 import java.util.Arrays;
 import java.util.Map;
 
+import team20.issuetracker.login.oauth.dto.UserProfile;
+
 public enum OauthAttributes {
-
     GITHUB("github") {
-
         @Override
         public UserProfile of(Map<String, Object> attributes) {
             return UserProfile.builder()

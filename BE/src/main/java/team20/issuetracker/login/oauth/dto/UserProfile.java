@@ -2,8 +2,8 @@ package team20.issuetracker.login.oauth.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import team20.issuetracker.login.oauth.Role;
 import team20.issuetracker.login.domain.member.Member;
+import team20.issuetracker.login.oauth.Role;
 
 @Getter
 public class UserProfile {

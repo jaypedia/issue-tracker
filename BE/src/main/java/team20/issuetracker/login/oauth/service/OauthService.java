@@ -1,25 +1,26 @@
 package team20.issuetracker.login.oauth.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
-import team20.issuetracker.login.domain.member.MemberRepository;
-import team20.issuetracker.login.jwt.JwtTokenProvider;
-import team20.issuetracker.login.oauth.OauthAttributes;
-import team20.issuetracker.login.oauth.OauthProvider;
-import team20.issuetracker.login.domain.member.Member;
-import team20.issuetracker.login.oauth.dto.LoginResponse;
-import team20.issuetracker.login.oauth.dto.OauthTokenResponse;
-import team20.issuetracker.login.oauth.dto.UserProfile;
-import team20.issuetracker.login.oauth.repository.InMemoryProviderRepository;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Map;
+
+import lombok.RequiredArgsConstructor;
+import team20.issuetracker.login.domain.member.Member;
+import team20.issuetracker.login.domain.member.MemberRepository;
+import team20.issuetracker.login.jwt.JwtTokenProvider;
+import team20.issuetracker.login.oauth.OauthAttributes;
+import team20.issuetracker.login.oauth.OauthProvider;
+import team20.issuetracker.login.oauth.dto.LoginResponse;
+import team20.issuetracker.login.oauth.dto.OauthTokenResponse;
+import team20.issuetracker.login.oauth.dto.UserProfile;
+import team20.issuetracker.login.oauth.repository.InMemoryProviderRepository;
 
 @RequiredArgsConstructor
 @Service
@@ -30,6 +31,7 @@ public class OauthService {
     private final JwtTokenProvider jwtTokenProvider;
 
     public LoginResponse signup(String providerName, String code) {
+
         OauthProvider provider = inMemoryProviderRepository.findByProviderName(providerName);
 
         OauthTokenResponse tokenResponse = getToken(code, provider);
@@ -74,7 +76,8 @@ public class OauthService {
                 .uri(provider.getUserInfoUrl())
                 .headers(header -> header.setBearerAuth(tokenResponse.getAccessToken()))
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
+                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
+                })
                 .block();
     }
 

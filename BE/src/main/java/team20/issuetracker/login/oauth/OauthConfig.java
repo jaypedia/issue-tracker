@@ -6,11 +6,14 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
 import team20.issuetracker.login.oauth.repository.InMemoryProviderRepository;
 
 @Configuration
 @EnableConfigurationProperties(OauthProperties.class)
+@Slf4j
 public class OauthConfig {
+
     private final OauthProperties properties;
 
     public OauthConfig(OauthProperties properties) {

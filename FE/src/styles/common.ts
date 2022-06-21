@@ -2,6 +2,10 @@ import styled from 'styled-components';
 
 import { mixins } from './mixins';
 
+const MainWrapper = styled.main`
+  padding: 32px 0;
+`;
+
 const InnerContainer = styled.div`
   ${mixins.flexBox({ justifyContent: 'space-between' })}
   max-width: 1280px;
@@ -9,4 +13,4 @@ const InnerContainer = styled.div`
   margin: 0 auto;
 `;
 
-export { InnerContainer };
+export { MainWrapper, InnerContainer };

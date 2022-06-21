@@ -2,10 +2,7 @@ import styled from 'styled-components';
 
 import { COLOR } from '@/styles/color';
 import { FONT_MIXIN } from '@/styles/mixins';
-
-export type InputStyleProps = {
-  inputStyle: 'large' | 'medium' | 'small';
-};
+import { InputStyleProps } from '@/type/input.type';
 
 const largeStyle = `
   padding: 18px 24px;

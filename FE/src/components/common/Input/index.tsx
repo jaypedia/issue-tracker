@@ -1,14 +1,17 @@
 import * as S from './style';
-import { InputStyleProps } from './style';
 
-type InputProps = InputStyleProps & {
-  title: string;
-  placeholder: string;
-  type: string;
-};
+import { InputProps } from '@/type/input.type';
 
-const Input = ({ inputStyle, title, placeholder, type }: InputProps) => {
-  return <S.Input type={type} title={title} placeholder={placeholder} inputStyle={inputStyle} />;
+const Input = ({ inputStyle, title, placeholder, type, name }: InputProps) => {
+  return (
+    <S.Input
+      type={type}
+      title={title}
+      placeholder={placeholder}
+      inputStyle={inputStyle}
+      name={name}
+    />
+  );
 };
 
 export default Input;

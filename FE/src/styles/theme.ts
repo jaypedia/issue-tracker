@@ -6,6 +6,7 @@ export interface ColorType {
   inputBg: string;
   cellBg: string;
   text: string;
+  line: string;
   primary: {
     [key: string]: string;
   };
@@ -28,6 +29,7 @@ export const DARK: ThemeType = {
     cellBg: COLOR.grey[500],
     inputBg: COLOR.grey[700],
     text: COLOR.white,
+    line: COLOR.grey[400],
     primary: COLOR.primary,
     error: COLOR.error,
     success: COLOR.success,
@@ -41,6 +43,7 @@ export const LIGHT: ThemeType = {
     cellBg: COLOR.white,
     inputBg: COLOR.grey[100],
     text: COLOR.black,
+    line: COLOR.grey[200],
     primary: COLOR.primary,
     error: COLOR.error,
     success: COLOR.success,

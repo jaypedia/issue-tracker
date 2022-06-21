@@ -24,6 +24,7 @@ public class JwtTokenProvider {
     private String secretKey;
 
     public String createAccessToken(String payload) {
+
         return createToken(payload, accessTokenValidityInMilliseconds);
     }
 
@@ -31,6 +32,7 @@ public class JwtTokenProvider {
         byte[] array = new byte[7];
         new Random().nextBytes(array);
         String generatedString = new String(array, StandardCharsets.UTF_8);
+
         return createToken(generatedString, refreshTokenValidityInMilliseconds);
     }
 

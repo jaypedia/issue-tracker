@@ -5,17 +5,17 @@ import { DropDownArrow } from '@/icons/DropDownArrow';
 import { DropDownProps } from '@/type/dropDown.type';
 
 const DropDown = ({
-  IndicatorsSize,
-  IndicatorsTitle,
+  indicatorSize,
+  indicatorTitle,
   menuPosition,
   detailsMenuList,
 }: DropDownProps) => {
   return (
     <S.DropDown>
-      <S.Indicators IndicatorsSize={IndicatorsSize}>
-        {IndicatorsTitle}
+      <S.Indicator indicatorSize={indicatorSize}>
+        {indicatorTitle}
         <DropDownArrow />
-      </S.Indicators>
+      </S.Indicator>
       <DetailsMenu menuPosition={menuPosition} detailsMenuList={detailsMenuList} />
     </S.DropDown>
   );

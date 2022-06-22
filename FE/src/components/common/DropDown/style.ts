@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { FONT_MIXIN, mixins } from '@/styles/mixins';
-import { DetailsMenusSytle, IndicatorsSytle } from '@/type/dropDown.type';
+import { DetailsMenusStyle, IndicatorStyle } from '@/type/dropDown.type';
 
 const DetailsMenuPositionObj = {
   left: 'left: 0;',
@@ -13,17 +13,16 @@ const DropDown = styled.details`
   position: relative;
 `;
 
-const Indicators = styled.summary<IndicatorsSytle>`
+const Indicator = styled.summary<IndicatorStyle>`
   ${mixins.flexBox({})}
   ${FONT_MIXIN.small(700)}
   gap: 4px;
-  color: ${({ theme: { color } }) => color.dropDown.indicators};
+  color: ${({ theme: { color } }) => color.dropDown.indicator};
   cursor: pointer;
-  ${({ IndicatorsSize }) =>
-    IndicatorsSize === 'large' && `padding: 0 24px; gap: 16px; height: 38px;`}
+  ${({ indicatorSize }) => indicatorSize === 'large' && `padding: 0 24px; gap: 16px; height: 38px;`}
 
   :hover {
-    color: ${({ theme: { color } }) => color.dropDown.indicatorsHover};
+    color: ${({ theme: { color } }) => color.dropDown.indicatorHover};
   }
 
   ::marker {
@@ -31,7 +30,7 @@ const Indicators = styled.summary<IndicatorsSytle>`
   }
 `;
 
-const DetailsMenu = styled.div<DetailsMenusSytle>`
+const DetailsMenu = styled.div<DetailsMenusStyle>`
   position: absolute;
   top: calc(100% + 8px);
   ${({ menuPosition }) => DetailsMenuPositionObj[menuPosition]}
@@ -80,4 +79,4 @@ const CheckBoxIcon = styled.div`
   }
 `;
 
-export { DropDown, Indicators, DetailsMenu, DetailsMenuTitle, DetailsMenuItem, CheckBoxIcon };
+export { DropDown, Indicator, DetailsMenu, DetailsMenuTitle, DetailsMenuItem, CheckBoxIcon };

@@ -22,9 +22,9 @@ export interface ColorType {
       detailsMenuTitle: string;
       detailsMenuCell: string;
     };
-    indicators: string;
-    indicatorsHover: string;
-    indicatorsHoverBg: string;
+    indicator: string;
+    indicatorHover: string;
+    indicatorHoverBg: string;
   };
   tabLink: {
     bg: {
@@ -60,9 +60,9 @@ export const DARK: ThemeType = {
         detailsMenuTitle: COLOR.black,
         detailsMenuCell: COLOR.grey[500],
       },
-      indicators: COLOR.grey[400],
-      indicatorsHover: COLOR.grey[500],
-      indicatorsHoverBg: COLOR.grey[200],
+      indicator: COLOR.grey[400],
+      indicatorHover: COLOR.grey[500],
+      indicatorHoverBg: COLOR.grey[200],
     },
     tabLink: {
       bg: {
@@ -95,9 +95,9 @@ export const LIGHT: ThemeType = {
         detailsMenuTitle: COLOR.grey[100],
         detailsMenuCell: COLOR.white,
       },
-      indicators: COLOR.grey[400],
-      indicatorsHover: COLOR.grey[500],
-      indicatorsHoverBg: COLOR.grey[200],
+      indicator: COLOR.grey[400],
+      indicatorHover: COLOR.grey[500],
+      indicatorHoverBg: COLOR.grey[200],
     },
     tabLink: {
       bg: {

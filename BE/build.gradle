@@ -19,14 +19,32 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok'
+    implementation "org.springframework.boot:spring-boot-configuration-processor"
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation 'org.projectlombok:lombok'
+    implementation('io.netty:netty-resolver-dns-native-macos:4.1.77.Final') {
+        artifact {
+            classifier = "osx-aarch_64"
+        }
+    }
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+test {
+    useJUnit()
+}
+
+jar {
+    enabled = false
+}
+
+bootJar {
+    archivesBaseName = 'app'
+    archiveFileName = 'app.jar'
+    archiveVersion = "0.0.0"
 }

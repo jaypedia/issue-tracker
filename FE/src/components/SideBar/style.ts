@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { FONT_MIXIN } from '../../styles/mixins';
+
 import { mixins } from '@/styles/mixins';
 
 const SideBarContainer = styled.div`
@@ -12,12 +14,17 @@ const SideBarList = styled.ul`
   width: 100%;
 `;
 
-const SideBarItemWrapper = styled.li`
-  ${mixins.flexBox({ justifyContent: 'space-between' })}
-  color: ${({ theme: { color } }) => color.lightText};
-  border-bottom: 1px solid ${({ theme: { color } }) => color.inputBg};
+const SideBarItemContainer = styled.div`
   width: 100%;
-  padding: 30px 0;
+  border-bottom: 1px solid ${({ theme: { color } }) => color.inputBg};
+  color: ${({ theme: { color } }) => color.lightText};
+  padding-bottom: 20px;
+`;
+
+const TitleWrapper = styled.li`
+  ${mixins.flexBox({ justifyContent: 'space-between' })}
+  width: 100%;
+  padding: 20px 0;
   cursor: pointer;
 
   :hover > * {
@@ -25,6 +32,10 @@ const SideBarItemWrapper = styled.li`
   }
 `;
 
-const SideBarItemText = styled.div``;
+const Title = styled.div``;
 
-export { SideBarContainer, SideBarList, SideBarItemWrapper, SideBarItemText };
+const Contents = styled.div`
+  ${FONT_MIXIN.xSmall(400)}
+`;
+
+export { SideBarContainer, SideBarList, SideBarItemContainer, TitleWrapper, Title, Contents };

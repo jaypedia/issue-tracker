@@ -6,6 +6,7 @@ import ThemeSwitch from '@/components/ThemeSwitch';
 import Layout from '@/layout';
 // TODO: import Home from '@/pages/Home';
 import Login from '@/pages/Login';
+import NewIssue from '@/pages/NewIssue';
 import NotFound from '@/pages/NotFound';
 import GlobalStyle from '@/styles/GlobalStyle';
 import { DARK, LIGHT } from '@/styles/theme';
@@ -27,6 +28,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Layout />}>
             {/* TODO: <Route index element={<Home />} /> */}
+            <Route path="new-issue" element={<NewIssue />} />
           </Route>
           <Route path="login" element={<Login />} />
           <Route path="*" element={<NotFound />} />

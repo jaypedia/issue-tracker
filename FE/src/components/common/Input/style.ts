@@ -1,20 +1,19 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { COLOR } from '@/styles/color';
 import { FONT_MIXIN } from '@/styles/mixins';
+import { InputStyleProps } from '@/type/input.type';
 
-export type InputStyleProps = {
-  inputStyle: 'large' | 'medium' | 'small';
-};
-
-const largeStyle = `
+export const largeStyle = `
   padding: 18px 24px;
   border-radius:16px;
-  `;
+`;
+
 const mediumStyle = `
   padding: 14px 24px;
   border-radius:14px;
 `;
+
 const smallStyle = `
   padding: 0 24px;
   border-radius:11px;
@@ -26,9 +25,8 @@ const inputStyleObj = {
   small: smallStyle,
 };
 
-const Input = styled.input<InputStyleProps>`
+export const inputCommonStyle = css`
   width: 100%;
-  ${({ inputStyle }) => inputStyleObj[inputStyle]}
   ${FONT_MIXIN.small(400)}
   color: ${({ theme: { color } }) => color.text};
   background: ${({ theme: { color } }) => color.inputBg};
@@ -42,6 +40,11 @@ const Input = styled.input<InputStyleProps>`
     border: 1px solid ${({ theme: { color } }) => color.text};
     background: ${({ theme: { color } }) => color.bg};
   }
+`;
+
+const Input = styled.input<InputStyleProps>`
+  ${({ inputStyle }) => inputStyleObj[inputStyle]}
+  ${inputCommonStyle}
 `;
 
 export { Input };

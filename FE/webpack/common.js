@@ -1,8 +1,10 @@
 const path = require('path');
-
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const { argv } = require('yargs');
+
+const isDevelopment = argv.env === 'development';
 
 module.exports = {
   entry: {
@@ -26,8 +28,38 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(jpe?g|png|gif|mp3|svg|webg|woff)$/,
-        use: ['file-loader'],
+        test: /\.[jt]sx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  targets: '> 0.25%, not dead',
+                  useBuiltIns: 'usage',
+                  corejs: { version: 3, proposals: true },
+                },
+              ],
+              [
+                '@babel/preset-react',
+                {
+                  runtime: 'automatic',
+                },
+              ],
+              '@babel/preset-typescript',
+            ],
+            plugins: [
+              isDevelopment && require.resolve('react-refresh/babel'),
+              isDevelopment && 'babel-plugin-styled-components',
+            ].filter(Boolean),
+          },
+        },
+      },
+      {
+        test: /\.(jpe?g|png|gif|mp3|svg|woff)$/,
+        type: 'asset/resource',
       },
     ],
   },
@@ -38,6 +70,6 @@ module.exports = {
       favicon: path.resolve('src', 'assets', './favicon.svg'),
     }),
     new webpack.ProvidePlugin({ React: 'react' }),
-    new ReactRefreshWebpackPlugin(),
-  ],
+    isDevelopment && new ReactRefreshWebpackPlugin(),
+  ].filter(Boolean),
 };

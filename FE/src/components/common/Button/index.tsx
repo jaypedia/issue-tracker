@@ -1,14 +1,10 @@
 import * as S from './style';
-import { ButtonStyleProps } from './style';
 
-type ButtonProps = ButtonStyleProps & {
-  text: string;
-  type?: 'button' | 'submit' | 'reset' | undefined;
-};
+import { ButtonProps } from '@/type/button.type';
 
-const Button = ({ btnSize, btnColor, text, type }: ButtonProps) => {
+const Button = ({ btnSize, btnColor, text, type, changeTag }: ButtonProps) => {
   return (
-    <S.Button btnSize={btnSize} btnColor={btnColor} type={type}>
+    <S.Button btnSize={btnSize} btnColor={btnColor} type={type} as={changeTag}>
       {text}
     </S.Button>
   );

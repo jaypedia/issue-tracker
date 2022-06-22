@@ -57,9 +57,10 @@
     ],
     "no-console": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
-    "import/extensions": ["error", "never", { "png": "always" }],
+    "import/extensions": ["error", "never", { "png": "always", "type": "always" }],
     "import/prefer-default-export": "off",
-    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "react/require-default-props": 0
   },
   "settings": {
     "import/resolver": {

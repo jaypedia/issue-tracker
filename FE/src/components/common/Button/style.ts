@@ -1,12 +1,8 @@
 import styled from 'styled-components';
 
 import { COLOR } from '@/styles/color';
-import { FONT_MIXIN } from '@/styles/mixins';
-
-export type ButtonStyleProps = {
-  btnSize: 'large' | 'medium' | 'small';
-  btnColor: 'primary' | 'grey' | 'black';
-};
+import { FONT_MIXIN, mixins } from '@/styles/mixins';
+import { ButtonStyleProps } from '@/type/button.type';
 
 const PrimaryStyle = `
   color: ${COLOR.white};
@@ -95,6 +91,7 @@ const btnSizeObj = {
 };
 
 const Button = styled.button<ButtonStyleProps>`
+  ${mixins.flexBox({})}
   ${({ btnColor }) => btnColorObj[btnColor]}
   ${({ btnSize }) => btnSizeObj[btnSize]}
 `;

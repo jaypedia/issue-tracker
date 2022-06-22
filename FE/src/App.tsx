@@ -6,16 +6,14 @@ import ThemeSwitch from '@/components/ThemeSwitch';
 import Layout from '@/layout';
 import Home from '@/pages/Home';
 import Login from '@/pages/Login';
+import NewIssue from '@/pages/NewIssue';
 import NotFound from '@/pages/NotFound';
 import GlobalStyle from '@/styles/GlobalStyle';
 import { DARK, LIGHT } from '@/styles/theme';
-
-const isUserSystemModeDark =
-  window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+import { getDefaultTheme } from '@/utils/mode';
 
 const App = () => {
-  const defaultTheme = isUserSystemModeDark ? DARK : LIGHT;
-  const [theme, setTheme] = useState(defaultTheme);
+  const [theme, setTheme] = useState(getDefaultTheme());
   const isLight = theme === LIGHT;
 
   const switchTheme = () => {
@@ -30,6 +28,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path="new-issue" element={<NewIssue />} />
           </Route>
           <Route path="login" element={<Login />} />
           <Route path="*" element={<NotFound />} />

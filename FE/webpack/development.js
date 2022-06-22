@@ -1,5 +1,4 @@
 const path = require('path');
-
 const webpack = require('webpack');
 
 const PORT = 9000;
@@ -14,11 +13,6 @@ module.exports = {
       {
         test: /\.(sc|c|sa)ss$/,
         use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.(ts|tsx|js|jsx)$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
       },
     ],
   },

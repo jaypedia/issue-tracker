@@ -12,6 +12,4 @@ const InnerFlex = styled(InnerContainer)`
   ${mixins.flexBox({ justifyContent: 'space-between' })}
 `;
 
-const Button = styled.button``;
-
-export { HeaderWrapper, InnerFlex, Button };
+export { HeaderWrapper, InnerFlex };

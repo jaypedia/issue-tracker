@@ -12,7 +12,7 @@ const HomeHeader = () => {
       <S.HederRight>
         <TabLink />
         <CustomLink
-          path="/newIssue"
+          path="/new-issue"
           component={<Button btnSize="small" btnColor="primary" text="New Issue" changeTag="div" />}
         />
       </S.HederRight>

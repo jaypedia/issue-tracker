@@ -6,7 +6,8 @@ const ContentsHeaderWrapper = styled.div`
   ${mixins.flexBox({})}
   width: 100%;
   border-bottom: 1px solid ${({ theme: { color } }) => color.line};
-  padding: 32px;
+  padding: 32px 0;
+  margin-bottom: 30px;
 `;
 
 const ContentsTopBox = styled.div`

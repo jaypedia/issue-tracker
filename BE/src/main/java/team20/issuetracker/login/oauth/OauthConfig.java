@@ -1,15 +1,15 @@
 package team20.issuetracker.login.oauth;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import lombok.extern.slf4j.Slf4j;
-import team20.issuetracker.login.oauth.repository.InMemoryProviderRepository;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import team20.issuetracker.login.oauth.repository.InMemoryProviderRepository;
 
 @Configuration
 @EnableConfigurationProperties(OauthProperties.class)

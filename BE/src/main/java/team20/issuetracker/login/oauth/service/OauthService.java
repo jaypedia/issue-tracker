@@ -50,7 +50,7 @@ public class OauthService {
                 .id(member.getId())
                 .name(member.getName())
                 .email(member.getEmail())
-                .imageUrl(member.getImageUrl())
+                .avatarUrl(member.getAvatarUrl())
                 .role(member.getRole())
                 .tokenType("Bearer")
                 .accessToken(accessToken)
@@ -64,7 +64,7 @@ public class OauthService {
     // 마지막으로 findMember 를 인자로 담아 Member Repository 로 보내 DB 에 저장한다.
     private Member saveOrUpdate(UserProfile userProfile) {
         Member findMember = memberRepository.findByOauthId(userProfile.getOauthId())
-                .map(member -> member.update(userProfile.getEmail(), userProfile.getName(), userProfile.getImageUrl()))
+                .map(member -> member.update(userProfile.getEmail(), userProfile.getName(), userProfile.getAvatarUrl()))
                 .orElseGet(userProfile::toMember);
 
         return memberRepository.save(findMember);

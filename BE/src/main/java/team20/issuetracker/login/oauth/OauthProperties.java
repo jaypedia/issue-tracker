@@ -2,11 +2,11 @@ package team20.issuetracker.login.oauth;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @ConfigurationProperties(prefix = "oauth2")

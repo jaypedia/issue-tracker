@@ -1,5 +1,7 @@
 package team20.issuetracker.login.oauth.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,17 +11,19 @@ import team20.issuetracker.login.oauth.Role;
 @NoArgsConstructor
 @Getter
 public class UserProfile {
+    @JsonProperty("id")
     private String oauthId;
     private String email;
     private String name;
-    private String imageUrl;
+    @JsonProperty("avatar_url")
+    private String avatarUrl;
 
     @Builder
-    public UserProfile(String oauthId, String email, String name, String imageUrl) {
+    public UserProfile(String oauthId, String email, String name, String avatarUrl) {
         this.oauthId = oauthId;
         this.email = email;
         this.name = name;
-        this.imageUrl = imageUrl;
+        this.avatarUrl = avatarUrl;
     }
 
     public Member toMember() {
@@ -27,7 +31,7 @@ public class UserProfile {
                 .oauthId(oauthId)
                 .email(email)
                 .name(name)
-                .imageUrl(imageUrl)
+                .avatarUrl(avatarUrl)
                 .role(Role.GUEST)
                 .build();
     }

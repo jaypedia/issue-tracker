@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 
 import ThemeSwitch from '@/components/ThemeSwitch';
 import Layout from '@/layout';
-// TODO: import Home from '@/pages/Home';
+import Home from '@/pages/Home';
 import Login from '@/pages/Login';
 import NewIssue from '@/pages/NewIssue';
 import NotFound from '@/pages/NotFound';
@@ -27,7 +27,7 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<Layout />}>
-            {/* TODO: <Route index element={<Home />} /> */}
+            <Route index element={<Home />} />
             <Route path="new-issue" element={<NewIssue />} />
           </Route>
           <Route path="login" element={<Login />} />

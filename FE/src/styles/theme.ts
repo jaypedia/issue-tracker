@@ -17,6 +17,26 @@ export interface ColorType {
   success: {
     [key: string]: string;
   };
+  dropDown: {
+    bg: {
+      detailsMenuTitle: string;
+      detailsMenuCell: string;
+    };
+    indicators: string;
+    indicatorsHover: string;
+    indicatorsHoverBg: string;
+  };
+  tabLink: {
+    bg: {
+      initial: string;
+      hover: string;
+      active: string;
+    };
+    font: {
+      initial: string;
+      active: string;
+    };
+  };
 }
 
 interface ThemeType {
@@ -35,6 +55,26 @@ export const DARK: ThemeType = {
     primary: COLOR.primary,
     error: COLOR.error,
     success: COLOR.success,
+    dropDown: {
+      bg: {
+        detailsMenuTitle: COLOR.black,
+        detailsMenuCell: COLOR.grey[500],
+      },
+      indicators: COLOR.grey[400],
+      indicatorsHover: COLOR.grey[500],
+      indicatorsHoverBg: COLOR.grey[200],
+    },
+    tabLink: {
+      bg: {
+        initial: COLOR.black,
+        hover: COLOR.grey[600],
+        active: COLOR.primary[300],
+      },
+      font: {
+        initial: COLOR.grey[400],
+        active: COLOR.white,
+      },
+    },
   },
 };
 
@@ -50,5 +90,25 @@ export const LIGHT: ThemeType = {
     primary: COLOR.primary,
     error: COLOR.error,
     success: COLOR.success,
+    dropDown: {
+      bg: {
+        detailsMenuTitle: COLOR.grey[100],
+        detailsMenuCell: COLOR.white,
+      },
+      indicators: COLOR.grey[400],
+      indicatorsHover: COLOR.grey[500],
+      indicatorsHoverBg: COLOR.grey[200],
+    },
+    tabLink: {
+      bg: {
+        initial: COLOR.grey[100],
+        hover: COLOR.grey[200],
+        active: COLOR.primary[300],
+      },
+      font: {
+        initial: COLOR.grey[400],
+        active: COLOR.white,
+      },
+    },
   },
 };

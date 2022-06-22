@@ -1,4 +1,3 @@
-# dev, deploy ?? ?? yml ??
 spring:
   config:
     activate:

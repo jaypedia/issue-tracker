@@ -178,3 +178,9 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+#yml
+application-dev.yml
+application-oauth2.yml
+
+#html
+index.html

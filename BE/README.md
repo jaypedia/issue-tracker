@@ -24,8 +24,8 @@
 
 ```json
 {
-  "userId": "TestID", //(NOT NULL)
-  "password": "1234" //(NOT NULL)
+  "userId": "작성자 아이디", 
+  "password": "1234" 
 }
 ```
 ### 회원가입 API
@@ -34,9 +34,9 @@
 
 ```json
 {
-  "userId": "TestID", //(NOT NULL)
-  "password": "1234", //(NOT NULL)
-  "email": "TestID@gmail.com" //(NOT NULL)
+  "userId": "작성자 아이디", 
+  "password": "1234", 
+  "email": "TestID@gmail.com" 
 }
 ```
 
@@ -58,34 +58,66 @@
 ```json
 [
   {
-    "Id": 1,
-    "issueTitle": "이슈1 타이틀", //(NOT NULL)
-    "issueWriter": "TestID", //(NOT NULL)
-    "issueCreateTime": "yyyy-mm-dd", //(NOT NULL)
-    "LabelName": "레이블 이름",
-    "MileStoneName": "마일스톤 이름",
-    "issueWriterImage": "이슈 작성자 프로필 이미지", //(NOT NULL)
-    "issueStatus": true //(OPEN 상태)
+    "id": 1,
+    "issueTitle": "이슈 타이틀", 
+    "issueWriter": "작성자 아이디", 
+    "issueCreateTime": "yyyy-mm-dd HH:MM:ss", 
+    "labels": [
+      {
+        "id" : 1,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      },
+      {
+        "id" : 2,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      }
+    ],
+    "mileStoneTitle": "마일스톤 이름",
+    "assignees" : [
+      {
+        "id" : 1,
+        "image" : "담당자 프로필 이미지"
+      },
+      {
+        "id" : 2,
+        "image" : "담당자 프로필 이미지"
+      }
+    ],
+    "issueWriterImage": "이슈 작성자 프로필 이미지", 
+    "issueStatus": "open" 
   },
   {
-    "Id": 2,
-    "issueTitle": "이슈2 타이틀", //(NOT NULL)
-    "issueWriter": "TestID", //(NOT NULL)
-    "issueCreateTime": "yyyy-mm-dd", //(NOT NULL)
-    "LabelName": "레이블 이름",
-    "MileStoneName": "마일스톤 이름",
-    "IssueWriterImage": "이슈 작성자 프로필 이미지", //(NOT NULL)
-    "issueStatus": false //(CLOSE 상태)
-  },
-  {
-    "Id": 3,
-    "issueTitle": "이슈3 타이틀", //(NOT NULL)
-    "issueWriter": "TestID", //(NOT NULL)
-    "issueCreateTime": "yyyy-mm-dd", //(NOT NULL)
-    "LabelName": "레이블 이름",
-    "MileStoneName": "마일스톤 이름",
-    "IssueWriterImage": "이슈 작성자 프로필 이미지", //(NOT NULL)
-    "issueStatus": true //(OPEN 상태)
+    "id": 2,
+    "issueTitle": "이슈 타이틀",
+    "issueWriter": "작성자 아이디",
+    "issueCreateTime": "yyyy-mm-dd HH:MM:ss",
+    "labels": [
+      {
+        "id" : 1,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      },
+      {
+        "id" : 2,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      }
+    ],
+    "mileStoneTitle": "마일스톤 이름",
+    "assignees" : [
+      {
+        "id" : 1,
+        "image" : "담당자 프로필 이미지"
+      },
+      {
+        "id" : 2,
+        "image" : "담당자 프로필 이미지"
+      }
+    ],
+    "issueWriterImage": "이슈 작성자 프로필 이미지",
+    "issueStatus": "close"
   }
 ]
 
@@ -105,24 +137,66 @@ List 형태로 각 이슈가 담긴다.
 ```json
 [
   {
-    "Id": 1,
-    "issueTitle": "이슈1 타이틀", //(NOT NULL)
-    "issueWriter": "TestID", //(NOT NULL)
-    "issueCreateTime": "yyyy-mm-dd", //(NOT NULL)
-    "LabelName": "레이블 이름",
-    "MileStoneName": "마일스톤 이름",
-    "issueWriterImage": "이슈 작성자 프로필 이미지", //(NOT NULL)
-    "issueStatus": true //(OPEN 상태)
+    "id": 1,
+    "issueTitle": "이슈 타이틀",
+    "issueWriter": "작성자 아이디",
+    "issueCreateTime": "yyyy-mm-dd HH:MM:ss",
+    "labels": [
+      {
+        "id" : 1,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      },
+      {
+        "id" : 2,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      }
+    ],
+    "mileStoneTitle": "마일스톤 이름",
+    "assignees" : [
+      {
+        "id" : 1,
+        "image" : "담당자 프로필 이미지"
+      },
+      {
+        "id" : 2,
+        "image" : "담당자 프로필 이미지"
+      }
+    ],
+    "issueWriterImage": "이슈 작성자 프로필 이미지",
+    "issueStatus": "open"
   },
   {
-    "Id": 3,
-    "issueTitle": "이슈3 타이틀", //(NOT NULL)
-    "issueWriter": "TestID", //(NOT NULL)
-    "issueCreateTime": "yyyy-mm-dd", //(NOT NULL)
-    "LabelName": "레이블 이름",
-    "MileStoneName": "마일스톤 이름",
-    "IssueWriterImage": "이슈 작성자 프로필 이미지", //(NOT NULL)
-    "issueStatus": true //(OPEN 상태)
+    "id": 3,
+    "issueTitle": "이슈 타이틀",
+    "issueWriter": "작성자 아이디",
+    "issueCreateTime": "yyyy-mm-dd HH:MM:ss",
+    "labels": [
+      {
+        "id" : 1,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      },
+      {
+        "id" : 2,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      }
+    ],
+    "mileStoneTitle": "마일스톤 이름",
+    "assignees" : [
+      {
+        "id" : 1,
+        "image" : "담당자 프로필 이미지"
+      },
+      {
+        "id" : 2,
+        "image" : "담당자 프로필 이미지"
+      }
+    ],
+    "issueWriterImage": "이슈 작성자 프로필 이미지",
+    "issueStatus": "open"
   }
 ]
 
@@ -139,14 +213,35 @@ List 형태로 각 이슈가 담긴다.
 ```json
 [
   {
-    "Id": 2,
-    "issueTitle": "이슈2 타이틀", //(NOT NULL)
-    "issueWriter": "TestID", //(NOT NULL)
-    "issueCreateTime": "yyyy-mm-dd", //(NOT NULL)
-    "LabelName": "레이블 이름",
-    "MileStoneName": "마일스톤 이름",
-    "IssueWriterImage": "이슈 작성자 프로필 이미지", //(NOT NULL)
-    "issueStatus": false //(CLOSE 상태)
+    "id": 2,
+    "issueTitle": "이슈 타이틀",
+    "issueWriter": "작성자 아이디",
+    "issueCreateTime": "yyyy-mm-dd HH:MM:ss",
+    "labels": [
+      {
+        "id" : 1,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      },
+      {
+        "id" : 2,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      }
+    ],
+    "mileStoneTitle": "마일스톤 이름",
+    "assignees" : [
+      {
+        "id" : 1,
+        "image" : "담당자 프로필 이미지"
+      },
+      {
+        "id" : 2,
+        "image" : "담당자 프로필 이미지"
+      }
+    ],
+    "issueWriterImage": "이슈 작성자 프로필 이미지",
+    "issueStatus": "close"
   }
 ]
 
@@ -175,21 +270,42 @@ List 형태로 각 이슈가 담긴다.
 - 내가 댓글을 남긴 이슈 API
 
 ### 내가 작성한 이슈 API
-#### 자신이 작성한 이슈 중 닫힌 이슈일 때 Server -> Client Response 여기서 자신이라 함은 TestID 를 뜻한다.
+#### 자신이 작성한 이슈 중 닫힌 이슈일 때 Server -> Client Response 여기서 자신이라 함은 작성자 아이디 를 뜻한다.
 > GET `/issues/created_by?status=close&id=myID`
 > myID: 현재 로그인 되어있는 계정의 아이디
 
 ```json
 [
   {
-    "Id": 2,
-    "issueTitle": "이슈2 타이틀", //(NOT NULL)
-    "issueWriter": "TestID", //(NOT NULL)
-    "issueCreateTime": "yyyy-mm-dd", //(NOT NULL)
-    "LabelName": "레이블 이름",
-    "MileStoneName": "마일스톤 이름",
-    "IssueWriterImage": "이슈 작성자 프로필 이미지", //(NOT NULL)
-    "issueStatus": false //(CLOSE 상태)
+    "id": 2,
+    "issueTitle": "이슈 타이틀",
+    "issueWriter": "작성자 아이디",
+    "issueCreateTime": "yyyy-mm-dd HH:MM:ss",
+    "labels": [
+      {
+        "id" : 1,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      },
+      {
+        "id" : 2,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      }
+    ],
+    "mileStoneTitle": "마일스톤 이름",
+    "assignees" : [
+      {
+        "id" : 1,
+        "image" : "담당자 프로필 이미지"
+      },
+      {
+        "id" : 2,
+        "image" : "담당자 프로필 이미지"
+      }
+    ],
+    "issueWriterImage": "이슈 작성자 프로필 이미지",
+    "issueStatus": "close"
   }
 ] 
 ```
@@ -201,24 +317,66 @@ List 형태로 각 이슈가 담긴다.
 ```json
 [
   {
-    "Id": 1,
-    "issueTitle": "이슈1 타이틀", //(NOT NULL)
-    "issueWriter": "TestID", //(NOT NULL)
-    "issueCreateTime": "yyyy-mm-dd", //(NOT NULL)
-    "LabelName": "레이블 이름",
-    "MileStoneName": "마일스톤 이름",
-    "IssueWriterImage": "이슈 작성자 프로필 이미지", //(NOT NULL)
-    "issueStatus": true //(OPEN 상태)
+    "id": 1,
+    "issueTitle": "이슈 타이틀",
+    "issueWriter": "작성자 아이디",
+    "issueCreateTime": "yyyy-mm-dd HH:MM:ss",
+    "labels": [
+      {
+        "id" : 1,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      },
+      {
+        "id" : 2,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      }
+    ],
+    "mileStoneTitle": "마일스톤 이름",
+    "assignees" : [
+      {
+        "id" : 1,
+        "image" : "담당자 프로필 이미지"
+      },
+      {
+        "id" : 2,
+        "image" : "담당자 프로필 이미지"
+      }
+    ],
+    "issueWriterImage": "이슈 작성자 프로필 이미지",
+    "issueStatus": "open"
   },
   {
-    "Id": 3,
-    "issueTitle": "이슈3 타이틀", //(NOT NULL)
-    "issueWriter": "TestID", //(NOT NULL)
-    "issueCreateTime": "yyyy-mm-dd", //(NOT NULL)
-    "LabelName": "레이블 이름",
-    "MileStoneName": "마일스톤 이름",
-    "IssueWriterImage": "이슈 작성자 프로필 이미지", //(NOT NULL)
-    "issueStatus": true //(OPEN 상태)
+    "id": 3,
+    "issueTitle": "이슈 타이틀",
+    "issueWriter": "작성자 아이디",
+    "issueCreateTime": "yyyy-mm-dd HH:MM:ss",
+    "labels": [
+      {
+        "id" : 1,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      },
+      {
+        "id" : 2,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      }
+    ],
+    "mileStoneTitle": "마일스톤 이름",
+    "assignees" : [
+      {
+        "id" : 1,
+        "image" : "담당자 프로필 이미지"
+      },
+      {
+        "id" : 2,
+        "image" : "담당자 프로필 이미지"
+      }
+    ],
+    "issueWriterImage": "이슈 작성자 프로필 이미지",
+    "issueStatus": "open"
   }
 ] 
 ```
@@ -230,14 +388,35 @@ List 형태로 각 이슈가 담긴다.
 ```json
 [
   {
-    "Id": 2,
-    "issueTitle": "이슈2 타이틀", //(NOT NULL)
-    "issueWriter": "TestID", //(NOT NULL)
-    "issueCreateTime": "yyyy-mm-dd", //(NOT NULL)
-    "LabelName": "레이블 이름",
-    "MileStoneName": "마일스톤 이름",
-    "IssueWriterImage": "이슈 작성자 프로필 이미지", //(NOT NULL)
-    "issueStatus": false //(CLOSE 상태)
+    "id": 2,
+    "issueTitle": "이슈 타이틀",
+    "issueWriter": "작성자 아이디",
+    "issueCreateTime": "yyyy-mm-dd HH:MM:ss",
+    "labels": [
+      {
+        "id" : 1,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      },
+      {
+        "id" : 2,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      }
+    ],
+    "mileStoneTitle": "마일스톤 이름",
+    "assignees" : [
+      {
+        "id" : 1,
+        "image" : "담당자 프로필 이미지"
+      },
+      {
+        "id" : 2,
+        "image" : "담당자 프로필 이미지"
+      }
+    ],
+    "issueWriterImage": "이슈 작성자 프로필 이미지",
+    "issueStatus": "close"
   }
 ] 
 ```
@@ -249,24 +428,66 @@ List 형태로 각 이슈가 담긴다.
 ```json
 [
   {
-    "Id": 1,
-    "issueTitle": "이슈1 타이틀", //(NOT NULL)
-    "issueWriter": "TestID", //(NOT NULL)
-    "issueCreateTime": "yyyy-mm-dd", //(NOT NULL)
-    "LabelName": "레이블 이름",
-    "MileStoneName": "마일스톤 이름",
-    "IssueWriterImage": "이슈 작성자 프로필 이미지", //(NOT NULL)
-    "issueStatus": true //(OPEN 상태)
+    "id": 1,
+    "issueTitle": "이슈 타이틀",
+    "issueWriter": "작성자 아이디",
+    "issueCreateTime": "yyyy-mm-dd HH:MM:ss",
+    "labels": [
+      {
+        "id" : 1,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      },
+      {
+        "id" : 2,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      }
+    ],
+    "mileStoneTitle": "마일스톤 이름",
+    "assignees" : [
+      {
+        "id" : 1,
+        "image" : "담당자 프로필 이미지"
+      },
+      {
+        "id" : 2,
+        "image" : "담당자 프로필 이미지"
+      }
+    ],
+    "issueWriterImage": "이슈 작성자 프로필 이미지",
+    "issueStatus": "open"
   },
   {
-    "Id": 3,
-    "issueTitle": "이슈3 타이틀", //(NOT NULL)
-    "issueWriter": "TestID", //(NOT NULL)
-    "issueCreateTime": "yyyy-mm-dd", //(NOT NULL)
-    "LabelName": "레이블 이름",
-    "MileStoneName": "마일스톤 이름",
-    "IssueWriterImage": "이슈 작성자 프로필 이미지", //(NOT NULL)
-    "issueStatus": true //(OPEN 상태)
+    "id": 3,
+    "issueTitle": "이슈 타이틀",
+    "issueWriter": "작성자 아이디",
+    "issueCreateTime": "yyyy-mm-dd HH:MM:ss",
+    "labels": [
+      {
+        "id" : 1,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      },
+      {
+        "id" : 2,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      }
+    ],
+    "mileStoneTitle": "마일스톤 이름",
+    "assignees" : [
+      {
+        "id" : 1,
+        "image" : "담당자 프로필 이미지"
+      },
+      {
+        "id" : 2,
+        "image" : "담당자 프로필 이미지"
+      }
+    ],
+    "issueWriterImage": "이슈 작성자 프로필 이미지",
+    "issueStatus": "open"
   }
 ] 
 ```
@@ -279,14 +500,35 @@ List 형태로 각 이슈가 담긴다.
 ```json
 [
   {
-    "Id": 2,
-    "issueTitle": "이슈2 타이틀", //(NOT NULL)
-    "issueWriter": "TestID", //(NOT NULL)
-    "issueCreateTime": "yyyy-mm-dd", //(NOT NULL)
-    "LabelName": "레이블 이름",
-    "MileStoneName": "마일스톤 이름",
-    "IssueWriterImage": "이슈 작성자 프로필 이미지", //(NOT NULL)
-    "issueStatus": false //(CLOSE 상태)
+    "id": 2,
+    "issueTitle": "이슈 타이틀",
+    "issueWriter": "작성자 아이디",
+    "issueCreateTime": "yyyy-mm-dd HH:MM:ss",
+    "labels": [
+      {
+        "id" : 1,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      },
+      {
+        "id" : 2,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      }
+    ],
+    "mileStoneTitle": "마일스톤 이름",
+    "assignees" : [
+      {
+        "id" : 1,
+        "image" : "담당자 프로필 이미지"
+      },
+      {
+        "id" : 2,
+        "image" : "담당자 프로필 이미지"
+      }
+    ],
+    "issueWriterImage": "이슈 작성자 프로필 이미지",
+    "issueStatus": "close"
   }
 ] 
 ```
@@ -298,24 +540,66 @@ List 형태로 각 이슈가 담긴다.
 ```json
 [
   {
-    "Id": 1,
-    "issueTitle": "이슈1 타이틀", //(NOT NULL)
-    "issueWriter": "TestID", //(NOT NULL)
-    "issueCreateTime": "yyyy-mm-dd", //(NOT NULL)
-    "LabelName": "레이블 이름",
-    "MileStoneName": "마일스톤 이름",
-    "IssueWriterImage": "이슈 작성자 프로필 이미지", //(NOT NULL)
-    "issueStatus": true //(OPEN 상태)
+    "id": 1,
+    "issueTitle": "이슈 타이틀",
+    "issueWriter": "작성자 아이디",
+    "issueCreateTime": "yyyy-mm-dd HH:MM:ss",
+    "labels": [
+      {
+        "id" : 1,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      },
+      {
+        "id" : 2,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      }
+    ],
+    "mileStoneTitle": "마일스톤 이름",
+    "assignees" : [
+      {
+        "id" : 1,
+        "image" : "담당자 프로필 이미지"
+      },
+      {
+        "id" : 2,
+        "image" : "담당자 프로필 이미지"
+      }
+    ],
+    "issueWriterImage": "이슈 작성자 프로필 이미지",
+    "issueStatus": "open"
   },
   {
-    "Id": 3,
-    "issueTitle": "이슈3 타이틀", //(NOT NULL)
-    "issueWriter": "TestID", //(NOT NULL)
-    "issueCreateTime": "yyyy-mm-dd", //(NOT NULL)
-    "LabelName": "레이블 이름",
-    "MileStoneName": "마일스톤 이름",
-    "IssueWriterImage": "이슈 작성자 프로필 이미지", //(NOT NULL)
-    "issueStatus": true //(OPEN 상태)
+    "id": 3,
+    "issueTitle": "이슈 타이틀",
+    "issueWriter": "작성자 아이디",
+    "issueCreateTime": "yyyy-mm-dd HH:MM:ss",
+    "labels": [
+      {
+        "id" : 1,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      },
+      {
+        "id" : 2,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      }
+    ],
+    "mileStoneTitle": "마일스톤 이름",
+    "assignees" : [
+      {
+        "id" : 1,
+        "image" : "담당자 프로필 이미지"
+      },
+      {
+        "id" : 2,
+        "image" : "담당자 프로필 이미지"
+      }
+    ],
+    "issueWriterImage": "이슈 작성자 프로필 이미지",
+    "issueStatus": "open"
   }
 ]
 
@@ -337,14 +621,35 @@ List 형태로 각 이슈가 담긴다.
 ```json
 [
   {
-    "Id": 1,
-    "issueTitle": "이슈1 타이틀", //(NOT NULL)
-    "issueWriter": "TestID", //(NOT NULL)
-    "issueCreateTime": "yyyy-mm-dd", //(NOT NULL)
-    "LabelName": "레이블 이름",
-    "MileStoneName": "마일스톤 이름",
-    "IssueWriterImage": "이슈 작성자 프로필 이미지", //(NOT NULL)
-    "issueStatus": true //(OPEN 상태)
+    "id": 1,
+    "issueTitle": "이슈 타이틀",
+    "issueWriter": "작성자 아이디",
+    "issueCreateTime": "yyyy-mm-dd HH:MM:ss",
+    "labels": [
+      {
+        "id" : 1,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      },
+      {
+        "id" : 2,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      }
+    ],
+    "mileStoneTitle": "마일스톤 이름",
+    "assignees" : [
+      {
+        "id" : 1,
+        "image" : "담당자 프로필 이미지"
+      },
+      {
+        "id" : 2,
+        "image" : "담당자 프로필 이미지"
+      }
+    ],
+    "issueWriterImage": "이슈 작성자 프로필 이미지",
+    "issueStatus": "open"
   }
 ]
 ```
@@ -354,14 +659,35 @@ List 형태로 각 이슈가 담긴다.
 ```json
 [
   {
-    "Id": 1,
-    "issueTitle": "이슈1 타이틀", //(NOT NULL)
-    "issueWriter": "TestID", //(NOT NULL)
-    "issueCreateTime": "yyyy-mm-dd", //(NOT NULL)
-    "LabelName": "레이블 이름",
-    "MileStoneName": "마일스톤 이름",
-    "IssueWriterImage": "이슈 작성자 프로필 이미지", //(NOT NULL)
-    "issueStatus": true //(OPEN 상태)
+    "id": 2,
+    "issueTitle": "이슈 타이틀",
+    "issueWriter": "작성자 아이디",
+    "issueCreateTime": "yyyy-mm-dd HH:MM:ss",
+    "labels": [
+      {
+        "id" : 1,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      },
+      {
+        "id" : 2,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      }
+    ],
+    "mileStoneTitle": "마일스톤 이름",
+    "assignees" : [
+      {
+        "id" : 1,
+        "image" : "담당자 프로필 이미지"
+      },
+      {
+        "id" : 2,
+        "image" : "담당자 프로필 이미지"
+      }
+    ],
+    "issueWriterImage": "이슈 작성자 프로필 이미지",
+    "issueStatus": "close"
   }
 ]
 ```
@@ -372,14 +698,35 @@ List 형태로 각 이슈가 담긴다.
 ```json
 [
   {
-    "Id": 1,
-    "issueTitle": "이슈1 타이틀", //(NOT NULL)
-    "issueWriter": "TestID", //(NOT NULL)
-    "issueCreateTime": "yyyy-mm-dd", //(NOT NULL)
-    "LabelName": "레이블 이름",
-    "MileStoneName": "마일스톤 이름",
-    "IssueWriterImage": "이슈 작성자 프로필 이미지", //(NOT NULL)
-    "issueStatus": true //(OPEN 상태)
+    "id": 3,
+    "issueTitle": "이슈 타이틀",
+    "issueWriter": "작성자 아이디",
+    "issueCreateTime": "yyyy-mm-dd HH:MM:ss",
+    "labels": [
+      {
+        "id" : 1,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      },
+      {
+        "id" : 2,
+        "title" : "레이블 이름",
+        "backgroundColor": "배경색"
+      }
+    ],
+    "mileStoneTitle": "마일스톤 이름",
+    "assignees" : [
+      {
+        "id" : 1,
+        "image" : "담당자 프로필 이미지"
+      },
+      {
+        "id" : 2,
+        "image" : "담당자 프로필 이미지"
+      }
+    ],
+    "issueWriterImage": "이슈 작성자 프로필 이미지",
+    "issueStatus": "open"
   }
 ]
 ```
@@ -449,12 +796,12 @@ List 형태로 각 이슈가 담긴다.
 
 ```json
 {
-  "issueId": "1", //(NOT NULL)
-  "requestIssueStatus": false //(NOT NULL)
+  "id": "1", 
+  "requestIssueStatus": "close" 
 }
 
 /*
-현재 1 번 이슈의 상태는 true (OPEN) 상태이기 때문에, 반대 boolean 타입을 Request 한다.
+현재 1 번 이슈의 상태는 open 상태이기 때문에, 반대 boolean 타입을 Request 한다.
 */
 ```
 
@@ -469,23 +816,23 @@ List 형태로 각 이슈가 담긴다.
   "issues" : 
   [
     {
-      "issueId": "1", //(NOT NULL)
-      "requestIssueStatus": open //(NOT NULL)
+      "id": "1", 
+      "requestIssueStatus": "open" 
     },
     {
-      "issueId": "2", //(NOT NULL)
-      "requestIssueStatus": open //(NOT NULL)
+      "id": "2", 
+      "requestIssueStatus": "open" 
     },
     {
-      "issueId": "3", //(NOT NULL)
-      "requestIssueStatus": open //(NOT NULL)
+      "id": "3", 
+      "requestIssueStatus": "open" 
     }
   ]
 }
 
 /*
 리스트 형태로 선택한 이슈의 번호와 원하는 상태를 Request 한다.
-현재 1,3 번 이슈는 true (OPEN) 상태라 false를 Request 한다.
+현재 1,3 번 이슈는 open 상태라 close를 Request 한다.
 */
 ```
 
@@ -503,18 +850,33 @@ List 형태로 각 이슈가 담긴다.
 
 ```json
 {
-  "issueTitle": "이슈 제목", //(NOT NULL)
+  "id" : 1,
+  "issueTitle": "이슈 제목", 
   "issueContent": "이슈 내용",
-  "issueWriteDate" : "이슈 작성 날짜",
-  "issueWriterName" : "이슈 작성자 이름",
+  "issueCreateTime": "yyyy-mm-dd HH:MM:ss",
+  "issueWriter": "작성자 아이디",
   "files": [
     {
       //"파일과 관련된 Key, Value"
     }
   ],
-  "managerName" : "담당자 이름",
-  "labelName" : "라벨 이름",
-  "mileStoneName" : "마일스톤 이름"
+  "assignees" : [
+    {
+      "id" : 1
+    },
+    {
+      "id" : 2
+    }
+  ],
+  "labels" : [
+    {
+      "id" : 1
+    },
+    {
+      "id" : 2
+    }
+  ],
+  "mileStone" : 1
 }
 ```
 
@@ -536,35 +898,39 @@ List 형태로 각 이슈가 담긴다.
 
 ```json
 {
-  "issueTitle": "이슈1 타이틀",
-  "issueCount": 1,
-  "issueStatus": true,
-  "issueCreateTime": "yyyy-mm-dd",
+  "id": 1,
+  "issueTitle": "이슈 타이틀",
+  "issueStatus": "open",
+  "issueCreateTime": "yyyy-MM-dd HH:mm:ss",
   "commentCount": 1,
-  "managers": [
+  "assignees": [
     {
-      "managerName": "담당자1",
-      "managerImage": "담당자1 이미지 사진"
+      "id" : 1,
+      "name": "담당자 이름",
+      "image": "담당자 사진"
     },
     {
-      "managerName": "담당자2",
-      "managerImage": "담당자2 이미지 사진"
+      "id" : 2,
+      "name": "담당자 이름",
+      "image": "담당자 사진"
     }
   ],
   "labels": [
     {
-      "labelName": "레이블1"
+      "id" : 1,
+      "name": "레이블 이름"
     },
     {
-      "labelName": "레이블2"
+      "id" : 2,
+      "name": "레이블 이름"
     }
   ],
-  "mileStoneName" : "마일스톤 이름",
-  "muleStoneDescription" : "마일스톤 설명"
+  "mileStoneTitle" : "마일스톤 이름",
+  "mileStoneDescription" : "마일스톤 설명"
 }
 
 /*
-managers, labels, mileStoneName 빈 값이 Response 될 때도 있다.
+assignees, labels, mileStoneName 빈 값이 Response 될 때도 있다.
 */
 ```
 ### 제목편집 API
@@ -573,7 +939,7 @@ managers, labels, mileStoneName 빈 값이 Response 될 때도 있다.
  
 ```json
 {
-  "issueId": 1,
+  "id": 1,
   "issueTitle": "변경할 제목"
 }
 ```
@@ -584,9 +950,16 @@ managers, labels, mileStoneName 빈 값이 Response 될 때도 있다.
 ```json
 [
   {
+    "id" : 1,
     "commentWriter" : "작성자 아이디",
     "commentContent" : "코멘트 내용",
-    "commentWriteDate" : "코멘트 작성 날짜"
+    "commentCreateTime" : "yyyy-mm-dd HH:MM:ss"
+  },
+  {
+    "id" : 2,
+    "commentWriter" : "작성자 아이디",
+    "commentContent" : "코멘트 내용",
+    "commentCreateTime" : "yyyy-mm-dd HH:MM:ss"
   }
 ]
 ```
@@ -648,22 +1021,25 @@ managers, labels, mileStoneName 빈 값이 Response 될 때도 있다.
   "labels" : 
   [
     {
-      "labelTitle": "레이블 제목", //(NOT NULL)
-      "labelDescription": "레이블 설명",
-      "labelBackgroundColor": "배경색", //(NOT NULL)
-      "labelTestColor": "글자색"//(NOT NULL)
+      "id" : 1,
+      "title": "레이블 제목", 
+      "description": "레이블 설명",
+      "backgroundColor": "배경색", 
+      "textColor": "글자색"
     },
     {
-      "labelTitle": "레이블 제목", //(NOT NULL)
-      "labelDescription": "레이블 설명",
-      "labelBackgroundColor": "배경색", //(NOT NULL)
-      "labelTestColor": "글자색"//(NOT NULL)
+      "id" : 2,
+      "title": "레이블 제목",
+      "description": "레이블 설명",
+      "backgroundColor": "배경색",
+      "textColor": "글자색"
     },
     {
-      "labelTitle": "레이블 제목", //(NOT NULL)
-      "labelDescription": "레이블 설명",
-      "labelBackgroundColor": "배경색", //(NOT NULL)
-      "labelTestColor": "글자색"//(NOT NULL)
+      "id" : 3,
+      "title": "레이블 제목",
+      "description": "레이블 설명",
+      "backgroundColor": "배경색",
+      "textColor": "글자색"
     }
   ]
 }
@@ -674,10 +1050,9 @@ managers, labels, mileStoneName 빈 값이 Response 될 때도 있다.
 
 ```json
 {
-  "labelTitle": "레이블 제목", //(NOT NULL)
+  "labelTitle": "레이블 제목", 
   "labelDescription": "레이블 설명",
-  "labelBackgroundColor": "배경색", //(NOT NULL)
-  "labelTestColor": "글자색" //(NOT NULL)
+  "labelBackgroundColor": "배경색"
 }
 ```
 ### 레이블 편집 API
@@ -686,10 +1061,9 @@ managers, labels, mileStoneName 빈 값이 Response 될 때도 있다.
 
 ```json
 {
-  "labelTitle": "레이블 제목", //(NOT NULL)
+  "labelTitle": "레이블 제목", 
   "labelDescription": "레이블 설명",
-  "labelBackgroundColor": "배경색", //(NOT NULL)
-  "labelTestColor": "글자색" //(NOT NULL)
+  "labelBackgroundColor": "배경색"
 }
 ```
 
@@ -728,18 +1102,20 @@ managers, labels, mileStoneName 빈 값이 Response 될 때도 있다.
   "mileStones" :
   [
     {
-      "mileStoneTitle": "마일스톤 제목", //(NOT NULL)
-      "mileStoneEndDate": "yyyy-mm-dd",
-      "mileStoneDescription": "마일스톤 설명",
-      "openIssueCount": 1, //(NOT NULL)
-      "closeIssueCount": 1 //(NOT NULL)
+      "id" : 1,
+      "title": "마일스톤 제목", 
+      "endDate": "yyyy-MM-dd HH:mm:ss",
+      "description": "마일스톤 설명",
+      "openIssueCount": 1, 
+      "closeIssueCount": 1 
     },
     {
-      "mileStoneTitle": "마일스톤 제목", //(NOT NULL)
-      "mileStoneEndDate": "yyyy-mm-dd",
-      "mileStoneDescription": "마일스톤 설명",
-      "openIssueCount": 1, //(NOT NULL)
-      "closeIssueCount": 1 //(NOT NULL)
+      "id" : 2,
+      "title": "마일스톤 제목",
+      "endDate": "yyyy-MM-dd HH:mm:ss",
+      "description": "마일스톤 설명",
+      "openIssueCount": 1,
+      "closeIssueCount": 1
     }
   ]
 }
@@ -751,8 +1127,8 @@ managers, labels, mileStoneName 빈 값이 Response 될 때도 있다.
 
 ```json
 {
-  "mileStoneTitle": "마일스톤 제목", //(NOT NULL)
-  "mileStoneEndDate": "yyyy-mm-dd",
+  "mileStoneTitle": "마일스톤 제목", 
+  "mileStoneEndDate": "yyyy-MM-dd HH:mm:ss",
   "mileStoneDescription": "마일스톤 설명"
 }
 ```
@@ -763,8 +1139,8 @@ managers, labels, mileStoneName 빈 값이 Response 될 때도 있다.
 
 ```json
 {
-  "mileStoneTitle": "마일스톤 제목", //(NOT NULL)
-  "mileStoneEndDate": "yyyy-mm-dd",
+  "mileStoneTitle": "마일스톤 제목", 
+  "mileStoneEndDate": "yyyy-MM-dd HH:mm:ss",
   "mileStoneDescription": "마일스톤 설명"
 }
 ```
@@ -775,7 +1151,7 @@ managers, labels, mileStoneName 빈 값이 Response 될 때도 있다.
 
 ```json
 {
-  "mileStoneId": 1 //(NOT NULL)
+  "mileStoneId": 1 
 }
 ```
 
@@ -787,23 +1163,24 @@ managers, labels, mileStoneName 빈 값이 Response 될 때도 있다.
 ## 담당자 필요 API
 
 - 담당자 목록 API
-- 담당자 추가 API
 
 ### 담당자 목록 API
 #### 담당자 목록 (+ 버튼 클릭) 클릭 시, Sever -> Client Response
-> GET `/manager`
+> GET `/assignees`
 
 ```json
 {
-  "managers" : 
+  "assignees" : 
   [
     {
-      "managerName": "담당자 이름", //(NOT NULL)
-      "managerImage": "담당자 이미지" //(NOT NULL)
+      "id" : 1,
+      "name": "담당자 이름", 
+      "image": "담당자 이미지" 
     },
     {
-      "managerName": "담당자 이름", //(NOT NULL)
-      "managerImage": "담당자 이미지" //(NOT NULL)
+      "id" : 2,
+      "name": "담당자 이름", 
+      "image": "담당자 이미지" 
     }
   ]
 }
@@ -812,18 +1189,6 @@ managers, labels, mileStoneName 빈 값이 Response 될 때도 있다.
 담당자가 없는 경우 빈 리스트 [] 를 반환한다.
 */
 ```
-
-### 담당자 추가 API
-#### 담당자 추가 시 Client -> Server Request (현재 요구사항에 페이지는 존재하지 않음)
-> POST `/manager`
-
-```json
-{
-  "managerName": "추가할 담당자 이름", //(NOT NULL)
-  "managerImage": "추가할 담당자 이미지" //(NOT NULL)
-}
-```
-
 </details>
 
 # 인프라

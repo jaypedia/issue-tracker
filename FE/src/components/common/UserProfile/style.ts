@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { UserProfileStyle } from '@/type/userProfile.type';
+import { UserProfileStyle } from '@/components/common/UserProfile/type';
 
 const UserProfile = styled.img<UserProfileStyle>`
   width: ${({ size }) => (size === 'large' ? '44px' : '22px')};

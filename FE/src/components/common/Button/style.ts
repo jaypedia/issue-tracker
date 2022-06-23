@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
+import { ButtonStyleProps } from '@/components/common/Button/type';
 import { COLOR } from '@/styles/color';
 import { FONT_MIXIN, mixins } from '@/styles/mixins';
-import { ButtonStyleProps } from '@/type/button.type';
 
 const PrimaryStyle = `
   color: ${COLOR.white};

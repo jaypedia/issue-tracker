@@ -41,13 +41,13 @@ const DetailsMenu = styled.div<DetailsMenusStyle>`
   border-radius: ${({ indicatorType }) => (indicatorType === 'setting' ? '8px' : '16px')};
   border: 1px solid ${({ theme: { color } }) => color.line};
   overflow: hidden;
-  z-index: 1;
+  z-index: 10;
 `;
 
 const DetailsMenuTitle = styled.p<IndicatorStyle>`
   padding: 8px 16px;
   ${({ indicatorType }) =>
-    indicatorType === 'setting' ? FONT_MIXIN.xSmall(400) : FONT_MIXIN.medium(400)};
+    indicatorType === 'large' ? FONT_MIXIN.medium(400) : FONT_MIXIN.xSmall(400)};
   background: ${({ theme: { color } }) => color.dropDown.bg.detailsMenuTitle};
 `;
 

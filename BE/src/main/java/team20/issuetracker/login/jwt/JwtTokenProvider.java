@@ -16,17 +16,14 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class JwtTokenProvider {
-    @Value("${jwt.access-token.access-token.expire-length:expire-length}") // 7200000
+    @Value("${jwt.access-token.expire-length:7200000}")
     private long accessTokenValidityInMilliseconds;
 
-    @Value("${jwt.refresh-token.refresh-token.expire-length:expire-length}") // 604800000
+    @Value("${jwt.refresh-token.expire-length:604800000}")
     private long refreshTokenValidityInMilliseconds;
 
     @Value("${jwt.token.secret-key:secret-key}")
     private String secretKey;
-
-    @Value("${jwt.token.signature-algorithm:signature-algorithm}")
-    private SignatureAlgorithm signatureAlgorithm;
 
     public String createAccessToken(String payload) {
 
@@ -50,7 +47,7 @@ public class JwtTokenProvider {
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(validity)
-                .signWith(signatureAlgorithm, secretKey)
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 

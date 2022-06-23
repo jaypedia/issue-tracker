@@ -1,22 +1,40 @@
 import DetailsMenu from './DetailsMenu';
 import * as S from './style';
 
-import { DropDownArrow } from '@/icons/DropDownArrow';
-import { DropDownProps } from '@/type/dropDown.type';
+import { DropDownProps } from '@/components/common/DropDown/type';
+import ArrowIcon from '@/icons/DropDownArrow';
+import SettingIcon from '@/icons/Setting';
 
 const DropDown = ({
-  indicatorSize,
+  indicatorType,
   indicatorTitle,
   menuPosition,
   detailsMenuList,
+  hasCheckBox,
+  checkType,
 }: DropDownProps) => {
   return (
     <S.DropDown>
-      <S.Indicator indicatorSize={indicatorSize}>
-        {indicatorTitle}
-        <DropDownArrow />
+      <S.Indicator indicatorType={indicatorType}>
+        {indicatorType === 'setting' ? (
+          <S.TitleWrapper>
+            <S.Title>{indicatorTitle}</S.Title>
+            <SettingIcon />
+          </S.TitleWrapper>
+        ) : (
+          <>
+            {indicatorTitle}
+            <ArrowIcon />
+          </>
+        )}
       </S.Indicator>
-      <DetailsMenu menuPosition={menuPosition} detailsMenuList={detailsMenuList} />
+      <DetailsMenu
+        indicatorType={indicatorType}
+        menuPosition={menuPosition}
+        detailsMenuList={detailsMenuList}
+        hasCheckBox={hasCheckBox}
+        checkType={checkType}
+      />
     </S.DropDown>
   );
 };

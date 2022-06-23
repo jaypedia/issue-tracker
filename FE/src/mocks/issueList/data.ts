@@ -3,18 +3,28 @@ export const mockIssueList = [
     id: 1,
     issueTitle: 'Implement Home page',
     author: 'J',
-    issueCreateTime: '2022-06-23 02:33:02',
+    issueCreateTime: '2022-06-23 17:55:02',
     labels: [
       {
         id: 1,
-        name: 'Feature',
+        title: '✨ Feature',
+        backgroundColor: '#a2eeef',
+        textColor: '#0A071B',
       },
       {
         id: 2,
-        name: 'Design',
+        title: '🎨 Design',
+        backgroundColor: '#FEF2C0',
+        textColor: '#0A071B',
+      },
+      {
+        id: 3,
+        title: '🧊 EPIC',
+        backgroundColor: '#23026B',
+        textColor: '#FEFEFE',
       },
     ],
-    mileStoneName: 'Week 1',
+    mileStoneTitle: 'Week 1',
     assignees: [
       {
         id: 1,
@@ -38,14 +48,18 @@ export const mockIssueList = [
     labels: [
       {
         id: 1,
-        name: 'Feature',
+        title: '✨ Feature',
+        backgroundColor: '#a2eeef',
+        textColor: '#0A071B',
       },
       {
         id: 2,
-        name: 'Design',
+        title: '🎨 Design',
+        backgroundColor: '#FEF2C0',
+        textColor: '#0A071B',
       },
     ],
-    mileStoneName: 'Week 1',
+    mileStoneTitle: 'Week 1',
     assignees: [
       {
         id: 1,
@@ -69,14 +83,18 @@ export const mockIssueList = [
     labels: [
       {
         id: 1,
-        name: 'Feature',
+        title: '✨ Feature',
+        backgroundColor: '#a2eeef',
+        textColor: '#0A071B',
       },
       {
         id: 2,
-        name: 'Design',
+        title: '🎨 Design',
+        backgroundColor: '#FEF2C0',
+        textColor: '#0A071B',
       },
     ],
-    mileStoneName: 'Week 1',
+    mileStoneTitle: 'Week 1',
     assignees: [
       {
         id: 1,
@@ -100,14 +118,18 @@ export const mockIssueList = [
     labels: [
       {
         id: 1,
-        name: 'Feature',
+        title: '✨ Feature',
+        backgroundColor: '#a2eeef',
+        textColor: '#0A071B',
       },
       {
         id: 2,
-        name: 'Design',
+        title: '🎨 Design',
+        backgroundColor: '#FEF2C0',
+        textColor: '#0A071B',
       },
     ],
-    mileStoneName: 'Week 1',
+    mileStoneTitle: 'Week 1',
     assignees: [
       {
         id: 1,

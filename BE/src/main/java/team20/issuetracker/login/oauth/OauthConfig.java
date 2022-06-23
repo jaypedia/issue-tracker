@@ -8,13 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import team20.issuetracker.login.oauth.repository.InMemoryProviderRepository;
 
 @Configuration
 @EnableConfigurationProperties(OauthProperties.class)
 @RequiredArgsConstructor
-@Slf4j
 public class OauthConfig {
 
     private final OauthProperties properties;

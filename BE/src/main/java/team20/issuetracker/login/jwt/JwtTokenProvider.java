@@ -15,17 +15,20 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class JwtTokenProvider {
-    @Value("${jwt.access-token.expire-length:7200000}")
-    private long accessTokenValidityInMilliseconds;
 
-    @Value("${jwt.refresh-token.expire-length:604800000}")
-    private long refreshTokenValidityInMilliseconds;
+    private final long accessTokenValidityInMilliseconds;
+    private final long refreshTokenValidityInMilliseconds;
+    private final String secretKey;
 
-    @Value("${jwt.token.secret-key:secret-key}")
-    private String secretKey;
+    public JwtTokenProvider(@Value("${jwt.accessTokenExpiry}") long accessTokenValidityInMilliseconds,
+                            @Value("${jwt.refreshTokenExpiry}") long refreshTokenValidityInMilliseconds,
+                            @Value("${jwt.secretKey}") String secretKey) {
+        this.accessTokenValidityInMilliseconds = accessTokenValidityInMilliseconds;
+        this.refreshTokenValidityInMilliseconds = refreshTokenValidityInMilliseconds;
+        this.secretKey = secretKey;
+    }
 
     public String createAccessToken(String payload) {
-
         return createToken(payload, accessTokenValidityInMilliseconds);
     }
 
@@ -52,8 +55,7 @@ public class JwtTokenProvider {
 
     public boolean validateToken(String token) {
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-
+            Jws<Claims> claims = Jwts.parser().setSigningKey(this.secretKey).parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());
         } catch (JwtException | IllegalArgumentException e) {
             return false;

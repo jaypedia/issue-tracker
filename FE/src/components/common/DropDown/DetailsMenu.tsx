@@ -50,12 +50,13 @@ const DetailsMenu = ({
           {detailsMenuList.menus.map(menu =>
             hasCheckBox ? (
               <DetailsCheckMenuItem
+                key={menu}
                 menu={menu}
                 indicatorType={indicatorType}
                 checkType={checkType}
               />
             ) : (
-              <DetailsMenuItem menu={menu} indicatorType={indicatorType} />
+              <DetailsMenuItem key={menu} menu={menu} indicatorType={indicatorType} />
             ),
           )}
         </ul>

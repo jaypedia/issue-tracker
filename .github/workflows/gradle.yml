@@ -37,9 +37,18 @@ jobs:
           cd BE
           sed -i "s|client_secret|$CLIENT_SECRET|g" ./src/main/resources/application-oauth2.yml
           sed -i "s|redirect_uri|$REDIRECT_URI|g" ./src/main/resources/application-oauth2.yml
+          sed -i "s|access_token_expire_length|ACCESS_TOKEN_EXPIRE_LENGTH|g" ./src/main/resources/application-oauth2.yml
+          sed -i "s|refresh_token_expire_length|REFRESH_TOKEN_EXPIRE_LENGTH|g" ./src/main/resources/application-oauth2.yml
+          sed -i "s|secret_key|SECRET_KEY|g" ./src/main/resources/application-oauth2.yml
+          sed -i "s|signature_algorithm|SIGNATURE_ALGORITHM|g" ./src/main/resources/application-oauth2.yml
+
         env:
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           REDIRECT_URI: ${{ secrets.REDIRECT_URI }}
+          ACCESS_TOKEN_EXPIRE_LENGTH: ${{ secrets.ACCESS_TOKEN_EXPIRE_LENGTH }}
+          REFRESH_TOKEN_EXPIRE_LENGTH: ${{ secrets.REFRESH_TOKEN_EXPIRE_LENGTH }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          SIGNATURE_ALGORITHM: ${{ secrets.SIGNATURE_ALGORITHM }}
 
       - name: Grant execute permission for gradlew
         run: |

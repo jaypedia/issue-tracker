@@ -8,3 +8,15 @@ oauth2:
     github:
       token-uri: https://github.com/login/oauth/access_token
       user-info-uri: https://api.github.com/user
+
+jwt:
+  access-token:
+    access-token-expire-length: expire-length
+
+  refresh-token:
+    refresh-token-expire-length: expire-length
+
+  token:
+    secret-key: secret-key
+    signature-algorithm: signature-algorithm
+

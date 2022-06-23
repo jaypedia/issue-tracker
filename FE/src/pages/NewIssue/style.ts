@@ -1,31 +1,25 @@
 import styled from 'styled-components';
 
-import { mixins } from '../../styles/mixins';
+import { mixins, FONT_MIXIN } from '../../styles/mixins';
 
-const ColumnWrapper = styled.div`
+import { InnerContainer } from '@/styles/common';
+
+const NewIssueWrapper = styled(InnerContainer)`
   ${mixins.flexBox({ direction: 'column' })}
+  padding: 32px 0;
+`;
+
+const NewIssueHeaderWrapper = styled.div`
+  ${mixins.flexBox({ justifyContent: 'flex-start' })}
   width: 100%;
+  border-bottom: 1px solid ${({ theme: { color } }) => color.line};
+  padding: 32px 0;
+  margin-bottom: 30px;
 `;
 
-const FlexStartStyle = `
-${mixins.flexBox({ alignItems: 'flex-start' })}
-width: 100%;
+const Heading = styled.h1`
+  font-size: ${FONT_MIXIN.display(400)};
+  margin: 0;
 `;
 
-const FlexWrapper = styled.div`
-  ${FlexStartStyle}
-  gap: 20px;
-`;
-
-const NewIssueForm = styled.form`
-  ${FlexStartStyle}
-  gap: 40px;
-`;
-
-const NewIssueContentsWrapper = styled.div`
-  ${mixins.flexBox({ direction: 'column', alignItems: 'flex-end' })}
-  width: 100%;
-  gap: 15px;
-`;
-
-export { ColumnWrapper, FlexWrapper, NewIssueForm, NewIssueContentsWrapper };
+export { NewIssueWrapper, NewIssueHeaderWrapper, Heading };

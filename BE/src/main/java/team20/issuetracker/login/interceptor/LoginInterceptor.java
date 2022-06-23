@@ -25,7 +25,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return jwtTokenProvider.validateToken(jwtAccessToken);
         }
 
-        response.sendRedirect("/");
+        response.sendRedirect("/index.html");
         return false;
     }
 }

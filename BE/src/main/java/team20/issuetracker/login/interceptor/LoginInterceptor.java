@@ -1,28 +1,31 @@
 package team20.issuetracker.login.interceptor;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.servlet.HandlerInterceptor;
-import team20.issuetracker.login.jwt.JwtTokenProvider;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@Slf4j
+import team20.issuetracker.login.jwt.JwtTokenProvider;
+
 public class LoginInterceptor implements HandlerInterceptor {
+
+    private final JwtTokenProvider jwtTokenProvider;
+
+    public LoginInterceptor(JwtTokenProvider jwtTokenProvider) {
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("LoginInterceptor preHandle");
 
         String jwtAccessToken = request.getHeader(HttpHeaders.AUTHORIZATION);
-        JwtTokenProvider jwtTokenProvider = new JwtTokenProvider();
 
-        if (jwtAccessToken.length() != 0) {
+        if (jwtAccessToken != null) {
             return jwtTokenProvider.validateToken(jwtAccessToken);
         }
 
-        response.sendRedirect("/login");
+        response.sendRedirect("/");
         return false;
     }
 }

@@ -2,6 +2,7 @@ import DropDown from '../common/DropDown';
 import CheckBoxIcon from './CheckBox';
 import * as S from './style';
 
+import CustomLink from '@/components/common/CustomLink';
 import { Closed } from '@/icons/Closed';
 import { Open } from '@/icons/Open';
 
@@ -22,18 +23,34 @@ const assingeeList = {
   menus: ['Millie', 'J', 'Tany', 'geombong'],
 };
 
+type TabItemType = {
+  isOpen?: boolean;
+};
+
+const TabItem = ({ isOpen }: TabItemType) => {
+  return (
+    <S.TabItem type="button">
+      {isOpen ? (
+        <>
+          <Open />2 Open
+        </>
+      ) : (
+        <>
+          <Closed />2 Closed
+        </>
+      )}
+    </S.TabItem>
+  );
+};
+
 const IssueListHeader = () => {
   return (
     <S.IssueListHeader>
       <S.Flex>
         <CheckBoxIcon />
         <S.Tabs>
-          <S.TabItem type="button">
-            <Open />2 Open
-          </S.TabItem>
-          <S.TabItem type="button">
-            <Closed />2 Closed
-          </S.TabItem>
+          <CustomLink path="?issueStatus=open" component={<TabItem isOpen />} />
+          <CustomLink path="?issueStatus=closed" component={<TabItem />} />
         </S.Tabs>
       </S.Flex>
       <S.ListFilter>

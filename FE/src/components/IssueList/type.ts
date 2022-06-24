@@ -8,9 +8,10 @@ export type Label = {
 export type Assignees = {
   id: number;
   image: string;
+  userId: string;
 };
 
-type IssueItem = {
+export type IssueItem = {
   id: number;
   issueTitle: string;
   author: string;

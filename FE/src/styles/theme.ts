@@ -4,7 +4,16 @@ export interface ColorType {
   headerBg: string;
   bg: string;
   inputBg: string;
-  cellBg: string;
+  cell: {
+    bg: {
+      cellHeaderBg: string;
+      cellBg: string;
+    };
+    font: {
+      initial: string;
+      active: string;
+    };
+  };
   text: string;
   lightText: string;
   line: string;
@@ -47,7 +56,16 @@ export const DARK: ThemeType = {
   color: {
     headerBg: COLOR.grey[600],
     bg: COLOR.black,
-    cellBg: COLOR.grey[500],
+    cell: {
+      bg: {
+        cellHeaderBg: COLOR.grey[500],
+        cellBg: COLOR.grey[400],
+      },
+      font: {
+        initial: COLOR.grey[200],
+        active: COLOR.white,
+      },
+    },
     inputBg: COLOR.grey[700],
     text: COLOR.white,
     lightText: COLOR.grey[300],
@@ -82,7 +100,16 @@ export const LIGHT: ThemeType = {
   color: {
     headerBg: COLOR.grey[100],
     bg: COLOR.white,
-    cellBg: COLOR.white,
+    cell: {
+      bg: {
+        cellHeaderBg: COLOR.grey[100],
+        cellBg: COLOR.white,
+      },
+      font: {
+        initial: COLOR.grey[400],
+        active: COLOR.black,
+      },
+    },
     inputBg: COLOR.grey[100],
     text: COLOR.black,
     lightText: COLOR.grey[400],

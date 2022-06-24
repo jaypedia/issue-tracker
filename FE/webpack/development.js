@@ -1,4 +1,3 @@
-const path = require('path');
 const webpack = require('webpack');
 
 const PORT = 9000;
@@ -29,9 +28,6 @@ module.exports = {
     },
     compress: true,
     historyApiFallback: true,
-    static: {
-      directory: path.join(__dirname, 'public'),
-    },
     open: true,
     port: PORT,
   },

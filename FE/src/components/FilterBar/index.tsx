@@ -18,7 +18,7 @@ const FilterBar = () => {
   return (
     <S.FilterBar>
       <DropDown
-        indicatorSize="large"
+        indicatorType="large"
         indicatorTitle="Filter"
         menuPosition="left"
         detailsMenuList={filterBoxDetailsMenu}

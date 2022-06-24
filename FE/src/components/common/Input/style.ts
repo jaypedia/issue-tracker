@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components';
 
+import { InputStyleProps } from '@/components/common/Input/type';
 import { COLOR } from '@/styles/color';
 import { FONT_MIXIN } from '@/styles/mixins';
-import { InputStyleProps } from '@/type/input.type';
 
 export const largeStyle = `
   padding: 18px 24px;

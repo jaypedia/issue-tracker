@@ -1,15 +1,16 @@
 import * as S from './style';
 
-import CommentBox from '@/components/CommentBox';
+import CommentForm from '@/components/CommentForm';
+import { ColumnWrapper, Heading1 } from '@/styles/common';
 
 const NewIssue = () => {
   return (
-    <S.NewIssueWrapper>
+    <ColumnWrapper>
       <S.NewIssueHeaderWrapper>
-        <S.Heading>Create a new issue</S.Heading>
+        <Heading1>Create a new issue</Heading1>
       </S.NewIssueHeaderWrapper>
-      <CommentBox newIssue />
-    </S.NewIssueWrapper>
+      <CommentForm newIssue />
+    </ColumnWrapper>
   );
 };
 

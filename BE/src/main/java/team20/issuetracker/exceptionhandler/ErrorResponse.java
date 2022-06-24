@@ -8,4 +8,8 @@ import lombok.RequiredArgsConstructor;
 public class ErrorResponse {
 
     private final String errorMessage;
+
+    static ErrorResponse create(String errorMessage) {
+        return new ErrorResponse(errorMessage);
+    }
 }

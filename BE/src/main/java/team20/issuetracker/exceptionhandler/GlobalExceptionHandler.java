@@ -1,16 +1,17 @@
 package team20.issuetracker.exceptionhandler;
 
-import io.jsonwebtoken.JwtException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import team20.issuetracker.exception.MyJwtException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(JwtException.class)
-    public ErrorResponse JwtExceptionHandler() {
-        String message = "유효하지 않은 Access Token 입니다.";
+    @ExceptionHandler(MyJwtException.class)
+    public ResponseEntity<ErrorResponse> expiredJwtException(MyJwtException myJwtException) {
 
-        return new ErrorResponse(message);
+        return new ResponseEntity<>(ErrorResponse.create(myJwtException.getErrorMessage()), myJwtException.getHttpStatus());
     }
 }

@@ -2,7 +2,7 @@ import moment from 'moment';
 
 import { ISSUE_STATUS } from '@/constants/constants';
 
-const getRelativeTime = (issueCreateTime: string) => {
+export const getRelativeTime = (issueCreateTime: string) => {
   return moment(issueCreateTime).fromNow();
 };
 

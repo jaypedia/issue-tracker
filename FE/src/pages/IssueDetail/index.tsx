@@ -4,12 +4,13 @@ import { useParams } from 'react-router-dom';
 
 import * as S from './style';
 
+import Comment from '@/components/Comment';
 import CommentForm from '@/components/CommentForm';
 import Button from '@/components/common/Button';
 import Label from '@/components/common/Label';
 import SideBar from '@/components/SideBar';
 import { COLOR } from '@/styles/color';
-import { ColumnWrapper, Heading1, FlexBetween, FlexColumn } from '@/styles/common';
+import { ColumnWrapper, Heading1, FlexBetween } from '@/styles/common';
 import { convertFirstLetterToUppercase, getIssueInfoSentence } from '@/utils/issue';
 
 const IssueDetail = () => {
@@ -31,6 +32,8 @@ const IssueDetail = () => {
     getIssue();
   }, []);
 
+  const { author, issueCreateTime, issueStatus } = issue;
+
   return (
     <ColumnWrapper>
       {!isLoading && (
@@ -45,27 +48,31 @@ const IssueDetail = () => {
             </FlexBetween>
             <S.IssueInfoBox>
               <Label
-                title={convertFirstLetterToUppercase(issue.issueStatus)}
+                title={convertFirstLetterToUppercase(issueStatus)}
                 size="large"
                 backgroundColor={COLOR.success[300]}
                 textColor={COLOR.white}
               />
               {getIssueInfoSentence({
                 issueId: issue.id,
-                issueStatus: issue.issueStatus,
-                author: issue.author,
-                issueCreateTime: issue.issueCreateTime,
+                issueStatus,
+                author,
+                issueCreateTime,
                 commentCount: issue.commentCount,
               })}
             </S.IssueInfoBox>
           </S.IssueDetailHeaderWrapper>
           <S.ContentsWrapper>
-            <FlexColumn>
-              <div>CommentBox</div>
-              <div>CommentBox</div>
-              <div>CommentBox</div>
+            <S.CommentsConatiner>
+              <Comment
+                issueAuthor={author}
+                imgUrl="https://avatars.githubusercontent.com/u/85419343?s=80&v=4"
+                userId={author}
+                createTime={issueCreateTime}
+                description=""
+              />
               <CommentForm />
-            </FlexColumn>
+            </S.CommentsConatiner>
             <SideBar />
           </S.ContentsWrapper>
         </>

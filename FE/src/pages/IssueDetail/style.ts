@@ -30,4 +30,8 @@ const ContentsWrapper = styled.div`
   gap: 40px;
 `;
 
-export { IssueDetailHeaderWrapper, ButtonBox, IssueInfoBox, ContentsWrapper };
+const CommentsConatiner = styled.div`
+  width: 100%;
+`;
+
+export { IssueDetailHeaderWrapper, ButtonBox, IssueInfoBox, ContentsWrapper, CommentsConatiner };

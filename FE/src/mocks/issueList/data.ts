@@ -73,7 +73,7 @@ export const mockIssueList = [
       },
     ],
     issueWriterImage: 'https://avatars.githubusercontent.com/u/85419343?s=80&v=4',
-    issueStatus: 'close',
+    issueStatus: 'closed',
   },
   {
     id: 3,
@@ -143,15 +143,16 @@ export const mockIssueList = [
       },
     ],
     issueWriterImage: 'https://avatars.githubusercontent.com/u/85419343?s=80&v=4',
-    issueStatus: 'close',
+    issueStatus: 'closed',
   },
 ];
 
 export const mockIssueDetail = {
   id: 1,
-  issueTitle: '이슈 타이틀',
+  author: 'Millie',
+  issueTitle: '[Mock Issue Detail] Webpack comfiguration',
   issueStatus: 'open',
-  issueCreateTime: 'yyyy-MM-dd HH:mm:ss',
+  issueCreateTime: '2022-06-23 02:33:02',
   commentCount: 1,
   assignees: [
     {
@@ -168,13 +169,17 @@ export const mockIssueDetail = {
   labels: [
     {
       id: 1,
-      name: '레이블 이름',
+      title: '✨ Feature',
+      backgroundColor: '#a2eeef',
+      textColor: '#0A071B',
     },
     {
       id: 2,
-      name: '레이블 이름',
+      title: '🎨 Design',
+      backgroundColor: '#FEF2C0',
+      textColor: '#0A071B',
     },
   ],
-  mileStoneTitle: '마일스톤 이름',
-  mileStoneDescription: '마일스톤 설명',
+  mileStoneTitle: 'Week 3',
+  mileStoneDescription: 'CodeSquad Last Mission',
 };

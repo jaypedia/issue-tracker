@@ -1,6 +1,5 @@
 import * as S from './style';
-
-import { ButtonProps } from '@/type/button.type';
+import { ButtonProps } from './type';
 
 const Button = ({ btnSize, btnColor, text, type, changeTag }: ButtonProps) => {
   return (

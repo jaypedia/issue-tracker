@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 import CheckBoxIcon from '../CheckBox';
 import { IssueItemType } from '../type';
 import * as S from './style';
@@ -7,37 +5,26 @@ import * as S from './style';
 import CustomLink from '@/components/common/CustomLink';
 import Label from '@/components/common/Label';
 import UserProfile from '@/components/common/UserProfile';
+import { ISSUE_STATUS } from '@/constants/constants';
 import { Closed } from '@/icons/Closed';
 import { Milestone } from '@/icons/Milestone';
 import { Open } from '@/icons/Open';
 import { COLOR } from '@/styles/color';
+import { getIssueInfoSentence } from '@/utils/issue';
 
 const IssueStatusIcon = ({ status }: { status: string }) => {
   switch (status) {
-    case 'open':
+    case ISSUE_STATUS.open:
       return <Open color={COLOR.success[200]} />;
-    case 'close':
+    case ISSUE_STATUS.closed:
       return <Closed color={COLOR.primary[200]} />;
     default:
-      throw new Error('state is not correct');
-  }
-};
-
-const IssueInfoSentence = ({ issue }: IssueItemType) => {
-  switch (issue.issueStatus) {
-    case 'open':
-      return `#${issue.id} opened ${moment(issue.issueCreateTime).fromNow()} by ${issue.author}`;
-    case 'close':
-      return `#${issue.id} by ${issue.author} was closed #${issue.id} ${moment(
-        issue.issueCreateTime,
-      ).fromNow()} `;
-    default:
-      throw new Error('Error');
+      throw new Error('Status is not correct');
   }
 };
 
 const IssueItem = ({ issue }: IssueItemType) => {
-  const { issueStatus } = issue;
+  const { id: issueId, issueStatus, author, issueCreateTime } = issue;
   return (
     <S.IssueItem>
       <S.Flex>
@@ -45,7 +32,10 @@ const IssueItem = ({ issue }: IssueItemType) => {
         <S.IssueInfoContainer>
           <S.IssueInfo>
             <IssueStatusIcon status={issueStatus} />
-            <CustomLink path="/" component={<S.IssueTitle>{issue.issueTitle}</S.IssueTitle>} />
+            <CustomLink
+              path={`issue/${issueId}`}
+              component={<S.IssueTitle>{issue.issueTitle}</S.IssueTitle>}
+            />
             <S.LabelContainer>
               {issue.labels.map(({ id, title, backgroundColor, textColor }) => (
                 <Label
@@ -59,7 +49,7 @@ const IssueItem = ({ issue }: IssueItemType) => {
             </S.LabelContainer>
           </S.IssueInfo>
           <S.IssueInfoBottom>
-            {IssueInfoSentence({ issue })}
+            {getIssueInfoSentence({ issueId, issueStatus, author, issueCreateTime })}
             <S.MilestonBox>
               <Milestone />
               {issue.mileStoneTitle}

@@ -37,7 +37,7 @@ const Tabs = styled.div`
 
 const TabItem = styled.button`
   ${mixins.flexBox({})}
-  margin: 0 12px;
+  margin-right: 24px;
   gap: 8px;
   ${FONT_MIXIN.small(400)}
 

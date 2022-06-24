@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { ThemeConsumer } from 'styled-components';
 
 import { LabelStyle } from './type';
 
@@ -12,21 +12,32 @@ const LargeStyle = `
   color: ${COLOR.white};
   ${FONT_MIXIN.medium(500)}
 `;
+
 const SmallStyle = `
   padding: 4px 16px;
+  ${FONT_MIXIN.xSmall(700)}
+`;
+
+const LineStyle = `
+  padding: 2px 16px;
+  border-width: 1px;
+  border-style: solid;
   ${FONT_MIXIN.xSmall(700)}
 `;
 
 const LabelStyleObj = {
   large: LargeStyle,
   small: SmallStyle,
+  line: LineStyle,
 };
 
 const Label = styled.div<LabelStyle>`
-  color: ${({ textColor }) => textColor};
+  color: ${({ theme, textColor, hasLine }) => (hasLine ? theme.color.text : textColor)};
   border-radius: 30px;
   background: ${({ backgroundColor }) => backgroundColor};
-  ${({ size }) => LabelStyleObj[size]}
+  border-color: ${({ theme: { color } }) => color.line};
+  ${({ size }) => LabelStyleObj[size]};
+  ${({ hasLine }) => hasLine && LabelStyleObj.line};
 `;
 
 export { Label };

@@ -6,11 +6,11 @@ import TextArea from '@/components/common/TextArea';
 import UserProfile from '@/components/common/UserProfile';
 import SideBar from '@/components/SideBar';
 
-type CommentBoxProps = {
+type CommentFormProps = {
   newIssue?: boolean;
 };
 
-const CommentBox = ({ newIssue }: CommentBoxProps) => {
+const CommentForm = ({ newIssue }: CommentFormProps) => {
   const btnStyle = {
     size: newIssue ? 'medium' : 'small',
     text: newIssue ? 'Submit new issue' : 'Comment',
@@ -37,4 +37,4 @@ const CommentBox = ({ newIssue }: CommentBoxProps) => {
   );
 };
 
-export default CommentBox;
+export default CommentForm;

@@ -1,6 +1,7 @@
 package team20.issuetracker.login.jwt;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -10,21 +11,26 @@ import java.util.Random;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import team20.issuetracker.exception.MyJwtException;
 
 @Component
 public class JwtTokenProvider {
-    @Value("${jwt.access-token.expire-length:10000}")
-    private long accessTokenValidityInMilliseconds;
-    @Value("${jwt.refresh-token.expire-length:10000}")
-    private long refreshTokenValidityInMilliseconds;
-    @Value("${jwt.token.secret-key:secret-key}")
-    private String secretKey;
+
+    private final long accessTokenValidityInMilliseconds;
+    private final long refreshTokenValidityInMilliseconds;
+    private final String secretKey;
+
+    public JwtTokenProvider(@Value("${jwt.accessTokenExpiry}") long accessTokenValidityInMilliseconds,
+                            @Value("${jwt.refreshTokenExpiry}") long refreshTokenValidityInMilliseconds,
+                            @Value("${jwt.secretKey}") String secretKey) {
+        this.accessTokenValidityInMilliseconds = accessTokenValidityInMilliseconds;
+        this.refreshTokenValidityInMilliseconds = refreshTokenValidityInMilliseconds;
+        this.secretKey = secretKey;
+    }
 
     public String createAccessToken(String payload) {
-
         return createToken(payload, accessTokenValidityInMilliseconds);
     }
 
@@ -49,23 +55,13 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public String getPayload(String token) {
-        try {
-            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-        } catch (ExpiredJwtException e) {
-            return e.getClaims().getSubject();
-        } catch (JwtException e) {
-            throw new RuntimeException("유효하지 않은 토큰입니다.");
-        }
-    }
-
     public boolean validateToken(String token) {
-        try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
 
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(this.secretKey).parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());
-        } catch (JwtException | IllegalArgumentException e) {
-            return false;
+        } catch (IllegalArgumentException | ExpiredJwtException e) {
+            throw new MyJwtException("유효하지 않은 토큰 입니다.", HttpStatus.UNAUTHORIZED);
         }
     }
 }

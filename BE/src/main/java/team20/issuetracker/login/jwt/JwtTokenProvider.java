@@ -18,6 +18,7 @@ import team20.issuetracker.exception.MyJwtException;
 @Component
 public class JwtTokenProvider {
 
+    public static final String TOKEN_TYPE = "Bearer";
     private final long accessTokenValidityInMilliseconds;
     private final long refreshTokenValidityInMilliseconds;
     private final String secretKey;
@@ -58,10 +59,18 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
 
         try {
+            validateTokeType(token);
             Jws<Claims> claims = Jwts.parser().setSigningKey(this.secretKey).parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());
         } catch (IllegalArgumentException | ExpiredJwtException e) {
             throw new MyJwtException("유효하지 않은 토큰 입니다.", HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    private void validateTokeType(String token) {
+        String tokenType = token.split(" ")[0];
+        if (!tokenType.equals(TOKEN_TYPE)) {
+            throw new MyJwtException("토큰 타입이 유효하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
     }
 }

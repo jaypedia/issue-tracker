@@ -11,8 +11,12 @@ import java.util.Random;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import team20.issuetracker.exception.MyJwtException;
 
 @Component
@@ -59,18 +63,27 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
 
         try {
-            validateTokeType(token);
-            Jws<Claims> claims = Jwts.parser().setSigningKey(this.secretKey).parseClaimsJws(token);
+            String validatedToken = validateTokeType(token);
+            Jws<Claims> claims = Jwts.parser().setSigningKey(this.secretKey).parseClaimsJws(validatedToken);
             return !claims.getBody().getExpiration().before(new Date());
-        } catch (IllegalArgumentException | ExpiredJwtException e) {
+        } catch (SignatureException e) {
+            throw new MyJwtException("서명을 확인할 수 없는 토큰입니다.", HttpStatus.UNAUTHORIZED);
+        } catch (MalformedJwtException e) {
+            throw new MyJwtException("잘못 구성된 토큰이 입니다.", HttpStatus.UNAUTHORIZED);
+        } catch (ExpiredJwtException e) {
+            throw new MyJwtException("만료된 토큰 입니다.", HttpStatus.UNAUTHORIZED);
+        } catch (UnsupportedJwtException e) {
+            throw new MyJwtException("형식에 맞지 않는 토큰 입니다.", HttpStatus.UNAUTHORIZED);
+        } catch (JwtException | IllegalArgumentException e) {
             throw new MyJwtException("유효하지 않은 토큰 입니다.", HttpStatus.UNAUTHORIZED);
         }
     }
 
-    private void validateTokeType(String token) {
+    private String validateTokeType(String token) {
         String tokenType = token.split(" ")[0];
         if (!tokenType.equals(TOKEN_TYPE)) {
             throw new MyJwtException("토큰 타입이 유효하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
+        return token.split(" ")[1];
     }
 }

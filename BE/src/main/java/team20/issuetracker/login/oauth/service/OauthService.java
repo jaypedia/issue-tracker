@@ -39,7 +39,7 @@ public class OauthService {
                 .id(member.getId())
                 .name(member.getName())
                 .email(member.getEmail())
-                .avatarUrl(member.getAvatarUrl())
+                .profileImageUrl(member.getProfileImageUrl())
                 .role(member.getRole())
                 .tokenType("Bearer")
                 .accessToken(accessToken)
@@ -49,7 +49,7 @@ public class OauthService {
 
     private Member saveOrUpdate(UserProfile userProfile) {
         Member findMember = memberRepository.findByOauthId(userProfile.getOauthId())
-                .map(member -> member.update(userProfile.getEmail(), userProfile.getName(), userProfile.getAvatarUrl()))
+                .map(member -> member.update(userProfile.getEmail(), userProfile.getName(), userProfile.getProfileImageUrl()))
                 .orElseGet(userProfile::toMember);
 
         return memberRepository.save(findMember);

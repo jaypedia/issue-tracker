@@ -24,25 +24,25 @@ public class Member {
     private String oauthId;
     private String name;
     private String email;
-    private String avatarUrl;
+    private String profileImageUrl;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @Builder
-    public Member(Long id, String oauthId, String name, String email, String avatarUrl, Role role) {
+    public Member(Long id, String oauthId, String name, String email, String profileImageUrl, Role role) {
         this.id = id;
         this.oauthId = oauthId;
         this.name = name;
         this.email = email;
-        this.avatarUrl = avatarUrl;
+        this.profileImageUrl = profileImageUrl;
         this.role = role;
     }
 
-    public Member update(String name, String email, String avatarUrl) {
+    public Member update(String name, String email, String profileImageUrl) {
         this.name = name;
         this.email = email;
-        this.avatarUrl = avatarUrl;
+        this.profileImageUrl = profileImageUrl;
         return this;
     }
 }

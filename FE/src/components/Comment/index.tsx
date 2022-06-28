@@ -3,7 +3,7 @@ import UserProfile from '../common/UserProfile';
 import * as S from './style';
 import { CommentProps } from './type';
 
-import { Emoji } from '@/icons/emoji';
+import { Emoji } from '@/icons/Emoji';
 import { getRelativeTime } from '@/utils/issue';
 
 const Comment = ({ issueAuthor, userId, imgUrl, createTime, description }: CommentProps) => {

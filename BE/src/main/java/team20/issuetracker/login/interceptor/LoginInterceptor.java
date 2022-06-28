@@ -1,6 +1,7 @@
 package team20.issuetracker.login.interceptor;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -22,6 +23,10 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         String jwtAccessToken = request.getHeader(HttpHeaders.AUTHORIZATION);
+
+        if (HttpMethod.OPTIONS.matches(request.getMethod())) {
+            return true;
+        }
 
         if (jwtAccessToken != null) {
             return jwtTokenProvider.validateToken(jwtAccessToken);

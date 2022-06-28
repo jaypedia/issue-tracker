@@ -2,12 +2,14 @@ package team20.issuetracker.login.interceptor;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import team20.issuetracker.exception.MyJwtException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@Component
 public class TokenInterceptor implements HandlerInterceptor {
 
     @Override

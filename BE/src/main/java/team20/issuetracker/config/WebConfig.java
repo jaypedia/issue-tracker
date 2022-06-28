@@ -24,12 +24,12 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(tokenInterceptor)
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**", "/", "/index.html", "/login/**");
+                .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**", "/index.html", "/login/**");
 
         registry.addInterceptor(loginInterceptor)
                 .order(2)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**", "/", "/index.html", "/login/**");
+                .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**", "/index.html", "/login/**");
     }
 
     @Override

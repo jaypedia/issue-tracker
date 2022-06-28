@@ -80,9 +80,13 @@ public class JwtTokenProvider {
     }
 
     private String validateTokeType(String token) {
-        String tokenType = token.split(" ")[0];
-        if (!tokenType.equals(TOKEN_TYPE)) {
-            throw new MyJwtException("토큰 타입이 유효하지 않습니다.", HttpStatus.BAD_REQUEST);
+        try {
+            String tokenType = token.split(" ")[0];
+            if (!tokenType.equals(TOKEN_TYPE)) {
+                throw new MyJwtException("토큰 타입이 유효하지 않습니다.", HttpStatus.BAD_REQUEST);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new MyJwtException("토큰이 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
         return token.split(" ")[1];
     }

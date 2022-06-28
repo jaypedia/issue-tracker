@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import lombok.RequiredArgsConstructor;
 import team20.issuetracker.login.interceptor.LoginInterceptor;
+import team20.issuetracker.login.interceptor.TokenInterceptor;
 
 @Configuration
 @EnableWebMvc
@@ -15,11 +16,18 @@ import team20.issuetracker.login.interceptor.LoginInterceptor;
 public class WebConfig implements WebMvcConfigurer {
 
     private final LoginInterceptor loginInterceptor;
+    private final TokenInterceptor tokenInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginInterceptor)
+
+        registry.addInterceptor(tokenInterceptor)
                 .order(1)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**", "/", "/index.html", "/login/**");
+
+        registry.addInterceptor(loginInterceptor)
+                .order(2)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**", "/", "/index.html", "/login/**");
     }

@@ -7,6 +7,7 @@ import Layout from '@/layout';
 import Home from '@/pages/Home';
 import IssueDetail from '@/pages/IssueDetail';
 import Login from '@/pages/Login';
+import LoginCallback from '@/pages/LoginCallback';
 import NewIssue from '@/pages/NewIssue';
 import NotFound from '@/pages/NotFound';
 import GlobalStyle from '@/styles/GlobalStyle';
@@ -32,6 +33,7 @@ const App = () => {
             <Route path="new-issue" element={<NewIssue />} />
             <Route path="issue/:id" element={<IssueDetail />} />
           </Route>
+          <Route path="callback" element={<LoginCallback />} />
           <Route path="login" element={<Login />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

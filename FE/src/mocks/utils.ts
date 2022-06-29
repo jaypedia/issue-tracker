@@ -1,5 +1,5 @@
-import { IssueItemType, Assignees } from '@/components/IssueList/type';
-import { ISSUE_STATUS, QUERY_KEY } from '@/constants/constants';
+import { Assignees } from '@/components/IssueList/type';
+import { ISSUE_STATUS, QUERY_KEY, IssueStatusType } from '@/constants/constants';
 
 // Reference: thanks to @happyGyu
 
@@ -23,7 +23,7 @@ const filterByQuery = (queryKey: string, queryValue: string | null, originalIssu
   }
 };
 
-const filterByStatus = (target: 'open' | 'closed', originalIssues) => {
+const filterByStatus = (target: IssueStatusType, originalIssues) => {
   const filtered = originalIssues.filter(issue => issue.issueStatus === target);
   const oppositeStatusCount = originalIssues.length - filtered.length;
   return {

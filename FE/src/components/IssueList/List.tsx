@@ -16,8 +16,7 @@ const IssueList = ({ list }: IssueListType) => {
 };
 
 const List = ({ list }: IssueListType) => {
-  const issuesCount = list.length;
-  return issuesCount ? <IssueList list={list} /> : <EmptyList text="Welcome to issues!" />;
+  return list?.length ? <IssueList list={list} /> : <EmptyList text="Welcome to issues!" />;
 };
 
 export default List;

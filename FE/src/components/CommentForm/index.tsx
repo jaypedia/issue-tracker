@@ -1,3 +1,5 @@
+import { useRecoilValue } from 'recoil';
+
 import * as S from './style';
 
 import Button from '@/components/common/Button';
@@ -5,12 +7,14 @@ import Input from '@/components/common/Input';
 import TextArea from '@/components/common/TextArea';
 import UserProfile from '@/components/common/UserProfile';
 import SideBar from '@/components/SideBar';
+import { userState } from '@/stores/atoms/user';
 
 type CommentFormProps = {
   newIssue?: boolean;
 };
 
 const CommentForm = ({ newIssue }: CommentFormProps) => {
+  const userData = useRecoilValue(userState);
   const btnStyle = {
     size: newIssue ? 'medium' : 'small',
     text: newIssue ? 'Submit new issue' : 'Comment',
@@ -19,11 +23,7 @@ const CommentForm = ({ newIssue }: CommentFormProps) => {
   return (
     <S.NewIssueForm>
       <S.FlexWrapper>
-        <UserProfile
-          imgUrl="https://avatars.githubusercontent.com/u/85419343?s=80&v=4"
-          userId="jaypeida"
-          size="large"
-        />
+        <UserProfile imgUrl={userData?.profileImageUrl} userId={userData?.name} size="large" />
         <S.CommentWrapper>
           {newIssue && (
             <Input name="title" placeholder="Title" inputStyle="medium" title="Title" type="text" />

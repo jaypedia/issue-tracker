@@ -2,6 +2,7 @@ import * as S from './style';
 
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
+import { LOGIN_URL } from '@/constants/login';
 import Logo from '@/icons/Logo';
 
 const Login = () => {
@@ -9,7 +10,9 @@ const Login = () => {
     <S.LoginWrapper>
       <Logo />
       <S.LoginBox>
-        <Button btnSize="large" btnColor="black" text="Login with GitHub" />
+        <a href={LOGIN_URL}>
+          <Button btnSize="large" btnColor="black" text="Login with GitHub" changeTag="div" />
+        </a>
         <S.OrDivider>or</S.OrDivider>
         <S.LoginForm>
           <Input type="text" placeholder="User ID" title="User ID" inputStyle="large" />

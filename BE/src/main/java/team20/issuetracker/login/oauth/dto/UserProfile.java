@@ -13,17 +13,19 @@ import team20.issuetracker.login.oauth.Role;
 public class UserProfile {
     @JsonProperty("id")
     private String oauthId;
+    @JsonProperty("name")
     private String email;
+    @JsonProperty("email")
     private String name;
     @JsonProperty("avatar_url")
-    private String avatarUrl;
+    private String profileImageUrl;
 
     @Builder
-    public UserProfile(String oauthId, String email, String name, String avatarUrl) {
+    public UserProfile(String oauthId, String email, String name, String profileImageUrl) {
         this.oauthId = oauthId;
         this.email = email;
         this.name = name;
-        this.avatarUrl = avatarUrl;
+        this.profileImageUrl = profileImageUrl;
     }
 
     public Member toMember() {
@@ -31,7 +33,7 @@ public class UserProfile {
                 .oauthId(oauthId)
                 .email(email)
                 .name(name)
-                .avatarUrl(avatarUrl)
+                .profileImageUrl(profileImageUrl)
                 .role(Role.GUEST)
                 .build();
     }

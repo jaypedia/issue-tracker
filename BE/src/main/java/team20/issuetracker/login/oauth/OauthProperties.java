@@ -29,5 +29,6 @@ public class OauthProperties {
         private String tokenUri;
         private String userInfoUri;
         private String userNameAttribute;
+        private String loginUri;
     }
 }

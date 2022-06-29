@@ -4,10 +4,12 @@ oauth2:
       client-id: 2e5ceb95caa77110b9ba
       client-secret: client_secret
       redirect-uri: redirect_uri
+
   provider:
     github:
       token-uri: https://github.com/login/oauth/access_token
       user-info-uri: https://api.github.com/user
+      login-uri: https://github.com/login/oauth/authorize
 
 jwt:
   secretKey: secret_key

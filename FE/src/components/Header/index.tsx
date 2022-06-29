@@ -1,19 +1,20 @@
+import { useRecoilValue } from 'recoil';
+
 import * as S from './style';
 
 import CustomLink from '@/components/common/CustomLink';
 import UserProfile from '@/components/common/UserProfile';
 import Logo from '@/icons/Logo';
+import { userState } from '@/stores/atoms/user';
 
 const Header = () => {
+  const userData = useRecoilValue(userState);
+
   return (
     <S.HeaderWrapper>
       <S.InnerFlex>
         <CustomLink path="/" component={<Logo />} />
-        <UserProfile
-          imgUrl="https://avatars.githubusercontent.com/u/85419343?s=80&v=4"
-          userId="jaypeida"
-          size="large"
-        />
+        <UserProfile imgUrl={userData?.profileImageUrl} userId={userData?.name} size="large" />
       </S.InnerFlex>
     </S.HeaderWrapper>
   );

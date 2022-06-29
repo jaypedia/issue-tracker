@@ -10,17 +10,19 @@ public class OauthProvider {
     private final String redirectUrl;
     private final String tokenUrl;
     private final String userInfoUrl;
+    private final String loginUri;
 
     public OauthProvider(OauthProperties.User user, OauthProperties.Provider provider) {
-        this(user.getClientId(), user.getClientSecret(), user.getRedirectUri(), provider.getTokenUri(), provider.getUserInfoUri());
+        this(user.getClientId(), user.getClientSecret(), user.getRedirectUri(), provider.getTokenUri(), provider.getUserInfoUri(), provider.getLoginUri());
     }
 
     @Builder
-    public OauthProvider(String clientId, String clientSecret, String redirectUrl, String tokenUrl, String userInfoUrl) {
+    public OauthProvider(String clientId, String clientSecret, String redirectUrl, String tokenUrl, String userInfoUrl, String loginUri) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.redirectUrl = redirectUrl;
         this.tokenUrl = tokenUrl;
         this.userInfoUrl = userInfoUrl;
+        this.loginUri = loginUri;
     }
 }

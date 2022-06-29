@@ -6,8 +6,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 import team20.issuetracker.login.domain.member.Member;
 import team20.issuetracker.login.domain.member.MemberRepository;
 import team20.issuetracker.login.jwt.JwtTokenProvider;
@@ -27,7 +30,7 @@ public class OauthService {
 
     public LoginResponse signup(String code) {
         OauthProvider provider = inMemoryProviderRepository.getProvider();
-        OauthTokenResponse tokenResponse = getToken(code, provider);
+        OauthTokenResponse tokenResponse = requestToken(code, provider);
         UserProfile userProfile = getUserProfile(provider, tokenResponse);
         Member member = saveOrUpdate(userProfile);
 
@@ -65,7 +68,7 @@ public class OauthService {
                 .block();
     }
 
-    private OauthTokenResponse getToken(String code, OauthProvider provider) {
+    private OauthTokenResponse requestToken(String code, OauthProvider provider) {
 
         return WebClient.create().post()
                 .uri(provider.getTokenUrl())
@@ -84,5 +87,16 @@ public class OauthService {
         formData.put("client_secret", provider.getClientSecret());
 
         return formData;
+    }
+
+    public RedirectView getToken(RedirectAttributes redirectAttributes) {
+
+        OauthProvider provider = inMemoryProviderRepository.getProvider();
+
+        redirectAttributes.addAttribute("client_id", provider.getClientId());
+        redirectAttributes.addAttribute("redirect_url", provider.getRedirectUrl());
+        redirectAttributes.addAttribute("state", UUID.randomUUID().toString());
+
+        return new RedirectView(provider.getLoginUri());
     }
 }

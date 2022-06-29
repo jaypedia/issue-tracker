@@ -2,7 +2,6 @@ package team20.issuetracker.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -11,7 +10,6 @@ import team20.issuetracker.login.interceptor.LoginInterceptor;
 import team20.issuetracker.login.interceptor.TokenInterceptor;
 
 @Configuration
-@EnableWebMvc
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 

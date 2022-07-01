@@ -29,7 +29,6 @@ const LoginCallback = () => {
       // 2) refresh token을 cookie에 저장
       setCookie('RefreshToken', refreshToken, {
         path: '/',
-        secure: true,
       });
 
       // 3) access token을 default header로 세팅

@@ -58,7 +58,7 @@ export const DARK: ThemeType = {
     bg: COLOR.black,
     cell: {
       bg: {
-        cellHeaderBg: COLOR.grey[500],
+        cellHeaderBg: COLOR.grey[600],
         cellBg: COLOR.grey[400],
       },
       font: {
@@ -78,8 +78,8 @@ export const DARK: ThemeType = {
         detailsMenuTitle: COLOR.black,
         detailsMenuCell: COLOR.grey[500],
       },
-      indicator: COLOR.grey[400],
-      indicatorHover: COLOR.grey[500],
+      indicator: COLOR.grey[200],
+      indicatorHover: COLOR.grey[300],
       indicatorHoverBg: COLOR.grey[200],
     },
     tabLink: {

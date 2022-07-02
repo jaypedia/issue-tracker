@@ -2,13 +2,23 @@ import styled from 'styled-components';
 
 import { DARK } from '@/styles/theme';
 
-const CheckBoxIcon = styled.div`
+type LabelType = {
+  isHeader?: boolean;
+};
+
+const CheckBox = styled.div`
   align-self: flex-start;
-  margin-right: 20px;
+  margin-right: 18px;
 
   input {
     ${({ theme }) => theme === DARK && 'color-scheme: dark;'};
   }
 `;
 
-export { CheckBoxIcon };
+const Label = styled.label<LabelType>`
+  display: block;
+  padding: 8px 0 8px 16px;
+  height: ${({ isHeader }) => (isHeader ? '40px' : '70px')};
+`;
+
+export { CheckBox, Label };

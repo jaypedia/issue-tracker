@@ -1,13 +1,18 @@
 import * as S from './style';
 
-const CheckBoxIcon = () => {
+type CheckBoxProps = {
+  id: string;
+  isHeader?: boolean;
+};
+
+const CheckBox = ({ id, isHeader }: CheckBoxProps) => {
   return (
-    <S.CheckBoxIcon>
-      <label htmlFor="allIssues">
-        <input type="checkbox" id="allIssues" />
-      </label>
-    </S.CheckBoxIcon>
+    <S.CheckBox>
+      <S.Label htmlFor={id} isHeader={isHeader}>
+        <input type="checkbox" id={id} />
+      </S.Label>
+    </S.CheckBox>
   );
 };
 
-export default CheckBoxIcon;
+export default CheckBox;

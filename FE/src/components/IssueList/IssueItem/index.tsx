@@ -1,23 +1,23 @@
-import CheckBoxIcon from '../CheckBox';
 import { IssueItemType } from '../type';
 import * as S from './style';
 
+import CheckBox from '@/components/common/CheckBox';
 import CustomLink from '@/components/common/CustomLink';
 import Label from '@/components/common/Label';
 import UserProfile from '@/components/common/UserProfile';
 import { ISSUE_STATUS } from '@/constants/constants';
-import { Closed } from '@/icons/Closed';
+import ClosedIcon from '@/icons/Closed';
 import { Milestone } from '@/icons/Milestone';
-import { Open } from '@/icons/Open';
+import OpenIcon from '@/icons/Open';
 import { COLOR } from '@/styles/color';
 import { getIssueInfoSentence } from '@/utils/issue';
 
 const IssueStatusIcon = ({ status }: { status: string }) => {
   switch (status) {
     case ISSUE_STATUS.open:
-      return <Open color={COLOR.success[200]} />;
+      return <OpenIcon color={COLOR.success[200]} />;
     case ISSUE_STATUS.closed:
-      return <Closed color={COLOR.primary[200]} />;
+      return <ClosedIcon color={COLOR.primary[200]} />;
     default:
       throw new Error('Status is not correct');
   }
@@ -28,7 +28,7 @@ const IssueItem = ({ issue }: IssueItemType) => {
   return (
     <S.IssueItem>
       <S.Flex>
-        <CheckBoxIcon />
+        <CheckBox id={issue.id.toString()} isHeader={false} />
         <S.IssueInfoContainer>
           <S.IssueInfo>
             <IssueStatusIcon status={issueStatus} />

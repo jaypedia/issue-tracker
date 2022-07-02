@@ -29,4 +29,6 @@ export type IssueItemType = {
 
 export type IssueListType = {
   list: IssueItem[] | [];
+  openIssueCount?: number;
+  closedIssueCount?: number;
 };

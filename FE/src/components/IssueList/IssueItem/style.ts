@@ -8,12 +8,17 @@ const Flex = styled.div`
 `;
 const IssueItem = styled.li`
   ${mixins.flexBox({ justifyContent: 'space-between' })}
-  padding: 16px 32px;
   border-top: 1px solid ${({ theme: { color } }) => color.line};
+  padding: 5px 0;
+
+  :hover {
+    background-color: ${({ theme: { color } }) => color.cell.bg.cellHeaderBg};
+  }
 `;
 
 const IssueInfoContainer = styled.div`
   margin-top: -5px;
+  padding: 10px 3px;
 `;
 
 const IssueInfo = styled.div`
@@ -43,7 +48,7 @@ const MilestonBox = styled.span`
 const IssueAssignees = styled.div`
   ${mixins.flexBox({})}
   flex-direction: row-reverse;
-  margin: 0 22px;
+  margin: 0 60px;
 
   img {
     margin-left: -11px;
@@ -53,6 +58,7 @@ const IssueAssignees = styled.div`
     &:first-child {
       z-index: 3;
     }
+
     &:nth-child(3) {
       z-index: 1;
     }

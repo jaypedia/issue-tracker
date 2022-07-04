@@ -4,6 +4,7 @@ export type LabelProps = {
   backgroundColor: string;
   textColor?: string;
   hasLine?: boolean;
+  icon?: JSX.Element;
 };
 
 export type LabelStyle = {

@@ -1,4 +1,4 @@
-import styled, { ThemeConsumer } from 'styled-components';
+import styled from 'styled-components';
 
 import { LabelStyle } from './type';
 
@@ -6,11 +6,14 @@ import { COLOR } from '@/styles/color';
 import { FONT_MIXIN } from '@/styles/mixins';
 
 const LargeStyle = `
-  width: 100px;
   padding: 5px 12px;
   text-align: center;
   color: ${COLOR.white};
-  ${FONT_MIXIN.medium(500)}
+  ${FONT_MIXIN.small(500)}
+
+  & > :first-child {
+    margin-right: 5px;
+  }
 `;
 
 const SmallStyle = `
@@ -40,4 +43,6 @@ const Label = styled.div<LabelStyle>`
   ${({ hasLine }) => hasLine && LabelStyleObj.line};
 `;
 
-export { Label };
+const LabelName = styled.span``;
+
+export { Label, LabelName };

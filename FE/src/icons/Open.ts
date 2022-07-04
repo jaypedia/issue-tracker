@@ -1,7 +1,9 @@
-import { BsExclamationCircle } from 'react-icons/bs';
+import { FaRegDotCircle } from 'react-icons/fa';
 import styled from 'styled-components';
 
-export const Open = styled(BsExclamationCircle)`
+const Open = styled(FaRegDotCircle)`
   width: 16px;
   height: 16px;
 `;
+
+export default Open;

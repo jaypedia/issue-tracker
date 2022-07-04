@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { FlexStart, headerWrapperStyle } from '@/styles/common';
+import { headerWrapperStyle } from '@/styles/common';
 import { mixins } from '@/styles/mixins';
 
 const IssueDetailHeaderWrapper = styled.div`
@@ -16,14 +16,6 @@ const ButtonBox = styled.div`
   }
 `;
 
-const IssueInfoBox = styled(FlexStart)`
-  margin-top: 10px;
-
-  & :first-child {
-    margin-right: 10px;
-  }
-`;
-
 const ContentsWrapper = styled.div`
   ${mixins.flexBox({ alignItems: 'flex-start', justifyContent: 'space-between' })}
   width: 100%;
@@ -34,4 +26,4 @@ const CommentsConatiner = styled.div`
   width: 100%;
 `;
 
-export { IssueDetailHeaderWrapper, ButtonBox, IssueInfoBox, ContentsWrapper, CommentsConatiner };
+export { IssueDetailHeaderWrapper, ButtonBox, ContentsWrapper, CommentsConatiner };

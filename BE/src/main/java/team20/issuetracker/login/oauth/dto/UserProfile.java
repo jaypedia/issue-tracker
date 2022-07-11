@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import team20.issuetracker.login.domain.member.Member;
+import team20.issuetracker.domain.member.Member;
 import team20.issuetracker.login.oauth.Role;
 
 @NoArgsConstructor

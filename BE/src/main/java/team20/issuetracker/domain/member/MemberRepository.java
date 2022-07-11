@@ -1,4 +1,4 @@
-package team20.issuetracker.login.domain.member;
+package team20.issuetracker.domain.member;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

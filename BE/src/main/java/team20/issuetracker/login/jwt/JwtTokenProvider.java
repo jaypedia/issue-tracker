@@ -90,4 +90,8 @@ public class JwtTokenProvider {
         }
         return token.split(" ")[1];
     }
+
+    public long getRefreshTokenValidityInMilliseconds() {
+        return refreshTokenValidityInMilliseconds;
+    }
 }

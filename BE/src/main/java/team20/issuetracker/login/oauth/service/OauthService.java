@@ -1,5 +1,6 @@
 package team20.issuetracker.login.oauth.service;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -7,10 +8,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+
 import team20.issuetracker.domain.member.Member;
 import team20.issuetracker.domain.member.MemberRepository;
 import team20.issuetracker.login.jwt.JwtTokenProvider;
@@ -27,6 +30,7 @@ public class OauthService {
     private final InMemoryProviderRepository inMemoryProviderRepository;
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final RedisTemplate<String, String> redisTemplate;
 
     public LoginResponse signup(String code) {
         OauthProvider provider = inMemoryProviderRepository.getProvider();
@@ -36,7 +40,7 @@ public class OauthService {
 
         String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(member.getId()));
         String refreshToken = jwtTokenProvider.createRefreshToken();
-
+        redisTemplate.opsForValue().set(String.valueOf(member.getId()), refreshToken, jwtTokenProvider.getRefreshTokenValidityInMilliseconds(), TimeUnit.MILLISECONDS);
         // FE 쪽으로 유저 정보, JWT Token (Access, Refresh) 를 응답한다.
         return LoginResponse.builder()
                 .id(member.getId())

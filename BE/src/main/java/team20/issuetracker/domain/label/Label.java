@@ -15,4 +15,5 @@ public class Label {
     private String title;
     private String textColor;
     private String backgroundColor;
+    private String description;
 }

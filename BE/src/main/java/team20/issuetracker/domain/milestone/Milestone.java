@@ -17,6 +17,7 @@ public class Milestone {
     private String title;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
+    private String description;
 
     @OneToMany(mappedBy = "milestone")
     private List<Issue> issues = new ArrayList<>();

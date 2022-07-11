@@ -1,11 +1,12 @@
 package team20.issuetracker.domain.milestone;
 
-import java.time.LocalDateTime;
+import team20.issuetracker.domain.issue.Issue;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.*;
 
 @Entity
 public class Milestone {
@@ -16,4 +17,7 @@ public class Milestone {
     private String title;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
+
+    @OneToMany(mappedBy = "milestone")
+    private List<Issue> issues = new ArrayList<>();
 }

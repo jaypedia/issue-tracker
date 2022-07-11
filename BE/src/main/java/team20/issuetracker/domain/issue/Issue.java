@@ -3,6 +3,7 @@ package team20.issuetracker.domain.issue;
 import team20.issuetracker.domain.assignee.Assignee;
 import team20.issuetracker.domain.comment.Comment;
 import team20.issuetracker.domain.member.Member;
+import team20.issuetracker.domain.milestone.Milestone;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -39,4 +40,8 @@ public class Issue {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
     private List<Comment> comments = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "milestone_id")
+    private Milestone milestone;
 }

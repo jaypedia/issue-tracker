@@ -27,27 +27,22 @@ public class Issue {
 
     private LocalDateTime createdAt;
 
-    // TODO : 회원과 이슈 매핑 (이슈 다 : 회원 일)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    // TODO : 마일스톤과 이슈 매핑 (이슈 다 : 마일스톤 일)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "milestone_id")
     private Milestone milestone;
 
-    // TODO : 담당자와 이슈 매핑 (이슈 일 : 담당자 다)
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "assignee_id")
     private List<Assignee> assignees = new ArrayList<>();
 
-    // TODO : 댓글과 이슈 매핑 (이슈 일 : 댓글 다)
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
     private List<Comment> comments = new ArrayList<>();
 
-    // TODO : 레이블과 이슈 매핑 (이슈 일 : 레이블 다)
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "label_id")
     private List<Label> labels = new ArrayList<>();

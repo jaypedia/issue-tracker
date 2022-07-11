@@ -1,6 +1,7 @@
 package team20.issuetracker.domain.issue;
 
 import team20.issuetracker.domain.assignee.Assignee;
+import team20.issuetracker.domain.comment.Comment;
 import team20.issuetracker.domain.member.Member;
 
 import java.time.LocalDateTime;
@@ -33,4 +34,9 @@ public class Issue {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "assignee_id")
     private List<Assignee> assignees = new ArrayList<>();
+
+    // TODO : 댓글과 이슈 매핑 (이슈 일 : 댓글 다)
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "comment_id")
+    private List<Comment> comments = new ArrayList<>();
 }

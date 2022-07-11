@@ -41,6 +41,7 @@ const Label = styled.div<LabelStyle>`
   border-color: ${({ theme: { color } }) => color.line};
   ${({ size }) => LabelStyleObj[size]};
   ${({ hasLine }) => hasLine && LabelStyleObj.line};
+  width: fit-content;
 `;
 
 const LabelName = styled.span``;

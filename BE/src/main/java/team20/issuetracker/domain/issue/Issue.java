@@ -2,6 +2,7 @@ package team20.issuetracker.domain.issue;
 
 import team20.issuetracker.domain.assignee.Assignee;
 import team20.issuetracker.domain.comment.Comment;
+import team20.issuetracker.domain.label.Label;
 import team20.issuetracker.domain.member.Member;
 import team20.issuetracker.domain.milestone.Milestone;
 
@@ -31,6 +32,11 @@ public class Issue {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    // TODO : 마일스톤과 이슈 매핑 (이슈 다 : 마일스톤 일)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "milestone_id")
+    private Milestone milestone;
+
     // TODO : 담당자와 이슈 매핑 (이슈 일 : 담당자 다)
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "assignee_id")
@@ -41,7 +47,8 @@ public class Issue {
     @JoinColumn(name = "comment_id")
     private List<Comment> comments = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "milestone_id")
-    private Milestone milestone;
+    // TODO : 레이블과 이슈 매핑 (이슈 일 : 레이블 다)
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "label_id")
+    private List<Label> labels = new ArrayList<>();
 }

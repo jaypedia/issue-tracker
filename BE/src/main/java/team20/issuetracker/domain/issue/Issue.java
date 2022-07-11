@@ -1,5 +1,9 @@
 package team20.issuetracker.domain.issue;
 
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import team20.issuetracker.domain.assignee.Assignee;
 import team20.issuetracker.domain.comment.Comment;
 import team20.issuetracker.domain.label.Label;
@@ -12,6 +16,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Issue {
 
@@ -20,6 +26,7 @@ public class Issue {
     private Long id;
 
     private String title;
+    private String content;
     private String author;
 
     @Enumerated(value = EnumType.STRING)
@@ -46,4 +53,18 @@ public class Issue {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "label_id")
     private List<Label> labels = new ArrayList<>();
+
+    @Builder
+    public Issue(String title, String content, String author, IssueStatus status, LocalDateTime createdAt, Member member, Milestone milestone, List<Assignee> assignees, List<Comment> comments, List<Label> labels) {
+        this.title = title;
+        this.content = content;
+        this.author = author;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.member = member;
+        this.milestone = milestone;
+        this.assignees = assignees;
+        this.comments = comments;
+        this.labels = labels;
+    }
 }

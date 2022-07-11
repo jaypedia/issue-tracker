@@ -16,7 +16,7 @@ public class OauthController {
     private final OauthService oauthService;
 
     @GetMapping("/login/oauth/github")
-    public ResponseEntity<LoginResponse> login(@RequestParam String code, @RequestParam String state) {
+    public ResponseEntity<LoginResponse> login(@RequestParam String code) {
         LoginResponse loginResponse = oauthService.signup(code);
         return ResponseEntity.ok().body(loginResponse);
     }

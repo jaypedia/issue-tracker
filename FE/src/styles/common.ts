@@ -20,18 +20,22 @@ const ColumnWrapper = styled(InnerContainer)`
 const headerWrapperStyle = css`
   width: 100%;
   border-bottom: 1px solid ${({ theme: { color } }) => color.line};
-  padding: 32px 0;
-  margin-bottom: 30px;
+  padding: 15px 0;
+  margin-bottom: 35px;
 `;
 
 const Heading1 = styled.h1`
-  font-size: ${FONT_MIXIN.display(400)};
+  ${FONT_MIXIN.display(400)};
   margin: 0;
 `;
 
 const FlexBetween = styled.div`
   width: 100%;
   ${mixins.flexBox({ justifyContent: 'space-between' })}
+`;
+
+const Flex = styled.div`
+  ${mixins.flexBox({})}
 `;
 
 const FlexStart = styled.div`
@@ -50,6 +54,7 @@ export {
   ColumnWrapper,
   headerWrapperStyle,
   Heading1,
+  Flex,
   FlexBetween,
   FlexStart,
   FlexColumn,

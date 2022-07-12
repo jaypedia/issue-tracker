@@ -5,10 +5,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.transaction.annotation.Transactional;
+import team20.issuetracker.config.WebConfig;
 import team20.issuetracker.domain.assignee.Assignee;
 import team20.issuetracker.domain.comment.Comment;
 import team20.issuetracker.domain.label.Label;
+import team20.issuetracker.login.interceptor.LoginInterceptor;
+import team20.issuetracker.login.jwt.JwtTokenProvider;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,6 +31,15 @@ class IssueRepositoryTest {
     void cleanup() {
         issueRepository.deleteAll();
     }
+
+    @MockBean
+    private WebConfig webConfig;
+
+    @MockBean
+    private LoginInterceptor loginInterceptor;
+
+    @MockBean
+    private JwtTokenProvider jwtTokenProvider;
 
     @Test
     @DisplayName("이슈가 저장되고 1L 이 반환되어야 한다.")

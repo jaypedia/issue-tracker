@@ -1,5 +1,7 @@
 package team20.issuetracker.domain.milestone;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import team20.issuetracker.domain.issue.Issue;
 
 import java.time.LocalDateTime;
@@ -8,6 +10,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Milestone {
 

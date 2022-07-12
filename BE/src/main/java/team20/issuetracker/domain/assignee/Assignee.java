@@ -1,10 +1,15 @@
 package team20.issuetracker.domain.assignee;
 
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Assignee {
 
@@ -13,4 +18,10 @@ public class Assignee {
     private Long id;
     private String image;
     private String title;
+
+    @Builder
+    public Assignee(String image, String title) {
+        this.image = image;
+        this.title = title;
+    }
 }

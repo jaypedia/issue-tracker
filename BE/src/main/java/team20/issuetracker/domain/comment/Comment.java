@@ -1,5 +1,9 @@
 package team20.issuetracker.domain.comment;
 
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -8,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Comment {
 
@@ -18,4 +23,10 @@ public class Comment {
     @Lob
     private String content;
     private LocalDateTime createdAt;
+
+    @Builder
+    public Comment(String content, LocalDateTime createdAt) {
+        this.content = content;
+        this.createdAt = createdAt;
+    }
 }

@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import team20.issuetracker.domain.assignee.Assignee;
-import team20.issuetracker.domain.comment.Comment;
 import team20.issuetracker.domain.label.Label;
 import team20.issuetracker.domain.milestone.Milestone;
 
@@ -26,19 +25,17 @@ public class SaveIssueDto {
     private LocalDateTime createdAt;
 
     private String author;
-    private IssueStatus issueStatus;
 //    private Files files;
     private List<Assignee> assignees = new ArrayList<>();
     private List<Label> labels = new ArrayList<>();
     private Milestone milestone;
 
     @Builder
-    public SaveIssueDto(String title, String content, LocalDateTime createdAt, String author, IssueStatus issueStatus, Files files, List<Assignee> assignees, List<Label> labels, Milestone milestone) {
+    public SaveIssueDto(String title, String content, LocalDateTime createdAt, String author, Files files, List<Assignee> assignees, List<Label> labels, Milestone milestone) {
         this.title = title;
         this.content = content;
         this.createdAt = createdAt;
         this.author = author;
-        this.issueStatus = issueStatus;
 //        this.files = files;
         this.assignees = assignees;
         this.labels = labels;
@@ -54,7 +51,6 @@ public class SaveIssueDto {
                 .createdAt(createdAt)
                 .labels(labels)
                 .milestone(milestone)
-                .status(issueStatus)
                 .build();
     }
 }

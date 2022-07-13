@@ -1,6 +1,7 @@
 package team20.issuetracker.domain.milestone;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import team20.issuetracker.domain.issue.Issue;
@@ -26,4 +27,13 @@ public class Milestone {
 
     @OneToMany(mappedBy = "milestone")
     private List<Issue> issues = new ArrayList<>();
+
+    @Builder
+    public Milestone(String title, LocalDateTime startDate, LocalDateTime endDate, String description, List<Issue> issues) {
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.description = description;
+        this.issues = issues;
+    }
 }

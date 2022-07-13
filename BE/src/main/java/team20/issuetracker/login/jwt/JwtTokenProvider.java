@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.Random;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -36,24 +34,30 @@ public class JwtTokenProvider {
     }
 
     public String createAccessToken(String payload) {
-        return createToken(payload, accessTokenValidityInMilliseconds);
+        return createAccessToken(payload, accessTokenValidityInMilliseconds);
     }
 
     public String createRefreshToken() {
-        byte[] array = new byte[7];
-        new Random().nextBytes(array);
-        String generatedString = new String(array, StandardCharsets.UTF_8);
-
-        return createToken(generatedString, refreshTokenValidityInMilliseconds);
+        return createRefreshToken(refreshTokenValidityInMilliseconds);
     }
 
-    public String createToken(String payload, long expireLength) {
+    public String createAccessToken(String payload, long expireLength) {
+        Date now = new Date();
+        Date validity = new Date(now.getTime() + expireLength);
         Claims claims = Jwts.claims().setSubject(payload);
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(validity)
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
+    }
+
+    public String createRefreshToken(long expireLength) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + expireLength);
 
         return Jwts.builder()
-                .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(validity)
                 .signWith(SignatureAlgorithm.HS256, secretKey)

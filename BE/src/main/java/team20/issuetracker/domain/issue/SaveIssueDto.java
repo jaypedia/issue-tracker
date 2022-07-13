@@ -24,6 +24,7 @@ public class SaveIssueDto {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
+
     private String author;
     private IssueStatus issueStatus;
 //    private Files files;

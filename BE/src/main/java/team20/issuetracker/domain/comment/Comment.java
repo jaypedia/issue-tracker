@@ -2,6 +2,7 @@ package team20.issuetracker.domain.comment;
 
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @Entity
 public class Comment {
 

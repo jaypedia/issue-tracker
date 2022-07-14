@@ -13,5 +13,6 @@ oauth2:
 
 jwt:
   secretKey: secret_key
+  refreshSecretKey: refresh_secret_key
   accessTokenExpiry : access_token_expiry
   refreshTokenExpiry : refresh_token_expiry

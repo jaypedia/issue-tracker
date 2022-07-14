@@ -24,13 +24,16 @@ public class JwtTokenProvider {
     private final long accessTokenValidityInMilliseconds;
     private final long refreshTokenValidityInMilliseconds;
     private final String secretKey;
+    private final String refreshSecretKey;
 
     public JwtTokenProvider(@Value("${jwt.accessTokenExpiry}") long accessTokenValidityInMilliseconds,
                             @Value("${jwt.refreshTokenExpiry}") long refreshTokenValidityInMilliseconds,
-                            @Value("${jwt.secretKey}") String secretKey) {
+                            @Value("${jwt.secretKey}") String secretKey,
+                            @Value("${jwt.refreshSecretKey}") String refreshSecretKey) {
         this.accessTokenValidityInMilliseconds = accessTokenValidityInMilliseconds;
         this.refreshTokenValidityInMilliseconds = refreshTokenValidityInMilliseconds;
         this.secretKey = secretKey;
+        this.refreshSecretKey = refreshSecretKey;
     }
 
     public String createAccessToken(String payload) {
@@ -60,7 +63,7 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .setIssuedAt(now)
                 .setExpiration(validity)
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .signWith(SignatureAlgorithm.HS256, refreshSecretKey)
                 .compact();
     }
 

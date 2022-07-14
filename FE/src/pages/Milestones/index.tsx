@@ -74,9 +74,9 @@ const Milestones = () => {
                     closedIssueCount={closedIssueCount}
                   />
                   <S.ButtonBox>
-                    <Button btnStyle="text" textColor="primary" text="Edit" />
-                    <Button btnStyle="text" textColor="primary" text="Close" />
-                    <Button btnStyle="text" textColor="warning" text="Delete" />
+                    <Button isText textColor="primary" text="Edit" />
+                    <Button isText textColor="primary" text="Close" />
+                    <Button isText textColor="warning" text="Delete" />
                   </S.ButtonBox>
                 </S.ProgressBarBox>
               </Item>

@@ -3,6 +3,7 @@ import { useQuery } from 'react-query';
 
 import * as S from './style';
 
+import Button from '@/components/common/Button';
 import Label from '@/components/common/Label';
 import Navbar from '@/components/Navbar';
 import { MainWrapper, InnerContainer } from '@/styles/common';
@@ -22,8 +23,8 @@ const Labels = () => {
         <Navbar btnText="New Label" />
         <ListContainer>
           <ListHeader type="large">{data?.data.labelCount} Labels</ListHeader>
-          {data?.data.labels.map(({ title, backgroundColor, textColor, description }, i) => (
-            <Item key={i} type="large">
+          {data?.data.labels.map(({ id, title, backgroundColor, textColor, description }) => (
+            <Item key={id} type="large">
               <S.LabelWrapper>
                 <Label
                   size="small"
@@ -34,8 +35,8 @@ const Labels = () => {
               </S.LabelWrapper>
               <S.Description>{description}</S.Description>
               <S.ButtonsWrapper>
-                <S.TextButton>Edit</S.TextButton>
-                <S.TextButton>Delete</S.TextButton>
+                <Button isText text="Edit" />
+                <Button isText text="Delete" />
               </S.ButtonsWrapper>
             </Item>
           ))}

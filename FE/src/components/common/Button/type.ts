@@ -1,8 +1,9 @@
 type ButtonType = {
-  btnStyle: 'large' | 'medium' | 'small' | 'text';
+  size?: 'large' | 'medium' | 'small';
   textColor?: 'primary' | 'grey' | 'warning';
-  btnColor?: 'primary' | 'grey' | 'black';
+  color?: 'primary' | 'grey' | 'black';
   type?: 'button' | 'submit' | 'reset';
+  isText?: boolean;
   onClick?: () => void;
 };
 

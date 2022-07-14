@@ -15,7 +15,7 @@ type CommentFormProps = {
 
 const CommentForm = ({ newIssue }: CommentFormProps) => {
   const userData = useRecoilValue(userState);
-  const btnStyle = {
+  const style = {
     size: newIssue ? 'medium' : 'small',
     text: newIssue ? 'Submit new issue' : 'Comment',
   };
@@ -29,7 +29,7 @@ const CommentForm = ({ newIssue }: CommentFormProps) => {
             <Input name="title" placeholder="Title" inputStyle="medium" title="Title" type="text" />
           )}
           <TextArea name="comment" />
-          <Button btnSize={btnStyle.size} btnColor="primary" text={btnStyle.text} type="submit" />
+          <Button size={style.size} color="primary" text={style.text} type="submit" />
         </S.CommentWrapper>
       </S.FlexWrapper>
       {newIssue && <SideBar />}

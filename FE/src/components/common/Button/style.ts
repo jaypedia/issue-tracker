@@ -4,7 +4,7 @@ import { ButtonStyleProps } from '@/components/common/Button/type';
 import { COLOR } from '@/styles/color';
 import { FONT_MIXIN, mixins } from '@/styles/mixins';
 
-// Button Styles
+// Button Sizes
 const large = `
   width: 340px;
   height: 64px;
@@ -26,19 +26,10 @@ const small = `
   ${FONT_MIXIN.xSmall(700)}
 `;
 
-const text = `
-  ${FONT_MIXIN.xSmall(500)}
-
-  :hover {
-    text-decoration: underline;
-  }
-`;
-
-const btnStyleObj = {
+const sizeObj = {
   large,
   medium,
   small,
-  text,
 };
 
 // Button Colors
@@ -95,7 +86,7 @@ const black = `
   }
 `;
 
-const btnColorObj = {
+const colorObj = {
   primary,
   grey,
   black,
@@ -120,12 +111,22 @@ const textColorObj = {
   warning: warningText,
 };
 
+// Button types
+const text = `
+  ${FONT_MIXIN.xSmall(500)}
+
+  :hover {
+    text-decoration: underline;
+  }
+`;
+
 // Button Component
 const Button = styled.button<ButtonStyleProps>`
   ${mixins.flexBox({})}
-  ${({ btnStyle }) => btnStyleObj[btnStyle]};
-  ${({ btnColor }) => btnColor && btnColorObj[btnColor]}
+  ${({ size }) => size && sizeObj[size]};
+  ${({ color }) => color && colorObj[color]};
   ${({ textColor }) => textColor && textColorObj[textColor]};
+  ${({ isText }) => isText && text};
 `;
 
 export { Button };

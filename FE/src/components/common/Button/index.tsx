@@ -1,14 +1,24 @@
 import * as S from './style';
 import { ButtonProps } from './type';
 
-const Button = ({ btnStyle, textColor, btnColor, type, changeTag, onClick, text }: ButtonProps) => {
+const Button = ({
+  size,
+  textColor,
+  color,
+  type,
+  isText,
+  changeTag,
+  onClick,
+  text,
+}: ButtonProps) => {
   return (
     <S.Button
-      btnStyle={btnStyle}
+      size={size}
       textColor={textColor}
-      btnColor={btnColor}
+      color={color}
       type={type}
       as={changeTag}
+      isText={isText}
       onClick={onClick}
     >
       {text}

@@ -11,8 +11,6 @@ import team20.issuetracker.domain.member.Member;
 import team20.issuetracker.domain.milestone.Milestone;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.*;
 
@@ -55,14 +53,14 @@ public class Issue {
     private Label label;
 
     @Builder
-    public Issue(String title, String content, String author, LocalDateTime createdAt, Milestone milestone, List<Assignee> assignees, List<Label> labels) {
+    public Issue(String title, String content, String author, LocalDateTime createdAt, Milestone milestone, Assignee assignee, Label label) {
         this.title = title;
         this.content = content;
         this.author = author;
         this.createdAt = createdAt;
         this.milestone = milestone;
-        this.assignees = assignees;
-        this.labels = labels;
+        this.assignee = assignee;
+        this.label = label;
     }
 
 //    public void setMilestone(Milestone milestone) {

@@ -1,6 +1,7 @@
 package team20.issuetracker.domain.milestone;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import team20.issuetracker.domain.issue.Issue;
 
@@ -11,6 +12,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @Entity
 public class Milestone {
 

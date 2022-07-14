@@ -5,10 +5,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.transaction.annotation.Transactional;
+import team20.issuetracker.config.WebConfig;
 import team20.issuetracker.domain.assignee.Assignee;
 import team20.issuetracker.domain.comment.Comment;
 import team20.issuetracker.domain.label.Label;
+import team20.issuetracker.login.interceptor.LoginInterceptor;
+import team20.issuetracker.login.jwt.JwtTokenProvider;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

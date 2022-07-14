@@ -30,7 +30,7 @@ public class Issue {
     private String author;
 
     @Enumerated(value = EnumType.STRING)
-    private IssueStatus status;
+    private IssueStatus status = IssueStatus.OPEN;
 
     private LocalDateTime createdAt;
 

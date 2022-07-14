@@ -42,18 +42,17 @@ public class Issue {
     @JoinColumn(name = "milestone_id")
     private Milestone milestone;
 
-    // TODO : 연관관계의 주인 변경 예정 -> @ManyToOne
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "assignee_id")
-    private List<Assignee> assignees = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assignes_id")
+    private Assignee assignee;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
-    private List<Comment> comments = new ArrayList<>();
+    private Comment comment;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "label_id")
-    private List<Label> labels = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lebel_id")
+    private Label label;
 
     @Builder
     public Issue(String title, String content, String author, LocalDateTime createdAt, Milestone milestone, List<Assignee> assignees, List<Label> labels) {

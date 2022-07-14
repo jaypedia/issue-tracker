@@ -4,14 +4,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import team20.issuetracker.domain.issue.Issue;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -25,6 +24,9 @@ public class Comment {
     @Lob
     private String content;
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "comment")
+    private List<Issue> issues = new ArrayList<>();
 
     @Builder
     public Comment(String content, LocalDateTime createdAt) {

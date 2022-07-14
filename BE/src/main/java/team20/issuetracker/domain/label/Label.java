@@ -5,11 +5,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import team20.issuetracker.domain.issue.Issue;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -23,6 +23,9 @@ public class Label {
     private String textColor;
     private String backgroundColor;
     private String description;
+
+    @OneToMany(mappedBy = "label")
+    private List<Issue> issues = new ArrayList<>();
 
     @Builder
     public Label(String title, String textColor, String backgroundColor, String description) {

@@ -9,8 +9,6 @@ import team20.issuetracker.domain.label.ReadLabelDto;
 import team20.issuetracker.domain.milestone.ReadMilestoneDto;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
@@ -23,8 +21,8 @@ public class SaveIssueDto {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
-    private List<ReadAssigneeDto> assignees;
-    private List<ReadLabelDto> labels;
+    private ReadAssigneeDto assignee;
+    private ReadLabelDto label;
     private ReadMilestoneDto milestone;
 
     public Issue toEntity() {
@@ -33,8 +31,8 @@ public class SaveIssueDto {
                 .content(content)
                 .author(author)
                 .createdAt(createdAt)
-                .assignees(assignees.stream().map(ReadAssigneeDto::toEntity).collect(Collectors.toList()))
-                .labels(labels.stream().map(ReadLabelDto::toEntity).collect(Collectors.toList()))
+                .assignee(assignee.toEntity())
+                .label(label.toEntity())
                 .milestone(milestone.toEntity())
                 .build();
     }

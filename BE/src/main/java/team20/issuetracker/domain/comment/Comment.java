@@ -24,8 +24,5 @@ public class Comment {
 
     @Lob
     private String content;
-
-    @OneToMany(mappedBy = "comment")
-    private List<IssueComment> comments = new ArrayList<>();
 }
 

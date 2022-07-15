@@ -23,4 +23,13 @@ public class IssueAssignee {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assignee_id")
     private Assignee assignee;
+
+    private IssueAssignee(Issue issue, Assignee assignee) {
+        this.issue = issue;
+        this.assignee = assignee;
+    }
+
+    public static IssueAssignee of(Issue issue, Assignee assignee) {
+        return new IssueAssignee(issue, assignee);
+    }
 }

@@ -23,4 +23,13 @@ public class IssueLabel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "label_id")
     private Label label;
+
+    private IssueLabel(Issue issue, Label label) {
+        this.issue = issue;
+        this.label = label;
+    }
+
+    public static IssueLabel of(Issue issue, Label label) {
+        return new IssueLabel(issue, label);
+    }
 }

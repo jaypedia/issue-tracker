@@ -2,10 +2,9 @@ package team20.issuetracker.domain.label;
 
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import team20.issuetracker.domain.issue.Issue;
+import team20.issuetracker.domain.issue.IssueLabel;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -25,13 +24,5 @@ public class Label {
     private String description;
 
     @OneToMany(mappedBy = "label")
-    private List<Issue> issues = new ArrayList<>();
-
-    @Builder
-    public Label(String title, String textColor, String backgroundColor, String description) {
-        this.title = title;
-        this.textColor = textColor;
-        this.backgroundColor = backgroundColor;
-        this.description = description;
-    }
+    private List<IssueLabel> labels = new ArrayList<>();
 }

@@ -1,10 +1,9 @@
 package team20.issuetracker.domain.comment;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import team20.issuetracker.domain.issue.Issue;
+import team20.issuetracker.domain.issue.IssueComment;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,8 +11,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Comment {
 
@@ -21,16 +20,12 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Lob
-    private String content;
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "comment")
-    private List<Issue> issues = new ArrayList<>();
+    @Lob
+    private String content;
 
-    @Builder
-    public Comment(String content, LocalDateTime createdAt) {
-        this.content = content;
-        this.createdAt = createdAt;
-    }
+    @OneToMany(mappedBy = "comment")
+    private List<IssueComment> comments = new ArrayList<>();
 }
+

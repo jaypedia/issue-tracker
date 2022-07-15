@@ -14,6 +14,6 @@ public class IssueService {
 
     @Transactional
     public Long save(SaveIssueDto saveIssueDto) {
-        return issueRepository.save(saveIssueDto.toEntity()).getId();
+        return null;
     }
 }

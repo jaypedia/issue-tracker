@@ -181,3 +181,4 @@ Temporary Items
 #yml
 application-dev.yml
 application-local.yml
+test/resources/application.yml

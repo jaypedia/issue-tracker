@@ -20,4 +20,15 @@ public class Milestone {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String description;
+
+    private Milestone(String title, LocalDateTime startDate, LocalDateTime endDate, String description) {
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.description = description;
+    }
+
+    public static Milestone of(String title, LocalDateTime startDate, LocalDateTime endDate, String description) {
+        return new Milestone(title, startDate, endDate, description);
+    }
 }

@@ -36,7 +36,7 @@ public class IssueService {
         LocalDateTime createdAt = saveIssueDto.getCreatedAt();
 
         List<Assignee> assignees = assigneeRepository.findAllById(saveIssueDto.getAssigneeIds());
-        List<Label> labels = labelRepository.findAllById(saveIssueDto.getAssigneeIds());
+        List<Label> labels = labelRepository.findAllById(saveIssueDto.getLabelIds());
         Milestone milestone = null;
         if(saveIssueDto.getMilestoneId() != null) {
             milestone = milestoneRepository.findById(saveIssueDto.getMilestoneId())

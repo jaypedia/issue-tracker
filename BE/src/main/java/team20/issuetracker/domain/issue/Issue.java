@@ -1,11 +1,11 @@
 package team20.issuetracker.domain.issue;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import team20.issuetracker.domain.assginee.Assignee;
+import team20.issuetracker.domain.comment.Comment;
 import team20.issuetracker.domain.label.Label;
 import team20.issuetracker.domain.milestone.Milestone;
 
@@ -17,7 +17,6 @@ import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 public class Issue {
 
@@ -39,13 +38,13 @@ public class Issue {
     private Milestone milestone;
 
     @OneToMany(mappedBy = "issue")
-    private List<IssueAssignee> assignees = new ArrayList<>();
+    private List<IssueAssignee> issueAssignees = new ArrayList<>();
 
     @OneToMany(mappedBy = "issue")
-    private List<IssueComment> comments = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "issue")
-    private List<IssueLabel> labels = new ArrayList<>();
+    private List<IssueLabel> issueLabels = new ArrayList<>();
 
     private Issue(String author, String title, String content, LocalDateTime createdAt, Milestone milestone) {
         this.author = author;
@@ -61,13 +60,13 @@ public class Issue {
 
     public void addAssignees(List<Assignee> assignees) {
         for (Assignee assignee : assignees) {
-            this.assignees.add(IssueAssignee.of(this, assignee));
+            this.issueAssignees.add(IssueAssignee.of(this, assignee));
         }
     }
 
     public void addLabels(List<Label> labels) {
         for (Label label : labels) {
-            this.labels.add(IssueLabel.of(this, label));
+            this.issueLabels.add(IssueLabel.of(this, label));
         }
     }
 }

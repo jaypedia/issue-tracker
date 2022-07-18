@@ -3,11 +3,9 @@ package team20.issuetracker.domain.comment;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import team20.issuetracker.domain.issue.IssueComment;
+import team20.issuetracker.domain.issue.Issue;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.*;
 
@@ -24,5 +22,9 @@ public class Comment {
 
     @Lob
     private String content;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "issue_id")
+    private Issue issue;
 }
 

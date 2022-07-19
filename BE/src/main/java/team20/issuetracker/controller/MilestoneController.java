@@ -37,7 +37,7 @@ public class MilestoneController {
     public void delete(@PathVariable Long id) {
         milestoneService.delete(id);
     }
-    
+
     @PostMapping("/{id}")
     public ResponseEntity<Long> update(@PathVariable Long id, @RequestBody UpdateMilestoneDto updateMilestoneDto) {
         Long milestoneId = milestoneService.update(id, updateMilestoneDto);

@@ -1,4 +1,4 @@
-package team20.issuetracker.domain.milestone.requestDto;
+package team20.issuetracker.domain.milestone.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

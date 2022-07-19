@@ -7,7 +7,7 @@ import team20.issuetracker.domain.milestone.MilestoneStatus;
 import java.time.LocalDateTime;
 
 @Getter
-public class ReadMilestoneDto {
+public class MilestoneDto {
 
     private Long id;
     private String title;
@@ -16,7 +16,7 @@ public class ReadMilestoneDto {
     private String description;
     private MilestoneStatus milestoneStatus;
 
-    private ReadMilestoneDto(Long id, String title, LocalDateTime startDate, LocalDateTime endDate, String description, MilestoneStatus milestoneStatus) {
+    private MilestoneDto(Long id, String title, LocalDateTime startDate, LocalDateTime endDate, String description, MilestoneStatus milestoneStatus) {
         this.id = id;
         this.title = title;
         this.startDate = startDate;
@@ -25,7 +25,7 @@ public class ReadMilestoneDto {
         this.milestoneStatus = milestoneStatus;
     }
 
-    public static ReadMilestoneDto of(Milestone milestone) {
-        return new ReadMilestoneDto(milestone.getId(), milestone.getTitle(), milestone.getStartDate(), milestone.getEndDate(), milestone.getDescription(), milestone.getMilestoneStatus());
+    public static MilestoneDto of(Milestone milestone) {
+        return new MilestoneDto(milestone.getId(), milestone.getTitle(), milestone.getStartDate(), milestone.getEndDate(), milestone.getDescription(), milestone.getMilestoneStatus());
     }
 }

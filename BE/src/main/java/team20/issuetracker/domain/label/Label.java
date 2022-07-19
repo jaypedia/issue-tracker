@@ -19,9 +19,15 @@ public class Label {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, length = 20)
     private String title;
+    @Column(nullable = false, length = 7)
     private String textColor;
+    @Column(nullable = false, length = 7)
     private String backgroundColor;
+
+    @Column(length = 100)
     private String description;
 
     @OneToMany(mappedBy = "label")
@@ -36,10 +42,10 @@ public class Label {
         return new Label(id, title, textColor, backgroundColor, description, List.of());
     }
 
-    public void update(UpdateLabelDto updateLabelDto) {
-        this.title = updateLabelDto.getTitle() != null ? updateLabelDto.getTitle() : title;
-        this.textColor = updateLabelDto.getTextColor() != null ? updateLabelDto.getTextColor() : textColor;
-        this.backgroundColor = updateLabelDto.getBackgroundColor() != null ? updateLabelDto.getBackgroundColor() : backgroundColor;
-        this.description = updateLabelDto.getDescription() != null ? updateLabelDto.getDescription() : description;
+    public void update(RequestLabelDto requestLabelDto) {
+        this.title = requestLabelDto.getTitle();
+        this.textColor = requestLabelDto.getTextColor();
+        this.backgroundColor = requestLabelDto.getBackgroundColor();
+        this.description = requestLabelDto.getDescription();
     }
 }

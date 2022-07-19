@@ -7,6 +7,7 @@ import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
 import team20.issuetracker.domain.milestone.MilestoneStatus;
 import team20.issuetracker.domain.milestone.request.SaveMilestoneDto;
+import team20.issuetracker.domain.milestone.request.UpdateMilestoneDto;
 import team20.issuetracker.domain.milestone.response.MilestoneDto;
 import team20.issuetracker.domain.milestone.response.ResponseMilestone;
 
@@ -55,5 +56,15 @@ public class MilestoneService {
                 .orElseThrow(() -> new NoSuchElementException("해당 Milestone 은 존재하지 않습니다."));
 
         milestoneRepository.delete(findMilestone);
+    }
+
+    @Transactional
+    public Long update(Long id, UpdateMilestoneDto updateMilestoneDto) {
+        Milestone milestone = milestoneRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("해당 Milestone 은 존재하지 않습니다."));
+
+        milestone.update(updateMilestoneDto);
+
+        return milestone.getId();
     }
 }

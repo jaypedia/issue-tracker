@@ -3,10 +3,11 @@ package team20.issuetracker.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.request.SaveMilestoneDto;
 import team20.issuetracker.domain.milestone.request.UpdateMilestoneDto;
 import team20.issuetracker.domain.milestone.response.MilestoneDto;
-import team20.issuetracker.domain.milestone.response.ResponseMilestone;
+import team20.issuetracker.domain.milestone.response.ReadAllMilestones;
 import team20.issuetracker.service.MilestoneService;
 
 import java.util.List;
@@ -26,11 +27,18 @@ public class MilestoneController {
     }
 
     @GetMapping
-    public ResponseEntity<ResponseMilestone> read() {
+    public ResponseEntity<ReadAllMilestones> read() {
         List<MilestoneDto> milestoneDto = milestoneService.findAll();
-        ResponseMilestone responseMilestone = milestoneService.getAllMilestoneData(milestoneDto);
+        ReadAllMilestones readAllMilestones = milestoneService.getAllMilestoneData(milestoneDto);
 
-        return ResponseEntity.ok(responseMilestone);
+        return ResponseEntity.ok(readAllMilestones);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MilestoneDto> detail(@PathVariable Long id) {
+        MilestoneDto findMilestone = milestoneService.detail(id);
+
+        return ResponseEntity.ok(findMilestone);
     }
 
     @DeleteMapping("/{id}")

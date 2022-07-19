@@ -9,7 +9,7 @@ import team20.issuetracker.domain.milestone.MilestoneStatus;
 import team20.issuetracker.domain.milestone.request.SaveMilestoneDto;
 import team20.issuetracker.domain.milestone.request.UpdateMilestoneDto;
 import team20.issuetracker.domain.milestone.response.MilestoneDto;
-import team20.issuetracker.domain.milestone.response.ResponseMilestone;
+import team20.issuetracker.domain.milestone.response.ReadAllMilestones;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -42,12 +42,12 @@ public class MilestoneService {
                 .map(MilestoneDto::of).collect(Collectors.toList());
     }
 
-    public ResponseMilestone getAllMilestoneData(List<MilestoneDto> milestones) {
+    public ReadAllMilestones getAllMilestoneData(List<MilestoneDto> milestones) {
         int allMilestoneCount = milestones.size();
         long openMilestonesCount = milestones.stream().filter(milestone -> milestone.getMilestoneStatus().equals(MilestoneStatus.OPEN)).count();
         long closeMilestonesCount = milestones.stream().filter(milestone -> milestone.getMilestoneStatus().equals(MilestoneStatus.CLOSE)).count();
 
-        return ResponseMilestone.of(allMilestoneCount, openMilestonesCount, closeMilestonesCount, milestones);
+        return ReadAllMilestones.of(allMilestoneCount, openMilestonesCount, closeMilestonesCount, milestones);
     }
 
     @Transactional(readOnly = true)
@@ -60,11 +60,18 @@ public class MilestoneService {
 
     @Transactional
     public Long update(Long id, UpdateMilestoneDto updateMilestoneDto) {
-        Milestone milestone = milestoneRepository.findById(id)
+        Milestone findMilestone = milestoneRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("해당 Milestone 은 존재하지 않습니다."));
 
-        milestone.update(updateMilestoneDto);
+        findMilestone.update(updateMilestoneDto);
 
-        return milestone.getId();
+        return findMilestone.getId();
+    }
+
+    public MilestoneDto detail(Long id) {
+        Milestone findMilestone = milestoneRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("해당 Milestone 은 존재하지 않습니다."));
+
+        return MilestoneDto.of(findMilestone);
     }
 }

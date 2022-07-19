@@ -50,7 +50,7 @@ public class MilestoneService {
         return ReadAllMilestones.of(allMilestoneCount, openMilestonesCount, closeMilestonesCount, milestones);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void delete(Long id) {
         Milestone findMilestone = milestoneRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("해당 Milestone 은 존재하지 않습니다."));

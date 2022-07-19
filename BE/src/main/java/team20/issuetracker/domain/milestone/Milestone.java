@@ -20,14 +20,16 @@ public class Milestone {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String description;
-    private boolean open;
+
+    @Enumerated(EnumType.STRING)
+    private MilestoneStatus milestoneStatus;
 
     private Milestone(String title, LocalDateTime startDate, LocalDateTime endDate, String description) {
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
-        this.open = true;
+        this.milestoneStatus = MilestoneStatus.OPEN;
     }
 
     public static Milestone of(String title, LocalDateTime startDate, LocalDateTime endDate, String description) {

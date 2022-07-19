@@ -10,9 +10,10 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ResponseLabelsDto {
 
+    private int labelCount;
     private List<ResponseLabelDto> labels;
 
     public static ResponseLabelsDto from(List<ResponseLabelDto> labels) {
-        return new ResponseLabelsDto(labels);
+        return new ResponseLabelsDto(labels.size(), labels);
     }
 }

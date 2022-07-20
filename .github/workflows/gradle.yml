@@ -27,10 +27,12 @@ jobs:
           sed -i "s|datasource_url|$DATASOURCE_URL|g" ./src/main/resources/application-deploy.yml
           sed -i "s|datasource_username|$DATASOURCE_USERNAME|g" ./src/main/resources/application-deploy.yml
           sed -i "s|datasource_password|$DATASOURCE_PASSWORD|g" ./src/main/resources/application-deploy.yml
+          sed -i "s|redis_host|$REDIS_HOST|g" ./src/main/resources/application-deploy.yml
         env:
           DATASOURCE_URL : ${{ secrets.DATASOURCE_URL }}
           DATASOURCE_USERNAME : ${{ secrets.DATASOURCE_USERNAME }}
           DATASOURCE_PASSWORD : ${{ secrets.DATASOURCE_PASSWORD }}
+          REDIS_HOST : ${{ secrets.REDIS_HOST }}
 
       - name: Insert oauth information into application-oauth2.yml
         run: |

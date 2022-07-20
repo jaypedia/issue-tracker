@@ -11,5 +11,5 @@ spring:
       ddl-auto: none
 
   redis:
-    host: 3.35.9.222
+    host: redis_host
     port: 6379

@@ -10,6 +10,7 @@ import team20.issuetracker.service.dto.response.ResponseMilestoneDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllMilestonesDto;
 import team20.issuetracker.service.MilestoneService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -20,7 +21,7 @@ public class MilestoneController {
     private final MilestoneService milestoneService;
 
     @PostMapping
-    public ResponseEntity<Long> save(@RequestBody RequestSaveMilestoneDto requestSaveMilestoneDto) {
+    public ResponseEntity<Long> save(@RequestBody @Valid RequestSaveMilestoneDto requestSaveMilestoneDto) {
         Long milestoneId = milestoneService.save(requestSaveMilestoneDto);
 
         return ResponseEntity.ok(milestoneId);
@@ -47,7 +48,7 @@ public class MilestoneController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<Long> update(@PathVariable Long id, @RequestBody RequestUpdateMilestoneDto requestUpdateMilestoneDto) {
+    public ResponseEntity<Long> update(@PathVariable Long id, @RequestBody @Valid RequestUpdateMilestoneDto requestUpdateMilestoneDto) {
         Long milestoneId = milestoneService.update(id, requestUpdateMilestoneDto);
 
         return ResponseEntity.ok(milestoneId);

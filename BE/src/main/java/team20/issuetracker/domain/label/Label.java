@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import team20.issuetracker.domain.issue.IssueLabel;
+import team20.issuetracker.service.dto.request.RequestLabelDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;

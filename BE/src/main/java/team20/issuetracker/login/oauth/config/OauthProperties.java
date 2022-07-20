@@ -1,4 +1,4 @@
-package team20.issuetracker.login.oauth;
+package team20.issuetracker.login.oauth.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

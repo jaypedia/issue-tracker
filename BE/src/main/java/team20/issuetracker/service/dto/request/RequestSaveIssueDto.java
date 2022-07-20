@@ -1,4 +1,4 @@
-package team20.issuetracker.domain.issue;
+package team20.issuetracker.service.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class SaveIssueDto {
+public class RequestSaveIssueDto {
 
     private String title;
     private String content;

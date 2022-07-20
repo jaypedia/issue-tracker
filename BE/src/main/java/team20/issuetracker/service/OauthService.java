@@ -20,10 +20,10 @@ import team20.issuetracker.domain.member.MemberRepository;
 import team20.issuetracker.exception.MyJwtException;
 import team20.issuetracker.login.jwt.JwtTokenProvider;
 import team20.issuetracker.login.oauth.OauthProvider;
-import team20.issuetracker.login.oauth.dto.LoginResponse;
-import team20.issuetracker.login.oauth.dto.OauthTokenResponse;
-import team20.issuetracker.login.oauth.dto.RequestRefreshDto;
-import team20.issuetracker.login.oauth.dto.UserProfile;
+import team20.issuetracker.login.oauth.dto.response.ResponseLoginDto;
+import team20.issuetracker.login.oauth.dto.response.ResponseOauthTokenDto;
+import team20.issuetracker.login.oauth.dto.request.RequestRefreshDto;
+import team20.issuetracker.login.oauth.dto.request.RequestUserDto;
 import team20.issuetracker.login.oauth.repository.InMemoryProviderRepository;
 
 @RequiredArgsConstructor
@@ -35,17 +35,17 @@ public class OauthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate<String, String> redisTemplate;
 
-    public LoginResponse signup(String code) {
+    public ResponseLoginDto signup(String code) {
         OauthProvider provider = inMemoryProviderRepository.getProvider();
-        OauthTokenResponse tokenResponse = requestToken(code, provider);
-        UserProfile userProfile = getUserProfile(provider, tokenResponse);
-        Member member = saveOrUpdate(userProfile);
+        ResponseOauthTokenDto tokenResponse = requestToken(code, provider);
+        RequestUserDto requestUserDto = getUserProfile(provider, tokenResponse);
+        Member member = saveOrUpdate(requestUserDto);
 
         String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(member.getId()));
         String refreshToken = jwtTokenProvider.createRefreshToken();
         redisTemplate.opsForValue().set(String.valueOf(member.getId()), refreshToken, jwtTokenProvider.getRefreshTokenValidityInMilliseconds(), TimeUnit.MILLISECONDS);
         // FE 쪽으로 유저 정보, JWT Token (Access, Refresh) 를 응답한다.
-        return LoginResponse.builder()
+        return ResponseLoginDto.builder()
                 .id(member.getId())
                 .name(member.getName())
                 .email(member.getEmail())
@@ -57,32 +57,32 @@ public class OauthService {
                 .build();
     }
 
-    private Member saveOrUpdate(UserProfile userProfile) {
-        Member findMember = memberRepository.findByOauthId(userProfile.getOauthId())
-                .map(member -> member.update(userProfile.getEmail(), userProfile.getName(), userProfile.getProfileImageUrl()))
-                .orElseGet(userProfile::toMember);
+    private Member saveOrUpdate(RequestUserDto requestUserDto) {
+        Member findMember = memberRepository.findByOauthId(requestUserDto.getOauthId())
+                .map(member -> member.update(requestUserDto.getEmail(), requestUserDto.getName(), requestUserDto.getProfileImageUrl()))
+                .orElseGet(requestUserDto::toMember);
 
         return memberRepository.save(findMember);
     }
 
-    private UserProfile getUserProfile(OauthProvider provider, OauthTokenResponse tokenResponse) {
+    private RequestUserDto getUserProfile(OauthProvider provider, ResponseOauthTokenDto tokenResponse) {
 
         return WebClient.create().get()
                 .uri(provider.getUserInfoUrl())
                 .header("Authorization", "token " + tokenResponse.getAccessToken())
                 .retrieve()
-                .bodyToMono(UserProfile.class)
+                .bodyToMono(RequestUserDto.class)
                 .block();
     }
 
-    private OauthTokenResponse requestToken(String code, OauthProvider provider) {
+    private ResponseOauthTokenDto requestToken(String code, OauthProvider provider) {
 
         return WebClient.create().post()
                 .uri(provider.getTokenUrl())
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(tokenRequest(code, provider))
                 .retrieve()
-                .bodyToMono(OauthTokenResponse.class)
+                .bodyToMono(ResponseOauthTokenDto.class)
                 .block();
     }
 

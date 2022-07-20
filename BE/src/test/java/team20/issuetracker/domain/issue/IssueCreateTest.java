@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 import team20.issuetracker.service.IssueService;
+import team20.issuetracker.service.dto.request.RequestSaveIssueDto;
 
 @ActiveProfiles( {"test"} )
 @SpringBootTest
@@ -28,14 +29,14 @@ class IssueCreateTest {
     @DisplayName("Issue 객체를 만들고 저장하면 저장된 Issue 의 ID 값이 반환되어야 한다.")
     void issueCreateTest() {
         // given
-        SaveIssueDto saveIssueDto = new SaveIssueDto();
-        saveIssueDto.setAuthor("author");
-        saveIssueDto.setTitle("title");
-        saveIssueDto.setContent("content");
-        saveIssueDto.setCreatedAt(LocalDateTime.now());
+        RequestSaveIssueDto requestSaveIssueDto = new RequestSaveIssueDto();
+        requestSaveIssueDto.setAuthor("author");
+        requestSaveIssueDto.setTitle("title");
+        requestSaveIssueDto.setContent("content");
+        requestSaveIssueDto.setCreatedAt(LocalDateTime.now());
 
         // when
-        Issue newIssue = Issue.of(saveIssueDto.getAuthor(), saveIssueDto.getTitle(), saveIssueDto.getContent(), saveIssueDto.getCreatedAt(), null);
+        Issue newIssue = Issue.of(requestSaveIssueDto.getAuthor(), requestSaveIssueDto.getTitle(), requestSaveIssueDto.getContent(), requestSaveIssueDto.getCreatedAt(), null);
 
         Long saveIssueId = issueRepository.save(newIssue).getId();
 

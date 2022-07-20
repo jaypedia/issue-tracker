@@ -1,4 +1,4 @@
-package team20.issuetracker.login.oauth.dto;
+package team20.issuetracker.login.oauth.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class OauthTokenResponse {
+public class ResponseOauthTokenDto {
     @JsonProperty("access_token")
     private String accessToken;
 
@@ -18,7 +18,7 @@ public class OauthTokenResponse {
     private String tokenType;
 
     @Builder
-    public OauthTokenResponse(String accessToken, String scope, String tokenType) {
+    public ResponseOauthTokenDto(String accessToken, String scope, String tokenType) {
         this.accessToken = accessToken;
         this.scope = scope;
         this.tokenType = tokenType;

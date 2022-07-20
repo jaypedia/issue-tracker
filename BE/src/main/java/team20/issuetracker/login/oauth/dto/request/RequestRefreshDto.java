@@ -1,4 +1,4 @@
-package team20.issuetracker.login.oauth.dto;
+package team20.issuetracker.login.oauth.dto.request;
 
 import lombok.Builder;
 import lombok.Getter;

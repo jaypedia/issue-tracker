@@ -6,10 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
 import team20.issuetracker.domain.milestone.MilestoneStatus;
-import team20.issuetracker.domain.milestone.request.SaveMilestoneDto;
-import team20.issuetracker.domain.milestone.request.UpdateMilestoneDto;
-import team20.issuetracker.domain.milestone.response.MilestoneDto;
-import team20.issuetracker.domain.milestone.response.ReadAllMilestones;
+import team20.issuetracker.service.dto.request.RequestSaveMilestoneDto;
+import team20.issuetracker.service.dto.request.RequestUpdateMilestoneDto;
+import team20.issuetracker.service.dto.response.ResponseMilestoneDto;
+import team20.issuetracker.service.dto.response.ResponseReadAllMilestonesDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,11 +23,11 @@ public class MilestoneService {
     public final MilestoneRepository milestoneRepository;
 
     @Transactional
-    public Long save(SaveMilestoneDto saveMilestoneDto) {
-        String title = saveMilestoneDto.getTitle();
-        String description = saveMilestoneDto.getDescription() == null ? "" : saveMilestoneDto.getDescription();
-        LocalDateTime startDate = saveMilestoneDto.getStartDate();
-        LocalDateTime endDate = saveMilestoneDto.getEndDate();
+    public Long save(RequestSaveMilestoneDto requestSaveMilestoneDto) {
+        String title = requestSaveMilestoneDto.getTitle();
+        String description = requestSaveMilestoneDto.getDescription() == null ? "" : requestSaveMilestoneDto.getDescription();
+        LocalDateTime startDate = requestSaveMilestoneDto.getStartDate();
+        LocalDateTime endDate = requestSaveMilestoneDto.getEndDate();
 
         Milestone newMilestone = Milestone.of(title, startDate, endDate, description);
 
@@ -35,19 +35,19 @@ public class MilestoneService {
     }
 
     @Transactional(readOnly = true)
-    public List<MilestoneDto> findAll() {
+    public List<ResponseMilestoneDto> findAll() {
         List<Milestone> findMilestones = milestoneRepository.findAll();
 
         return findMilestones.stream()
-                .map(MilestoneDto::of).collect(Collectors.toList());
+                .map(ResponseMilestoneDto::of).collect(Collectors.toList());
     }
 
-    public ReadAllMilestones getAllMilestoneData(List<MilestoneDto> milestones) {
+    public ResponseReadAllMilestonesDto getAllMilestoneData(List<ResponseMilestoneDto> milestones) {
         int allMilestoneCount = milestones.size();
         long openMilestonesCount = milestones.stream().filter(milestone -> milestone.getMilestoneStatus().equals(MilestoneStatus.OPEN)).count();
         long closeMilestonesCount = milestones.stream().filter(milestone -> milestone.getMilestoneStatus().equals(MilestoneStatus.CLOSE)).count();
 
-        return ReadAllMilestones.of(allMilestoneCount, openMilestonesCount, closeMilestonesCount, milestones);
+        return ResponseReadAllMilestonesDto.of(allMilestoneCount, openMilestonesCount, closeMilestonesCount, milestones);
     }
 
     @Transactional
@@ -59,19 +59,19 @@ public class MilestoneService {
     }
 
     @Transactional
-    public Long update(Long id, UpdateMilestoneDto updateMilestoneDto) {
+    public Long update(Long id, RequestUpdateMilestoneDto requestUpdateMilestoneDto) {
         Milestone findMilestone = milestoneRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("해당 Milestone 은 존재하지 않습니다."));
 
-        findMilestone.update(updateMilestoneDto);
+        findMilestone.update(requestUpdateMilestoneDto);
 
         return findMilestone.getId();
     }
 
-    public MilestoneDto detail(Long id) {
+    public ResponseMilestoneDto detail(Long id) {
         Milestone findMilestone = milestoneRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("해당 Milestone 은 존재하지 않습니다."));
 
-        return MilestoneDto.of(findMilestone);
+        return ResponseMilestoneDto.of(findMilestone);
     }
 }

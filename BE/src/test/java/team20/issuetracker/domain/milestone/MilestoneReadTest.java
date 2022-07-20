@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-import team20.issuetracker.domain.milestone.request.SaveMilestoneDto;
-import team20.issuetracker.domain.milestone.response.MilestoneDto;
-import team20.issuetracker.domain.milestone.response.ReadAllMilestones;
+import team20.issuetracker.service.dto.request.RequestSaveMilestoneDto;
+import team20.issuetracker.service.dto.response.ResponseMilestoneDto;
+import team20.issuetracker.service.dto.response.ResponseReadAllMilestonesDto;
 import team20.issuetracker.service.MilestoneService;
 
 import java.time.LocalDateTime;
@@ -28,24 +28,24 @@ public class MilestoneReadTest {
     @DisplayName("생성한 Milestone 만큼의 List<Milestone> size 가 맞아야 한다.")
     void findAllMilestones() {
         // given
-        SaveMilestoneDto saveMilestoneDtoA = new SaveMilestoneDto();
-        saveMilestoneDtoA.setTitle("titleA");
-        saveMilestoneDtoA.setDescription("descriptionA");
-        saveMilestoneDtoA.setStartDate(LocalDateTime.now());
-        saveMilestoneDtoA.setEndDate(LocalDateTime.now());
+        RequestSaveMilestoneDto requestSaveMilestoneDtoA = new RequestSaveMilestoneDto();
+        requestSaveMilestoneDtoA.setTitle("titleA");
+        requestSaveMilestoneDtoA.setDescription("descriptionA");
+        requestSaveMilestoneDtoA.setStartDate(LocalDateTime.now());
+        requestSaveMilestoneDtoA.setEndDate(LocalDateTime.now());
 
-        SaveMilestoneDto saveMilestoneDtoB = new SaveMilestoneDto();
-        saveMilestoneDtoA.setTitle("titleB");
-        saveMilestoneDtoA.setDescription("descriptionB");
-        saveMilestoneDtoA.setStartDate(LocalDateTime.now());
-        saveMilestoneDtoA.setEndDate(LocalDateTime.now());
+        RequestSaveMilestoneDto requestSaveMilestoneDtoB = new RequestSaveMilestoneDto();
+        requestSaveMilestoneDtoA.setTitle("titleB");
+        requestSaveMilestoneDtoA.setDescription("descriptionB");
+        requestSaveMilestoneDtoA.setStartDate(LocalDateTime.now());
+        requestSaveMilestoneDtoA.setEndDate(LocalDateTime.now());
 
-        milestoneService.save(saveMilestoneDtoA);
-        milestoneService.save(saveMilestoneDtoB);
+        milestoneService.save(requestSaveMilestoneDtoA);
+        milestoneService.save(requestSaveMilestoneDtoB);
 
         // when
-        List<MilestoneDto> milestoneDtos = milestoneService.findAll();
-        ReadAllMilestones allMilestoneData = milestoneService.getAllMilestoneData(milestoneDtos);
+        List<ResponseMilestoneDto> responseMilestoneDtos = milestoneService.findAll();
+        ResponseReadAllMilestonesDto allMilestoneData = milestoneService.getAllMilestoneData(responseMilestoneDtos);
 
         // then
         assertThat(allMilestoneData.getAllMilestoneCount()).isEqualTo(2);

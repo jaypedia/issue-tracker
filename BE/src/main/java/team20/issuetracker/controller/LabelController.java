@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
-import team20.issuetracker.domain.label.RequestLabelDto;
-import team20.issuetracker.domain.label.ResponseLabelsDto;
+import team20.issuetracker.service.dto.request.RequestLabelDto;
+import team20.issuetracker.service.dto.response.ResponseLabelsDto;
 import team20.issuetracker.service.LabelService;
 
 @RestController

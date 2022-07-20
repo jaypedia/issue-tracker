@@ -1,19 +1,19 @@
-package team20.issuetracker.domain.milestone.request;
+package team20.issuetracker.service.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import team20.issuetracker.domain.milestone.MilestoneStatus;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class UpdateMilestoneDto {
+@NoArgsConstructor
+public class RequestSaveMilestoneDto {
 
     private String title;
     private String description;
-    private MilestoneStatus milestoneStatus;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startDate;

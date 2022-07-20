@@ -3,11 +3,11 @@ package team20.issuetracker.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import team20.issuetracker.domain.milestone.Milestone;
-import team20.issuetracker.domain.milestone.request.SaveMilestoneDto;
-import team20.issuetracker.domain.milestone.request.UpdateMilestoneDto;
-import team20.issuetracker.domain.milestone.response.MilestoneDto;
-import team20.issuetracker.domain.milestone.response.ReadAllMilestones;
+
+import team20.issuetracker.service.dto.request.RequestSaveMilestoneDto;
+import team20.issuetracker.service.dto.request.RequestUpdateMilestoneDto;
+import team20.issuetracker.service.dto.response.ResponseMilestoneDto;
+import team20.issuetracker.service.dto.response.ResponseReadAllMilestonesDto;
 import team20.issuetracker.service.MilestoneService;
 
 import java.util.List;
@@ -20,23 +20,23 @@ public class MilestoneController {
     private final MilestoneService milestoneService;
 
     @PostMapping
-    public ResponseEntity<Long> save(@RequestBody SaveMilestoneDto saveMilestoneDto) {
-        Long milestoneId = milestoneService.save(saveMilestoneDto);
+    public ResponseEntity<Long> save(@RequestBody RequestSaveMilestoneDto requestSaveMilestoneDto) {
+        Long milestoneId = milestoneService.save(requestSaveMilestoneDto);
 
         return ResponseEntity.ok(milestoneId);
     }
 
     @GetMapping
-    public ResponseEntity<ReadAllMilestones> read() {
-        List<MilestoneDto> milestoneDto = milestoneService.findAll();
-        ReadAllMilestones readAllMilestones = milestoneService.getAllMilestoneData(milestoneDto);
+    public ResponseEntity<ResponseReadAllMilestonesDto> read() {
+        List<ResponseMilestoneDto> responseMilestoneDto = milestoneService.findAll();
+        ResponseReadAllMilestonesDto responseReadAllMilestonesDto = milestoneService.getAllMilestoneData(responseMilestoneDto);
 
-        return ResponseEntity.ok(readAllMilestones);
+        return ResponseEntity.ok(responseReadAllMilestonesDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MilestoneDto> detail(@PathVariable Long id) {
-        MilestoneDto findMilestone = milestoneService.detail(id);
+    public ResponseEntity<ResponseMilestoneDto> detail(@PathVariable Long id) {
+        ResponseMilestoneDto findMilestone = milestoneService.detail(id);
 
         return ResponseEntity.ok(findMilestone);
     }
@@ -47,8 +47,8 @@ public class MilestoneController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<Long> update(@PathVariable Long id, @RequestBody UpdateMilestoneDto updateMilestoneDto) {
-        Long milestoneId = milestoneService.update(id, updateMilestoneDto);
+    public ResponseEntity<Long> update(@PathVariable Long id, @RequestBody RequestUpdateMilestoneDto requestUpdateMilestoneDto) {
+        Long milestoneId = milestoneService.update(id, requestUpdateMilestoneDto);
 
         return ResponseEntity.ok(milestoneId);
     }

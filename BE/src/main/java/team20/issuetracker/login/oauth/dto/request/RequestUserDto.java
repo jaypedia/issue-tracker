@@ -1,4 +1,4 @@
-package team20.issuetracker.login.oauth.dto;
+package team20.issuetracker.login.oauth.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -10,7 +10,7 @@ import team20.issuetracker.login.oauth.Role;
 
 @NoArgsConstructor
 @Getter
-public class UserProfile {
+public class RequestUserDto {
     @JsonProperty("id")
     private String oauthId;
     @JsonProperty("name")
@@ -21,7 +21,7 @@ public class UserProfile {
     private String profileImageUrl;
 
     @Builder
-    public UserProfile(String oauthId, String email, String name, String profileImageUrl) {
+    public RequestUserDto(String oauthId, String email, String name, String profileImageUrl) {
         this.oauthId = oauthId;
         this.email = email;
         this.name = name;

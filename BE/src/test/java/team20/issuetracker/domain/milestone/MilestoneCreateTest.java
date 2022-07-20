@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-import team20.issuetracker.domain.milestone.request.SaveMilestoneDto;
+import team20.issuetracker.service.dto.request.RequestSaveMilestoneDto;
 import team20.issuetracker.service.MilestoneService;
 
 import java.time.LocalDateTime;
@@ -28,14 +28,14 @@ public class MilestoneCreateTest {
     @DisplayName("Issue 객체를 만들고 저장하면 저장된 Issue 의 ID 값이 반환되어야 한다.")
     void milestoneCreateTest() {
         // given
-        SaveMilestoneDto saveMilestoneDto = new SaveMilestoneDto();
-        saveMilestoneDto.setTitle("마일스톤 타이틀");
-        saveMilestoneDto.setDescription("마일스톤 설명");
-        saveMilestoneDto.setStartDate(LocalDateTime.now());
-        saveMilestoneDto.setEndDate(LocalDateTime.now());
+        RequestSaveMilestoneDto requestSaveMilestoneDto = new RequestSaveMilestoneDto();
+        requestSaveMilestoneDto.setTitle("마일스톤 타이틀");
+        requestSaveMilestoneDto.setDescription("마일스톤 설명");
+        requestSaveMilestoneDto.setStartDate(LocalDateTime.now());
+        requestSaveMilestoneDto.setEndDate(LocalDateTime.now());
 
         // when
-        Milestone newMilestone = Milestone.of(saveMilestoneDto.getTitle(), saveMilestoneDto.getStartDate(), saveMilestoneDto.getEndDate(), saveMilestoneDto.getDescription());
+        Milestone newMilestone = Milestone.of(requestSaveMilestoneDto.getTitle(), requestSaveMilestoneDto.getStartDate(), requestSaveMilestoneDto.getEndDate(), requestSaveMilestoneDto.getDescription());
 
         Long saveMilestoneId = milestoneRepository.save(newMilestone).getId();
 

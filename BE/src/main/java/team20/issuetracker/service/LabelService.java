@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import team20.issuetracker.domain.label.Label;
 import team20.issuetracker.domain.label.LabelRepository;
-import team20.issuetracker.domain.label.RequestLabelDto;
-import team20.issuetracker.domain.label.ResponseLabelDto;
-import team20.issuetracker.domain.label.ResponseLabelsDto;
+import team20.issuetracker.service.dto.request.RequestLabelDto;
+import team20.issuetracker.service.dto.response.ResponseLabelDto;
+import team20.issuetracker.service.dto.response.ResponseLabelsDto;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)

@@ -2,6 +2,7 @@ package team20.issuetracker.login.oauth;
 
 import lombok.Builder;
 import lombok.Getter;
+import team20.issuetracker.login.oauth.config.OauthProperties;
 
 @Getter
 public class OauthProvider {

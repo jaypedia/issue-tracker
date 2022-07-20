@@ -1,4 +1,4 @@
-package team20.issuetracker.domain.label;
+package team20.issuetracker.service.dto.request;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;

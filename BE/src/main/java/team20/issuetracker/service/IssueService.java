@@ -7,10 +7,9 @@ import team20.issuetracker.domain.assginee.Assignee;
 import team20.issuetracker.domain.assginee.AssigneeRepository;
 import team20.issuetracker.domain.issue.Issue;
 import team20.issuetracker.domain.issue.IssueRepository;
-import team20.issuetracker.domain.issue.SaveIssueDto;
+import team20.issuetracker.service.dto.request.RequestSaveIssueDto;
 import team20.issuetracker.domain.label.Label;
 import team20.issuetracker.domain.label.LabelRepository;
-import team20.issuetracker.domain.member.MemberRepository;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
 
@@ -28,18 +27,18 @@ public class IssueService {
     private final LabelRepository labelRepository;
 
     @Transactional
-    public Long save(SaveIssueDto saveIssueDto) {
+    public Long save(RequestSaveIssueDto requestSaveIssueDto) {
 
-        String author = saveIssueDto.getAuthor();
-        String title = saveIssueDto.getTitle();
-        String content = saveIssueDto.getContent() == null ? "" : saveIssueDto.getContent();
-        LocalDateTime createdAt = saveIssueDto.getCreatedAt();
+        String author = requestSaveIssueDto.getAuthor();
+        String title = requestSaveIssueDto.getTitle();
+        String content = requestSaveIssueDto.getContent() == null ? "" : requestSaveIssueDto.getContent();
+        LocalDateTime createdAt = requestSaveIssueDto.getCreatedAt();
 
-        List<Assignee> assignees = assigneeRepository.findAllById(saveIssueDto.getAssigneeIds());
-        List<Label> labels = labelRepository.findAllById(saveIssueDto.getLabelIds());
+        List<Assignee> assignees = assigneeRepository.findAllById(requestSaveIssueDto.getAssigneeIds());
+        List<Label> labels = labelRepository.findAllById(requestSaveIssueDto.getLabelIds());
         Milestone milestone = null;
-        if(saveIssueDto.getMilestoneId() != null) {
-            milestone = milestoneRepository.findById(saveIssueDto.getMilestoneId())
+        if(requestSaveIssueDto.getMilestoneId() != null) {
+            milestone = milestoneRepository.findById(requestSaveIssueDto.getMilestoneId())
                     .orElseThrow(() -> new NoSuchElementException("해당 Milestone 은 존재하지 않습니다."));
         }
 

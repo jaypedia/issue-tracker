@@ -1,4 +1,4 @@
-package team20.issuetracker.login.oauth.dto;
+package team20.issuetracker.login.oauth.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import team20.issuetracker.login.oauth.Role;
 
 @Getter
 @NoArgsConstructor
-public class LoginResponse {
+public class ResponseLoginDto {
     private Long id;
     private String name;
     private String email;
@@ -18,7 +18,7 @@ public class LoginResponse {
     private String refreshToken;
 
     @Builder
-    public LoginResponse(Long id, String name, String email, String profileImageUrl, Role role, String tokenType, String accessToken, String refreshToken) {
+    public ResponseLoginDto(Long id, String name, String email, String profileImageUrl, Role role, String tokenType, String accessToken, String refreshToken) {
         this.id = id;
         this.name = name;
         this.email = email;

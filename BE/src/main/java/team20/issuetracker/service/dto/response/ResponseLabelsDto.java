@@ -1,4 +1,4 @@
-package team20.issuetracker.domain.label;
+package team20.issuetracker.service.dto.response;
 
 import java.util.List;
 

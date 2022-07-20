@@ -1,8 +1,9 @@
-package team20.issuetracker.domain.label;
+package team20.issuetracker.service.dto.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import team20.issuetracker.domain.label.Label;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

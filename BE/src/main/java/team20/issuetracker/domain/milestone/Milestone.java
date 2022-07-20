@@ -3,7 +3,7 @@ package team20.issuetracker.domain.milestone;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import team20.issuetracker.domain.milestone.request.UpdateMilestoneDto;
+import team20.issuetracker.service.dto.request.RequestUpdateMilestoneDto;
 
 import java.time.LocalDateTime;
 
@@ -37,11 +37,11 @@ public class Milestone {
         return new Milestone(title, startDate, endDate, description);
     }
 
-    public void update(UpdateMilestoneDto updateMilestoneDto) {
-        this.title = updateMilestoneDto.getTitle() != null ? updateMilestoneDto.getTitle() : title;
-        this.description = updateMilestoneDto.getDescription() != null ? updateMilestoneDto.getDescription() : description;
-        this.startDate = updateMilestoneDto.getStartDate() != null ? updateMilestoneDto.getStartDate() : startDate;
-        this.endDate = updateMilestoneDto.getEndDate() != null ? updateMilestoneDto.getEndDate() : endDate;
-        this.milestoneStatus = updateMilestoneDto.getMilestoneStatus() != null ? updateMilestoneDto.getMilestoneStatus() : milestoneStatus;
+    public void update(RequestUpdateMilestoneDto requestUpdateMilestoneDto) {
+        this.title = requestUpdateMilestoneDto.getTitle() != null ? requestUpdateMilestoneDto.getTitle() : title;
+        this.description = requestUpdateMilestoneDto.getDescription() != null ? requestUpdateMilestoneDto.getDescription() : description;
+        this.startDate = requestUpdateMilestoneDto.getStartDate() != null ? requestUpdateMilestoneDto.getStartDate() : startDate;
+        this.endDate = requestUpdateMilestoneDto.getEndDate() != null ? requestUpdateMilestoneDto.getEndDate() : endDate;
+        this.milestoneStatus = requestUpdateMilestoneDto.getMilestoneStatus() != null ? requestUpdateMilestoneDto.getMilestoneStatus() : milestoneStatus;
     }
 }

@@ -3,7 +3,6 @@ package team20.issuetracker.domain.label;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -15,7 +14,7 @@ public class ResponseLabelDto {
     private String backgroundColor;
     private String textColor;
 
-    public ResponseLabelDto(Label label) {
+    private ResponseLabelDto(Label label) {
         this.id = label.getId();
         this.title = label.getTitle();
         this.description = label.getDescription();

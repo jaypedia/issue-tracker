@@ -1,4 +1,4 @@
-package team20.issuetracker.controller;
+package team20.issuetracker.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,14 +9,13 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import team20.issuetracker.domain.label.Label;
 import team20.issuetracker.domain.label.LabelRepository;
+import team20.issuetracker.domain.label.RequestLabelDto;
 import team20.issuetracker.domain.label.ResponseLabelDto;
 import team20.issuetracker.domain.label.ResponseLabelsDto;
-import team20.issuetracker.domain.label.SaveLabelDto;
-import team20.issuetracker.domain.label.UpdateLabelDto;
 
-@Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Service
 public class LabelService {
 
     private final LabelRepository labelRepository;
@@ -29,11 +28,11 @@ public class LabelService {
     }
 
     @Transactional
-    public Long save(SaveLabelDto saveLabelDto) {
-        String title = saveLabelDto.getTitle();
-        String textColor = saveLabelDto.getTextColor();
-        String backgroundColor = saveLabelDto.getBackgroundColor();
-        String description = saveLabelDto.getDescription();
+    public Long save(RequestLabelDto requestLabelDto) {
+        String title = requestLabelDto.getTitle();
+        String textColor = requestLabelDto.getTextColor();
+        String backgroundColor = requestLabelDto.getBackgroundColor();
+        String description = requestLabelDto.getDescription();
 
         Label label = Label.of(title, textColor, backgroundColor, description);
 
@@ -41,11 +40,11 @@ public class LabelService {
     }
 
     @Transactional
-    public Long update(Long id, UpdateLabelDto updateLabelDto) {
+    public Long update(Long id, RequestLabelDto requestLabelDto) {
         Label label = labelRepository.findById(id).orElseThrow(() -> {
             throw new IllegalArgumentException("존재하지 않는 Label 입니다.");
         });
-        label.update(updateLabelDto);
+        label.update(requestLabelDto);
         return label.getId();
     }
 
@@ -57,3 +56,4 @@ public class LabelService {
         labelRepository.delete(label);
     }
 }
+

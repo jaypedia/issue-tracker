@@ -1,7 +1,10 @@
 type ButtonType = {
-  btnSize: 'large' | 'medium' | 'small';
-  btnColor: 'primary' | 'grey' | 'black';
+  size?: 'large' | 'medium' | 'small';
+  textColor?: 'primary' | 'grey' | 'warning';
+  color?: 'primary' | 'grey' | 'black';
   type?: 'button' | 'submit' | 'reset';
+  isText?: boolean;
+  onClick?: () => void;
 };
 
 export type ButtonStyleProps = ButtonType & {

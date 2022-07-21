@@ -43,9 +43,11 @@ const DetailsMenu = ({
   return (
     <S.DetailsMenu menuPosition={menuPosition} indicatorType={indicatorType}>
       <div>
-        <S.DetailsMenuTitle indicatorType={indicatorType}>
-          {detailsMenuList.title}
-        </S.DetailsMenuTitle>
+        <S.DetailsMenuTitleWrapper>
+          <S.DetailsMenuTitle indicatorType={indicatorType}>
+            {detailsMenuList.title}
+          </S.DetailsMenuTitle>
+        </S.DetailsMenuTitleWrapper>
         <ul>
           {detailsMenuList.menus.map(menu =>
             hasCheckBox ? (

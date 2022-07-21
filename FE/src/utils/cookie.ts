@@ -4,7 +4,7 @@ const cookies = new Cookies();
 
 type CookieOptionType = {
   path: string;
-  secure: boolean;
+  secure?: boolean;
 };
 
 export const setCookie = (name: string, value: string, option?: CookieOptionType) => {

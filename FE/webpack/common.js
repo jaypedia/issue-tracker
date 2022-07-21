@@ -1,3 +1,4 @@
+const dotenv = require('dotenv');
 const path = require('path');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -5,6 +6,12 @@ const webpack = require('webpack');
 const { argv } = require('yargs');
 
 const isDevelopment = argv.env === 'development';
+
+dotenv.config({ path: path.resolve('src', './.env') });
+const WebpackEnvironmentPlugin = new webpack.EnvironmentPlugin([
+  'OAUTH_URL_GITHUB',
+  'CLIENT_ID_GITHUB',
+]);
 
 module.exports = {
   entry: {
@@ -72,5 +79,6 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({ React: 'react' }),
     isDevelopment && new ReactRefreshWebpackPlugin(),
+    WebpackEnvironmentPlugin,
   ].filter(Boolean),
 };

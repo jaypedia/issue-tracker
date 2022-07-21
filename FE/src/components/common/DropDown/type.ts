@@ -13,6 +13,7 @@ export type DetailsMenuProps = DropDownType & {
 
 export type IndicatorStyle = {
   indicatorType?: 'large' | 'small' | 'setting';
+  hasBefore?: boolean;
 };
 
 type IndicatorType = IndicatorStyle & {

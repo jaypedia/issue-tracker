@@ -1,10 +1,15 @@
 import * as S from './style';
 import { LabelProps } from './type';
 
-const Label = ({ size, title, backgroundColor, textColor, hasLine }: LabelProps) => {
+import { FlexBetween } from '@/styles/common';
+
+const Label = ({ size, title, backgroundColor, textColor, hasLine, icon }: LabelProps) => {
   return (
     <S.Label size={size} backgroundColor={backgroundColor} textColor={textColor} hasLine={hasLine}>
-      {title}
+      <FlexBetween>
+        {icon}
+        <S.LabelName>{title}</S.LabelName>
+      </FlexBetween>
     </S.Label>
   );
 };

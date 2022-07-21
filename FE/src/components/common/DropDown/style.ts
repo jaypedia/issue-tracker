@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import { DetailsMenusStyle, IndicatorStyle } from '@/components/common/DropDown/type';
 import { COLOR } from '@/styles/color';
+import { FlexBetween } from '@/styles/common';
 import { FONT_MIXIN, mixins } from '@/styles/mixins';
 
 const DetailsMenuPositionObj = {
@@ -12,6 +13,20 @@ const DetailsMenuPositionObj = {
 
 const DropDown = styled.details`
   position: relative;
+`;
+
+const beforeStyle = `
+::before {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 80;
+  display: block;
+  cursor: default;
+  content: ' ';
+  background: transparent;
 `;
 
 const Indicator = styled.summary<IndicatorStyle>`
@@ -29,6 +44,8 @@ const Indicator = styled.summary<IndicatorStyle>`
   ::marker {
     font-size: 0;
   }
+
+  ${({ hasBefore }) => hasBefore && beforeStyle}
 `;
 
 const DetailsMenu = styled.div<DetailsMenusStyle>`
@@ -41,14 +58,18 @@ const DetailsMenu = styled.div<DetailsMenusStyle>`
   border-radius: ${({ indicatorType }) => (indicatorType === 'setting' ? '8px' : '16px')};
   border: 1px solid ${({ theme: { color } }) => color.line};
   overflow: hidden;
-  z-index: 10;
+  z-index: 99;
+`;
+
+const DetailsMenuTitleWrapper = styled(FlexBetween)`
+  cursor: default;
+  padding: 8px 16px;
+  background: ${({ theme: { color } }) => color.dropDown.bg.detailsMenuTitle};
 `;
 
 const DetailsMenuTitle = styled.p<IndicatorStyle>`
-  padding: 8px 16px;
   ${({ indicatorType }) =>
     indicatorType === 'large' ? FONT_MIXIN.medium(400) : FONT_MIXIN.xSmall(400)};
-  background: ${({ theme: { color } }) => color.dropDown.bg.detailsMenuTitle};
 `;
 
 const DetailsMenuItem = styled.li<IndicatorStyle>`
@@ -89,7 +110,7 @@ const DetailsMenuItem = styled.li<IndicatorStyle>`
   `}
 `;
 
-const CheckBoxIcon = styled.div`
+const CheckBox = styled.div`
   input[type='checkbox'] {
     display: none;
   }
@@ -132,7 +153,8 @@ export {
   DetailsMenu,
   DetailsMenuTitle,
   DetailsMenuItem,
-  CheckBoxIcon,
+  DetailsMenuTitleWrapper,
+  CheckBox,
   TitleWrapper,
   Title,
   CheckLabel,

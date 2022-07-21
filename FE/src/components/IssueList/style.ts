@@ -10,19 +10,11 @@ const IssueListContainer = styled.div`
   overflow: hidden;
 `;
 
-const IssueListHeader = styled.div`
-  ${mixins.flexBox({ justifyContent: 'space-between' })};
-  padding: 16px 32px;
-  ${FONT_MIXIN.small(400)}
-  color: ${({ theme: { color } }) => color.cell.font.initial};
-  background: ${({ theme: { color } }) => color.cell.bg.cellHeaderBg};
-`;
-
 const Flex = styled.div`
   ${mixins.flexBox({})}
 `;
 
-const CheckBoxIcon = styled.div`
+const CheckBox = styled.div`
   align-self: flex-start;
   margin-right: 20px;
 
@@ -31,36 +23,11 @@ const CheckBoxIcon = styled.div`
   }
 `;
 
-const Tabs = styled.div`
-  ${mixins.flexBox({})}
+const EmptyList = styled.div`
+  padding: 20px 0;
+  border-top: 1px solid ${({ theme: { color } }) => color.line};
+  ${FONT_MIXIN.large(500)}
+  text-align: center;
 `;
 
-const TabItem = styled.button`
-  ${mixins.flexBox({})}
-  margin-right: 24px;
-  gap: 8px;
-  ${FONT_MIXIN.small(400)}
-
-  :hover {
-    color: ${({ theme: { color } }) => color.cell.font.active};
-  }
-`;
-
-const ListFilter = styled.div`
-  ${mixins.flexBox({})}
-`;
-
-const ListFilterItem = styled.div`
-  margin-left: 32px;
-`;
-
-export {
-  IssueListContainer,
-  IssueListHeader,
-  Flex,
-  CheckBoxIcon,
-  Tabs,
-  TabItem,
-  ListFilter,
-  ListFilterItem,
-};
+export { IssueListContainer, Flex, CheckBox, EmptyList };

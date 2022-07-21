@@ -8,8 +8,10 @@ import ThemeSwitch from '@/components/ThemeSwitch';
 import Layout from '@/layout';
 import Home from '@/pages/Home';
 import IssueDetail from '@/pages/IssueDetail';
+import Labels from '@/pages/Labels';
 import Login from '@/pages/Login';
 import LoginCallback from '@/pages/LoginCallback';
+import Milestones from '@/pages/Milestones';
 import NewIssue from '@/pages/NewIssue';
 import NotFound from '@/pages/NotFound';
 import GlobalStyle from '@/styles/GlobalStyle';
@@ -37,6 +39,8 @@ const App = () => {
               <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
                 <Route path="new-issue" element={<NewIssue />} />
+                <Route path="labels" element={<Labels />} />
+                <Route path="milestones" element={<Milestones />} />
                 <Route path="issue/:id" element={<IssueDetail />} />
               </Route>
               <Route path="callback" element={<LoginCallback />} />

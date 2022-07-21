@@ -11,3 +11,7 @@ export const QUERY_KEY = {
   milestone: 'milestone',
   assignees: 'assignees',
 };
+
+export const INDICATOR = {
+  setting: 'setting',
+};

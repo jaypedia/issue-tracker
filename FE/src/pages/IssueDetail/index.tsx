@@ -7,11 +7,10 @@ import * as S from './style';
 import Comment from '@/components/Comment';
 import CommentForm from '@/components/CommentForm';
 import Button from '@/components/common/Button';
-import Label from '@/components/common/Label';
+import CustomLink from '@/components/common/CustomLink';
+import IssueDetailInfo from '@/components/IssueDetailInfo';
 import SideBar from '@/components/SideBar';
-import { COLOR } from '@/styles/color';
 import { ColumnWrapper, Heading1, FlexBetween } from '@/styles/common';
-import { convertFirstLetterToUppercase, getIssueInfoSentence } from '@/utils/issue';
 
 const IssueDetail = () => {
   const { id } = useParams();
@@ -32,35 +31,31 @@ const IssueDetail = () => {
     getIssue();
   }, []);
 
-  const { author, issueCreateTime, issueStatus } = issue;
+  const { issueId, author, issueCreateTime, issueStatus, commentCount, issueTitle } = issue;
 
+  // TODO: new-issue 버튼 클릭해서 새로운 이슈 페이지 이동 시 path가 누적되는 문제 해결하기
   return (
     <ColumnWrapper>
       {!isLoading && (
         <>
           <S.IssueDetailHeaderWrapper>
             <FlexBetween>
-              <Heading1>{issue.issueTitle}</Heading1>
+              <Heading1>{issueTitle}</Heading1>
               <S.ButtonBox>
                 <Button btnSize="small" btnColor="grey" text="Edit" />
-                <Button btnSize="small" btnColor="primary" text="New Issue" />
+                <CustomLink
+                  path="new-issue"
+                  component={<Button btnSize="small" btnColor="primary" text="New Issue" />}
+                />
               </S.ButtonBox>
             </FlexBetween>
-            <S.IssueInfoBox>
-              <Label
-                title={convertFirstLetterToUppercase(issueStatus)}
-                size="large"
-                backgroundColor={COLOR.success[300]}
-                textColor={COLOR.white}
-              />
-              {getIssueInfoSentence({
-                issueId: issue.id,
-                issueStatus,
-                author,
-                issueCreateTime,
-                commentCount: issue.commentCount,
-              })}
-            </S.IssueInfoBox>
+            <IssueDetailInfo
+              issueId={issueId}
+              issueStatus={issueStatus}
+              author={author}
+              issueCreateTime={issueCreateTime}
+              commentCount={commentCount}
+            />
           </S.IssueDetailHeaderWrapper>
           <S.ContentsWrapper>
             <S.CommentsConatiner>

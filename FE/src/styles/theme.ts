@@ -39,6 +39,7 @@ export interface ColorType {
     bg: {
       initial: string;
       hover: string;
+      count: string;
       active: string;
     };
     font: {
@@ -58,7 +59,7 @@ export const DARK: ThemeType = {
     bg: COLOR.black,
     cell: {
       bg: {
-        cellHeaderBg: COLOR.grey[500],
+        cellHeaderBg: COLOR.grey[600],
         cellBg: COLOR.grey[400],
       },
       font: {
@@ -78,14 +79,15 @@ export const DARK: ThemeType = {
         detailsMenuTitle: COLOR.black,
         detailsMenuCell: COLOR.grey[500],
       },
-      indicator: COLOR.grey[400],
-      indicatorHover: COLOR.grey[500],
+      indicator: COLOR.grey[200],
+      indicatorHover: COLOR.grey[300],
       indicatorHoverBg: COLOR.grey[200],
     },
     tabLink: {
       bg: {
         initial: COLOR.black,
         hover: COLOR.grey[600],
+        count: COLOR.grey[500],
         active: COLOR.primary[300],
       },
       font: {
@@ -130,6 +132,7 @@ export const LIGHT: ThemeType = {
       bg: {
         initial: COLOR.grey[100],
         hover: COLOR.grey[200],
+        count: COLOR.grey[300],
         active: COLOR.primary[300],
       },
       font: {

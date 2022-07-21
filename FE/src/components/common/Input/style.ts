@@ -43,8 +43,17 @@ export const inputCommonStyle = css`
 `;
 
 const Input = styled.input<InputStyleProps>`
-  ${({ inputStyle }) => inputStyleObj[inputStyle]}
-  ${inputCommonStyle}
+  ${({ inputStyle }) => inputStyleObj[inputStyle]};
+  ${inputCommonStyle};
+  border: ${({ hasBorder, theme: { color } }) => hasBorder && `1px solid ${color.line}`};
 `;
 
-export { Input };
+const InputLabel = styled.label`
+  ${FONT_MIXIN.xSmall(700)}
+
+  &>:last-child {
+    margin-top: 5px;
+  }
+`;
+
+export { Input, InputLabel };

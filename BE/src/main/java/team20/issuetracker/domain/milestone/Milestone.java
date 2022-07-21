@@ -17,9 +17,17 @@ public class Milestone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, length = 50)
     private String title;
+
+    @Column(nullable = false)
     private LocalDateTime startDate;
+
+    @Column(nullable = false)
     private LocalDateTime endDate;
+
+    @Column(length = 800)
     private String description;
 
     @Enumerated(EnumType.STRING)

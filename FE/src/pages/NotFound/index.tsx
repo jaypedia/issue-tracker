@@ -9,7 +9,7 @@ const NotFound = () => {
       <S.NotFoundText>Sorry, Page Not Found</S.NotFoundText>
       <CustomLink
         path="/"
-        component={<Button btnSize="small" btnColor="primary" text="Home" changeTag="div" />}
+        component={<Button size="small" color="primary" text="Home" changeTag="div" />}
       />
     </S.NotFoundWrapper>
   );

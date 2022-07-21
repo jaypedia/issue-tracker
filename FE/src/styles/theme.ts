@@ -39,6 +39,7 @@ export interface ColorType {
     bg: {
       initial: string;
       hover: string;
+      count: string;
       active: string;
     };
     font: {
@@ -86,6 +87,7 @@ export const DARK: ThemeType = {
       bg: {
         initial: COLOR.black,
         hover: COLOR.grey[600],
+        count: COLOR.grey[500],
         active: COLOR.primary[300],
       },
       font: {
@@ -130,6 +132,7 @@ export const LIGHT: ThemeType = {
       bg: {
         initial: COLOR.grey[100],
         hover: COLOR.grey[200],
+        count: COLOR.grey[300],
         active: COLOR.primary[300],
       },
       font: {

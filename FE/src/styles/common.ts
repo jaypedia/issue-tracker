@@ -48,6 +48,21 @@ const FlexColumn = styled.div`
   ${mixins.flexBox({ direction: 'column' })}
 `;
 
+const FlexEnd = styled.div`
+  width: 100%;
+  ${mixins.flexBox({ justifyContent: 'flex-end' })}
+`;
+
+const FlexEndAlign = styled.div`
+  width: 100%;
+  ${mixins.flexBox({ alignItems: 'flex-end' })}
+`;
+
+const FlexColumnStart = styled.div`
+  width: 100%;
+  ${mixins.flexBox({ direction: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' })}
+`;
+
 export {
   MainWrapper,
   InnerContainer,
@@ -58,4 +73,7 @@ export {
   FlexBetween,
   FlexStart,
   FlexColumn,
+  FlexEnd,
+  FlexColumnStart,
+  FlexEndAlign,
 };

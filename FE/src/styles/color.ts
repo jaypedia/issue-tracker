@@ -13,6 +13,7 @@ export const COLOR = {
     100: '#DDFFE6',
     200: '#34C759',
     300: '#00A028',
+    400: '#1a7f37',
   },
   grey: {
     100: '#EFF0F6',
@@ -22,6 +23,9 @@ export const COLOR = {
     500: '#4E4B66',
     600: '#2A2748',
     700: '#14142B',
+  },
+  transparent: {
+    100: '#a0a3bd66',
   },
   black: '#0A071B',
   white: '#FEFEFE',

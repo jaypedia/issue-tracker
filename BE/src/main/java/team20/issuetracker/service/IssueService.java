@@ -13,7 +13,6 @@ import team20.issuetracker.domain.label.LabelRepository;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -29,10 +28,8 @@ public class IssueService {
     @Transactional
     public Long save(RequestSaveIssueDto requestSaveIssueDto) {
 
-        String author = requestSaveIssueDto.getAuthor();
         String title = requestSaveIssueDto.getTitle();
         String content = requestSaveIssueDto.getContent() == null ? "" : requestSaveIssueDto.getContent();
-        LocalDateTime createdAt = requestSaveIssueDto.getCreatedAt();
 
         List<Assignee> assignees = assigneeRepository.findAllById(requestSaveIssueDto.getAssigneeIds());
         List<Label> labels = labelRepository.findAllById(requestSaveIssueDto.getLabelIds());
@@ -43,7 +40,7 @@ public class IssueService {
         }
 
         // TODO : Issue 엔티티 만들어서 값 넣어주기.
-        Issue newIssue = Issue.of(author, title, content, createdAt, milestone);
+        Issue newIssue = Issue.of(title, content, milestone);
 
         // TODO : 연관관계 편의 메서드를 통해 빈 값 채워주기
         newIssue.addAssignees(assignees);

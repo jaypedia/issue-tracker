@@ -41,7 +41,7 @@ public class OauthService {
         RequestUserDto requestUserDto = getUserProfile(provider, tokenResponse);
         Member member = saveOrUpdate(requestUserDto);
 
-        String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(member.getId()));
+        String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(member.getName()));
         String refreshToken = jwtTokenProvider.createRefreshToken();
         redisTemplate.opsForValue().set(String.valueOf(member.getId()), refreshToken, jwtTokenProvider.getRefreshTokenValidityInMilliseconds(), TimeUnit.MILLISECONDS);
         // FE 쪽으로 유저 정보, JWT Token (Access, Refresh) 를 응답한다.

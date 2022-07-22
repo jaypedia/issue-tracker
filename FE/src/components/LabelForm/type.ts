@@ -13,4 +13,5 @@ export type LabelFormProps = FormStyleType & {
 export type ColorChangeButtonProps = {
   backgroundColor: string;
   onClick: () => void;
+  iconColor?: string | undefined;
 };

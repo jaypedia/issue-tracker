@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import ColorChangeButton from './ColorChangeButton';
 import * as S from './style';
@@ -9,7 +9,7 @@ import Input from '@/components/common/Input';
 import Label from '@/components/common/Label';
 import { useInput } from '@/hooks/useInput';
 import { FlexEndAlign, FlexBetween, FlexColumnStart } from '@/styles/common';
-import { getRandomHexColorCode } from '@/utils/label';
+import { getRandomHexColorCode, isDark } from '@/utils/label';
 
 const LabelForm = ({
   type,
@@ -25,10 +25,16 @@ const LabelForm = ({
     onChange: changeLabelColor,
     setValue: setLabelColor,
   } = useInput(backgroundColor.toUpperCase());
+  const [labelTextColor, setLabelTextColor] = useState(color);
 
   const handleChangeColorClick = () => {
     const newColor = getRandomHexColorCode();
     setLabelColor(newColor);
+    if (isDark(newColor)) {
+      setLabelTextColor('white');
+    } else {
+      setLabelTextColor('black');
+    }
   };
 
   const saveLabel = () => {
@@ -38,7 +44,12 @@ const LabelForm = ({
   return (
     <S.LabelForm type={type}>
       <FlexBetween>
-        <Label size="small" title={labelPriview} backgroundColor={labelColor} textColor={color} />
+        <Label
+          size="small"
+          title={labelPriview}
+          backgroundColor={labelColor}
+          textColor={labelTextColor}
+        />
         {type === 'edit' && <Button isText text="Delete" type="button" />}
       </FlexBetween>
       <S.GridContainer>
@@ -66,7 +77,11 @@ const LabelForm = ({
         <FlexColumnStart>
           <S.InputLabel>Color</S.InputLabel>
           <FlexEndAlign>
-            <ColorChangeButton backgroundColor={labelColor} onClick={handleChangeColorClick} />
+            <ColorChangeButton
+              backgroundColor={labelColor}
+              onClick={handleChangeColorClick}
+              iconColor={labelTextColor}
+            />
             <Input
               type="text"
               title="Color"

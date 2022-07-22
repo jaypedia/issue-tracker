@@ -3,10 +3,10 @@ import { ColorChangeButtonProps } from '../type';
 
 import * as I from '@/icons/Label';
 
-const ColorChangeButton = ({ backgroundColor, onClick }: ColorChangeButtonProps) => {
+const ColorChangeButton = ({ backgroundColor, onClick, iconColor }: ColorChangeButtonProps) => {
   return (
     <S.ColorChangeButton backgroundColor={backgroundColor} type="button" onClick={onClick}>
-      <I.Change />
+      <I.Change iconColor={iconColor} />
     </S.ColorChangeButton>
   );
 };

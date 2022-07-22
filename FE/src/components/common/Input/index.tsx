@@ -13,6 +13,7 @@ const Input = ({
   defaultValue,
   value,
   onChange,
+  maxLength,
 }: InputProps) => {
   return (
     <S.InputLabel>
@@ -27,6 +28,7 @@ const Input = ({
         defaultValue={defaultValue}
         value={value}
         onChange={onChange}
+        maxLength={maxLength}
       />
     </S.InputLabel>
   );

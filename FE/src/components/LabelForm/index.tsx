@@ -4,6 +4,7 @@ import { LabelFormProps, ColorChangeButtonProps } from './type';
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import Label from '@/components/common/Label';
+import { useInput } from '@/hooks/useInput';
 import * as I from '@/icons/Label';
 import { FlexEndAlign, FlexBetween, FlexColumnStart } from '@/styles/common';
 
@@ -29,16 +30,18 @@ const LabelForm = ({
     // Api logic
   };
 
+  const { value: labelPriview, onChange } = useInput(labelName);
+
   return (
     <S.LabelForm type={type}>
       <FlexBetween>
         <Label
           size="small"
-          title={labelName || 'Label preview'}
+          title={labelPriview || 'Label preview'}
           backgroundColor={backgroundColor || randomColor}
           textColor={color}
         />
-        {type === 'edit' && <Button isText text="Delete" />}
+        {type === 'edit' && <Button isText text="Delete" type="button" />}
       </FlexBetween>
       <S.GridContainer>
         <Input
@@ -49,7 +52,8 @@ const LabelForm = ({
           name="labelName"
           hasBorder
           inputLabel="Label name"
-          value={labelName}
+          defaultValue={labelName}
+          onChange={onChange}
         />
         <Input
           type="text"
@@ -59,7 +63,7 @@ const LabelForm = ({
           name="description"
           hasBorder
           inputLabel="Description"
-          value={description}
+          defaultValue={description}
         />
         <FlexColumnStart>
           <S.InputLabel>Color</S.InputLabel>
@@ -71,7 +75,7 @@ const LabelForm = ({
               inputStyle="small"
               name="color"
               hasBorder
-              value={backgroundColor}
+              defaultValue={backgroundColor || randomColor}
             />
           </FlexEndAlign>
         </FlexColumnStart>

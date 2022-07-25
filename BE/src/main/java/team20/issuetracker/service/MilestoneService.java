@@ -1,8 +1,15 @@
 package team20.issuetracker.service;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+
+import lombok.RequiredArgsConstructor;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
 import team20.issuetracker.domain.milestone.MilestoneStatus;
@@ -10,11 +17,7 @@ import team20.issuetracker.service.dto.request.RequestSaveMilestoneDto;
 import team20.issuetracker.service.dto.request.RequestUpdateMilestoneDto;
 import team20.issuetracker.service.dto.response.ResponseMilestoneDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllMilestonesDto;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
+import team20.issuetracker.util.JwtUtils;
 
 @RequiredArgsConstructor
 @Service
@@ -22,12 +25,15 @@ public class MilestoneService {
 
     public final MilestoneRepository milestoneRepository;
 
+    @Value(value = "${jwt.secretKey}")
+    private String key;
+
     @Transactional
     public Long save(RequestSaveMilestoneDto requestSaveMilestoneDto) {
         String title = requestSaveMilestoneDto.getTitle();
         String description = requestSaveMilestoneDto.getDescription() == null ? "" : requestSaveMilestoneDto.getDescription();
-        LocalDateTime startDate = requestSaveMilestoneDto.getStartDate();
-        LocalDateTime endDate = requestSaveMilestoneDto.getEndDate();
+        LocalDate startDate = requestSaveMilestoneDto.getStartDate();
+        LocalDate endDate = requestSaveMilestoneDto.getEndDate();
 
         Milestone newMilestone = Milestone.of(title, startDate, endDate, description);
 
@@ -35,8 +41,9 @@ public class MilestoneService {
     }
 
     @Transactional(readOnly = true)
-    public List<ResponseMilestoneDto> findAll() {
-        List<Milestone> findMilestones = milestoneRepository.findAll();
+    public List<ResponseMilestoneDto> findAll(String accessToken) {
+        String authorId = JwtUtils.decodingToken(accessToken, key).getId();
+        List<Milestone> findMilestones = milestoneRepository.findAllByAuthorId(authorId);
 
         return findMilestones.stream()
                 .map(ResponseMilestoneDto::of).collect(Collectors.toList());

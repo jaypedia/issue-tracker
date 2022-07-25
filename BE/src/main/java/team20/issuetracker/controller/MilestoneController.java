@@ -1,6 +1,8 @@
 package team20.issuetracker.controller;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +11,9 @@ import team20.issuetracker.service.dto.request.RequestUpdateMilestoneDto;
 import team20.issuetracker.service.dto.response.ResponseMilestoneDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllMilestonesDto;
 import team20.issuetracker.service.MilestoneService;
+import team20.issuetracker.util.JwtUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -21,15 +25,16 @@ public class MilestoneController {
     private final MilestoneService milestoneService;
 
     @PostMapping
-    public ResponseEntity<Long> save(@RequestBody @Valid RequestSaveMilestoneDto requestSaveMilestoneDto) {
+    public ResponseEntity<Long> save(@RequestBody @Valid RequestSaveMilestoneDto requestSaveMilestoneDto, HttpServletRequest request) {
         Long milestoneId = milestoneService.save(requestSaveMilestoneDto);
 
         return ResponseEntity.ok(milestoneId);
     }
 
     @GetMapping
-    public ResponseEntity<ResponseReadAllMilestonesDto> read() {
-        List<ResponseMilestoneDto> responseMilestoneDto = milestoneService.findAll();
+    public ResponseEntity<ResponseReadAllMilestonesDto> read(HttpServletRequest request) {
+        String accessToken = JwtUtils.tokenExtraction(request, HttpHeaders.AUTHORIZATION);
+        List<ResponseMilestoneDto> responseMilestoneDto = milestoneService.findAll(accessToken);
         ResponseReadAllMilestonesDto responseReadAllMilestonesDto = milestoneService.getAllMilestoneData(responseMilestoneDto);
 
         return ResponseEntity.ok(responseReadAllMilestonesDto);

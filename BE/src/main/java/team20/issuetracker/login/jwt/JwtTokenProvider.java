@@ -15,7 +15,9 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
+import team20.issuetracker.domain.member.Member;
 import team20.issuetracker.exception.MyJwtException;
+import team20.issuetracker.util.JwtUtils;
 
 @Component
 public class JwtTokenProvider {
@@ -36,34 +38,38 @@ public class JwtTokenProvider {
         this.refreshSecretKey = refreshSecretKey;
     }
 
-    public String createAccessToken(String payload) {
-        return createAccessToken(payload, accessTokenValidityInMilliseconds);
+    public String getAccessToken(Member member) {
+        return createToken(member.getOauthId(),
+                this.accessTokenValidityInMilliseconds,
+                this.secretKey);
     }
 
-    public String createRefreshToken() {
-        return createRefreshToken(refreshTokenValidityInMilliseconds);
+    public String getAccessToken(String refreshToken) {
+        String jwtId = JwtUtils.decodingToken(refreshToken, this.refreshSecretKey).getId();
+        return createToken(jwtId,
+                this.accessTokenValidityInMilliseconds,
+                this.secretKey);
     }
 
-    public String createAccessToken(String payload, long expireLength) {
+    public String getRefreshToken(Member member) {
+        return createToken(member.getOauthId(),
+                this.refreshTokenValidityInMilliseconds,
+                this.refreshSecretKey);
+    }
+
+    private String createToken(String jwtId,
+                               long accessTokenValidityInMilliseconds,
+                               String secretKey) {
         Date now = new Date();
-        Date validity = new Date(now.getTime() + expireLength);
-        Claims claims = Jwts.claims().setSubject(payload);
+        Date validity = new Date(now.getTime() + accessTokenValidityInMilliseconds);
+        Claims claims = Jwts.claims()
+                .setId(jwtId)
+                .setIssuedAt(now)
+                .setExpiration(validity);
+
         return Jwts.builder()
                 .setClaims(claims)
-                .setIssuedAt(now)
-                .setExpiration(validity)
                 .signWith(SignatureAlgorithm.HS256, secretKey)
-                .compact();
-    }
-
-    public String createRefreshToken(long expireLength) {
-        Date now = new Date();
-        Date validity = new Date(now.getTime() + expireLength);
-
-        return Jwts.builder()
-                .setIssuedAt(now)
-                .setExpiration(validity)
-                .signWith(SignatureAlgorithm.HS256, refreshSecretKey)
                 .compact();
     }
 
@@ -87,10 +93,10 @@ public class JwtTokenProvider {
     }
 
     private String validateTokeType(String token) {
-            String tokenType = token.split(" ")[0];
-            if (!tokenType.equals(TOKEN_TYPE)) {
-                throw new MyJwtException("토큰 타입이 유효하지 않습니다.", HttpStatus.BAD_REQUEST);
-            }
+        String tokenType = token.split(" ")[0];
+        if (!tokenType.equals(TOKEN_TYPE)) {
+            throw new MyJwtException("토큰 타입이 유효하지 않습니다.", HttpStatus.BAD_REQUEST);
+        }
         return token.split(" ")[1];
     }
 

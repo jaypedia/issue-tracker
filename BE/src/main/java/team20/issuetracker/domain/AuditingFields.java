@@ -25,5 +25,5 @@ public abstract class AuditingFields {
 
     @CreatedBy
     @Column(nullable = false, updatable = false)
-    private String author;
+    private String authorId;
 }

@@ -15,7 +15,7 @@ public class RequestUserDto {
     private String oauthId;
     @JsonProperty("email")
     private String email;
-    @JsonProperty("name")
+    @JsonProperty("login")
     private String name;
     @JsonProperty("avatar_url")
     private String profileImageUrl;

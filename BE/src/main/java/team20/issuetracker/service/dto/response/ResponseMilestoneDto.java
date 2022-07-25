@@ -1,22 +1,22 @@
 package team20.issuetracker.service.dto.response;
 
+import java.time.LocalDate;
+
 import lombok.Getter;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneStatus;
-
-import java.time.LocalDateTime;
 
 @Getter
 public class ResponseMilestoneDto {
 
     private Long id;
     private String title;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String description;
     private MilestoneStatus milestoneStatus;
 
-    private ResponseMilestoneDto(Long id, String title, LocalDateTime startDate, LocalDateTime endDate, String description, MilestoneStatus milestoneStatus) {
+    private ResponseMilestoneDto(Long id, String title, LocalDate startDate, LocalDate endDate, String description, MilestoneStatus milestoneStatus) {
         this.id = id;
         this.title = title;
         this.startDate = startDate;

@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import team20.issuetracker.login.oauth.dto.response.ResponseLoginDto;
 import team20.issuetracker.login.oauth.dto.request.RequestRefreshDto;
+import team20.issuetracker.login.oauth.dto.response.ResponseLoginDto;
 import team20.issuetracker.service.OauthService;
 
 @RestController

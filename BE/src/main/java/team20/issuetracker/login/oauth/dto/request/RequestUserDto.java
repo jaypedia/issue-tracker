@@ -13,9 +13,9 @@ import team20.issuetracker.login.oauth.Role;
 public class RequestUserDto {
     @JsonProperty("id")
     private String oauthId;
-    @JsonProperty("name")
-    private String email;
     @JsonProperty("email")
+    private String email;
+    @JsonProperty("login")
     private String name;
     @JsonProperty("avatar_url")
     private String profileImageUrl;

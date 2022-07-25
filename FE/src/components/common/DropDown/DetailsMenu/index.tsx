@@ -1,7 +1,8 @@
-import * as S from './style';
+import * as S from '../style';
 
 import { DetailsMenuProps } from '@/components/common/DropDown/type';
-import CheckIcon from '@/icons/Check';
+import UserProfile from '@/components/common/UserProfile';
+import { getUniformMenus } from '@/utils/dropdown';
 
 type DetailsMenuItemProps = {
   menu: string;
@@ -10,6 +11,8 @@ type DetailsMenuItemProps = {
 
 type DetailsCheckMenuItem = DetailsMenuItemProps & {
   checkType?: 'checkBox' | 'radio';
+  image?: string;
+  backgroundColor?: string;
 };
 
 const DetailsMenuItem = ({ menu, indicatorType }: DetailsMenuItemProps) => {
@@ -20,14 +23,23 @@ const DetailsMenuItem = ({ menu, indicatorType }: DetailsMenuItemProps) => {
   );
 };
 
-// TODO: Input Checked 상태 저장하여 CheckIncon 렌더링 상태 변경
-const DetailsCheckMenuItem = ({ menu, indicatorType, checkType }: DetailsCheckMenuItem) => {
+const DetailsCheckMenuItem = ({
+  menu,
+  indicatorType,
+  checkType,
+  image,
+  backgroundColor,
+}: DetailsCheckMenuItem) => {
+  const randomId = Math.random().toString();
   return (
     <S.DetailsMenuItem indicatorType={indicatorType}>
-      <input type={checkType} id={menu} name={checkType} />
-      <S.CheckLabel htmlFor={menu}>
-        <CheckIcon />
-        <S.Title>{menu}</S.Title>
+      <input type={checkType} id={randomId} name={checkType} />
+      <S.CheckLabel htmlFor={randomId}>
+        <S.Menu>
+          {image && <UserProfile imgUrl={image} userId={menu} size="small" />}
+          {backgroundColor && <S.LabelColorCircle backgroundColor={backgroundColor} />}
+          <p>{menu}</p>
+        </S.Menu>
       </S.CheckLabel>
     </S.DetailsMenuItem>
   );
@@ -40,6 +52,8 @@ const DetailsMenu = ({
   hasCheckBox,
   checkType,
 }: DetailsMenuProps) => {
+  const menuList = getUniformMenus(detailsMenuList.indicator, detailsMenuList);
+
   return (
     <S.DetailsMenu menuPosition={menuPosition} indicatorType={indicatorType}>
       <div>
@@ -49,16 +63,18 @@ const DetailsMenu = ({
           </S.DetailsMenuTitle>
         </S.DetailsMenuTitleWrapper>
         <ul>
-          {detailsMenuList.menus.map(menu =>
+          {menuList.map(({ id, name, image, backgroundColor }) =>
             hasCheckBox ? (
               <DetailsCheckMenuItem
-                key={menu}
-                menu={menu}
+                key={id}
+                menu={name}
+                image={image}
+                backgroundColor={backgroundColor}
                 indicatorType={indicatorType}
                 checkType={checkType}
               />
             ) : (
-              <DetailsMenuItem key={menu} menu={menu} indicatorType={indicatorType} />
+              <DetailsMenuItem key={id} menu={name} indicatorType={indicatorType} />
             ),
           )}
         </ul>

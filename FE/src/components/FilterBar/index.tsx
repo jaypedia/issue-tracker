@@ -3,6 +3,7 @@ import SearchInput from './SearchInput';
 import * as S from './style';
 
 const filterBoxDetailsMenu = {
+  indicator: 'Filter',
   title: 'Filter Issues',
   menus: [
     'Open issues',

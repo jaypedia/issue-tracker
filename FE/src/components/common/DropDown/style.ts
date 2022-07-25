@@ -93,11 +93,11 @@ const DetailsMenuItem = styled.li<IndicatorStyle>`
   }
 
   input[type='checkbox']:checked + label {
-    background-color: blue;
+    background-color: ${COLOR.primary[100]};
   }
 
   input[type='radio']:checked + label {
-    background-color: blue;
+    background-color: ${COLOR.primary[100]};
   }
 
   ${({ theme: { color }, indicatorType }) =>
@@ -139,13 +139,35 @@ const TitleWrapper = styled.li`
   }
 `;
 
-const Title = styled.div``;
+const Menu = styled.div`
+  ${mixins.flexBox({ justifyContent: 'flex-start' })}
+  ${FONT_MIXIN.small(400)}
+  margin-left: 15px;
+
+  & > :first-child {
+    margin-right: 10px;
+  }
+`;
 
 const CheckLabel = styled.label`
-  ${mixins.flexBox({ justifyContent: 'flex-start' })}
+  ${mixins.flexBox({ justifyContent: 'flex-between' })}
   width: 100%;
   cursor: pointer;
 `;
+
+type LabelColorCircle = {
+  backgroundColor: string;
+};
+
+const LabelColorCircle = styled.span<LabelColorCircle>`
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+`;
+
+const Title = styled.div``;
 
 export {
   DropDown,
@@ -156,6 +178,8 @@ export {
   DetailsMenuTitleWrapper,
   CheckBox,
   TitleWrapper,
-  Title,
+  Menu,
   CheckLabel,
+  LabelColorCircle,
+  Title,
 };

@@ -3,4 +3,5 @@ export const API = {
   ISSUES: 'issues',
   LABELS: 'labels',
   MILESTONES: 'milestones',
+  ASSIGNEES: 'assignees',
 };

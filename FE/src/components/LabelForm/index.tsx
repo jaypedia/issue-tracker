@@ -1,30 +1,42 @@
+import React, { useState } from 'react';
+
+import ColorChangeButton from './ColorChangeButton';
 import * as S from './style';
-import { LabelFormProps, ColorChangeButtonProps } from './type';
+import { LabelFormProps } from './type';
 
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import Label from '@/components/common/Label';
-import * as I from '@/icons/Label';
+import { useInput } from '@/hooks/useInput';
 import { FlexEndAlign, FlexBetween, FlexColumnStart } from '@/styles/common';
-
-const randomColor = '#bfdadc';
-
-const ColorChangeButton = ({ backgroundColor }: ColorChangeButtonProps) => {
-  return (
-    <S.ColorChangeButton backgroundColor={backgroundColor} type="button">
-      <I.Change />
-    </S.ColorChangeButton>
-  );
-};
+import { getRandomHexColorCode, isDark } from '@/utils/label';
 
 const LabelForm = ({
   type,
-  labelName,
+  labelName = 'Label preview',
   description,
-  backgroundColor,
+  backgroundColor = getRandomHexColorCode(),
   color,
   onCancel,
 }: LabelFormProps) => {
+  const { value: labelPriview, onChange: changeLabelName } = useInput(labelName);
+  const {
+    value: labelColor,
+    onChange: changeLabelColor,
+    setValue: setLabelColor,
+  } = useInput(backgroundColor.toUpperCase());
+  const [labelTextColor, setLabelTextColor] = useState(color);
+
+  const handleChangeColorClick = () => {
+    const newColor = getRandomHexColorCode();
+    setLabelColor(newColor);
+    if (isDark(newColor)) {
+      setLabelTextColor('white');
+    } else {
+      setLabelTextColor('black');
+    }
+  };
+
   const saveLabel = () => {
     // Api logic
   };
@@ -34,11 +46,11 @@ const LabelForm = ({
       <FlexBetween>
         <Label
           size="small"
-          title={labelName || 'Label preview'}
-          backgroundColor={backgroundColor || randomColor}
-          textColor={color}
+          title={labelPriview}
+          backgroundColor={labelColor}
+          textColor={labelTextColor}
         />
-        {type === 'edit' && <Button isText text="Delete" />}
+        {type === 'edit' && <Button isText text="Delete" type="button" />}
       </FlexBetween>
       <S.GridContainer>
         <Input
@@ -49,7 +61,8 @@ const LabelForm = ({
           name="labelName"
           hasBorder
           inputLabel="Label name"
-          value={labelName}
+          defaultValue={labelName}
+          onChange={changeLabelName}
         />
         <Input
           type="text"
@@ -59,19 +72,26 @@ const LabelForm = ({
           name="description"
           hasBorder
           inputLabel="Description"
-          value={description}
+          defaultValue={description}
         />
         <FlexColumnStart>
           <S.InputLabel>Color</S.InputLabel>
           <FlexEndAlign>
-            <ColorChangeButton backgroundColor={backgroundColor || randomColor} />
+            <ColorChangeButton
+              backgroundColor={labelColor}
+              onClick={handleChangeColorClick}
+              iconColor={labelTextColor}
+            />
             <Input
               type="text"
               title="Color"
               inputStyle="small"
               name="color"
               hasBorder
-              value={backgroundColor}
+              defaultValue={labelColor}
+              onChange={changeLabelColor}
+              maxLength={7}
+              value={labelColor}
             />
           </FlexEndAlign>
         </FlexColumnStart>
@@ -89,4 +109,4 @@ const LabelForm = ({
   );
 };
 
-export default LabelForm;
+export default React.memo(LabelForm);

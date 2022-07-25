@@ -9,5 +9,8 @@ export type InputProps = InputStyleProps & {
   placeholder?: string;
   type: string;
   name: string;
+  defaultValue?: string;
   value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  maxLength?: number;
 };

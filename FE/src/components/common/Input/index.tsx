@@ -10,7 +10,10 @@ const Input = ({
   name,
   hasBorder,
   inputLabel,
+  defaultValue,
   value,
+  onChange,
+  maxLength,
 }: InputProps) => {
   return (
     <S.InputLabel>
@@ -22,7 +25,10 @@ const Input = ({
         inputStyle={inputStyle}
         hasBorder={hasBorder}
         name={name}
+        defaultValue={defaultValue}
         value={value}
+        onChange={onChange}
+        maxLength={maxLength}
       />
     </S.InputLabel>
   );

@@ -1,18 +1,47 @@
-import { HeaderDropDownList } from './data';
 import * as S from './style';
 import TabBar from './TabBar';
 
 import CheckBox from '@/components/common/CheckBox';
 import DropDown from '@/components/common/DropDown';
+import { mockAssignees } from '@/mocks/Assignees/data';
+import { mockLabels } from '@/mocks/Labels/data';
+import { mockMilestones } from '@/mocks/Milestones/data';
+import { ListHeader } from '@/styles/list';
 
 type IssueListHeader = {
   openIssueCount?: number;
   closedIssueCount?: number;
 };
 
+const authorList = {
+  indicator: 'Author',
+  title: 'Filter by author',
+  menus: mockAssignees,
+};
+
+const labelList = {
+  indicator: 'Label',
+  title: 'Filter by label',
+  menus: mockLabels.labels,
+};
+
+const milestoneList = {
+  indicator: 'Milestone',
+  title: 'Filter by milestone',
+  menus: mockMilestones.milestones,
+};
+
+const assingeeList = {
+  indicator: 'Assignee',
+  title: 'Filter by who’s assigned',
+  menus: mockAssignees,
+};
+
+const HeaderDropDownList = [authorList, labelList, milestoneList, assingeeList];
+
 const IssueListHeader = ({ openIssueCount, closedIssueCount }: IssueListHeader) => {
   return (
-    <S.IssueListHeader>
+    <ListHeader>
       <S.Flex>
         <CheckBox id="headerCheckBox" isHeader />
         <TabBar openIssueCount={openIssueCount} closedIssueCount={closedIssueCount} />
@@ -31,7 +60,7 @@ const IssueListHeader = ({ openIssueCount, closedIssueCount }: IssueListHeader) 
           </S.ListFilterItem>
         ))}
       </S.ListFilter>
-    </S.IssueListHeader>
+    </ListHeader>
   );
 };
 

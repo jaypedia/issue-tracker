@@ -27,6 +27,12 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Setting .env
+        run: |
+          echo "OAUTH_URL_GITHUB=${{ secrets.OAUTH_URL_GITHUB }}" >> .env
+          echo "CLIENT_ID_GITHUB=${{ secrets.CLIENT_ID_GITHUB }}" >> .env
+          cat .env
+
       - name: Build
         run: npm run build
 

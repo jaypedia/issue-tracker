@@ -1,3 +1,4 @@
+// TODO: Refactoring types
 type DropDownType = {
   menuPosition: 'left' | 'right' | 'center';
   indicatorType?: 'large' | 'small' | 'setting';
@@ -5,7 +6,7 @@ type DropDownType = {
   checkType?: 'checkBox' | 'radio';
 };
 
-export type detailsMenuListType = { title: string; menus: string[] };
+export type detailsMenuListType = { indicator: string; title: string };
 
 export type DetailsMenuProps = DropDownType & {
   detailsMenuList: detailsMenuListType;

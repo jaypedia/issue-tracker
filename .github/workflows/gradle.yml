@@ -37,6 +37,7 @@ jobs:
       - name: Insert oauth information into application-oauth2.yml
         run: |
           cd BE
+          sed -i "s|client_id|$CLIENT_ID_GITHUB|g" ./src/main/resources/application-oauth2.yml
           sed -i "s|client_secret|$CLIENT_SECRET|g" ./src/main/resources/application-oauth2.yml
           sed -i "s|redirect_uri|$REDIRECT_URI|g" ./src/main/resources/application-oauth2.yml
           sed -i "s|secret_key|$SECRET_KEY|g" ./src/main/resources/application-oauth2.yml

@@ -6,22 +6,17 @@ import org.springframework.transaction.annotation.Transactional;
 import team20.issuetracker.domain.assginee.Assignee;
 import team20.issuetracker.domain.assginee.AssigneeRepository;
 import team20.issuetracker.domain.issue.*;
-import team20.issuetracker.domain.milestone.MilestoneStatus;
-import team20.issuetracker.service.dto.request.RequestSaveIssueDto;
 import team20.issuetracker.domain.label.Label;
 import team20.issuetracker.domain.label.LabelRepository;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
+import team20.issuetracker.service.dto.request.RequestSaveIssueDto;
 import team20.issuetracker.service.dto.response.ResponseIssueDto;
-import team20.issuetracker.service.dto.response.ResponseMilestoneDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllIssueDto;
-import team20.issuetracker.service.dto.response.ResponseReadAllMilestonesDto;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
@@ -31,6 +26,8 @@ public class IssueService {
     private final MilestoneRepository milestoneRepository;
     private final AssigneeRepository assigneeRepository;
     private final LabelRepository labelRepository;
+    private final IssueLabelRepository issueLabelRepository;
+    private final IssueAssigneeRepository issueAssigneeRepository;
 
     @Transactional
     public Long save(RequestSaveIssueDto requestSaveIssueDto) {
@@ -41,7 +38,7 @@ public class IssueService {
         List<Assignee> assignees = assigneeRepository.findAllById(requestSaveIssueDto.getAssigneeIds());
         List<Label> labels = labelRepository.findAllById(requestSaveIssueDto.getLabelIds());
         Milestone milestone = null;
-        if(requestSaveIssueDto.getMilestoneId() != null) {
+        if (requestSaveIssueDto.getMilestoneId() != null) {
             milestone = milestoneRepository.findById(requestSaveIssueDto.getMilestoneId())
                     .orElseThrow(() -> new NoSuchElementException("해당 Milestone 은 존재하지 않습니다."));
         }
@@ -59,22 +56,22 @@ public class IssueService {
     @Transactional(readOnly = true)
     public List<ResponseIssueDto> findAll(String oauthId) {
         List<Issue> findIssues = issueRepository.findAllByAuthorId(oauthId);
+        List<IssueLabel> issueLabels = issueLabelRepository.findAll();
+        List<IssueAssignee> issueAssignees = issueAssigneeRepository.findAll();
 
-        return null;
+        List<Label> labels = issueLabels.stream()
+                .map(IssueLabel::getLabel)
+                .collect(Collectors.toList());
 
-//        List<Long> labelIds = findIssues.stream()
-//                .map(Issue::getIssueLabels)
-//                .flatMap(Collection::stream)
-//                .map(issueLabel -> issueLabel.getLabel().getId()).collect(Collectors.toList());
-//
-//        labelRepository.findById()
-//
-//        return findIssues.stream()
-//                .map(ResponseIssueDto::from)
-//                .collect(Collectors.toList());
+        List<Assignee> assignees = issueAssignees.stream()
+                .map(IssueAssignee::getAssignee)
+                .collect(Collectors.toList());
+
+        return findIssues.stream()
+                .map(issue -> ResponseIssueDto.of(issue, labels, assignees))
+                .collect(Collectors.toList());
     }
-//
-//
+
     public ResponseReadAllIssueDto getAllIssueData(List<ResponseIssueDto> issues) {
         long openIssueCount = issues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.OPEN)).count();
         long closedIssueCount = issues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.CLOSE)).count();

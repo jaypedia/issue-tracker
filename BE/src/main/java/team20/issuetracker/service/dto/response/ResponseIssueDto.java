@@ -38,7 +38,7 @@ public class ResponseIssueDto {
         this.assignees = assignees;
     }
 
-    public static ResponseIssueDto of(Issue issue) {
+    public static ResponseIssueDto of(Issue issue, List<Label> label, List<Assignee> assignee) {
         return new ResponseIssueDto(
                 issue.getId(),
                 issue.getTitle(),
@@ -46,16 +46,7 @@ public class ResponseIssueDto {
                 issue.getCreatedAt(),
                 issue.getStatus(),
                 issue.getMilestone().getTitle(),
-
-                issue.getIssueLabels().stream()
-                        .map(IssueLabel::getLabel)
-                        .map(ResponseLabelDto::from)
-                        .collect(Collectors.toList()),
-
-                issue.getIssueAssignees().stream()
-                        .map(IssueAssignee::getAssignee)
-                        .map(ResponseAssigneeDto::from)
-                        .collect(Collectors.toList())
-        );
+                label.stream().map(ResponseLabelDto::from).collect(Collectors.toList()),
+                assignee.stream().map(ResponseAssigneeDto::from).collect(Collectors.toList()));
     }
 }

@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
+import team20.issuetracker.service.LabelService;
 import team20.issuetracker.service.dto.request.RequestLabelDto;
 import team20.issuetracker.service.dto.response.ResponseLabelsDto;
-import team20.issuetracker.service.LabelService;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,8 +24,9 @@ public class LabelController {
     private final LabelService labelService;
 
     @GetMapping
-    public ResponseEntity<ResponseLabelsDto> findAllLabels() {
-        ResponseLabelsDto labels = labelService.findAll();
+    public ResponseEntity<ResponseLabelsDto> findAllLabels(HttpServletRequest request) {
+        String oauthId = request.getAttribute("oauthId").toString();
+        ResponseLabelsDto labels = labelService.findAll(oauthId);
         return ResponseEntity.ok(labels);
     }
 

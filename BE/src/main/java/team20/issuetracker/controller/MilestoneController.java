@@ -33,9 +33,9 @@ public class MilestoneController {
 
     @GetMapping
     public ResponseEntity<ResponseReadAllMilestonesDto> read(HttpServletRequest request) {
-        String accessToken = JwtUtils.tokenExtraction(request, HttpHeaders.AUTHORIZATION);
-        List<ResponseMilestoneDto> responseMilestoneDto = milestoneService.findAll(accessToken);
-        ResponseReadAllMilestonesDto responseReadAllMilestonesDto = milestoneService.getAllMilestoneData(responseMilestoneDto);
+        String oauthId = request.getAttribute("oauthId").toString();
+        List<ResponseMilestoneDto> responseMilestoneDtos = milestoneService.findAll(oauthId);
+        ResponseReadAllMilestonesDto responseReadAllMilestonesDto = milestoneService.getAllMilestoneData(responseMilestoneDtos);
 
         return ResponseEntity.ok(responseReadAllMilestonesDto);
     }

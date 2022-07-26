@@ -41,9 +41,8 @@ public class MilestoneService {
     }
 
     @Transactional(readOnly = true)
-    public List<ResponseMilestoneDto> findAll(String accessToken) {
-        String authorId = JwtUtils.decodingToken(accessToken, key).getId();
-        List<Milestone> findMilestones = milestoneRepository.findAllByAuthorId(authorId);
+    public List<ResponseMilestoneDto> findAll(String oauthId) {
+        List<Milestone> findMilestones = milestoneRepository.findAllByAuthorId(oauthId);
 
         return findMilestones.stream()
                 .map(ResponseMilestoneDto::of).collect(Collectors.toList());

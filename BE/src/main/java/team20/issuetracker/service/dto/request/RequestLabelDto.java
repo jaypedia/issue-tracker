@@ -5,8 +5,10 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class RequestLabelDto {
 
     @NotEmpty
@@ -20,7 +22,7 @@ public class RequestLabelDto {
     @Size(max = 100, message = "Label의 설명은 100글자를 넘을 수 없습니다.")
     private String description;
 
-    public RequestLabelDto(String title, String backgroundColor, String textColor, String description) {
+    private RequestLabelDto(String title, String backgroundColor, String textColor, String description) {
         this.title = title;
         this.backgroundColor = backgroundColor;
         this.textColor = textColor;

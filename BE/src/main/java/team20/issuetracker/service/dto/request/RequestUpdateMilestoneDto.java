@@ -9,11 +9,13 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import team20.issuetracker.domain.milestone.MilestoneStatus;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class RequestUpdateMilestoneDto {
 
     @NotEmpty

@@ -3,16 +3,7 @@ package team20.issuetracker.domain.issue;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -42,13 +33,13 @@ public class Issue extends AuditingFields {
     @JoinColumn(name = "milestone_id")
     private Milestone milestone;
 
-    @OneToMany(mappedBy = "issue")
+    @OneToMany(mappedBy = "issue", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<IssueAssignee> issueAssignees = new ArrayList<>();
 
-    @OneToMany(mappedBy = "issue")
+    @OneToMany(mappedBy = "issue", fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "issue")
+    @OneToMany(mappedBy = "issue", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<IssueLabel> issueLabels = new ArrayList<>();
 
     private Issue(String title, String content, Milestone milestone) {

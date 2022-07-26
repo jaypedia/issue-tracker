@@ -32,4 +32,8 @@ public class IssueAssignee {
     public static IssueAssignee of(Issue issue, Assignee assignee) {
         return new IssueAssignee(issue, assignee);
     }
+
+    public static IssueAssignee from(Assignee assignee) {
+        return new IssueAssignee(null, assignee);
+    }
 }

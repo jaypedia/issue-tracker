@@ -22,7 +22,7 @@ public class LabelService {
 
     public ResponseLabelsDto findAll(String authorId) {
         List<ResponseLabelDto> labels = labelRepository.findAllByAuthorId(authorId).stream()
-                .map(ResponseLabelDto::form)
+                .map(ResponseLabelDto::from)
                 .collect(Collectors.toList());
         return ResponseLabelsDto.from(labels);
     }

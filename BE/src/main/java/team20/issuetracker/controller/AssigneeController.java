@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import team20.issuetracker.service.AssigneeService;
 import team20.issuetracker.service.dto.response.ResponseAssigneesDto;
 
-
 @RequestMapping("/assignees")
 @RequiredArgsConstructor
 @RestController

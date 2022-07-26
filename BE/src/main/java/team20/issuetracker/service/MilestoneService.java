@@ -17,16 +17,12 @@ import team20.issuetracker.service.dto.request.RequestSaveMilestoneDto;
 import team20.issuetracker.service.dto.request.RequestUpdateMilestoneDto;
 import team20.issuetracker.service.dto.response.ResponseMilestoneDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllMilestonesDto;
-import team20.issuetracker.util.JwtUtils;
 
 @RequiredArgsConstructor
 @Service
 public class MilestoneService {
 
     public final MilestoneRepository milestoneRepository;
-
-    @Value(value = "${jwt.secretKey}")
-    private String key;
 
     @Transactional
     public Long save(RequestSaveMilestoneDto requestSaveMilestoneDto) {

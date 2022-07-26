@@ -2,11 +2,14 @@ package team20.issuetracker.service.dto.response;
 
 import java.time.LocalDate;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneStatus;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ResponseMilestoneDto {
 
     private Long id;

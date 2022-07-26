@@ -1,13 +1,15 @@
 package team20.issuetracker.domain.assginee;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import team20.issuetracker.domain.issue.IssueAssignee;
+import team20.issuetracker.domain.issue.IssueLabel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,4 +22,7 @@ public class Assignee {
 
     private String image;
     private String title;
+
+    @OneToMany(mappedBy = "assignee", cascade = CascadeType.ALL)
+    public List<IssueAssignee> issueAssignees = new ArrayList<>();
 }

@@ -1,10 +1,13 @@
 package team20.issuetracker.service.dto.response;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ResponseReadAllMilestonesDto {
 
     private int allMilestoneCount;

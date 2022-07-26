@@ -23,7 +23,7 @@ public class ResponseLabelDto {
         this.textColor = label.getTextColor();
     }
 
-    public static ResponseLabelDto form(Label label) {
+    public static ResponseLabelDto from(Label label) {
         return new ResponseLabelDto(label.getId(),
                 label.getTitle(),
                 label.getDescription(),

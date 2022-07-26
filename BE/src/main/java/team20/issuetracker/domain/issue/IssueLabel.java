@@ -32,4 +32,8 @@ public class IssueLabel {
     public static IssueLabel of(Issue issue, Label label) {
         return new IssueLabel(issue, label);
     }
+
+    public static IssueLabel from(Label label) {
+        return new IssueLabel(null, label);
+    }
 }

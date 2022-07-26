@@ -76,8 +76,7 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
 
         try {
-            String validatedToken = validateTokeType(token);
-            Jws<Claims> claims = Jwts.parser().setSigningKey(this.secretKey).parseClaimsJws(validatedToken);
+            Jws<Claims> claims = Jwts.parser().setSigningKey(this.secretKey).parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());
         } catch (SignatureException e) {
             throw new MyJwtException("서명을 확인할 수 없는 토큰입니다.", HttpStatus.UNAUTHORIZED);
@@ -92,7 +91,7 @@ public class JwtTokenProvider {
         }
     }
 
-    private String validateTokeType(String token) {
+    public String validateTokeType(String token) {
         String tokenType = token.split(" ")[0];
         if (!tokenType.equals(TOKEN_TYPE)) {
             throw new MyJwtException("토큰 타입이 유효하지 않습니다.", HttpStatus.BAD_REQUEST);

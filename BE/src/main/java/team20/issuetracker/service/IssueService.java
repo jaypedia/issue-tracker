@@ -16,6 +16,7 @@ import team20.issuetracker.service.dto.response.ResponseReadAllIssueDto;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -54,18 +55,18 @@ public class IssueService {
     }
 
     @Transactional(readOnly = true)
-    public List<ResponseIssueDto> findAll(String oauthId) {
-        List<Issue> findIssues = issueRepository.findAllByAuthorId(oauthId);
-        List<IssueLabel> issueLabels = issueLabelRepository.findAll();
-        List<IssueAssignee> issueAssignees = issueAssigneeRepository.findAll();
+    public List<ResponseIssueDto> findAll() {
+        List<Issue> findIssues = issueRepository.findAll();
+        Set<IssueLabel> issueLabels = issueLabelRepository.findAllTest();
+        Set<IssueAssignee> issueAssignees = issueAssigneeRepository.findAllTest();
 
-        List<Label> labels = issueLabels.stream()
+        Set<Label> labels = issueLabels.stream()
                 .map(IssueLabel::getLabel)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
 
-        List<Assignee> assignees = issueAssignees.stream()
+        Set<Assignee> assignees = issueAssignees.stream()
                 .map(IssueAssignee::getAssignee)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
 
         return findIssues.stream()
                 .map(issue -> ResponseIssueDto.of(issue, labels, assignees))

@@ -1,7 +1,7 @@
 package team20.issuetracker.domain.label;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -33,16 +33,16 @@ public class Label extends AuditingFields {
     @Column(length = 100)
     private String description;
 
-    @OneToMany(mappedBy = "label", cascade = CascadeType.ALL)
-    public List<IssueLabel> issueLabels = new ArrayList<>();
+    @OneToMany(mappedBy = "label")
+    public Set<IssueLabel> issueLabels = new HashSet<>();
 
 
     public static Label of(String title, String textColor, String backgroundColor, String description) {
-        return new Label(null, title, textColor, backgroundColor, description, List.of());
+        return new Label(null, title, textColor, backgroundColor, description, Set.of());
     }
 
     public static Label of(Long id, String title, String textColor, String backgroundColor, String description) {
-        return new Label(id, title, textColor, backgroundColor, description, List.of());
+        return new Label(id, title, textColor, backgroundColor, description, Set.of());
     }
 
     public void update(RequestLabelDto requestLabelDto) {

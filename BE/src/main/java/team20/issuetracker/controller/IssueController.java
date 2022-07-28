@@ -28,8 +28,7 @@ public class IssueController {
     // TODO - Issue 전체 조회
     @GetMapping
     public ResponseEntity<ResponseReadAllIssueDto> read(HttpServletRequest request) {
-        String oauthId = request.getAttribute("oauthId").toString();
-        List<ResponseIssueDto> responseIssueDtos = issueService.findAll(oauthId);
+        List<ResponseIssueDto> responseIssueDtos = issueService.findAll();
         ResponseReadAllIssueDto responseReadAllIssuesDto = issueService.getAllIssueData(responseIssueDtos);
 
         return ResponseEntity.ok(responseReadAllIssuesDto);

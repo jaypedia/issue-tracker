@@ -10,6 +10,7 @@ import team20.issuetracker.service.dto.response.ResponseIssueDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllIssueDto;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -52,7 +53,8 @@ public class IssueController {
     // TODO - 특정 Issue Title 변경
     //  RequestUpdateIssueTitleDto @Valid 추가해서 Validation 필요
     @PostMapping("/{id}")
-    public ResponseEntity<Long> updateTitle(@PathVariable Long id, @RequestBody RequestUpdateIssueTitleDto requestUpdateIssueTitleDto) {
+    public ResponseEntity<Long> updateTitle(@PathVariable Long id,
+                                            @Valid @RequestBody RequestUpdateIssueTitleDto requestUpdateIssueTitleDto) {
         Long updateIssueId = issueService.updateTitle(id, requestUpdateIssueTitleDto);
 
         return ResponseEntity.ok(updateIssueId);

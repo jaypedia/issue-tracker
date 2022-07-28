@@ -17,6 +17,7 @@ import NotFound from '@/pages/NotFound';
 import GlobalStyle from '@/styles/GlobalStyle';
 import { DARK, LIGHT } from '@/styles/theme';
 import { getDefaultTheme } from '@/utils/mode';
+import '@/assets/fonts/index.css';
 
 const queryClient = new QueryClient();
 

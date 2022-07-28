@@ -56,10 +56,10 @@
     ],
     "no-console": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
-    "import/extensions": ["error", "never", { "png": "always", "type": "always" }],
+    "import/extensions": ["error", "never", { "png": "always", "type": "always", "css": "always" }],
     "import/prefer-default-export": "off",
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
-    "react/require-default-props": 0,
+    "react/require-default-props": "off",
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
   },
   "settings": {

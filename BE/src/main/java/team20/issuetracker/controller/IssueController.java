@@ -34,5 +34,13 @@ public class IssueController {
         return ResponseEntity.ok(responseReadAllIssuesDto);
     }
 
+    // TODO - Issue 상세 조회
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseIssueDto> detail(@PathVariable Long id, HttpServletRequest request) {
+        String oauthId = request.getAttribute("oauthId").toString();
+        ResponseIssueDto responseIssueDto = issueService.detail(oauthId, id);
+
+        return ResponseEntity.ok(responseIssueDto);
+    }
 
 }

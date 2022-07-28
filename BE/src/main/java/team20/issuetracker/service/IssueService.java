@@ -57,8 +57,8 @@ public class IssueService {
     @Transactional(readOnly = true)
     public List<ResponseIssueDto> findAll() {
         List<Issue> findIssues = issueRepository.findAll();
-        Set<IssueLabel> issueLabels = issueLabelRepository.findAllTest();
-        Set<IssueAssignee> issueAssignees = issueAssigneeRepository.findAllTest();
+        List<IssueLabel> issueLabels = issueLabelRepository.findAllTest();
+        List<IssueAssignee> issueAssignees = issueAssigneeRepository.findAllTest();
 
         Set<Label> labels = issueLabels.stream()
                 .map(IssueLabel::getLabel)
@@ -79,5 +79,24 @@ public class IssueService {
         long labelCount = issues.stream().map(issue -> issue.getLabels().size()).count();
 
         return ResponseReadAllIssueDto.of(openIssueCount, closedIssueCount, labelCount, issues);
+    }
+
+    @Transactional(readOnly = true)
+    public ResponseIssueDto detail(String oauthId, Long id) {
+        Issue findIssue = issueRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("해당 Issue 는 존재하지 않습니다"));
+
+        List<IssueLabel> issueLabels = issueLabelRepository.findAllById(id);
+        List<IssueAssignee> issueAssignees = issueAssigneeRepository.findAllById(id);
+
+        Set<Label> labels = issueLabels.stream()
+                .map(IssueLabel::getLabel)
+                .collect(Collectors.toSet());
+
+        Set<Assignee> assignees = issueAssignees.stream()
+                .map(IssueAssignee::getAssignee)
+                .collect(Collectors.toSet());
+
+        return ResponseIssueDto.of(findIssue, labels, assignees);
     }
 }

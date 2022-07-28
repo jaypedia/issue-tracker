@@ -82,7 +82,7 @@ public class IssueService {
     }
 
     @Transactional(readOnly = true)
-    public ResponseIssueDto detail(String oauthId, Long id) {
+    public ResponseIssueDto detail(Long id) {
         Issue findIssue = issueRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("해당 Issue 는 존재하지 않습니다"));
 
@@ -98,5 +98,13 @@ public class IssueService {
                 .collect(Collectors.toSet());
 
         return ResponseIssueDto.of(findIssue, labels, assignees);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Issue findIssue = issueRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("해당 Issue 는 존재하지 않습니다."));
+
+        issueRepository.delete(findIssue);
     }
 }

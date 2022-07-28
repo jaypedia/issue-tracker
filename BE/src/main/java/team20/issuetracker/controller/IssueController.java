@@ -36,11 +36,16 @@ public class IssueController {
 
     // TODO - Issue 상세 조회
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseIssueDto> detail(@PathVariable Long id, HttpServletRequest request) {
-        String oauthId = request.getAttribute("oauthId").toString();
-        ResponseIssueDto responseIssueDto = issueService.detail(oauthId, id);
+    public ResponseEntity<ResponseIssueDto> detail(@PathVariable Long id) {
+        ResponseIssueDto responseIssueDto = issueService.detail(id);
 
         return ResponseEntity.ok(responseIssueDto);
+    }
+
+    // TODO - 특정 Issue 삭제
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        issueService.delete(id);
     }
 
 }

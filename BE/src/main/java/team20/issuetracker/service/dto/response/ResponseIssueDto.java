@@ -5,6 +5,7 @@ import team20.issuetracker.domain.assginee.Assignee;
 import team20.issuetracker.domain.issue.Issue;
 import team20.issuetracker.domain.issue.IssueStatus;
 import team20.issuetracker.domain.label.Label;
+import team20.issuetracker.domain.milestone.Milestone;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -36,13 +37,19 @@ public class ResponseIssueDto {
     }
 
     public static ResponseIssueDto of(Issue issue, Set<Label> label, Set<Assignee> assignee) {
+        String milestoneTitle = " ";
+
+        if (issue.getMilestone() != null) {
+            milestoneTitle = issue.getMilestone().getTitle();
+        }
+
         return new ResponseIssueDto(
                 issue.getId(),
                 issue.getTitle(),
                 issue.getAuthorId(),
                 issue.getCreatedAt(),
                 issue.getStatus(),
-                issue.getMilestone().getTitle(),
+                milestoneTitle,
                 label.stream().map(ResponseLabelDto::from).collect(Collectors.toSet()),
                 assignee.stream().map(ResponseAssigneeDto::from).collect(Collectors.toSet()));
     }

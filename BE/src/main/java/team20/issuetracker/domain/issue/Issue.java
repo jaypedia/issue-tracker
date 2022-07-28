@@ -12,6 +12,7 @@ import team20.issuetracker.domain.assginee.Assignee;
 import team20.issuetracker.domain.comment.Comment;
 import team20.issuetracker.domain.label.Label;
 import team20.issuetracker.domain.milestone.Milestone;
+import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleDto;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -49,6 +50,10 @@ public class Issue extends AuditingFields {
 
     public static Issue of(String title, String content, Milestone milestone) {
         return new Issue(title, content, milestone);
+    }
+
+    public void updateTitle(RequestUpdateIssueTitleDto requestUpdateIssueTitleDto) {
+        this.title = requestUpdateIssueTitleDto.getTitle();
     }
 
     public void addAssignees(List<Assignee> assignees) {

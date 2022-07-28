@@ -11,6 +11,7 @@ import team20.issuetracker.domain.label.LabelRepository;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
 import team20.issuetracker.service.dto.request.RequestSaveIssueDto;
+import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleDto;
 import team20.issuetracker.service.dto.response.ResponseIssueDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllIssueDto;
 
@@ -106,5 +107,15 @@ public class IssueService {
                 .orElseThrow(() -> new NoSuchElementException("해당 Issue 는 존재하지 않습니다."));
 
         issueRepository.delete(findIssue);
+    }
+
+    @Transactional
+    public Long updateTitle(Long id, RequestUpdateIssueTitleDto requestUpdateIssueTitleDto) {
+        Issue findIssue = issueRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("해당 Issue 는 존재하지 않습니다."));
+
+        findIssue.updateTitle(requestUpdateIssueTitleDto);
+
+        return findIssue.getId();
     }
 }

@@ -3,8 +3,9 @@ package team20.issuetracker.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import team20.issuetracker.service.dto.request.RequestSaveIssueDto;
 import team20.issuetracker.service.IssueService;
+import team20.issuetracker.service.dto.request.RequestSaveIssueDto;
+import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleDto;
 import team20.issuetracker.service.dto.response.ResponseIssueDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllIssueDto;
 
@@ -48,4 +49,12 @@ public class IssueController {
         issueService.delete(id);
     }
 
+    // TODO - 특정 Issue Title 변경
+    //  RequestUpdateIssueTitleDto @Valid 추가해서 Validation 필요
+    @PostMapping("/{id}")
+    public ResponseEntity<Long> updateTitle(@PathVariable Long id, @RequestBody RequestUpdateIssueTitleDto requestUpdateIssueTitleDto) {
+        Long updateIssueId = issueService.updateTitle(id, requestUpdateIssueTitleDto);
+
+        return ResponseEntity.ok(updateIssueId);
+    }
 }

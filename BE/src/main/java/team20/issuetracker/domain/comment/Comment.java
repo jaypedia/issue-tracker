@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import team20.issuetracker.domain.AuditingFields;
 import team20.issuetracker.domain.issue.Issue;
+import team20.issuetracker.service.dto.request.RequestCommentDto;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -43,6 +44,11 @@ public class Comment extends AuditingFields {
 
     public static Comment of(String memberId, String profileImageUrl, String content, Issue issue) {
         return new Comment(memberId, profileImageUrl, content, issue);
+    }
+
+    public Long update(RequestCommentDto requestCommentDto) {
+        this.content = requestCommentDto.getContent();
+        return this.id;
     }
 }
 

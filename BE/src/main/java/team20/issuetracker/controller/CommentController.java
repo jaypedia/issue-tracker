@@ -1,6 +1,7 @@
 package team20.issuetracker.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,5 +24,10 @@ public class CommentController {
     public ResponseEntity<Long> save(@RequestBody RequestCommentDto requestCommentDto, HttpServletRequest request) {
         String oauthId = request.getAttribute("oauthId").toString();
         return ResponseEntity.ok(commentService.save(requestCommentDto, oauthId));
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<Long> update(@RequestBody RequestCommentDto requestCommentDto, @PathVariable Long id) {
+        return ResponseEntity.ok(commentService.update(requestCommentDto, id));
     }
 }

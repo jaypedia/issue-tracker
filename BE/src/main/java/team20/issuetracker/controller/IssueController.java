@@ -29,11 +29,31 @@ public class IssueController {
 
     // TODO - Issue 전체 조회
     @GetMapping
-    public ResponseEntity<ResponseReadAllIssueDto> read(HttpServletRequest request) {
+    public ResponseEntity<ResponseReadAllIssueDto> read() {
         List<ResponseIssueDto> responseIssueDtos = issueService.findAll();
         ResponseReadAllIssueDto responseReadAllIssuesDto = issueService.getAllIssueData(responseIssueDtos);
 
         return ResponseEntity.ok(responseReadAllIssuesDto);
+    }
+
+    // TODO - Open Issue 전체 조회
+    @GetMapping("/open")
+    public ResponseEntity<ResponseReadAllIssueDto> readOpenIssue() {
+        List<ResponseIssueDto> findAllIssues = issueService.findAll();
+        List<ResponseIssueDto> findAllOpenIssues = issueService.findAllOpenIssue();
+        ResponseReadAllIssueDto responseReadAllOpenIssueDto = issueService.getAllIOpenIssueData(findAllOpenIssues, findAllIssues);
+
+        return ResponseEntity.ok(responseReadAllOpenIssueDto);
+    }
+
+    // TODO - Close Issue 전체 조회
+    @GetMapping("/close")
+    public ResponseEntity<ResponseReadAllIssueDto> readCloseIssue() {
+        List<ResponseIssueDto> findAllIssues = issueService.findAll();
+        List<ResponseIssueDto> findAllCloseIssues = issueService.findAllCloseIssue();
+        ResponseReadAllIssueDto responseReadAllCloseIssueDto = issueService.getAllICloseIssueData(findAllCloseIssues, findAllIssues);
+
+        return ResponseEntity.ok(responseReadAllCloseIssueDto);
     }
 
     // TODO - Issue 상세 조회

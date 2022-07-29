@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IssueAssigneeRepository extends JpaRepository<IssueAssignee, Long> {
     @Query("select i from IssueAssignee i join fetch i.assignee")
-    List<IssueAssignee> findAllTest();
+    List<IssueAssignee> findAllAssignees();
 
     @Query("select ia from IssueAssignee ia join fetch ia.assignee where ia.issue.id = :issueId")
     List<IssueAssignee> findAllById(

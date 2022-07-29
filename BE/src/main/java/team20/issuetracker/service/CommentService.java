@@ -41,4 +41,9 @@ public class CommentService {
         });
         return savedComment.update(requestCommentDto);
     }
+
+    @Transactional
+    public void delete(Long id) {
+        commentRepository.deleteById(id);
+    }
 }

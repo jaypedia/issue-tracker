@@ -31,8 +31,9 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         String jwtAccessToken = request.getHeader(HttpHeaders.AUTHORIZATION);
 
+        if (isPreFlightRequest((ServerHttpRequest) request)) return true;
+
         if (jwtAccessToken != null) {
-            if (isPreFlightRequest((ServerHttpRequest) request)) return true;
             String token = jwtTokenProvider.validateTokeType(jwtAccessToken);
             jwtTokenProvider.validateToken(token);
 
@@ -47,9 +48,6 @@ public class LoginInterceptor implements HandlerInterceptor {
     }
 
     private static boolean isPreFlightRequest(ServerHttpRequest request) {
-        if (CorsUtils.isPreFlightRequest(request)) {
-            return true;
-        }
-        return false;
+        return CorsUtils.isPreFlightRequest(request);
     }
 }

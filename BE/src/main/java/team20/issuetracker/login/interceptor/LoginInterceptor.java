@@ -2,9 +2,8 @@ package team20.issuetracker.login.interceptor;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
-import org.springframework.web.cors.reactive.CorsUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +30,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         String jwtAccessToken = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if (isPreFlightRequest((ServerHttpRequest) request)) return true;
+        if (isPreFlightRequest(request)) return true;
 
         if (jwtAccessToken != null) {
             String token = jwtTokenProvider.validateTokeType(jwtAccessToken);
@@ -47,7 +46,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         return false;
     }
 
-    private static boolean isPreFlightRequest(ServerHttpRequest request) {
-        return CorsUtils.isPreFlightRequest(request);
+    private static boolean isPreFlightRequest(HttpServletRequest request) {
+        return HttpMethod.OPTIONS.matches(request.getMethod());
     }
 }

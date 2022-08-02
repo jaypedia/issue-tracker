@@ -77,11 +77,10 @@ public class IssueService {
 
     // TODO 특정 검색어에 포함되는 모든 이슈 조회
     @Transactional(readOnly = true)
-    public List<ResponseIssueDto> findAllSearchIssue(String title) {
+    public List<ResponseIssueDto> findAllSearchIssues(String title) {
         List<Issue> findSearchIssues = issueRepository.findAllSearchIssues(title);
 
         List<IssueLabel> issueLabels = issueLabelRepository.findAllIssueLabels().stream()
-                .peek(issueLabel -> System.out.println(issueLabel.getIssue().getTitle()))
                 .filter(issueLabel -> issueLabel.getIssue().getTitle().contains(title))
                 .collect(Collectors.toList());
 
@@ -93,6 +92,32 @@ public class IssueService {
         Set<Assignee> assignees = issueAssignees.stream().map(IssueAssignee::getAssignee).collect(Collectors.toSet());
 
         return findSearchIssues.stream()
+                .map(searchIssue -> ResponseIssueDto.of(searchIssue, labels, assignees))
+                .collect(Collectors.toList());
+    }
+
+    // TODO 특정 Title 에 해당하며 열려있는 모든 이슈 검색
+    @Transactional(readOnly = true)
+    public List<ResponseIssueDto> findAllSearchStatusIssues(String title, String issueStatus) {
+        List<Issue> findAllSearchOpenIssues = issueRepository.findAll().stream()
+                .filter(issue -> issue.getStatus().toString().equals(issueStatus.toUpperCase()))
+                .filter(issue -> issue.getTitle().contains(title))
+                .collect(Collectors.toList());
+
+        List<IssueLabel> issueLabels = issueLabelRepository.findAllIssueLabels().stream()
+                .filter(issueLabel -> issueLabel.getIssue().getStatus().toString().equals(issueStatus.toUpperCase()))
+                .filter(issueLabel -> issueLabel.getIssue().getTitle().contains(title))
+                .collect(Collectors.toList());
+
+        List<IssueAssignee> issueAssignees = issueAssigneeRepository.findAllAssignees().stream()
+                .filter(issueAssignee -> issueAssignee.getIssue().getStatus().toString().equals(issueStatus.toUpperCase()))
+                .filter(issueAssignee -> issueAssignee.getIssue().getTitle().contains(title))
+                .collect(Collectors.toList());
+
+        Set<Label> labels = issueLabels.stream().map(IssueLabel::getLabel).collect(Collectors.toSet());
+        Set<Assignee> assignees = issueAssignees.stream().map(IssueAssignee::getAssignee).collect(Collectors.toSet());
+
+        return findAllSearchOpenIssues.stream()
                 .map(searchIssue -> ResponseIssueDto.of(searchIssue, labels, assignees))
                 .collect(Collectors.toList());
     }
@@ -214,7 +239,7 @@ public class IssueService {
         return ResponseReadAllIssueDto.of(openIssueCount, closedIssueCount, labelCount, findAllCloseIssues);
     }
 
-    public ResponseReadAllIssueDto getAllISearchIssueData(List<ResponseIssueDto> findAllSearchIssues) {
+    public ResponseReadAllIssueDto getAllSearchIssueData(List<ResponseIssueDto> findAllSearchIssues) {
         long openIssueCount = findAllSearchIssues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.OPEN)).count();
         long closedIssueCount = findAllSearchIssues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.CLOSE)).count();
         long labelCount = findAllSearchIssues.stream().map(issue -> issue.getLabels().size()).count();

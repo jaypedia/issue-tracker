@@ -56,15 +56,27 @@ public class IssueController {
     }
 
     // TODO - 특정 Title 로 모든 이슈 검색
-    @GetMapping("/search")
-    public ResponseEntity<ResponseReadAllIssueDto> searchIssueTitle(@RequestParam String title) {
-        List<ResponseIssueDto> findAllSearchIssues = issueService.findAllSearchIssue(title);
-        ResponseReadAllIssueDto responseReadAllSearchIssueDto = issueService.getAllISearchIssueData(findAllSearchIssues);
+    //  title 에 대한 검증 필요
+    @GetMapping(value = "/search", params = "title")
+    public ResponseEntity<ResponseReadAllIssueDto> searchIssuesByTitle(@RequestParam String title) {
+        List<ResponseIssueDto> findAllSearchIssues = issueService.findAllSearchIssues(title);
+        ResponseReadAllIssueDto responseReadAllSearchIssueDto = issueService.getAllSearchIssueData(findAllSearchIssues);
 
         return ResponseEntity.ok(responseReadAllSearchIssueDto);
     }
 
+    // TODO - 특정 Title 에 해당하며 열려있거나 닫혀있는 이슈를 판단해 조회
+    //  title, issueStatus 에 대한 검증 필요
+    @GetMapping(value = "/search", params = {"title", "issueStatus"})
+    public ResponseEntity<ResponseReadAllIssueDto> searchStatusIssuesByTitle(@RequestParam String title, @RequestParam String issueStatus) {
+        List<ResponseIssueDto> findAllSearchOpenIssues = issueService.findAllSearchStatusIssues(title, issueStatus);
+        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.getAllSearchIssueData(findAllSearchOpenIssues);
+
+        return ResponseEntity.ok(responseReadAllIssueDto);
+    }
+
     // TODO - Issue 상세 조회
+    //  id 에 대한 검증 필요
     @GetMapping("/{id}")
     public ResponseEntity<ResponseIssueDto> detail(@PathVariable Long id) {
         ResponseIssueDto responseIssueDto = issueService.detail(id);
@@ -73,12 +85,14 @@ public class IssueController {
     }
 
     // TODO - 특정 Issue 삭제
+    //  id 에 대한 검증 필요
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         issueService.delete(id);
     }
 
     // TODO - 특정 Issue Title 변경
+    //  id 에 대한 검증 필요
     @PostMapping("/{id}")
     public ResponseEntity<Long> updateTitle(@PathVariable Long id,
                                             @Valid @RequestBody RequestUpdateIssueTitleDto requestUpdateIssueTitleDto) {

@@ -75,6 +75,28 @@ public class IssueService {
                 .collect(Collectors.toList());
     }
 
+    // TODO 특정 검색어에 포함되는 모든 이슈 조회
+    @Transactional(readOnly = true)
+    public List<ResponseIssueDto> findAllSearchIssue(String title) {
+        List<Issue> findSearchIssues = issueRepository.findAllSearchIssues(title);
+
+        List<IssueLabel> issueLabels = issueLabelRepository.findAllIssueLabels().stream()
+                .peek(issueLabel -> System.out.println(issueLabel.getIssue().getTitle()))
+                .filter(issueLabel -> issueLabel.getIssue().getTitle().contains(title))
+                .collect(Collectors.toList());
+
+        List<IssueAssignee> issueAssignees = issueAssigneeRepository.findAllAssignees().stream()
+                .filter(issueAssignee -> issueAssignee.getIssue().getTitle().contains(title))
+                .collect(Collectors.toList());
+
+        Set<Label> labels = issueLabels.stream().map(IssueLabel::getLabel).collect(Collectors.toSet());
+        Set<Assignee> assignees = issueAssignees.stream().map(IssueAssignee::getAssignee).collect(Collectors.toSet());
+
+        return findSearchIssues.stream()
+                .map(searchIssue -> ResponseIssueDto.of(searchIssue, labels, assignees))
+                .collect(Collectors.toList());
+    }
+
     // TODO Open 되어 있는 모든 이슈 조회
     @Transactional(readOnly = true)
     public List<ResponseIssueDto> findAllOpenIssue() {
@@ -166,6 +188,7 @@ public class IssueService {
         170 ~ 176 Line - 모든 이슈 Response
         178 ~ 184 Line - 모든 열린 이슈 Response
         186 ~ 192 Line - 모든 닫힌 이슈 Response
+        201 ~ 206 Line - 검색된 키워드의 전체 이슈
      */
     public ResponseReadAllIssueDto getAllIssueData(List<ResponseIssueDto> issues) {
         long openIssueCount = issues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.OPEN)).count();
@@ -189,5 +212,13 @@ public class IssueService {
         long labelCount = findAllIssues.stream().map(issue -> issue.getLabels().size()).count();
 
         return ResponseReadAllIssueDto.of(openIssueCount, closedIssueCount, labelCount, findAllCloseIssues);
+    }
+
+    public ResponseReadAllIssueDto getAllISearchIssueData(List<ResponseIssueDto> findAllSearchIssues) {
+        long openIssueCount = findAllSearchIssues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.OPEN)).count();
+        long closedIssueCount = findAllSearchIssues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.CLOSE)).count();
+        long labelCount = findAllSearchIssues.stream().map(issue -> issue.getLabels().size()).count();
+
+        return ResponseReadAllIssueDto.of(openIssueCount, closedIssueCount, labelCount, findAllSearchIssues);
     }
 }

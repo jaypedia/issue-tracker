@@ -9,7 +9,6 @@ import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleDto;
 import team20.issuetracker.service.dto.response.ResponseIssueDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllIssueDto;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -56,6 +55,15 @@ public class IssueController {
         return ResponseEntity.ok(responseReadAllCloseIssueDto);
     }
 
+    // TODO - 특정 Title 로 모든 이슈 검색
+    @GetMapping("/search")
+    public ResponseEntity<ResponseReadAllIssueDto> searchIssueTitle(@RequestParam String title) {
+        List<ResponseIssueDto> findAllSearchIssues = issueService.findAllSearchIssue(title);
+        ResponseReadAllIssueDto responseReadAllSearchIssueDto = issueService.getAllISearchIssueData(findAllSearchIssues);
+
+        return ResponseEntity.ok(responseReadAllSearchIssueDto);
+    }
+
     // TODO - Issue 상세 조회
     @GetMapping("/{id}")
     public ResponseEntity<ResponseIssueDto> detail(@PathVariable Long id) {
@@ -71,7 +79,6 @@ public class IssueController {
     }
 
     // TODO - 특정 Issue Title 변경
-    //  RequestUpdateIssueTitleDto @Valid 추가해서 Validation 필요
     @PostMapping("/{id}")
     public ResponseEntity<Long> updateTitle(@PathVariable Long id,
                                             @Valid @RequestBody RequestUpdateIssueTitleDto requestUpdateIssueTitleDto) {

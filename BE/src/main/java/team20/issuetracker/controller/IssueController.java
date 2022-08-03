@@ -69,7 +69,10 @@ public class IssueController {
     // TODO - 특정 Title 에 해당하며 열려있거나 닫혀있는 이슈를 판단해 조회
     //  title, issueStatus 에 대한 검증 필요
     @GetMapping(value = "/search", params = {"title", "issueStatus"})
-    public ResponseEntity<ResponseReadAllIssueDto> searchStatusIssuesByTitle(@RequestParam String title, @RequestParam String issueStatus) {
+    public ResponseEntity<ResponseReadAllIssueDto> searchStatusIssuesByTitle(
+            @RequestParam String title,
+            @RequestParam String issueStatus) {
+
         List<ResponseIssueDto> findAllSearchOpenIssues = issueService.findAllSearchStatusIssues(title, issueStatus);
         ResponseReadAllIssueDto responseReadAllIssueDto = issueService.getAllSearchIssueData(findAllSearchOpenIssues);
 
@@ -84,6 +87,19 @@ public class IssueController {
         ResponseReadAllIssueDto responseReadAllIssuesDto = issueService.getAllIssueData(responseIssueDtos);
 
         return ResponseEntity.ok(responseReadAllIssuesDto);
+    }
+
+    // TODO - 내가 작성한 모든 열린 또는 닫힌 이슈 필터링 후 조회
+    @GetMapping(value = "/filter", params = "issueStatus")
+    public ResponseEntity<ResponseReadAllIssueDto> filterMyAllOpenIssues(
+            HttpServletRequest request,
+            @RequestParam String issueStatus) {
+
+        String oauthId = request.getAttribute("oauthId").toString();
+        List<ResponseIssueDto> responseIssueDtos = issueService.findAllMyOpenIssues(oauthId, issueStatus);
+        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.getAllIssueData(responseIssueDtos);
+
+        return ResponseEntity.ok(responseReadAllIssueDto);
     }
 
 

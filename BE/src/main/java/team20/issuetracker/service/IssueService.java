@@ -95,6 +95,31 @@ public class IssueService {
                 .collect(Collectors.toList());
     }
 
+    // TODO 내가 작성한 모든 열린 또는 닫힌 이슈 조회
+    @Transactional(readOnly = true)
+    public List<ResponseIssueDto> findAllMyOpenIssues(String oauthId, String issueStatus) {
+        List<Issue> findAllMyIssues = issueRepository.findAllMyIssues(oauthId).stream()
+                .filter(issue -> issue.getStatus().toString().equals(issueStatus.toUpperCase()))
+                .collect(Collectors.toList());
+
+        List<IssueLabel> findIssueLabels = issueLabelRepository.findAllIssueLabels().stream()
+                .filter(issueLabel -> issueLabel.getIssue().getAuthorId().equals(oauthId))
+                .filter(issueLabel -> issueLabel.getIssue().getStatus().toString().equals(issueStatus.toUpperCase()))
+                .collect(Collectors.toList());
+
+        List<IssueAssignee> findIssueAssignees = issueAssigneeRepository.findAllAssignees().stream()
+                .filter(issueAssignee -> issueAssignee.getIssue().getAuthorId().equals(oauthId))
+                .filter(issueAssignee -> issueAssignee.getIssue().getStatus().toString().equals(issueStatus.toUpperCase()))
+                .collect(Collectors.toList());
+
+        Set<Label> labels = findIssueLabels.stream().map(IssueLabel::getLabel).collect(Collectors.toSet());
+        Set<Assignee> assignees = findIssueAssignees.stream().map(IssueAssignee::getAssignee).collect(Collectors.toSet());
+
+        return findAllMyIssues.stream()
+                .map(issue -> ResponseIssueDto.of(issue, labels, assignees))
+                .collect(Collectors.toList());
+    }
+
     // TODO 특정 검색어에 포함되는 모든 이슈 조회
     @Transactional(readOnly = true)
     public List<ResponseIssueDto> findAllSearchIssues(String title) {

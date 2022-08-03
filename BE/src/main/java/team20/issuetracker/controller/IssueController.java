@@ -9,6 +9,7 @@ import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleDto;
 import team20.issuetracker.service.dto.response.ResponseIssueDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllIssueDto;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -74,6 +75,17 @@ public class IssueController {
 
         return ResponseEntity.ok(responseReadAllIssueDto);
     }
+
+    // TODO - 내가 작성한 모든 이슈 필터링 후 조회
+    @GetMapping(value = "/filter")
+    public ResponseEntity<ResponseReadAllIssueDto> filterMyAllIssues(HttpServletRequest request) {
+        String oauthId = request.getAttribute("oauthId").toString();
+        List<ResponseIssueDto> responseIssueDtos = issueService.findAllMyIssues(oauthId);
+        ResponseReadAllIssueDto responseReadAllIssuesDto = issueService.getAllIssueData(responseIssueDtos);
+
+        return ResponseEntity.ok(responseReadAllIssuesDto);
+    }
+
 
     // TODO - Issue 상세 조회
     //  id 에 대한 검증 필요

@@ -11,6 +11,5 @@ public interface IssueLabelRepository extends JpaRepository<IssueLabel, Long> {
     List<IssueLabel> findAllIssueLabels();
 
     @Query("select il from IssueLabel il join fetch il.label where il.issue.id = :issueId")
-    List<IssueLabel> findAllById(
-            @Param("issueId") Long id);
+    List<IssueLabel> findAllById(@Param("issueId") Long id);
 }

@@ -75,6 +75,35 @@ public class IssueService {
                 .collect(Collectors.toList());
     }
 
+    // TODO 내가 할당된 모든 이슈 조회
+    @Transactional(readOnly = true)
+    public List<ResponseIssueDto> findAssigneeByMeIssues(String oauthId) {
+
+        // 1,2,5,6,7,8 return / 즉, IssueAssignee 에서 assignee_id 가 1인 셀을 모두 가져온 것.
+        // 다른 메서드 진행방식과 다르게 IssueAssignee 에서 먼저 거른 뒤 해당하는 Issue 를 뽑아낸다.
+        List<IssueAssignee> findIssueAssignees = issueAssigneeRepository.findAllAssignees().stream()
+                .filter(issueAssignee -> issueAssignee.getAssignee().getAuthorId().equals(oauthId))
+                .collect(Collectors.toList());
+
+        List<IssueLabel> findIssueLabels = issueLabelRepository.findAll();
+
+        List<Issue> findIssues = findIssueAssignees.stream()
+                .map(IssueAssignee::getIssue)
+                .collect(Collectors.toList());
+
+        Set<Assignee> assignees = findIssueAssignees.stream()
+                .map(IssueAssignee::getAssignee)
+                .collect(Collectors.toSet());
+
+        Set<Label> labels = findIssueLabels.stream()
+                .map(IssueLabel::getLabel)
+                .collect(Collectors.toSet());
+
+        return findIssues.stream()
+                .map(issue -> ResponseIssueDto.of(issue, labels, assignees))
+                .collect(Collectors.toList());
+    }
+
     // TODO 내가 작성한 모든 이슈 조회
     @Transactional(readOnly = true)
     public List<ResponseIssueDto> findAllMyIssues(String oauthId) {
@@ -97,7 +126,7 @@ public class IssueService {
 
     // TODO 내가 작성한 모든 열린 또는 닫힌 이슈 조회
     @Transactional(readOnly = true)
-    public List<ResponseIssueDto> findAllMyOpenIssues(String oauthId, String issueStatus) {
+    public List<ResponseIssueDto> findAllMyStatusIssues(String oauthId, String issueStatus) {
         List<Issue> findAllMyIssues = issueRepository.findAllMyIssues(oauthId).stream()
                 .filter(issue -> issue.getStatus().toString().equals(issueStatus.toUpperCase()))
                 .collect(Collectors.toList());
@@ -284,11 +313,19 @@ public class IssueService {
         return ResponseReadAllIssueDto.of(openIssueCount, closedIssueCount, labelCount, findAllCloseIssues);
     }
 
-    public ResponseReadAllIssueDto getAllSearchIssueData(List<ResponseIssueDto> findAllSearchIssues) {
-        long openIssueCount = findAllSearchIssues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.OPEN)).count();
-        long closedIssueCount = findAllSearchIssues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.CLOSE)).count();
-        long labelCount = findAllSearchIssues.stream().map(issue -> issue.getLabels().size()).count();
+    public ResponseReadAllIssueDto getAllSearchStatusIssueData(List<ResponseIssueDto> findAllSearchIssues, List<ResponseIssueDto> findAllIssues) {
+        long openIssueCount = findAllIssues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.OPEN)).count();
+        long closedIssueCount = findAllIssues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.CLOSE)).count();
+        long labelCount = findAllIssues.stream().map(issue -> issue.getLabels().size()).count();
 
         return ResponseReadAllIssueDto.of(openIssueCount, closedIssueCount, labelCount, findAllSearchIssues);
+    }
+
+    public ResponseReadAllIssueDto getStatusFilterAllIssueData(List<ResponseIssueDto> responseIssueDtos, List<ResponseIssueDto> findAllIssues) {
+        long openIssueCount = findAllIssues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.OPEN)).count();
+        long closedIssueCount = findAllIssues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.CLOSE)).count();
+        long labelCount = findAllIssues.stream().map(issue -> issue.getLabels().size()).count();
+
+        return ResponseReadAllIssueDto.of(openIssueCount, closedIssueCount, labelCount, responseIssueDtos);
     }
 }

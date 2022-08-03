@@ -117,6 +117,21 @@ public class IssueController {
         return ResponseEntity.ok(responseReadAllIssueDto);
     }
 
+    // TODO - 내가 할당된 모든 열린 또는 닫힌 이슈 필터링 후 조회
+    //  issueStatus 검증 필요
+    @GetMapping(value = "/filter/AssigneeBy", params = {"issueStatus"})
+    public ResponseEntity<ResponseReadAllIssueDto> filterAssigneeByMeStatusIssue(
+            HttpServletRequest request,
+            @RequestParam String issueStatus) {
+
+        String oauthId = request.getAttribute("oauthId").toString();
+        List<ResponseIssueDto> findAllIssues = issueService.findAll();
+        List<ResponseIssueDto> responseIssueDtos = issueService.findAssigneeByMeStatusIssues(oauthId, issueStatus);
+        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.getStatusFilterAllIssueData(responseIssueDtos, findAllIssues);
+
+        return ResponseEntity.ok(responseReadAllIssueDto);
+    }
+
 
     // TODO - Issue 상세 조회
     //  id 에 대한 검증 필요

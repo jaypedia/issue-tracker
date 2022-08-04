@@ -80,8 +80,18 @@ public class IssueController {
         return ResponseEntity.ok(responseReadAllIssueDto);
     }
 
+    // TODO - 내가 댓글을 작성한 모든 이슈 필터링 후 조회
+//    @GetMapping("/filter/commentBy")
+//    public ResponseEntity<ResponseReadAllIssueDto> filterCommentByMeIssues(HttpServletRequest request) {
+//        String oauthId = request.getAttribute("oauthId").toString();
+//        List<ResponseIssueDto> responseIssueDtos = issueService.findCommentByMeIssues(oauthId);
+//        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.getAllIssueData(responseIssueDtos);
+//
+//        return ResponseEntity.ok(responseReadAllIssueDto);
+//    }
+
     // TODO - 내가 작성한 모든 이슈 필터링 후 조회
-    @GetMapping(value = "/filter/createBy")
+    @GetMapping("/filter/createBy")
     public ResponseEntity<ResponseReadAllIssueDto> filterMyAllIssues(HttpServletRequest request) {
         String oauthId = request.getAttribute("oauthId").toString();
         List<ResponseIssueDto> responseIssueDtos = issueService.findAllMyIssues(oauthId);
@@ -106,7 +116,7 @@ public class IssueController {
     }
 
     // TODO - 내가 할당된 모든 이슈 조회
-    @GetMapping(value = "/filter/AssigneeBy")
+    @GetMapping("/filter/AssigneeBy")
     public ResponseEntity<ResponseReadAllIssueDto> filterAssigneeByMeIssues(
             HttpServletRequest request) {
 

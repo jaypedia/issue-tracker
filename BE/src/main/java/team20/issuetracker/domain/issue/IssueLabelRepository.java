@@ -7,7 +7,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface IssueLabelRepository extends JpaRepository<IssueLabel, Long> {
-    @Query("select i from IssueLabel i join fetch i.label")
+
+    @Query("select il from IssueLabel il join fetch il.issue join fetch il.label")
     List<IssueLabel> findAllIssueLabels();
 
     @Query("select il from IssueLabel il join fetch il.label where il.issue.id = :issueId")

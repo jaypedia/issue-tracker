@@ -1,16 +1,18 @@
-import axios from 'axios';
+import { useRecoilState } from 'recoil';
 
 import * as S from './style';
 
 import CustomLink from '@/components/common/CustomLink';
-import { ISSUE_STATUS } from '@/constants/constants';
+import { ISSUE_STATUS, IssueStatusType } from '@/constants/constants';
 import ClosedIcon from '@/icons/Closed';
 import OpenIcon from '@/icons/Open';
+import { issueStatusState } from '@/stores/atoms/issue';
 
 type TabItemType = {
   isOpen?: boolean;
   issueCount?: number;
-  onClick: () => void;
+  isCurrentTab: boolean;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
 };
 
 type TabBarType = {
@@ -18,14 +20,9 @@ type TabBarType = {
   closedIssueCount?: number;
 };
 
-const handleTabClick = async (issueStatus: string) => {
-  const response = await axios.get(`/api/issues?issueStatus=${issueStatus}`);
-  console.log(response.data);
-};
-
-const TabItem = ({ isOpen, issueCount, onClick }: TabItemType) => {
+const TabItem = ({ isOpen, issueCount, onClick, isCurrentTab }: TabItemType) => {
   return (
-    <S.TabItem type="button" onClick={onClick}>
+    <S.TabItem type="button" onClick={onClick} isCurrentTab={isCurrentTab}>
       {isOpen ? (
         <>
           <OpenIcon />
@@ -40,7 +37,13 @@ const TabItem = ({ isOpen, issueCount, onClick }: TabItemType) => {
     </S.TabItem>
   );
 };
+
 const TabBar = ({ openIssueCount, closedIssueCount }: TabBarType) => {
+  const [issueStatus, setIssueStatus] = useRecoilState(issueStatusState);
+  const handleTabClick = async (currentIssueStatus: IssueStatusType) => {
+    setIssueStatus(currentIssueStatus);
+  };
+
   return (
     <S.Tabs>
       <CustomLink
@@ -50,6 +53,7 @@ const TabBar = ({ openIssueCount, closedIssueCount }: TabBarType) => {
             isOpen
             issueCount={openIssueCount}
             onClick={() => handleTabClick(ISSUE_STATUS.open)}
+            isCurrentTab={issueStatus === ISSUE_STATUS.open}
           />
         }
       />
@@ -59,6 +63,7 @@ const TabBar = ({ openIssueCount, closedIssueCount }: TabBarType) => {
           <TabItem
             issueCount={closedIssueCount}
             onClick={() => handleTabClick(ISSUE_STATUS.closed)}
+            isCurrentTab={issueStatus === ISSUE_STATUS.closed}
           />
         }
       />

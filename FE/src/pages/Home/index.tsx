@@ -1,27 +1,32 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import { useRecoilValue } from 'recoil';
 
 import Loading from '@/components/common/Loading';
 import HomeHeader from '@/components/HomeHeader';
 import IssueList from '@/components/IssueList';
+import { IssueStatusType } from '@/constants/constants';
+import { issueStatusState } from '@/stores/atoms/issue';
 import { InnerContainer, MainWrapper } from '@/styles/common';
 
-const fetchAPI = () => {
-  return axios.get('/api/issues?issueStatus=open');
+const fetchAPI = (issueStatus: IssueStatusType) => {
+  return axios.get(`/api/issues?issueStatus=${issueStatus}`);
 };
 
 const Home = () => {
-  // TODO: open/closed 클릭할 때마다 fetch 요청
-  // TODO: open 탭에 있을 때 또 open 탭을 클릭 시에는 fetch 요청 X
-
-  const { data: issues, isLoading } = useQuery('issueList', fetchAPI);
+  const issueStatus = useRecoilValue(issueStatusState);
+  const { data, isLoading } = useQuery(['issueList', issueStatus], () => fetchAPI(issueStatus));
 
   return (
     <MainWrapper>
       <InnerContainer>
         <HomeHeader />
         {isLoading && <Loading />}
-        <IssueList list={issues?.data.issues} />
+        <IssueList
+          list={data?.data.issues}
+          openIssueCount={data?.data.OpenIssueCount}
+          closedIssueCount={data?.data.ClosedIssueCount}
+        />
       </InnerContainer>
     </MainWrapper>
   );

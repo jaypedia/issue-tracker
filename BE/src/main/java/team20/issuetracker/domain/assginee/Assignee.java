@@ -21,6 +21,7 @@ public class Assignee {
 
     private String image;
     private String title;
+    private String authorId;
 
     @OneToMany(mappedBy = "assignee")
     public Set<IssueAssignee> issueAssignees = new HashSet<>();

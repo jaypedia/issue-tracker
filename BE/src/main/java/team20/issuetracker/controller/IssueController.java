@@ -56,7 +56,95 @@ public class IssueController {
         return ResponseEntity.ok(responseReadAllCloseIssueDto);
     }
 
+    // TODO - 특정 Title 로 모든 이슈 검색
+    //  title 에 대한 검증 필요
+    @GetMapping(value = "/search", params = "title")
+    public ResponseEntity<ResponseReadAllIssueDto> searchIssuesByTitle(@RequestParam String title) {
+        List<ResponseIssueDto> findAllSearchIssues = issueService.findAllSearchIssues(title);
+        ResponseReadAllIssueDto responseReadAllSearchIssueDto = issueService.getAllIssueData(findAllSearchIssues);
+
+        return ResponseEntity.ok(responseReadAllSearchIssueDto);
+    }
+
+    // TODO - 특정 Title 에 해당하며 열려있거나 닫혀있는 이슈를 판단해 조회
+    //  title, issueStatus 에 대한 검증 필요
+    @GetMapping(value = "/search", params = {"title", "issueStatus"})
+    public ResponseEntity<ResponseReadAllIssueDto> searchStatusIssuesByTitle(
+            @RequestParam String title,
+            @RequestParam String issueStatus) {
+
+        List<ResponseIssueDto> findAllIssues = issueService.findAll();
+        List<ResponseIssueDto> findAllSearchOpenIssues = issueService.findAllSearchStatusIssues(title, issueStatus);
+        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.getAllSearchStatusIssueData(findAllSearchOpenIssues, findAllIssues);
+
+        return ResponseEntity.ok(responseReadAllIssueDto);
+    }
+
+    // TODO - 내가 댓글을 작성한 모든 이슈 필터링 후 조회
+//    @GetMapping("/filter/commentBy")
+//    public ResponseEntity<ResponseReadAllIssueDto> filterCommentByMeIssues(HttpServletRequest request) {
+//        String oauthId = request.getAttribute("oauthId").toString();
+//        List<ResponseIssueDto> responseIssueDtos = issueService.findCommentByMeIssues(oauthId);
+//        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.getAllIssueData(responseIssueDtos);
+//
+//        return ResponseEntity.ok(responseReadAllIssueDto);
+//    }
+
+    // TODO - 내가 작성한 모든 이슈 필터링 후 조회
+    @GetMapping("/filter/createBy")
+    public ResponseEntity<ResponseReadAllIssueDto> filterMyAllIssues(HttpServletRequest request) {
+        String oauthId = request.getAttribute("oauthId").toString();
+        List<ResponseIssueDto> responseIssueDtos = issueService.findAllMyIssues(oauthId);
+        ResponseReadAllIssueDto responseReadAllIssuesDto = issueService.getAllIssueData(responseIssueDtos);
+
+        return ResponseEntity.ok(responseReadAllIssuesDto);
+    }
+
+    // TODO - 내가 작성한 모든 열린 또는 닫힌 이슈 필터링 후 조회
+    //  issueStatus 검증 필요
+    @GetMapping(value = "/filter/createBy", params = "issueStatus")
+    public ResponseEntity<ResponseReadAllIssueDto> filterMyAllStatusIssues(
+            HttpServletRequest request,
+            @RequestParam String issueStatus) {
+
+        String oauthId = request.getAttribute("oauthId").toString();
+        List<ResponseIssueDto> findAllIssues = issueService.findAll();
+        List<ResponseIssueDto> responseIssueDtos = issueService.findAllMyStatusIssues(oauthId, issueStatus);
+        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.getStatusFilterAllIssueData(responseIssueDtos, findAllIssues);
+
+        return ResponseEntity.ok(responseReadAllIssueDto);
+    }
+
+    // TODO - 내가 할당된 모든 이슈 조회
+    @GetMapping("/filter/AssigneeBy")
+    public ResponseEntity<ResponseReadAllIssueDto> filterAssigneeByMeIssues(
+            HttpServletRequest request) {
+
+        String oauthId = request.getAttribute("oauthId").toString();
+        List<ResponseIssueDto> responseIssueDtos = issueService.findAssigneeByMeIssues(oauthId);
+        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.getAllIssueData(responseIssueDtos);
+
+        return ResponseEntity.ok(responseReadAllIssueDto);
+    }
+
+    // TODO - 내가 할당된 모든 열린 또는 닫힌 이슈 필터링 후 조회
+    //  issueStatus 검증 필요
+    @GetMapping(value = "/filter/AssigneeBy", params = {"issueStatus"})
+    public ResponseEntity<ResponseReadAllIssueDto> filterAssigneeByMeStatusIssue(
+            HttpServletRequest request,
+            @RequestParam String issueStatus) {
+
+        String oauthId = request.getAttribute("oauthId").toString();
+        List<ResponseIssueDto> findAllIssues = issueService.findAll();
+        List<ResponseIssueDto> responseIssueDtos = issueService.findAssigneeByMeStatusIssues(oauthId, issueStatus);
+        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.getStatusFilterAllIssueData(responseIssueDtos, findAllIssues);
+
+        return ResponseEntity.ok(responseReadAllIssueDto);
+    }
+
+
     // TODO - Issue 상세 조회
+    //  id 에 대한 검증 필요
     @GetMapping("/{id}")
     public ResponseEntity<ResponseIssueDto> detail(@PathVariable Long id) {
         ResponseIssueDto responseIssueDto = issueService.detail(id);
@@ -65,13 +153,14 @@ public class IssueController {
     }
 
     // TODO - 특정 Issue 삭제
+    //  id 에 대한 검증 필요
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         issueService.delete(id);
     }
 
     // TODO - 특정 Issue Title 변경
-    //  RequestUpdateIssueTitleDto @Valid 추가해서 Validation 필요
+    //  id 에 대한 검증 필요
     @PostMapping("/{id}")
     public ResponseEntity<Long> updateTitle(@PathVariable Long id,
                                             @Valid @RequestBody RequestUpdateIssueTitleDto requestUpdateIssueTitleDto) {

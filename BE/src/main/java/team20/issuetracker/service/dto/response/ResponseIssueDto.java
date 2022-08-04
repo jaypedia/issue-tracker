@@ -9,7 +9,6 @@ import team20.issuetracker.domain.issue.IssueStatus;
 import team20.issuetracker.domain.label.Label;
 
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,7 +25,7 @@ public class ResponseIssueDto {
     private Set<ResponseLabelDto> labels;
     private Set<ResponseAssigneeDto> assignees;
 
-    public static ResponseIssueDto of(Issue issue) {
+    public static ResponseIssueDto from(Issue issue) {
         String milestoneTitle = " ";
 
         if (issue.getMilestone() != null) {
@@ -52,7 +51,8 @@ public class ResponseIssueDto {
                         .collect(Collectors.toSet()));
     }
 
-    public static ResponseIssueDto of(Issue issue, Set<Label> label, Set<Assignee> assignee) {
+    // 다 지워서 나중에 테스트 한 번 더해보기
+    public static ResponseIssueDto from(Issue issue, Set<Label> label, Set<Assignee> assignee) {
         String milestoneTitle = " ";
 
         if (issue.getMilestone() != null) {

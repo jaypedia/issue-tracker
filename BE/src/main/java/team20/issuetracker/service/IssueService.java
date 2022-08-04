@@ -1,6 +1,7 @@
 package team20.issuetracker.service;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team20.issuetracker.domain.assginee.Assignee;
@@ -16,12 +17,10 @@ import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleDto;
 import team20.issuetracker.service.dto.response.ResponseIssueDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllIssueDto;
 
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
@@ -61,80 +60,55 @@ public class IssueService {
 
     // TODO 모든 이슈 조회
     @Transactional(readOnly = true)
-    public List<ResponseIssueDto> findAll() {
-        List<Issue> findIssues = issueRepository.findAll();
-//        List<IssueLabel> findIssueLabels = issueLabelRepository.findAllIssueLabels();
-//        List<IssueAssignee> findIssueAssignees = issueAssigneeRepository.findAllAssignees();
-
-//        Set<Long> labels = findIssueLabels.stream()
-//                .map(issueLabel -> issueLabel.getLabel().getId())
-//                .collect(Collectors.toSet());
-//
-//        Set<Long> assignees = findIssueAssignees.stream()
-//                .map(issueAssignee -> issueAssignee.getAssignee().getId())
-//                .collect(Collectors.toSet());
+    public List<ResponseIssueDto> findAll(String oauthId) {
+        List<Issue> findIssues = issueRepository.findAllMyIssues(oauthId);
 
         return findIssues.stream()
-                .map(ResponseIssueDto::of)
+                .map(ResponseIssueDto::from)
                 .collect(Collectors.toList());
-
-//        return findIssues.stream()
-//                .map(issue -> ResponseIssueDto.of(
-//                        issue,
-//                        Set.copyOf(labelRepository.findAllById(labels)),
-//                        Set.copyOf(assigneeRepository.findAllById(assignees))))
-//                .collect(Collectors.toList());
     }
 
     // TODO Open 되어 있는 모든 이슈 조회
     @Transactional(readOnly = true)
-    public List<ResponseIssueDto> findAllOpenIssue() {
-        List<Issue> findOpenIssues = issueRepository.findAll().stream()
+    public ResponseReadAllIssueDto findAllOpenIssue(String oauthId) {
+        List<Issue> findOpenIssues = issueRepository.findAllMyIssues(oauthId).stream()
                 .filter(issue -> issue.getStatus().equals(IssueStatus.OPEN))
                 .collect(Collectors.toList());
 
-        List<IssueLabel> findIssueLabels = issueLabelRepository.findAllIssueLabels().stream()
-                .filter(issueLabel -> issueLabel.getIssue().getStatus().equals(IssueStatus.OPEN))
+        List<ResponseIssueDto> responseIssueDtos = findOpenIssues.stream()
+                .map(ResponseIssueDto::from)
                 .collect(Collectors.toList());
 
-        List<IssueAssignee> findIssueAssignees = issueAssigneeRepository.findAllAssignees().stream()
-                .filter(issueAssignee -> issueAssignee.getIssue().getStatus().equals(IssueStatus.OPEN))
-                .collect(Collectors.toList());
+        Long openIssueCount = issueRepository.countTest(oauthId, IssueStatus.OPEN);
+        Long closeIssueCount = issueRepository.countTest(oauthId, IssueStatus.CLOSE);
+        long labelCount = labelRepository.findAll().size();
 
-        Set<Label> labels = findIssueLabels.stream().map(IssueLabel::getLabel).collect(Collectors.toSet());
-        Set<Assignee> assignees = findIssueAssignees.stream().map(IssueAssignee::getAssignee).collect(Collectors.toSet());
-
-        return findOpenIssues.stream()
-                .map(openIssue -> ResponseIssueDto.of(openIssue, labels, assignees))
-                .collect(Collectors.toList());
+        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, labelCount, responseIssueDtos);
     }
 
     // TODO Close 되어 있는 모든 이슈 조회
     @Transactional(readOnly = true)
-    public List<ResponseIssueDto> findAllCloseIssue() {
-        List<Issue> findCloseIssues = issueRepository.findAll().stream()
+    public ResponseReadAllIssueDto findAllCloseIssue(String oauthId) {
+        List<Issue> findCloseIssues = issueRepository.findAllMyIssues(oauthId).stream()
                 .filter(issue -> issue.getStatus().equals(IssueStatus.CLOSE))
                 .collect(Collectors.toList());
 
-        List<IssueLabel> findIssueLabels = issueLabelRepository.findAllIssueLabels().stream()
-                .filter(issueLabel -> issueLabel.getIssue().getStatus().equals(IssueStatus.CLOSE))
+        List<ResponseIssueDto> responseIssueDtos = findCloseIssues.stream()
+                .map(ResponseIssueDto::from)
                 .collect(Collectors.toList());
 
-        List<IssueAssignee> findIssueAssignees = issueAssigneeRepository.findAllAssignees().stream()
-                .filter(issueAssignee -> issueAssignee.getIssue().getStatus().equals(IssueStatus.CLOSE))
-                .collect(Collectors.toList());
+        Long openIssueCount = issueRepository.countTest(oauthId, IssueStatus.OPEN);
+        Long closeIssueCount = issueRepository.countTest(oauthId, IssueStatus.CLOSE);
+        long labelCount = labelRepository.findAll().size();
 
-        Set<Label> labels = findIssueLabels.stream().map(IssueLabel::getLabel).collect(Collectors.toSet());
-        Set<Assignee> assignees = findIssueAssignees.stream().map(IssueAssignee::getAssignee).collect(Collectors.toSet());
-
-        return findCloseIssues.stream()
-                .map(openIssue -> ResponseIssueDto.of(openIssue, labels, assignees))
-                .collect(Collectors.toList());
+        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, labelCount, responseIssueDtos);
     }
 
-    // TODO 내가 할당된 모든 이슈 조회
+    // --------- 아래부터 싹 다시 수정
+
+    // TODO 내가 할당된 모든 이슈 조회 (여기 count 가 좀 이상함 / 이런식으로 할꺼면 갯수 세는 issueRepository 새로 만들고 인자에 oauthId 뺴야함)
     @Transactional(readOnly = true)
-    public List<ResponseIssueDto> findAssigneeByMeIssues(String oauthId) {
+    public ResponseReadAllIssueDto findAssigneeByMeIssues(String oauthId) {
         List<IssueAssignee> findIssueAssignees = issueAssigneeRepository.findAllAssignees().stream()
                 .filter(issueAssignee -> issueAssignee.getAssignee().getAuthorId().equals(oauthId))
                 .collect(Collectors.toList());
@@ -143,177 +117,106 @@ public class IssueService {
                 .map(IssueAssignee::getIssue)
                 .collect(Collectors.toList());
 
-        List<IssueLabel> findIssueLabels = issueLabelRepository.findAllIssueLabels();
-
-        Set<Assignee> assignees = findIssueAssignees.stream()
-                .map(IssueAssignee::getAssignee)
-                .collect(Collectors.toSet());
-
-        Set<Label> labels = findIssueLabels.stream()
-                .map(IssueLabel::getLabel)
-                .collect(Collectors.toSet());
-
-        return findIssues.stream()
-                .map(issue -> ResponseIssueDto.of(issue, labels, assignees))
+        List<ResponseIssueDto> responseIssueDtos = findIssues.stream()
+                .map(ResponseIssueDto::from)
                 .collect(Collectors.toList());
+
+        Long openIssueCount = issueRepository.countTest(oauthId, IssueStatus.OPEN);
+        Long closeIssueCount = issueRepository.countTest(oauthId, IssueStatus.CLOSE);
+        long labelCount = labelRepository.findAll().size();
+
+        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, labelCount, responseIssueDtos);
     }
 
     // TODO 내가 할당됐고 모든 열린 또는 닫힌 이슈 조회
     @Transactional(readOnly = true)
-    public List<ResponseIssueDto> findAssigneeByMeStatusIssues(String oauthId, String issueStatus) {
+    public ResponseReadAllIssueDto findAssigneeByMeStatusIssues(String oauthId, String issueStatus) {
         List<IssueAssignee> findIssueAssignees = issueAssigneeRepository.findAllAssignees().stream()
                 .filter(issueAssignee -> issueAssignee.getAssignee().getAuthorId().equals(oauthId))
                 .filter(issueAssignee -> issueAssignee.getIssue().getStatus().toString().equals(issueStatus.toUpperCase()))
                 .collect(Collectors.toList());
 
-        List<IssueLabel> findIssueLabels = issueLabelRepository.findAll();
-
         List<Issue> findIssues = findIssueAssignees.stream()
                 .map(IssueAssignee::getIssue)
                 .collect(Collectors.toList());
 
-        Set<Assignee> assignees = findIssueAssignees.stream()
-                .map(IssueAssignee::getAssignee)
-                .collect(Collectors.toSet());
-
-        Set<Label> labels = findIssueLabels.stream()
-                .map(IssueLabel::getLabel)
-                .collect(Collectors.toSet());
-
-        return findIssues.stream()
-                .map(issue -> ResponseIssueDto.of(issue, labels, assignees))
+        List<ResponseIssueDto> responseIssueDtos = findIssues.stream()
+                .map(ResponseIssueDto::from)
                 .collect(Collectors.toList());
+
+        Long openIssueCount = issueRepository.countTest(oauthId, IssueStatus.OPEN);
+        Long closeIssueCount = issueRepository.countTest(oauthId, IssueStatus.CLOSE);
+        long labelCount = labelRepository.findAll().size();
+
+        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, labelCount, responseIssueDtos);
     }
 
     // TODO 내가 작성한 모든 이슈 조회
     @Transactional(readOnly = true)
-    public List<ResponseIssueDto> findAllMyIssues(String oauthId) {
+    public ResponseReadAllIssueDto findAllMyIssues(String oauthId) {
         List<Issue> findAllMyIssues = issueRepository.findAllMyIssues(oauthId);
 
-        // 1번 이슈에는 1,2,3 레이블이 붙어있어야하고, 2번 이슈에는 레이블이 비어있다.
-        List<IssueLabel> findIssueLabels = issueLabelRepository.findAllIssueLabels().stream()
-                .filter(issueLabel -> issueLabel.getIssue().getAuthorId().equals(oauthId))
+        List<ResponseIssueDto> responseIssueDtos = findAllMyIssues.stream()
+                .map(ResponseIssueDto::from)
                 .collect(Collectors.toList());
 
+        Long openIssueCount = issueRepository.countTest(oauthId, IssueStatus.OPEN);
+        Long closeIssueCount = issueRepository.countTest(oauthId, IssueStatus.CLOSE);
+        long labelCount = labelRepository.findAll().size();
 
-        List<IssueAssignee> findIssueAssignees = issueAssigneeRepository.findAllAssignees().stream()
-                .filter(issueAssignee -> issueAssignee.getIssue().getAuthorId().equals(oauthId))
-                .collect(Collectors.toList());
-
-        Set<Label> labels = findIssueLabels.stream().map(IssueLabel::getLabel).collect(Collectors.toSet());
-        Set<Assignee> assignees = findIssueAssignees.stream().map(IssueAssignee::getAssignee).collect(Collectors.toSet());
-
-        return findAllMyIssues.stream()
-                .map(issue -> ResponseIssueDto.of(issue, labels, assignees))
-                .collect(Collectors.toList());
-
-        // IssueLabel 6개 안에 이슈와 레이블이 함께 조회됨.
-        /*
-        매칭되어있는 Issue 와 Label
-        이슈 ID, 레이블 ID
-        * 1 1
-        * 1 2
-        * 1 3
-        * 6 1
-        * 7 1
-        * 8 1
-        * */
-//        List<IssueLabel> findIssueLabels = issueLabelRepository.findAllIssueLabels();
-
-        // 찾아온 findIssueLabels 에서 존재하는 이슈를 돌면서 그 이슈에 해당하는 레이블을 구해내고,
-        // 구해낸 labelIds = [1, 2, 3, 1, 1, 1]
-//        List<Label> labels = findIssueLabels.stream()
-//                .map(IssueLabel::getLabel)
-//                .collect(Collectors.toList());
-//
-//        // 내가 쓴 이슈 목록 [1, 2, 4, 5, 6, 7, 8]
-//        // 찾아온 내가 쓴 이슈 리스트인 findAllMyIssues 의 레이블 값에 삽입한다.
-//        issueRepository.findAllMyIssues(oauthId).stream()
-//                .filter(issue -> issue.)
-//                .map(issue -> ResponseIssueDtoTest.of(issue, labels, null))
-
-
-
-//        findAllMyIssues.stream()
-//                .map(issue -> ResponseIssueDtoTest.of(issue, labels, null))
-//                .map(responseIssueDtoTest -> responseIssueDtoTest.get)
-//
-//        findAllMyIssues.stream().map(issue -> issue.addLabels())
-
-
-//        return null;
+        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, labelCount, responseIssueDtos);
     }
 
     // TODO 내가 작성한 모든 열린 또는 닫힌 이슈 조회
     @Transactional(readOnly = true)
-    public List<ResponseIssueDto> findAllMyStatusIssues(String oauthId, String issueStatus) {
+    public ResponseReadAllIssueDto findAllMyStatusIssues(String oauthId, String issueStatus) {
         List<Issue> findAllMyIssues = issueRepository.findAllMyIssues(oauthId).stream()
                 .filter(issue -> issue.getStatus().toString().equals(issueStatus.toUpperCase()))
                 .collect(Collectors.toList());
 
-        List<IssueLabel> findIssueLabels = issueLabelRepository.findAllIssueLabels().stream()
-                .filter(issueLabel -> issueLabel.getIssue().getAuthorId().equals(oauthId))
-                .filter(issueLabel -> issueLabel.getIssue().getStatus().toString().equals(issueStatus.toUpperCase()))
+        List<ResponseIssueDto> responseIssueDtos = findAllMyIssues.stream()
+                .map(ResponseIssueDto::from)
                 .collect(Collectors.toList());
 
-        List<IssueAssignee> findIssueAssignees = issueAssigneeRepository.findAllAssignees().stream()
-                .filter(issueAssignee -> issueAssignee.getIssue().getAuthorId().equals(oauthId))
-                .filter(issueAssignee -> issueAssignee.getIssue().getStatus().toString().equals(issueStatus.toUpperCase()))
-                .collect(Collectors.toList());
+        Long openIssueCount = issueRepository.countTest(oauthId, IssueStatus.OPEN);
+        Long closeIssueCount = issueRepository.countTest(oauthId, IssueStatus.CLOSE);
+        long labelCount = labelRepository.findAll().size();
 
-        Set<Label> labels = findIssueLabels.stream().map(IssueLabel::getLabel).collect(Collectors.toSet());
-        Set<Assignee> assignees = findIssueAssignees.stream().map(IssueAssignee::getAssignee).collect(Collectors.toSet());
-
-        return findAllMyIssues.stream()
-                .map(issue -> ResponseIssueDto.of(issue, labels, assignees))
-                .collect(Collectors.toList());
+        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, labelCount, responseIssueDtos);
     }
 
     // TODO 특정 검색어에 포함되는 모든 이슈 조회
     @Transactional(readOnly = true)
-    public List<ResponseIssueDto> findAllSearchIssues(String title) {
-        List<Issue> findSearchIssues = issueRepository.findAllSearchIssues(title);
+    public ResponseReadAllIssueDto findAllSearchIssues(String oauthId, String title) {
+        List<Issue> findSearchIssues = issueRepository.findAllSearchIssues(oauthId, title);
 
-        List<IssueLabel> issueLabels = issueLabelRepository.findAllIssueLabels().stream()
-                .filter(issueLabel -> issueLabel.getIssue().getTitle().contains(title))
+        List<ResponseIssueDto> responseIssueDtos = findSearchIssues.stream()
+                .map(ResponseIssueDto::from)
                 .collect(Collectors.toList());
 
-        List<IssueAssignee> issueAssignees = issueAssigneeRepository.findAllAssignees().stream()
-                .filter(issueAssignee -> issueAssignee.getIssue().getTitle().contains(title))
-                .collect(Collectors.toList());
+        Long openIssueCount = issueRepository.countTest(oauthId, IssueStatus.OPEN);
+        Long closeIssueCount = issueRepository.countTest(oauthId, IssueStatus.CLOSE);
+        long labelCount = labelRepository.findAll().size();
 
-        Set<Label> labels = issueLabels.stream().map(IssueLabel::getLabel).collect(Collectors.toSet());
-        Set<Assignee> assignees = issueAssignees.stream().map(IssueAssignee::getAssignee).collect(Collectors.toSet());
-
-        return findSearchIssues.stream()
-                .map(searchIssue -> ResponseIssueDto.of(searchIssue, labels, assignees))
-                .collect(Collectors.toList());
+        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, labelCount, responseIssueDtos);
     }
 
     // TODO 특정 Title 에 해당하며 열린 또는 닫힌 모든 이슈 검색
     @Transactional(readOnly = true)
-    public List<ResponseIssueDto> findAllSearchStatusIssues(String title, String issueStatus) {
-        List<Issue> findAllSearchOpenIssues = issueRepository.findAll().stream()
+    public ResponseReadAllIssueDto findAllSearchStatusIssues(String oauthId, String title, String issueStatus) {
+        List<Issue> findSearchStatusIssues = issueRepository.findAllSearchIssues(oauthId, title).stream()
                 .filter(issue -> issue.getStatus().toString().equals(issueStatus.toUpperCase()))
-                .filter(issue -> issue.getTitle().contains(title))
                 .collect(Collectors.toList());
 
-        List<IssueLabel> issueLabels = issueLabelRepository.findAllIssueLabels().stream()
-                .filter(issueLabel -> issueLabel.getIssue().getStatus().toString().equals(issueStatus.toUpperCase()))
-                .filter(issueLabel -> issueLabel.getIssue().getTitle().contains(title))
+        List<ResponseIssueDto> responseIssueDtos = findSearchStatusIssues.stream()
+                .map(ResponseIssueDto::from)
                 .collect(Collectors.toList());
 
-        List<IssueAssignee> issueAssignees = issueAssigneeRepository.findAllAssignees().stream()
-                .filter(issueAssignee -> issueAssignee.getIssue().getStatus().toString().equals(issueStatus.toUpperCase()))
-                .filter(issueAssignee -> issueAssignee.getIssue().getTitle().contains(title))
-                .collect(Collectors.toList());
+        Long openIssueCount = issueRepository.countTest(oauthId, IssueStatus.OPEN);
+        Long closeIssueCount = issueRepository.countTest(oauthId, IssueStatus.CLOSE);
+        long labelCount = labelRepository.findAll().size();
 
-        Set<Label> labels = issueLabels.stream().map(IssueLabel::getLabel).collect(Collectors.toSet());
-        Set<Assignee> assignees = issueAssignees.stream().map(IssueAssignee::getAssignee).collect(Collectors.toSet());
-
-        return findAllSearchOpenIssues.stream()
-                .map(searchIssue -> ResponseIssueDto.of(searchIssue, labels, assignees))
-                .collect(Collectors.toList());
+        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, labelCount, responseIssueDtos);
     }
 
     // TODO 특정 이슈 상세 조회
@@ -322,18 +225,7 @@ public class IssueService {
         Issue findIssue = issueRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("해당 Issue 는 존재하지 않습니다"));
 
-        List<IssueLabel> issueLabels = issueLabelRepository.findAllById(id);
-        List<IssueAssignee> issueAssignees = issueAssigneeRepository.findAllById(id);
-
-        Set<Label> labels = issueLabels.stream()
-                .map(IssueLabel::getLabel)
-                .collect(Collectors.toSet());
-
-        Set<Assignee> assignees = issueAssignees.stream()
-                .map(IssueAssignee::getAssignee)
-                .collect(Collectors.toSet());
-
-        return ResponseIssueDto.of(findIssue, labels, assignees);
+        return ResponseIssueDto.from(findIssue);
     }
 
     // TODO 특정 이슈 삭제
@@ -392,37 +284,5 @@ public class IssueService {
         long labelCount = issues.stream().map(issue -> issue.getLabels().size()).count();
 
         return ResponseReadAllIssueDto.of(openIssueCount, closedIssueCount, labelCount, issues);
-    }
-
-    public ResponseReadAllIssueDto getAllIOpenIssueData(List<ResponseIssueDto> findAllOpenIssues, List<ResponseIssueDto> findAllIssues) {
-        long openIssueCount = findAllIssues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.OPEN)).count();
-        long closedIssueCount = findAllIssues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.CLOSE)).count();
-        long labelCount = findAllIssues.stream().map(issue -> issue.getLabels().size()).count();
-
-        return ResponseReadAllIssueDto.of(openIssueCount, closedIssueCount, labelCount, findAllOpenIssues);
-    }
-
-    public ResponseReadAllIssueDto getAllICloseIssueData(List<ResponseIssueDto> findAllCloseIssues, List<ResponseIssueDto> findAllIssues) {
-        long openIssueCount = findAllIssues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.OPEN)).count();
-        long closedIssueCount = findAllIssues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.CLOSE)).count();
-        long labelCount = findAllIssues.stream().map(issue -> issue.getLabels().size()).count();
-
-        return ResponseReadAllIssueDto.of(openIssueCount, closedIssueCount, labelCount, findAllCloseIssues);
-    }
-
-    public ResponseReadAllIssueDto getAllSearchStatusIssueData(List<ResponseIssueDto> findAllSearchIssues, List<ResponseIssueDto> findAllIssues) {
-        long openIssueCount = findAllIssues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.OPEN)).count();
-        long closedIssueCount = findAllIssues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.CLOSE)).count();
-        long labelCount = findAllIssues.stream().map(issue -> issue.getLabels().size()).count();
-
-        return ResponseReadAllIssueDto.of(openIssueCount, closedIssueCount, labelCount, findAllSearchIssues);
-    }
-
-    public ResponseReadAllIssueDto getStatusFilterAllIssueData(List<ResponseIssueDto> responseIssueDtos, List<ResponseIssueDto> findAllIssues) {
-        long openIssueCount = findAllIssues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.OPEN)).count();
-        long closedIssueCount = findAllIssues.stream().filter(issue -> issue.getIssueStatus().equals(IssueStatus.CLOSE)).count();
-        long labelCount = findAllIssues.stream().map(issue -> issue.getLabels().size()).count();
-
-        return ResponseReadAllIssueDto.of(openIssueCount, closedIssueCount, labelCount, responseIssueDtos);
     }
 }

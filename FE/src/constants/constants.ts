@@ -3,8 +3,6 @@ export const ISSUE_STATUS = {
   closed: 'closed',
 } as const;
 
-export type IssueStatusType = typeof ISSUE_STATUS[keyof typeof ISSUE_STATUS];
-
 export const QUERY_KEY = {
   author: 'author',
   label: 'label',

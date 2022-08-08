@@ -1,16 +1,18 @@
 package team20.issuetracker.service.dto.response;
 
-import lombok.*;
+import java.time.LocalDate;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import team20.issuetracker.domain.assginee.Assignee;
 import team20.issuetracker.domain.issue.Issue;
 import team20.issuetracker.domain.issue.IssueAssignee;
 import team20.issuetracker.domain.issue.IssueLabel;
 import team20.issuetracker.domain.issue.IssueStatus;
 import team20.issuetracker.domain.label.Label;
-
-import java.time.LocalDate;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -51,7 +53,6 @@ public class ResponseIssueDto {
                         .collect(Collectors.toSet()));
     }
 
-    // 다 지워서 나중에 테스트 한 번 더해보기
     public static ResponseIssueDto from(Issue issue, Set<Label> label, Set<Assignee> assignee) {
         String milestoneTitle = " ";
 

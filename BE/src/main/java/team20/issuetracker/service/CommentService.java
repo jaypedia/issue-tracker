@@ -28,10 +28,10 @@ public class CommentService {
         Member member = memberRepository.findByOauthId(oauthId).orElseThrow(() -> {
             throw new NoSuchElementException("존재하지 않는 회원 입니다.");
         });
-        String memberId = member.getName();
+        String memberName = member.getName();
         String profileImageUrl = member.getProfileImageUrl();
         Issue savedIssue = issueRepository.getReferenceById(requestCommentDto.getIssueId());
-        return commentRepository.save(requestCommentDto.toEntity(memberId, profileImageUrl, savedIssue)).getId();
+        return commentRepository.save(requestCommentDto.toEntity(memberName, profileImageUrl, savedIssue)).getId();
     }
 
     @Transactional

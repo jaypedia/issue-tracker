@@ -24,6 +24,7 @@ public class ResponseIssueDto {
     private LocalDate createAt;
     private IssueStatus issueStatus;
     private String milestoneTitle;
+    private Set<ResponseCommentDto> comments;
     private Set<ResponseLabelDto> labels;
     private Set<ResponseAssigneeDto> assignees;
 
@@ -41,12 +42,13 @@ public class ResponseIssueDto {
                 issue.getCreatedAt(),
                 issue.getStatus(),
                 milestoneTitle,
-
+                issue.getComments().stream()
+                        .map(ResponseCommentDto::from)
+                        .collect(Collectors.toSet()),
                 issue.getIssueLabels().stream()
                         .map(IssueLabel::getLabel)
                         .map(ResponseLabelDto::from)
                         .collect(Collectors.toSet()),
-
                 issue.getIssueAssignees().stream()
                         .map(IssueAssignee::getAssignee)
                         .map(ResponseAssigneeDto::from)
@@ -67,6 +69,7 @@ public class ResponseIssueDto {
                 issue.getCreatedAt(),
                 issue.getStatus(),
                 milestoneTitle,
+                issue.getComments().stream().map(ResponseCommentDto::from).collect(Collectors.toSet()),
                 label.stream().map(ResponseLabelDto::from).collect(Collectors.toSet()),
                 assignee.stream().map(ResponseAssigneeDto::from).collect(Collectors.toSet()));
     }

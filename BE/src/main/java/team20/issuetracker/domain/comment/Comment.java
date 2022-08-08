@@ -35,15 +35,15 @@ public class Comment extends AuditingFields {
     private Issue issue;
 
 
-    private Comment(String author, String image, String content, Issue issue) {
-        this.author = author;
+    private Comment(String memberName, String image, String content, Issue issue) {
+        this.author = memberName;
         this.image = image;
         this.content = content;
         this.issue = issue;
     }
 
-    public static Comment of(String memberId, String profileImageUrl, String content, Issue issue) {
-        return new Comment(memberId, profileImageUrl, content, issue);
+    public static Comment of(String memberName, String profileImageUrl, String content, Issue issue) {
+        return new Comment(memberName, profileImageUrl, content, issue);
     }
 
     public Long update(RequestCommentDto requestCommentDto) {

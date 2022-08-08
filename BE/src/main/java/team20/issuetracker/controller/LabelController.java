@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
@@ -24,9 +23,8 @@ public class LabelController {
     private final LabelService labelService;
 
     @GetMapping
-    public ResponseEntity<ResponseLabelsDto> findAllLabels(HttpServletRequest request) {
-        String oauthId = request.getAttribute("oauthId").toString();
-        ResponseLabelsDto labels = labelService.findAll(oauthId);
+    public ResponseEntity<ResponseLabelsDto> findAllLabels() {
+        ResponseLabelsDto labels = labelService.findAll();
         return ResponseEntity.ok(labels);
     }
 

@@ -6,7 +6,6 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.BDDMockito.willDoNothing;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,7 +31,6 @@ class LabelServiceTest {
     @Mock
     private LabelRepository labelRepository;
 
-    @Disabled("구현중")
     @DisplayName("레이블을 조회하면, 모든 레이블 리스트를 반환한다.")
     @Test
     void givenFindAll_whenSearchingAllLabel_thenReturnsLabel() throws Exception {
@@ -41,7 +39,7 @@ class LabelServiceTest {
         given(labelRepository.findAll()).willReturn(List.of(expected));
 
         //when
-        List<ResponseLabelDto> actual = sut.findAll("78953393").getLabels();
+        List<ResponseLabelDto> actual = sut.findAll().getLabels();
 
         //then
         assertThat(actual)

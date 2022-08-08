@@ -20,8 +20,8 @@ public class LabelService {
 
     private final LabelRepository labelRepository;
 
-    public ResponseLabelsDto findAll(String authorId) {
-        List<ResponseLabelDto> labels = labelRepository.findAllByAuthorId(authorId).stream()
+    public ResponseLabelsDto findAll() {
+        List<ResponseLabelDto> labels = labelRepository.findAll().stream()
                 .map(ResponseLabelDto::from)
                 .collect(Collectors.toList());
         return ResponseLabelsDto.from(labels);

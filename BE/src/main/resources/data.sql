@@ -1,7 +1,8 @@
 /*
 ---- 기본 레이블 생성----
 */
-INSERT INTO issue.label (author_id, created_at, background_color, `description`, text_color, title)
+INSERT INTO issue.label
+(author_id, created_at, background_color, `description`, text_color, title)
 VALUES ('85419343', '2022-08-08', '#a2eeef', 'New features', '#0A071B', '✨ Feature'),
        ('85419343', '2022-08-08', '#FEF2C0', 'Styling', '#0A071B', '🎨 Design'),
        ('85419343', '2022-08-08', '#23026B', 'The largest unit of work', '#FEFEFE', '🧊 EPIC'),
@@ -14,7 +15,7 @@ VALUES ('85419343', '2022-08-08', '#a2eeef', 'New features', '#0A071B', '✨ Fea
 ---- 기본 마일스톤 생성----
 */
 INSERT INTO issue.milestone
-(author_id, created_at, `description`, end_date, milestone_status, start_date, title)
+(author_id, created_at, `description`, deu_date, milestone_status, start_date, title)
 VALUES ('78953393', LOCALTIME, 'Make API', ADDDATE(LOCALTIME, 7), 'OPEN', LOCALTIME, '[BE] New Week 1'),
        ('85419343', LOCALTIME, 'Common Components', ADDDATE(LOCALTIME, 7), 'OPEN', LOCALTIME, '[FE] Week 1');
 

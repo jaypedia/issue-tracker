@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneStatus;
 
@@ -21,6 +20,6 @@ public class ResponseMilestoneDto {
     private MilestoneStatus milestoneStatus;
 
     public static ResponseMilestoneDto of(Milestone milestone) {
-        return new ResponseMilestoneDto(milestone.getId(), milestone.getTitle(), milestone.getStartDate(), milestone.getEndDate(), milestone.getDescription(), milestone.getMilestoneStatus());
+        return new ResponseMilestoneDto(milestone.getId(), milestone.getTitle(), milestone.getStartDate(), milestone.getDueDate(), milestone.getDescription(), milestone.getMilestoneStatus());
     }
 }

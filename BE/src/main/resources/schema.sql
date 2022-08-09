@@ -93,7 +93,7 @@ create table milestone
     author_id        varchar(255) not null,
     created_at       date         not null,
     `description`    varchar(800),
-    end_date         date         not null,
+    deu_date         date         not null,
     milestone_status varchar(255),
     start_date       date         not null,
     title            varchar(50)  not null,

@@ -31,7 +31,7 @@ public class Milestone extends AuditingFields {
     private LocalDate startDate;
 
     @Column(nullable = false)
-    private LocalDate endDate;
+    private LocalDate dueDate;
 
     @Column(length = 800)
     private String description;
@@ -39,19 +39,19 @@ public class Milestone extends AuditingFields {
     @Enumerated(EnumType.STRING)
     private MilestoneStatus milestoneStatus;
 
-    private Milestone(Long id, String title, LocalDate startDate, LocalDate endDate, String description) {
+    private Milestone(Long id, String title, LocalDate startDate, LocalDate dueDate, String description) {
         this.id = id;
         this.title = title;
         this.startDate = startDate;
-        this.endDate = endDate;
+        this.dueDate = dueDate;
         this.description = description;
         this.milestoneStatus = MilestoneStatus.OPEN;
     }
 
-    private Milestone(String title, LocalDate startDate, LocalDate endDate, String description) {
+    private Milestone(String title, LocalDate startDate, LocalDate dueDate, String description) {
         this.title = title;
         this.startDate = startDate;
-        this.endDate = endDate;
+        this.dueDate = dueDate;
         this.description = description;
         this.milestoneStatus = MilestoneStatus.OPEN;
     }
@@ -68,7 +68,7 @@ public class Milestone extends AuditingFields {
         this.title = requestUpdateMilestoneDto.getTitle();
         this.description = requestUpdateMilestoneDto.getDescription();
         this.startDate = requestUpdateMilestoneDto.getStartDate();
-        this.endDate = requestUpdateMilestoneDto.getEndDate();
+        this.dueDate = requestUpdateMilestoneDto.getEndDate();
         this.milestoneStatus = requestUpdateMilestoneDto.getMilestoneStatus();
     }
 }

@@ -28,7 +28,7 @@ public class IssueController {
     private final IssueService issueService;
 
     @PostMapping("/write")
-    public ResponseEntity<Long> save(@RequestBody RequestSaveIssueDto requestSaveIssueDto) {
+    public ResponseEntity<Long> save(@Valid @RequestBody RequestSaveIssueDto requestSaveIssueDto) {
         Long issueId = issueService.save(requestSaveIssueDto);
 
         return ResponseEntity.ok(issueId);

@@ -6,11 +6,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
 import team20.issuetracker.domain.assginee.Assignee;
 import team20.issuetracker.domain.assginee.AssigneeRepository;
+import team20.issuetracker.domain.comment.Comment;
 import team20.issuetracker.domain.comment.CommentRepository;
 import team20.issuetracker.domain.issue.Issue;
 import team20.issuetracker.domain.issue.IssueAssignee;
@@ -19,6 +21,8 @@ import team20.issuetracker.domain.issue.IssueRepository;
 import team20.issuetracker.domain.issue.IssueStatus;
 import team20.issuetracker.domain.label.Label;
 import team20.issuetracker.domain.label.LabelRepository;
+import team20.issuetracker.domain.member.Member;
+import team20.issuetracker.domain.member.MemberRepository;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
 import team20.issuetracker.service.dto.request.RequestSaveIssueDto;
@@ -36,6 +40,7 @@ public class IssueService {
     private final LabelRepository labelRepository;
     private final CommentRepository commentRepository;
     private final IssueAssigneeRepository issueAssigneeRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
     public Long save(RequestSaveIssueDto requestSaveIssueDto) {
@@ -147,6 +152,19 @@ public class IssueService {
     }
 
     @Transactional(readOnly = true)
+    public ResponseReadAllIssueDto findAllIssuesByMyComment(String oauthId) {
+        List<Comment> comments = commentRepository.findAll().stream()
+                .filter(comment -> comment.getAuthorId().equals(oauthId))
+                .collect(Collectors.toList());
+
+        Set<Issue> findAllIssuesByMyComment = comments.stream()
+                .map(Comment::getIssue)
+                .collect(Collectors.toSet());
+
+        return getResponseReadAllIssueDto(findAllIssuesByMyComment);
+    }
+
+    @Transactional(readOnly = true)
     public ResponseIssueDto detail(Long id) {
         Issue findIssue = issueRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("해당 Issue 는 존재하지 않습니다"));
@@ -182,6 +200,16 @@ public class IssueService {
         return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, labelCount, responseIssueDtos);
     }
 
+    private ResponseReadAllIssueDto getResponseReadAllIssueDto(Set<Issue> findAllIssues) {
+        List<ResponseIssueDto> responseIssueDtos = responseIssueDtos(findAllIssues);
+
+        long openIssueCount = getOpenIssuesCountByFindAll(findAllIssues);
+        long closeIssueCount = getCloseIssuesCountByFindAll(findAllIssues);
+        long labelCount = getLabelCount();
+
+        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, labelCount, responseIssueDtos);
+    }
+
     private ResponseReadAllIssueDto getResponseReadAllIssueDto(List<Issue> findAllIssueByIssueStatus, List<Issue> findAllIssues) {
         List<ResponseIssueDto> responseIssueDtos = responseIssueDtos(findAllIssueByIssueStatus);
 
@@ -198,12 +226,25 @@ public class IssueService {
                 .collect(Collectors.toList());
     }
 
+    private List<ResponseIssueDto> responseIssueDtos(Set<Issue> findIssues) {
+        return findIssues.stream()
+                .map(ResponseIssueDto::from)
+                .collect(Collectors.toList());
+    }
 
     private long getOpenIssuesCountByFindAll(List<Issue> findIssues) {
         return findIssues.stream().filter(issue -> issue.getStatus().equals(IssueStatus.OPEN)).count();
     }
 
     private long getCloseIssuesCountByFindAll(List<Issue> findIssues) {
+        return findIssues.stream().filter(issue -> issue.getStatus().equals(IssueStatus.CLOSE)).count();
+    }
+
+    private long getOpenIssuesCountByFindAll(Set<Issue> findIssues) {
+        return findIssues.stream().filter(issue -> issue.getStatus().equals(IssueStatus.OPEN)).count();
+    }
+
+    private long getCloseIssuesCountByFindAll(Set<Issue> findIssues) {
         return findIssues.stream().filter(issue -> issue.getStatus().equals(IssueStatus.CLOSE)).count();
     }
 
@@ -216,28 +257,4 @@ public class IssueService {
                 .filter(issue -> issue.getStatus().toString().equals(issueStatus.toUpperCase()))
                 .collect(Collectors.toList());
     }
-
-    // TODO 내가 댓글을 단 이슈 모든 이슈 조회
-//    @Transactional(readOnly = true)
-//    public List<ResponseIssueDto> findCommentByMeIssues(String oauthId) {
-//
-//        // 내가 작성한 댓글 모두 조회
-//        List<Comment> comments = commentRepository.findAll().stream()
-//                .filter(comment -> comment.getAuthor().equals(oauthId))
-//                .collect(Collectors.toList());
-//
-//        // 댓글 쪽에서 이슈를 가지고 이슈 리스트 뽑아오기
-//        List<Issue> findIssues = comments.stream()
-//                .map(Comment::getIssue)
-//                .collect(Collectors.toList());
-
-//        issueLabelRepository
-
-//        issueLabelRepository.
-//        List<IssueAssignee> issueAssignees = issueAssigneeRepository.findAll();
-
-
-//        return null;
-//    }
-
 }

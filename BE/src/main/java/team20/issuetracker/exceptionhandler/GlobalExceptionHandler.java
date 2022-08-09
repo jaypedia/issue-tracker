@@ -12,20 +12,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 import team20.issuetracker.exception.MyJwtException;
+import team20.issuetracker.exception.CheckEntityException;
 
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MyJwtException.class)
-    public ResponseEntity<ResponseJwtError> expiredJwtException(MyJwtException myJwtException) {
+    public ResponseEntity<ResponseErrorMassage> expiredJwtException(MyJwtException myJwtException) {
+        log.error("errorMessage: {}", myJwtException.getErrorMessage());
 
-        return new ResponseEntity<>(ResponseJwtError.create(myJwtException.getErrorMessage()), myJwtException.getHttpStatus());
+        return new ResponseEntity<>(ResponseErrorMassage.create(myJwtException.getErrorMessage()), myJwtException.getHttpStatus());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ResponseErrorMap> mapValidException(MethodArgumentNotValidException exception) {
-
+    public ResponseEntity<ResponseErrorMap> mapValidExceptionByMethodArgumentNotValid(MethodArgumentNotValidException exception) {
         Map<String, String> responseValidationErrors = new HashMap<>();
 
         for (FieldError error : exception.getFieldErrors()) {
@@ -40,5 +41,12 @@ public class GlobalExceptionHandler {
         ResponseErrorMap responseError = ResponseErrorMap.from(responseValidationErrors);
 
         return new ResponseEntity<>(responseError, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CheckEntityException.class)
+    public ResponseEntity<ResponseErrorMassage> mapValidExceptionByNoSuchElement(CheckEntityException checkEntityException) {
+        log.error("errorMessage : {}", checkEntityException.getErrorMessage());
+
+        return new ResponseEntity<>(ResponseErrorMassage.create(checkEntityException.getErrorMessage()), checkEntityException.getHttpStatus());
     }
 }

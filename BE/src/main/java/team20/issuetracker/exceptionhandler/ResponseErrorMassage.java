@@ -5,11 +5,11 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class ResponseJwtError {
+public class ResponseErrorMassage {
 
     private final String errorMessage;
 
-    static ResponseJwtError create(String errorMessage) {
-        return new ResponseJwtError(errorMessage);
+    static ResponseErrorMassage create(String errorMessage) {
+        return new ResponseErrorMassage(errorMessage);
     }
 }

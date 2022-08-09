@@ -1,10 +1,10 @@
 package team20.issuetracker.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,9 +21,9 @@ import team20.issuetracker.domain.issue.IssueRepository;
 import team20.issuetracker.domain.issue.IssueStatus;
 import team20.issuetracker.domain.label.Label;
 import team20.issuetracker.domain.label.LabelRepository;
-import team20.issuetracker.domain.member.MemberRepository;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
+import team20.issuetracker.exception.CheckEntityException;
 import team20.issuetracker.service.dto.request.RequestSaveIssueDto;
 import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleDto;
 import team20.issuetracker.service.dto.response.ResponseIssueDto;
@@ -39,7 +39,6 @@ public class IssueService {
     private final LabelRepository labelRepository;
     private final CommentRepository commentRepository;
     private final IssueAssigneeRepository issueAssigneeRepository;
-    private final MemberRepository memberRepository;
 
     @Transactional
     public Long save(RequestSaveIssueDto requestSaveIssueDto) {
@@ -52,7 +51,7 @@ public class IssueService {
         Milestone milestone = null;
         if (requestSaveIssueDto.getMilestoneId() != null) {
             milestone = milestoneRepository.findById(requestSaveIssueDto.getMilestoneId())
-                    .orElseThrow(() -> new NoSuchElementException("해당 Milestone 은 존재하지 않습니다."));
+                    .orElseThrow(() -> new CheckEntityException("해당 Milestone 은 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
         }
 
         Issue newIssue = Issue.of(title, content, milestone);
@@ -180,8 +179,9 @@ public class IssueService {
 
     @Transactional(readOnly = true)
     public ResponseIssueDto detail(Long id) {
+
         Issue findIssue = issueRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("해당 Issue 는 존재하지 않습니다"));
+                .orElseThrow(() -> new CheckEntityException("해당 Issue 는 존재하지 않습니다", HttpStatus.BAD_REQUEST));
 
         return ResponseIssueDto.from(findIssue);
     }
@@ -189,7 +189,7 @@ public class IssueService {
     @Transactional
     public void delete(Long id) {
         Issue findIssue = issueRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("해당 Issue 는 존재하지 않습니다."));
+                .orElseThrow(() -> new CheckEntityException("해당 Issue 는 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
 
         issueRepository.delete(findIssue);
     }
@@ -197,7 +197,7 @@ public class IssueService {
     @Transactional
     public Long updateTitle(Long id, RequestUpdateIssueTitleDto requestUpdateIssueTitleDto) {
         Issue findIssue = issueRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("해당 Issue 는 존재하지 않습니다."));
+                .orElseThrow(() -> new CheckEntityException("해당 Issue 는 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
 
         findIssue.updateTitle(requestUpdateIssueTitleDto);
 

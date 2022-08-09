@@ -15,13 +15,13 @@ import team20.issuetracker.service.CommentService;
 import team20.issuetracker.service.dto.request.RequestCommentDto;
 
 @RequiredArgsConstructor
-@RequestMapping("/comments")
+@RequestMapping("/api/comments")
 @RestController
 public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/write")
+    @PostMapping()
     public ResponseEntity<Long> save(@RequestBody RequestCommentDto requestCommentDto, HttpServletRequest request) {
         String oauthId = request.getAttribute("oauthId").toString();
         return ResponseEntity.ok(commentService.save(requestCommentDto, oauthId));

@@ -21,13 +21,13 @@ import team20.issuetracker.service.dto.response.ResponseIssueDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllIssueDto;
 
 @RequiredArgsConstructor
-@RequestMapping("/issues")
+@RequestMapping("/api/issues")
 @RestController
 public class IssueController {
 
     private final IssueService issueService;
 
-    @PostMapping("/write")
+    @PostMapping
     public ResponseEntity<Long> save(@Valid @RequestBody RequestSaveIssueDto requestSaveIssueDto) {
         Long issueId = issueService.save(requestSaveIssueDto);
 
@@ -55,23 +55,23 @@ public class IssueController {
         return ResponseEntity.ok(responseReadAllIssueDto);
     }
 
-    @GetMapping(value = "/search", params = "title")
+    @GetMapping(params = "title")
     public ResponseEntity<ResponseReadAllIssueDto> searchIssuesByTitle(@RequestParam String title) {
         ResponseReadAllIssueDto responseReadAllIssueDto = issueService.findAllSearchIssues(title);
 
         return ResponseEntity.ok(responseReadAllIssueDto);
     }
 
-    @GetMapping(value = "/search", params = {"title", "issueStatus"})
+    @GetMapping(params = {"title", "status"})
     public ResponseEntity<ResponseReadAllIssueDto> searchStatusIssuesByTitle(
             @RequestParam String title,
-            @RequestParam String issueStatus) {
-        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.findAllSearchStatusIssues(title, issueStatus);
+            @RequestParam String status) {
+        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.findAllSearchStatusIssues(title, status);
 
         return ResponseEntity.ok(responseReadAllIssueDto);
     }
 
-    @GetMapping("/filter/commentBy")
+    @GetMapping("/commented_by/me")
     public ResponseEntity<ResponseReadAllIssueDto> filterCommentByIssues(HttpServletRequest request) {
         String oauthId = request.getAttribute("oauthId").toString();
         ResponseReadAllIssueDto responseReadAllIssueDto = issueService.filterCommentByMeIssue(oauthId);
@@ -79,17 +79,17 @@ public class IssueController {
         return ResponseEntity.ok(responseReadAllIssueDto);
     }
 
-    @GetMapping(value = "/filter/commentBy", params = "issueStatus")
+    @GetMapping(value = "/commented_by/me", params = "status")
     public ResponseEntity<ResponseReadAllIssueDto> filterCommentByStatusIssues(
             HttpServletRequest request,
-            @RequestParam String issueStatus) {
+            @RequestParam String status) {
         String oauthId = request.getAttribute("oauthId").toString();
-        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.filterCommentByMeStatusIssue(oauthId, issueStatus);
+        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.filterCommentByMeStatusIssue(oauthId, status);
 
         return ResponseEntity.ok(responseReadAllIssueDto);
     }
 
-    @GetMapping("/filter/createBy")
+    @GetMapping("/created_by/me")
     public ResponseEntity<ResponseReadAllIssueDto> filterMyAllIssues(HttpServletRequest request) {
         String oauthId = request.getAttribute("oauthId").toString();
         ResponseReadAllIssueDto responseIssueDtos = issueService.findAllMyIssues(oauthId);
@@ -97,19 +97,19 @@ public class IssueController {
         return ResponseEntity.ok(responseIssueDtos);
     }
 
-    @GetMapping(value = "/filter/createBy", params = "issueStatus")
+    @GetMapping(value = "/created_by/me", params = "status")
     public ResponseEntity<ResponseReadAllIssueDto> filterMyAllStatusIssues(
             HttpServletRequest request,
-            @RequestParam String issueStatus) {
+            @RequestParam String status) {
 
         String oauthId = request.getAttribute("oauthId").toString();
 
-        ResponseReadAllIssueDto responseIssueDtos = issueService.findAllMyStatusIssues(oauthId, issueStatus);
+        ResponseReadAllIssueDto responseIssueDtos = issueService.findAllMyStatusIssues(oauthId, status);
 
         return ResponseEntity.ok(responseIssueDtos);
     }
 
-    @GetMapping("/filter/AssigneeBy")
+    @GetMapping("assignee_by/me")
     public ResponseEntity<ResponseReadAllIssueDto> filterAssigneeByMeIssues(
             HttpServletRequest request) {
         String oauthId = request.getAttribute("oauthId").toString();
@@ -118,13 +118,13 @@ public class IssueController {
         return ResponseEntity.ok(responseReadAllIssueDto);
     }
 
-    @GetMapping(value = "/filter/AssigneeBy", params = {"issueStatus"})
+    @GetMapping(value = "assignee_by/me", params = "status")
     public ResponseEntity<ResponseReadAllIssueDto> filterAssigneeByMeStatusIssue(
             HttpServletRequest request,
-            @RequestParam String issueStatus) {
+            @RequestParam String status) {
 
         String oauthId = request.getAttribute("oauthId").toString();
-        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.findAssigneeByMeStatusIssues(oauthId, issueStatus);
+        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.findAssigneeByMeStatusIssues(oauthId, status);
 
         return ResponseEntity.ok(responseReadAllIssueDto);
     }

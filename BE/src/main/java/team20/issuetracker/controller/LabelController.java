@@ -18,7 +18,7 @@ import team20.issuetracker.service.dto.response.ResponseLabelsDto;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/labels")
+@RequestMapping("/api/labels")
 public class LabelController {
     private final LabelService labelService;
 

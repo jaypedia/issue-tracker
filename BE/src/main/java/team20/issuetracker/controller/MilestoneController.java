@@ -22,7 +22,7 @@ import team20.issuetracker.service.dto.response.ResponseMilestoneDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllMilestonesDto;
 
 @RequiredArgsConstructor
-@RequestMapping("/milestones")
+@RequestMapping("/api/milestones")
 @RestController
 public class MilestoneController {
 

@@ -1,6 +1,5 @@
 package team20.issuetracker.service;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,8 +36,8 @@ public class MilestoneService {
     }
 
     @Transactional(readOnly = true)
-    public List<ResponseMilestoneDto> findAll(String oauthId) {
-        List<Milestone> findMilestones = milestoneRepository.findAllByAuthorId(oauthId);
+    public List<ResponseMilestoneDto> findAll() {
+        List<Milestone> findMilestones = milestoneRepository.findAll();
 
         return findMilestones.stream()
                 .map(ResponseMilestoneDto::of).collect(Collectors.toList());

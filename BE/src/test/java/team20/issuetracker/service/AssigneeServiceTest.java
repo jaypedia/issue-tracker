@@ -41,7 +41,7 @@ class AssigneeServiceTest {
         assertThat(assigneesDto.getAssignees())
                 .hasSize(1)
                 .first()
-                .hasFieldOrPropertyWithValue("title", assignee.getTitle());
+                .hasFieldOrPropertyWithValue("title", assigneesDto.getAssignees().get(0).getTitle());
         then(assigneeRepository).should().findAll();
     }
 

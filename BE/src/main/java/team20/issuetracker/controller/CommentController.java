@@ -21,7 +21,7 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<Long> save(@RequestBody RequestCommentDto requestCommentDto, HttpServletRequest request) {
         String oauthId = request.getAttribute("oauthId").toString();
         return ResponseEntity.ok(commentService.save(requestCommentDto, oauthId));

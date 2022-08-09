@@ -31,7 +31,8 @@ public class CommentService {
         String memberName = member.getName();
         String profileImageUrl = member.getProfileImageUrl();
         Issue savedIssue = issueRepository.getReferenceById(requestCommentDto.getIssueId());
-        return commentRepository.save(requestCommentDto.toEntity(memberName, profileImageUrl, savedIssue)).getId();
+        String content = requestCommentDto.getContent();
+        return commentRepository.save(RequestCommentDto.toEntity(memberName, profileImageUrl, content, savedIssue)).getId();
     }
 
     @Transactional

@@ -60,8 +60,19 @@ public class Issue extends AuditingFields {
         this.milestone = milestone;
     }
 
+    private Issue(Long id, String title, String content, Milestone milestone) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.milestone = milestone;
+    }
+
     public static Issue of(String title, String content, Milestone milestone) {
         return new Issue(title, content, milestone);
+    }
+
+    public static Issue of(Long id, String title, String content, Milestone milestone) {
+        return new Issue(id, title, content, milestone);
     }
 
     public void updateTitle(RequestUpdateIssueTitleDto requestUpdateIssueTitleDto) {

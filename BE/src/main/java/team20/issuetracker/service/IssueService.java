@@ -1,6 +1,5 @@
 package team20.issuetracker.service;
 
-import org.apache.coyote.Response;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
+
 import team20.issuetracker.domain.assginee.Assignee;
 import team20.issuetracker.domain.assginee.AssigneeRepository;
 import team20.issuetracker.domain.comment.Comment;
@@ -21,7 +21,6 @@ import team20.issuetracker.domain.issue.IssueRepository;
 import team20.issuetracker.domain.issue.IssueStatus;
 import team20.issuetracker.domain.label.Label;
 import team20.issuetracker.domain.label.LabelRepository;
-import team20.issuetracker.domain.member.Member;
 import team20.issuetracker.domain.member.MemberRepository;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
@@ -152,7 +151,7 @@ public class IssueService {
     }
 
     @Transactional(readOnly = true)
-    public ResponseReadAllIssueDto findAllIssuesByMyComment(String oauthId) {
+    public ResponseReadAllIssueDto filterCommentByMeIssue(String oauthId) {
         List<Comment> comments = commentRepository.findAll().stream()
                 .filter(comment -> comment.getAuthorId().equals(oauthId))
                 .collect(Collectors.toList());
@@ -162,6 +161,21 @@ public class IssueService {
                 .collect(Collectors.toSet());
 
         return getResponseReadAllIssueDto(findAllIssuesByMyComment);
+    }
+
+    @Transactional(readOnly = true)
+    public ResponseReadAllIssueDto filterCommentByMeStatusIssue(String oauthId, String issueStatus) {
+        List<Comment> comments = commentRepository.findAll().stream()
+                .filter(comment -> comment.getAuthorId().equals(oauthId))
+                .collect(Collectors.toList());
+
+        Set<Issue> findIssues = comments.stream()
+                .map(Comment::getIssue)
+                .collect(Collectors.toSet());
+
+        List<Issue> findIssueByIssueStatus = filterIssueStatus(findIssues, issueStatus);
+
+        return getResponseReadAllIssueDto(findIssueByIssueStatus ,findIssues);
     }
 
     @Transactional(readOnly = true)
@@ -202,6 +216,16 @@ public class IssueService {
 
     private ResponseReadAllIssueDto getResponseReadAllIssueDto(Set<Issue> findAllIssues) {
         List<ResponseIssueDto> responseIssueDtos = responseIssueDtos(findAllIssues);
+
+        long openIssueCount = getOpenIssuesCountByFindAll(findAllIssues);
+        long closeIssueCount = getCloseIssuesCountByFindAll(findAllIssues);
+        long labelCount = getLabelCount();
+
+        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, labelCount, responseIssueDtos);
+    }
+
+    private ResponseReadAllIssueDto getResponseReadAllIssueDto(List<Issue> findAllIssueByIssueStatus, Set<Issue> findAllIssues) {
+        List<ResponseIssueDto> responseIssueDtos = responseIssueDtos(findAllIssueByIssueStatus);
 
         long openIssueCount = getOpenIssuesCountByFindAll(findAllIssues);
         long closeIssueCount = getCloseIssuesCountByFindAll(findAllIssues);
@@ -253,6 +277,12 @@ public class IssueService {
     }
 
     private List<Issue> filterIssueStatus(List<Issue> findIssues, String issueStatus) {
+        return findIssues.stream()
+                .filter(issue -> issue.getStatus().toString().equals(issueStatus.toUpperCase()))
+                .collect(Collectors.toList());
+    }
+
+    private List<Issue> filterIssueStatus(Set<Issue> findIssues, String issueStatus) {
         return findIssues.stream()
                 .filter(issue -> issue.getStatus().toString().equals(issueStatus.toUpperCase()))
                 .collect(Collectors.toList());

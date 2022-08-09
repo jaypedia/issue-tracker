@@ -71,11 +71,20 @@ public class IssueController {
         return ResponseEntity.ok(responseReadAllIssueDto);
     }
 
-    // TODO - 내가 댓글을 작성한 모든 이슈 필터링 후 조회
     @GetMapping("/filter/commentBy")
-    public ResponseEntity<ResponseReadAllIssueDto> filterCommentByMeIssues(HttpServletRequest request) {
+    public ResponseEntity<ResponseReadAllIssueDto> filterCommentByIssues(HttpServletRequest request) {
         String oauthId = request.getAttribute("oauthId").toString();
-        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.findAllIssuesByMyComment(oauthId);
+        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.filterCommentByMeIssue(oauthId);
+
+        return ResponseEntity.ok(responseReadAllIssueDto);
+    }
+
+    @GetMapping(value = "/filter/commentBy", params = "issueStatus")
+    public ResponseEntity<ResponseReadAllIssueDto> filterCommentByStatusIssues(
+            HttpServletRequest request,
+            @RequestParam String issueStatus) {
+        String oauthId = request.getAttribute("oauthId").toString();
+        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.filterCommentByMeStatusIssue(oauthId, issueStatus);
 
         return ResponseEntity.ok(responseReadAllIssueDto);
     }

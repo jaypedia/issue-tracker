@@ -9,11 +9,13 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class RequestSaveMilestoneDto {
 
     @NotEmpty
@@ -29,4 +31,8 @@ public class RequestSaveMilestoneDto {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
+
+    public static RequestSaveMilestoneDto of(String title, String description, LocalDate startDate, LocalDate endDate) {
+        return new RequestSaveMilestoneDto(title, description, startDate, endDate);
+    }
 }

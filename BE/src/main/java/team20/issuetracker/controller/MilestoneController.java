@@ -1,21 +1,25 @@
 package team20.issuetracker.controller;
 
-import lombok.RequiredArgsConstructor;
-
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+import lombok.RequiredArgsConstructor;
+import team20.issuetracker.service.MilestoneService;
 import team20.issuetracker.service.dto.request.RequestSaveMilestoneDto;
 import team20.issuetracker.service.dto.request.RequestUpdateMilestoneDto;
 import team20.issuetracker.service.dto.response.ResponseMilestoneDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllMilestonesDto;
-import team20.issuetracker.service.MilestoneService;
-import team20.issuetracker.util.JwtUtils;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/milestones")
@@ -32,9 +36,8 @@ public class MilestoneController {
     }
 
     @GetMapping
-    public ResponseEntity<ResponseReadAllMilestonesDto> read(HttpServletRequest request) {
-        String oauthId = request.getAttribute("oauthId").toString();
-        List<ResponseMilestoneDto> responseMilestoneDtos = milestoneService.findAll(oauthId);
+    public ResponseEntity<ResponseReadAllMilestonesDto> read() {
+        List<ResponseMilestoneDto> responseMilestoneDtos = milestoneService.findAll();
         ResponseReadAllMilestonesDto responseReadAllMilestonesDto = milestoneService.getAllMilestoneData(responseMilestoneDtos);
 
         return ResponseEntity.ok(responseReadAllMilestonesDto);

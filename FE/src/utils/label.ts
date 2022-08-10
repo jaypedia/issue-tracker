@@ -19,6 +19,11 @@ const getBrightness = (hexColorCode: string) => {
   return (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;
 };
 
-export const isDark = (hexColorCode: string) => {
+const isDark = (hexColorCode: string) => {
   return getBrightness(hexColorCode) < 128;
+};
+
+export const getTextColor = (hexColorCode: string) => {
+  if (isDark(hexColorCode)) return '#FFFFFF';
+  return '#000000';
 };

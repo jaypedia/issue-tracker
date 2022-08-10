@@ -11,29 +11,29 @@ const Comment = ({ issueAuthor, userId, imgUrl, createTime, description }: Comme
   const isIssueAuthor = issueAuthor === userId;
 
   return (
-    <S.CommentWraaper>
+    <S.CommentWrapper>
       <UserProfile size="large" imgUrl={imgUrl} userId={userId} />
       <S.CommentContainer>
         <S.CommentHeader>
           <S.Flex>
             <S.UserId>{userId}</S.UserId>
-            <S.Time>{timeCalc}</S.Time>
+            <S.Time>commented {timeCalc}</S.Time>
           </S.Flex>
           <S.Flex>
             {isIssueAuthor && (
               <>
                 <Label size="small" title="Author" backgroundColor="none" hasLine />
-                <S.EditBtn type="button">edit</S.EditBtn>
+                <S.EditButton type="button">edit</S.EditButton>
               </>
             )}
-            <S.EmojiBtn type="button">
+            <S.EmojiButton type="button">
               <Emoji />
-            </S.EmojiBtn>
+            </S.EmojiButton>
           </S.Flex>
         </S.CommentHeader>
         <S.CommentContents>{description || 'No description provided.'}</S.CommentContents>
       </S.CommentContainer>
-    </S.CommentWraaper>
+    </S.CommentWrapper>
   );
 };
 

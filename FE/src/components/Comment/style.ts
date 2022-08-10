@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { FONT_MIXIN, mixins } from '@/styles/mixins';
 
-const CommentWraaper = styled.div`
+const CommentWrapper = styled.div`
   ${mixins.flexBox({ alignItems: 'flex-start' })}
   gap: 16px;
   margin-bottom: 24px;
@@ -17,7 +17,7 @@ const CommentContainer = styled.div`
 
 const CommentHeader = styled.div`
   ${mixins.flexBox({ justifyContent: 'space-between' })}
-  padding: 16px 24px;
+  padding: 10px 24px;
   border-bottom: 1px solid ${({ theme: { color } }) => color.line};
   background: ${({ theme: { color } }) => color.cell.bg.cellHeaderBg};
 `;
@@ -35,30 +35,30 @@ const Time = styled.p`
   color: ${({ theme: { color } }) => color.cell.font.initial};
 `;
 
-const EditBtn = styled.button`
+const EditButton = styled.button`
   padding: 5px;
   margin-left: 20px;
   ${FONT_MIXIN.xSmall(700)}
 `;
 
-const EmojiBtn = styled.button`
+const EmojiButton = styled.button`
   padding: 5px;
   margin-left: 15px;
   font-size: 0;
 `;
 
 const CommentContents = styled.div`
-  padding: 16px 24px;
+  padding: 24px;
 `;
 
 export {
-  CommentWraaper,
+  CommentWrapper,
   CommentContainer,
   CommentHeader,
   Flex,
   UserId,
   Time,
-  EditBtn,
-  EmojiBtn,
+  EditButton,
+  EmojiButton,
   CommentContents,
 };

@@ -26,23 +26,34 @@ const LabelForm = ({
 }: LabelFormProps) => {
   const labelName = useRef<HTMLInputElement>(null);
   const labelDescription = useRef<HTMLInputElement>(null);
-
-  const { value: labelPriview, onChange: changeLabelName } = useInput(title);
+  const labelColorRef = useRef<HTMLInputElement>(null);
+  const { value: labelPriview, onChange: changeName } = useInput(title);
   const {
     value: labelColor,
-    onChange: changeLabelColor,
+    onChange: changeColor,
     setValue: setLabelColor,
   } = useInput(backgroundColor.toUpperCase());
   const [labelTextColor, setLabelTextColor] = useState(color || getTextColor(backgroundColor));
+  const { mutate } = useRefetchLabel();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(type === FORM_TYPE.create);
+
+  const handleInputChange = () => {
+    if (!labelName.current || !labelDescription.current) return;
+
+    if (labelName.current.value && labelDescription.current.value) {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  };
 
   const handleChangeColorClick = () => {
     const newColor = getRandomHexColorCode();
     const textColor = getTextColor(newColor);
     setLabelColor(newColor);
     setLabelTextColor(textColor);
+    handleInputChange();
   };
-
-  const { mutate } = useRefetchLabel();
 
   const saveLabel = () => {
     if (!labelName.current || !labelDescription.current) return;
@@ -57,12 +68,32 @@ const LabelForm = ({
     if (type === FORM_TYPE.create) {
       postLabel(labelData);
       mutate();
+      onCancel();
       return;
     }
 
     if (type === FORM_TYPE.edit && id) {
       patchLabel(id, labelData);
       mutate();
+      onCancel();
+    }
+  };
+
+  const changeLabelName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    changeName(e);
+    handleInputChange();
+  };
+
+  const changeLabelColor = (e: React.ChangeEvent<HTMLInputElement>) => {
+    changeColor(e);
+    const regex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+    const colorCode = e.target.value;
+    if (regex.test(colorCode)) {
+      const textColor = getTextColor(colorCode);
+      setLabelTextColor(textColor);
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
     }
   };
 
@@ -104,6 +135,7 @@ const LabelForm = ({
           defaultValue={description}
           maxLength={100}
           ref={labelDescription}
+          onChange={handleInputChange}
         />
         <FlexColumnStart>
           <S.InputLabel>Color</S.InputLabel>
@@ -114,7 +146,7 @@ const LabelForm = ({
               iconColor={labelTextColor}
             />
             <Input
-              type="text"
+              type="Hex colors should only contain numbers and letters from a-f"
               title="Color"
               inputStyle="small"
               name="color"
@@ -123,6 +155,7 @@ const LabelForm = ({
               onChange={changeLabelColor}
               maxLength={7}
               value={labelColor}
+              ref={labelColorRef}
             />
           </FlexEndAlign>
         </FlexColumnStart>
@@ -134,6 +167,7 @@ const LabelForm = ({
             text={type === FORM_TYPE.create ? 'Create label' : 'Save changes'}
             onClick={saveLabel}
             type="button"
+            disabled={isButtonDisabled}
           />
         </S.ButtonWrapper>
       </S.GridContainer>

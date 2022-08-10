@@ -10,6 +10,7 @@ const Button = ({
   changeTag,
   onClick,
   text,
+  disabled,
 }: ButtonProps) => {
   return (
     <S.Button
@@ -20,6 +21,7 @@ const Button = ({
       as={changeTag}
       isText={isText}
       onClick={onClick}
+      disabled={disabled}
     >
       {text}
     </S.Button>

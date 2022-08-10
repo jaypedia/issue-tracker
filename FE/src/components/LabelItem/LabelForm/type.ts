@@ -8,7 +8,7 @@ export type LabelFormProps = FormStyleType & {
   description?: string;
   backgroundColor?: string;
   color?: string;
-  onCancel?: () => void;
+  onCancel: () => void;
   onDelete?: () => void;
 };
 

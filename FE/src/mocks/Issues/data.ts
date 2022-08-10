@@ -181,7 +181,7 @@ export const mockIssueList = [
     issueStatus: 'closed',
   },
   {
-    id: 5,
+    id: 6,
     issueTitle: 'Webpack comfiguration',
     author: 'Millie',
     issueCreateTime: '2022-06-23 02:33:02',
@@ -216,7 +216,7 @@ export const mockIssueList = [
     issueStatus: 'closed',
   },
   {
-    id: 6,
+    id: 7,
     issueTitle: 'Refactoring Issue List',
     author: 'Millie',
     issueCreateTime: '2022-06-30 02:33:02',

@@ -1,15 +1,16 @@
-import axios from 'axios';
 import React, { useState, useRef } from 'react';
 
 import ColorChangeButton from './ColorChangeButton';
 import * as S from './style';
 import { LabelFormProps } from './type';
 
+import { postLabel, patchLabel } from '@/apis/labelApi';
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import Label from '@/components/common/Label';
 import { FORM_TYPE } from '@/constants/constants';
 import { useInput } from '@/hooks/useInput';
+import { useRefetchLabel } from '@/hooks/useLabel';
 import { FlexEndAlign, FlexBetween, FlexColumnStart } from '@/styles/common';
 import { getRandomHexColorCode, getTextColor } from '@/utils/label';
 
@@ -21,6 +22,7 @@ const LabelForm = ({
   backgroundColor = getRandomHexColorCode(),
   color,
   onCancel,
+  onDelete,
 }: LabelFormProps) => {
   const labelName = useRef<HTMLInputElement>(null);
   const labelDescription = useRef<HTMLInputElement>(null);
@@ -40,6 +42,8 @@ const LabelForm = ({
     setLabelTextColor(textColor);
   };
 
+  const { mutate } = useRefetchLabel();
+
   const saveLabel = () => {
     if (!labelName.current || !labelDescription.current) return;
 
@@ -51,12 +55,14 @@ const LabelForm = ({
     };
 
     if (type === FORM_TYPE.create) {
-      axios.post('/api/labels', labelData);
+      postLabel(labelData);
+      mutate();
       return;
     }
 
-    if (type === FORM_TYPE.edit) {
-      axios.patch(`/api/labels/${id}`, labelData);
+    if (type === FORM_TYPE.edit && id) {
+      patchLabel(id, labelData);
+      mutate();
     }
   };
 
@@ -69,7 +75,9 @@ const LabelForm = ({
           backgroundColor={labelColor}
           textColor={labelTextColor}
         />
-        {type === FORM_TYPE.edit && <Button isText text="Delete" type="button" />}
+        {type === FORM_TYPE.edit && (
+          <Button isText text="Delete" type="button" onClick={onDelete} />
+        )}
       </FlexBetween>
       <S.GridContainer>
         <Input

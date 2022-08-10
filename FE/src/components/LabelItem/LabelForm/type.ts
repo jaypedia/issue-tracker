@@ -9,6 +9,7 @@ export type LabelFormProps = FormStyleType & {
   backgroundColor?: string;
   color?: string;
   onCancel?: () => void;
+  onDelete?: () => void;
 };
 
 export type ColorChangeButtonProps = {

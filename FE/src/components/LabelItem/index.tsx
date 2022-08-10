@@ -1,23 +1,25 @@
-import axios from 'axios';
 import React from 'react';
 
 import LabelForm from './LabelForm';
 import * as S from './style';
 
+import Label from '@/components//common/Label';
 import Button from '@/components/common/Button';
-import Label from '@/components/common/Label';
 import useBoolean from '@/hooks/useBoolean';
+import { useDeleteLabel } from '@/hooks/useLabel';
 import { Item } from '@/styles/list';
+import { ILabel } from '@/types/labelTypes';
 
 const LabelItem = React.memo(({ id, title, backgroundColor, textColor, description }: ILabel) => {
   const { booleanState: isFormOpen, setTrue, setFalse } = useBoolean(false);
+  const { mutate: deleteLabel } = useDeleteLabel(id);
 
   const handleLabelEdit = () => {
     setTrue();
   };
 
   const handleLabelDelete = () => {
-    axios.delete(`/api/labels/${id}`);
+    deleteLabel();
   };
 
   return (
@@ -31,6 +33,7 @@ const LabelItem = React.memo(({ id, title, backgroundColor, textColor, descripti
           description={description}
           backgroundColor={backgroundColor}
           color={textColor}
+          onDelete={deleteLabel}
         />
       ) : (
         <>

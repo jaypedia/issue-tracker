@@ -1,15 +1,15 @@
-import { ILabel } from '@/components/common/Label/type';
 import Loading from '@/components/common/Loading';
 import LabelItem from '@/components/LabelItem';
 import LabelForm from '@/components/LabelItem/LabelForm';
 import Navbar from '@/components/Navbar';
 import useBoolean from '@/hooks/useBoolean';
+import { useGetLabel } from '@/hooks/useLabel';
 import { MainWrapper, InnerContainer } from '@/styles/common';
 import { ListHeader, ListContainer } from '@/styles/list';
-import { useLabelQuery } from '@/utils/query';
+import { ILabel } from '@/types/labelTypes';
 
 const Labels = () => {
-  const { data, isLoading } = useLabelQuery();
+  const { data, isLoading } = useGetLabel();
   const { booleanState: isFormOpen, setFalse, setToggle } = useBoolean(false);
 
   const handleNewLabelClick = () => {

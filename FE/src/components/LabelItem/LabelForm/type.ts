@@ -3,9 +3,10 @@ export type FormStyleType = {
 };
 
 export type LabelFormProps = FormStyleType & {
-  labelName?: string;
+  id?: number;
+  title?: string;
   description?: string;
-  backgroundColor: string;
+  backgroundColor?: string;
   color?: string;
   onCancel?: () => void;
 };

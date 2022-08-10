@@ -13,3 +13,8 @@ export const QUERY_KEY = {
 export const INDICATOR = {
   setting: 'setting',
 };
+
+export const FORM_TYPE = {
+  create: 'create',
+  edit: 'edit',
+};

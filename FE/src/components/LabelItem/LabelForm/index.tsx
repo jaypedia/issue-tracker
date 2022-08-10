@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useState, useRef } from 'react';
 
 import ColorChangeButton from './ColorChangeButton';
 import * as S from './style';
@@ -7,38 +8,56 @@ import { LabelFormProps } from './type';
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import Label from '@/components/common/Label';
+import { FORM_TYPE } from '@/constants/constants';
 import { useInput } from '@/hooks/useInput';
 import { FlexEndAlign, FlexBetween, FlexColumnStart } from '@/styles/common';
-import { getRandomHexColorCode, isDark } from '@/utils/label';
+import { getRandomHexColorCode, getTextColor } from '@/utils/label';
 
 const LabelForm = ({
+  id,
   type,
-  labelName = 'Label preview',
+  title = '',
   description,
   backgroundColor = getRandomHexColorCode(),
   color,
   onCancel,
 }: LabelFormProps) => {
-  const { value: labelPriview, onChange: changeLabelName } = useInput(labelName);
+  const labelName = useRef<HTMLInputElement>(null);
+  const labelDescription = useRef<HTMLInputElement>(null);
+
+  const { value: labelPriview, onChange: changeLabelName } = useInput(title);
   const {
     value: labelColor,
     onChange: changeLabelColor,
     setValue: setLabelColor,
   } = useInput(backgroundColor.toUpperCase());
-  const [labelTextColor, setLabelTextColor] = useState(color);
+  const [labelTextColor, setLabelTextColor] = useState(color || getTextColor(backgroundColor));
 
   const handleChangeColorClick = () => {
     const newColor = getRandomHexColorCode();
+    const textColor = getTextColor(newColor);
     setLabelColor(newColor);
-    if (isDark(newColor)) {
-      setLabelTextColor('white');
-    } else {
-      setLabelTextColor('black');
-    }
+    setLabelTextColor(textColor);
   };
 
   const saveLabel = () => {
-    // Api logic
+    if (!labelName.current || !labelDescription.current) return;
+
+    const labelData = {
+      title: labelName.current.value,
+      description: labelDescription.current.value,
+      backgroundColor: labelColor,
+      textColor: labelTextColor,
+    };
+
+    if (type === FORM_TYPE.create) {
+      axios.post('/api/labels', labelData);
+      return;
+    }
+
+    if (type === FORM_TYPE.edit) {
+      axios.patch(`/api/labels/${id}`, labelData);
+    }
   };
 
   return (
@@ -46,11 +65,11 @@ const LabelForm = ({
       <FlexBetween>
         <Label
           size="small"
-          title={labelPriview}
+          title={labelPriview || 'Label Priview'}
           backgroundColor={labelColor}
           textColor={labelTextColor}
         />
-        {type === 'edit' && <Button isText text="Delete" type="button" />}
+        {type === FORM_TYPE.edit && <Button isText text="Delete" type="button" />}
       </FlexBetween>
       <S.GridContainer>
         <Input
@@ -61,8 +80,10 @@ const LabelForm = ({
           name="labelName"
           hasBorder
           inputLabel="Label name"
-          defaultValue={labelName}
+          defaultValue={title}
           onChange={changeLabelName}
+          maxLength={50}
+          ref={labelName}
         />
         <Input
           type="text"
@@ -73,6 +94,8 @@ const LabelForm = ({
           hasBorder
           inputLabel="Description"
           defaultValue={description}
+          maxLength={100}
+          ref={labelDescription}
         />
         <FlexColumnStart>
           <S.InputLabel>Color</S.InputLabel>
@@ -100,8 +123,9 @@ const LabelForm = ({
           <Button
             size="small"
             color="primary"
-            text={type === 'create' ? 'Create label' : 'Save changes'}
+            text={type === FORM_TYPE.create ? 'Create label' : 'Save changes'}
             onClick={saveLabel}
+            type="button"
           />
         </S.ButtonWrapper>
       </S.GridContainer>

@@ -1,3 +1,12 @@
+// Temporary
+export interface ILabel {
+  id: number;
+  title: string;
+  backgroundColor: string;
+  textColor: string;
+  description: string;
+}
+
 export type LabelProps = {
   title: string;
   size: 'large' | 'small';

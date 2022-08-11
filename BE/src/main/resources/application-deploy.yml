@@ -10,6 +10,10 @@ spring:
     hibernate:
       ddl-auto: none
 
+  sql:
+    init:
+      mode: always
+
   redis:
     host: redis_host
     port: 6379

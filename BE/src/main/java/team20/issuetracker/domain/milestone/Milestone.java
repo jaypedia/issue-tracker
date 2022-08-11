@@ -1,19 +1,24 @@
 package team20.issuetracker.domain.milestone;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import team20.issuetracker.domain.AuditingFields;
+import team20.issuetracker.domain.issue.Issue;
 import team20.issuetracker.service.dto.request.RequestUpdateMilestoneDto;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -28,10 +33,7 @@ public class Milestone extends AuditingFields {
     private String title;
 
     @Column(nullable = false)
-    private LocalDate startDate;
-
-    @Column(nullable = false)
-    private LocalDate endDate;
+    private LocalDate dueDate;
 
     @Column(length = 800)
     private String description;
@@ -39,36 +41,40 @@ public class Milestone extends AuditingFields {
     @Enumerated(EnumType.STRING)
     private MilestoneStatus milestoneStatus;
 
-    private Milestone(Long id, String title, LocalDate startDate, LocalDate endDate, String description) {
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "milestone")
+    private List<Issue> issues = new ArrayList<>();
+
+    private Milestone(Long id, String title, LocalDate dueDate, String description) {
         this.id = id;
         this.title = title;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.dueDate = dueDate;
         this.description = description;
         this.milestoneStatus = MilestoneStatus.OPEN;
     }
 
-    private Milestone(String title, LocalDate startDate, LocalDate endDate, String description) {
+    private Milestone(String title, LocalDate dueDate, String description) {
         this.title = title;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.dueDate = dueDate;
         this.description = description;
         this.milestoneStatus = MilestoneStatus.OPEN;
     }
 
-    public static Milestone of(String title, LocalDate startDate, LocalDate endDate, String description) {
-        return new Milestone(title, startDate, endDate, description);
+    public static Milestone of(String title, LocalDate dueDate, String description) {
+        return new Milestone(title, dueDate, description);
     }
 
-    public static Milestone of(Long id, String title, LocalDate startDate, LocalDate endDate, String description) {
-        return new Milestone(id, title, startDate, endDate, description);
+    public static Milestone of(Long id, String title, LocalDate dueDate, String description) {
+        return new Milestone(id, title, dueDate, description);
+    }
+
+    public void updateIssue(Issue issue) {
+        issues.add(issue);
     }
 
     public void update(RequestUpdateMilestoneDto requestUpdateMilestoneDto) {
         this.title = requestUpdateMilestoneDto.getTitle();
         this.description = requestUpdateMilestoneDto.getDescription();
-        this.startDate = requestUpdateMilestoneDto.getStartDate();
-        this.endDate = requestUpdateMilestoneDto.getEndDate();
+        this.dueDate = requestUpdateMilestoneDto.getDueDate();
         this.milestoneStatus = requestUpdateMilestoneDto.getMilestoneStatus();
     }
 }

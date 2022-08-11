@@ -11,7 +11,6 @@ import team20.issuetracker.domain.assginee.Assignee;
 import team20.issuetracker.domain.issue.Issue;
 import team20.issuetracker.domain.issue.IssueAssignee;
 import team20.issuetracker.domain.issue.IssueLabel;
-import team20.issuetracker.domain.issue.IssueStatus;
 import team20.issuetracker.domain.label.Label;
 
 @Getter
@@ -22,7 +21,7 @@ public class ResponseIssueDto {
     private String title;
     private String author;
     private LocalDate createAt;
-    private IssueStatus issueStatus;
+    private String issueStatus;
     private String milestoneTitle;
     private Set<ResponseCommentDto> comments;
     private Set<ResponseLabelDto> labels;
@@ -40,7 +39,7 @@ public class ResponseIssueDto {
                 issue.getTitle(),
                 issue.getAuthorId(),
                 issue.getCreatedAt(),
-                issue.getStatus(),
+                issue.getStatus().toString().toLowerCase(),
                 milestoneTitle,
                 issue.getComments().stream()
                         .map(ResponseCommentDto::from)
@@ -67,7 +66,7 @@ public class ResponseIssueDto {
                 issue.getTitle(),
                 issue.getAuthorId(),
                 issue.getCreatedAt(),
-                issue.getStatus(),
+                issue.getStatus().toString().toLowerCase(),
                 milestoneTitle,
                 issue.getComments().stream().map(ResponseCommentDto::from).collect(Collectors.toSet()),
                 label.stream().map(ResponseLabelDto::from).collect(Collectors.toSet()),

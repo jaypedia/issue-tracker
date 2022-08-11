@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
-
 import team20.issuetracker.domain.assginee.Assignee;
 import team20.issuetracker.domain.assginee.AssigneeRepository;
 import team20.issuetracker.domain.comment.Comment;
@@ -52,13 +51,15 @@ public class IssueService {
         if (requestSaveIssueDto.getMilestoneId() != null) {
             milestone = milestoneRepository.findById(requestSaveIssueDto.getMilestoneId())
                     .orElseThrow(() -> new CheckEntityException("해당 Milestone 은 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
+            Issue newIssue = Issue.of(title, content, milestone);
+            milestone.updateIssue(newIssue);
+            newIssue.addAssignees(assignees);
+            newIssue.addLabels(labels);
+            return issueRepository.save(newIssue).getId();
         }
-
         Issue newIssue = Issue.of(title, content, milestone);
-
         newIssue.addAssignees(assignees);
         newIssue.addLabels(labels);
-
         return issueRepository.save(newIssue).getId();
     }
 
@@ -83,7 +84,7 @@ public class IssueService {
     public ResponseReadAllIssueDto findAllCloseIssue() {
         List<Issue> findIssues = issueRepository.findAll();
         List<Issue> findCloseIssues = findIssues.stream()
-                .filter(issue -> issue.getStatus().equals(IssueStatus.CLOSE))
+                .filter(issue -> issue.getStatus().equals(IssueStatus.CLOSED))
                 .collect(Collectors.toList());
 
         return getResponseReadAllIssueDto(findCloseIssues, findIssues);
@@ -261,7 +262,7 @@ public class IssueService {
     }
 
     private long getCloseIssuesCountByFindAll(List<Issue> findIssues) {
-        return findIssues.stream().filter(issue -> issue.getStatus().equals(IssueStatus.CLOSE)).count();
+        return findIssues.stream().filter(issue -> issue.getStatus().equals(IssueStatus.CLOSED)).count();
     }
 
     private long getOpenIssuesCountByFindAll(Set<Issue> findIssues) {
@@ -269,7 +270,7 @@ public class IssueService {
     }
 
     private long getCloseIssuesCountByFindAll(Set<Issue> findIssues) {
-        return findIssues.stream().filter(issue -> issue.getStatus().equals(IssueStatus.CLOSE)).count();
+        return findIssues.stream().filter(issue -> issue.getStatus().equals(IssueStatus.CLOSED)).count();
     }
 
     private long getLabelCount() {

@@ -46,7 +46,7 @@ public class MilestoneService {
     public ResponseReadAllMilestonesDto getAllMilestoneData(List<ResponseMilestoneDto> milestones) {
         int allMilestoneCount = milestones.size();
         long openMilestonesCount = milestones.stream().filter(milestone -> milestone.getMilestoneStatus().equals(MilestoneStatus.OPEN)).count();
-        long closeMilestonesCount = milestones.stream().filter(milestone -> milestone.getMilestoneStatus().equals(MilestoneStatus.CLOSE)).count();
+        long closeMilestonesCount = milestones.stream().filter(milestone -> milestone.getMilestoneStatus().equals(MilestoneStatus.CLOSED)).count();
 
         return ResponseReadAllMilestonesDto.of(allMilestoneCount, openMilestonesCount, closeMilestonesCount, milestones);
     }

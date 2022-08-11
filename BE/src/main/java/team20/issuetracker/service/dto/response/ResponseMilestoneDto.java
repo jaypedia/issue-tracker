@@ -6,7 +6,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import team20.issuetracker.domain.milestone.Milestone;
-import team20.issuetracker.domain.milestone.MilestoneStatus;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -17,9 +16,9 @@ public class ResponseMilestoneDto {
     private LocalDate startDate;
     private LocalDate endDate;
     private String description;
-    private MilestoneStatus milestoneStatus;
+    private String milestoneStatus;
 
     public static ResponseMilestoneDto of(Milestone milestone) {
-        return new ResponseMilestoneDto(milestone.getId(), milestone.getTitle(), milestone.getStartDate(), milestone.getDueDate(), milestone.getDescription(), milestone.getMilestoneStatus());
+        return new ResponseMilestoneDto(milestone.getId(), milestone.getTitle(), milestone.getStartDate(), milestone.getDueDate(), milestone.getDescription(), milestone.getMilestoneStatus().toString().toLowerCase());
     }
 }

@@ -27,10 +27,10 @@ INSERT INTO issue.issue
     (author_id, created_at, content, `status`, title, milestone_id)
 VALUES ('78953393', LOCALTIME, '검봉 이슈 내용1', 'OPEN', '검봉 이슈1', 1),
        ('78953393', LOCALTIME, '검봉 이슈 내용2', 'OPEN', '검봉 이슈2', 1),
-       ('78953393', LOCALTIME, '검봉 이슈 내용3', 'CLOSE', '검봉 이슈3', null),
+       ('78953393', LOCALTIME, '검봉 이슈 내용3', 'CLOSED', '검봉 이슈3', null),
        ('85419343', LOCALTIME, '밀리 이슈 내용1', 'OPEN', '밀리 이슈 1', 2),
        ('85419343', LOCALTIME, '밀리 이슈 내용2', 'OPEN', '밀리 이슈 2', 2),
-       ('85419343', LOCALTIME, '밀리 이슈 내용3', 'CLOSE', '밀리 이슈 3', null);
+       ('85419343', LOCALTIME, '밀리 이슈 내용3', 'CLOSED', '밀리 이슈 3', null);
 
 /*
 ---- 기본 코멘트 생성----

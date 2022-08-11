@@ -83,7 +83,7 @@ class MilestoneServiceTest {
         //then
         assertThat(requestUpdateMilestoneDto.getMilestoneStatus())
                 .isNotEqualTo(MilestoneStatus.OPEN)
-                .isEqualTo(MilestoneStatus.CLOSE);
+                .isEqualTo(MilestoneStatus.CLOSED);
         then(milestoneRepository).should().findById(milestone.getId());
     }
 
@@ -143,7 +143,7 @@ class MilestoneServiceTest {
                 "마일스톤 설명",
                 LocalDate.now(),
                 LocalDate.now().plusDays(1),
-                MilestoneStatus.CLOSE
+                MilestoneStatus.CLOSED
         );
     }
 }

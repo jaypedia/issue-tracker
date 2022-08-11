@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
-
 import team20.issuetracker.domain.assginee.Assignee;
 import team20.issuetracker.domain.assginee.AssigneeRepository;
 import team20.issuetracker.domain.comment.Comment;
@@ -83,7 +82,7 @@ public class IssueService {
     public ResponseReadAllIssueDto findAllCloseIssue() {
         List<Issue> findIssues = issueRepository.findAll();
         List<Issue> findCloseIssues = findIssues.stream()
-                .filter(issue -> issue.getStatus().equals(IssueStatus.CLOSE))
+                .filter(issue -> issue.getStatus().equals(IssueStatus.CLOSED))
                 .collect(Collectors.toList());
 
         return getResponseReadAllIssueDto(findCloseIssues, findIssues);
@@ -261,7 +260,7 @@ public class IssueService {
     }
 
     private long getCloseIssuesCountByFindAll(List<Issue> findIssues) {
-        return findIssues.stream().filter(issue -> issue.getStatus().equals(IssueStatus.CLOSE)).count();
+        return findIssues.stream().filter(issue -> issue.getStatus().equals(IssueStatus.CLOSED)).count();
     }
 
     private long getOpenIssuesCountByFindAll(Set<Issue> findIssues) {
@@ -269,7 +268,7 @@ public class IssueService {
     }
 
     private long getCloseIssuesCountByFindAll(Set<Issue> findIssues) {
-        return findIssues.stream().filter(issue -> issue.getStatus().equals(IssueStatus.CLOSE)).count();
+        return findIssues.stream().filter(issue -> issue.getStatus().equals(IssueStatus.CLOSED)).count();
     }
 
     private long getLabelCount() {

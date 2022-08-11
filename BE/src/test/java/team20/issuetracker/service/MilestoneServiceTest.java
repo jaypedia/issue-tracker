@@ -122,7 +122,6 @@ class MilestoneServiceTest {
         return Milestone.of(
                 1L,
                 requestSaveMilestoneDto.getTitle(),
-                requestSaveMilestoneDto.getStartDate(),
                 requestSaveMilestoneDto.getEndDate(),
                 requestSaveMilestoneDto.getDescription()
         );
@@ -142,7 +141,6 @@ class MilestoneServiceTest {
                 "마일스톤 타이틀",
                 "마일스톤 설명",
                 LocalDate.now(),
-                LocalDate.now().plusDays(1),
                 MilestoneStatus.CLOSED
         );
     }

@@ -51,13 +51,15 @@ public class IssueService {
         if (requestSaveIssueDto.getMilestoneId() != null) {
             milestone = milestoneRepository.findById(requestSaveIssueDto.getMilestoneId())
                     .orElseThrow(() -> new CheckEntityException("해당 Milestone 은 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
+            Issue newIssue = Issue.of(title, content, milestone);
+            milestone.updateIssue(newIssue);
+            newIssue.addAssignees(assignees);
+            newIssue.addLabels(labels);
+            return issueRepository.save(newIssue).getId();
         }
-
         Issue newIssue = Issue.of(title, content, milestone);
-
         newIssue.addAssignees(assignees);
         newIssue.addLabels(labels);
-
         return issueRepository.save(newIssue).getId();
     }
 

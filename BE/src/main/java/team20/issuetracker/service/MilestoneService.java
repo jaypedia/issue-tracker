@@ -1,5 +1,6 @@
 package team20.issuetracker.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
 import team20.issuetracker.domain.milestone.MilestoneStatus;
+import team20.issuetracker.exception.CheckEntityException;
 import team20.issuetracker.service.dto.request.RequestSaveMilestoneDto;
 import team20.issuetracker.service.dto.request.RequestUpdateMilestoneDto;
 import team20.issuetracker.service.dto.response.ResponseMilestoneDto;
@@ -27,10 +29,9 @@ public class MilestoneService {
     public Long save(RequestSaveMilestoneDto requestSaveMilestoneDto) {
         String title = requestSaveMilestoneDto.getTitle();
         String description = requestSaveMilestoneDto.getDescription() == null ? "" : requestSaveMilestoneDto.getDescription();
-        LocalDate startDate = requestSaveMilestoneDto.getStartDate();
         LocalDate endDate = requestSaveMilestoneDto.getEndDate();
 
-        Milestone newMilestone = Milestone.of(title, startDate, endDate, description);
+        Milestone newMilestone = Milestone.of(title, endDate, description);
 
         return milestoneRepository.save(newMilestone).getId();
     }
@@ -41,14 +42,6 @@ public class MilestoneService {
 
         return findMilestones.stream()
                 .map(ResponseMilestoneDto::of).collect(Collectors.toList());
-    }
-
-    public ResponseReadAllMilestonesDto getAllMilestoneData(List<ResponseMilestoneDto> milestones) {
-        int allMilestoneCount = milestones.size();
-        long openMilestonesCount = milestones.stream().filter(milestone -> milestone.getMilestoneStatus().equals(MilestoneStatus.OPEN)).count();
-        long closeMilestonesCount = milestones.stream().filter(milestone -> milestone.getMilestoneStatus().equals(MilestoneStatus.CLOSED)).count();
-
-        return ResponseReadAllMilestonesDto.of(allMilestoneCount, openMilestonesCount, closeMilestonesCount, milestones);
     }
 
     @Transactional
@@ -62,17 +55,30 @@ public class MilestoneService {
     @Transactional
     public Long update(Long id, RequestUpdateMilestoneDto requestUpdateMilestoneDto) {
         Milestone findMilestone = milestoneRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("해당 Milestone 은 존재하지 않습니다."));
+                .orElseThrow(() -> new CheckEntityException("해당 Milestone 은 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
 
         findMilestone.update(requestUpdateMilestoneDto);
 
         return findMilestone.getId();
     }
 
+    @Transactional(readOnly = true)
     public ResponseMilestoneDto detail(Long id) {
         Milestone findMilestone = milestoneRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("해당 Milestone 은 존재하지 않습니다."));
+                .orElseThrow(() -> new CheckEntityException("해당 Milestone 은 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
 
         return ResponseMilestoneDto.of(findMilestone);
+    }
+
+    public ResponseReadAllMilestonesDto getAllMilestoneData(List<ResponseMilestoneDto> milestones) {
+        int allMilestoneCount = milestones.size();
+        long openMilestonesCount = milestones.stream()
+                .filter(milestone -> milestone.getMilestoneStatus().equals(MilestoneStatus.OPEN.toString().toLowerCase()))
+                .count();
+        long closeMilestonesCount = milestones.stream()
+                .filter(milestone -> milestone.getMilestoneStatus().equals(MilestoneStatus.CLOSED.toString().toLowerCase()))
+                .count();
+
+        return ResponseReadAllMilestonesDto.of(allMilestoneCount, openMilestonesCount, closeMilestonesCount, milestones);
     }
 }

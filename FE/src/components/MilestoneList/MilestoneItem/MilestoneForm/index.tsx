@@ -14,7 +14,7 @@ import { MilestoneType } from '@/types/milestoneTypes';
 type MilestoneFormProps = {
   data?: MilestoneType;
   type: 'edit' | 'create';
-  onCancel: () => void;
+  onCancel?: () => void;
 };
 
 const MilestoneForm = ({ data, type, onCancel }: MilestoneFormProps) => {
@@ -26,7 +26,7 @@ const MilestoneForm = ({ data, type, onCancel }: MilestoneFormProps) => {
   const handleCancelClick = () => {
     if (type === FORM_TYPE.create) {
       navigate('/milestones');
-    } else {
+    } else if (onCancel) {
       onCancel();
     }
   };
@@ -48,7 +48,7 @@ const MilestoneForm = ({ data, type, onCancel }: MilestoneFormProps) => {
       return;
     }
 
-    if (type === FORM_TYPE.edit && data) {
+    if (type === FORM_TYPE.edit && data && onCancel) {
       patchMilestone(data.id, milestoneData);
       onCancel();
       mutate();

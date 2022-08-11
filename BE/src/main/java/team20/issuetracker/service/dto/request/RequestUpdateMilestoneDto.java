@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
 
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -26,16 +25,12 @@ public class RequestUpdateMilestoneDto {
     @Size(max = 800, message = "Milestone 의 본문은 800글자를 넘을 수 없습니다.")
     private String description;
 
-    @FutureOrPresent(message = "해당 시간은 이미 지나간 시간입니다.")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate startDate;
-
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate endDate;
+    private LocalDate dueDate;
 
     private MilestoneStatus milestoneStatus;
 
-    public static RequestUpdateMilestoneDto of(String title, String description, LocalDate startDate, LocalDate endDate, MilestoneStatus milestoneStatus) {
-        return new RequestUpdateMilestoneDto(title, description, startDate, endDate, milestoneStatus);
+    public static RequestUpdateMilestoneDto of(String title, String description, LocalDate dueDate, MilestoneStatus milestoneStatus) {
+        return new RequestUpdateMilestoneDto(title, description, dueDate, milestoneStatus);
     }
 }

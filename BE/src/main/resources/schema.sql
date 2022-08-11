@@ -17,12 +17,12 @@ create table assignee
     primary key (id)
 );
 
-
 create table `comment`
 (
     id         bigint       not null auto_increment,
     author_id  varchar(255) not null,
     created_at date         not null,
+    updated_at date         not null,
     author     varchar(255),
     content    longtext,
     image      varchar(255),
@@ -36,6 +36,7 @@ create table issue
     id           bigint       not null auto_increment,
     author_id    varchar(255) not null,
     created_at   date         not null,
+    updated_at   date         not null,
     content      varchar(255),
     `status`     varchar(255),
     title        varchar(255),
@@ -64,13 +65,14 @@ create table issue_label
 
 create table label
 (
-    id               bigint                                                        not null auto_increment,
-    author_id        varchar(255)                                                  not null,
-    created_at       date                                                          not null,
-    background_color varchar(7)                                                    not null,
+    id               bigint                                                       not null auto_increment,
+    author_id        varchar(255)                                                 not null,
+    created_at       date                                                         not null,
+    updated_at       date                                                         not null,
+    background_color varchar(7)                                                   not null,
     `description`    varchar(100),
-    text_color       varchar(7)                                                    not null,
-    title            varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci not null,
+    text_color       varchar(7)                                                   not null,
+    title            varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci not null,
     primary key (id)
 );
 
@@ -92,10 +94,10 @@ create table milestone
     id               bigint       not null auto_increment,
     author_id        varchar(255) not null,
     created_at       date         not null,
+    updated_at       date         not null,
     `description`    varchar(800),
-    end_date         date         not null,
+    due_date         date         not null,
     milestone_status varchar(255),
-    start_date       date         not null,
     title            varchar(50)  not null,
     primary key (id)
 );

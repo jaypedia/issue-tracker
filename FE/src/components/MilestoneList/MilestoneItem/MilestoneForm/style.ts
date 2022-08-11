@@ -4,6 +4,10 @@ import { FlexEnd } from '@/styles/common';
 
 const MilestoneForm = styled.form`
   width: 100%;
+
+  input {
+    margin-bottom: 10px;
+  }
 `;
 
 const ButtonWrapper = styled(FlexEnd)`

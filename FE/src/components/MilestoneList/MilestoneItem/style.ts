@@ -5,7 +5,7 @@ import { FONT_MIXIN, mixins } from '@/styles/mixins';
 
 const MilestoneInfoBox = styled.div`
   ${mixins.flexBox({ direction: 'column', alignItems: 'flex-start' })}
-  width: 650px;
+  width: 750px;
 
   & > * {
     margin-bottom: 10px;

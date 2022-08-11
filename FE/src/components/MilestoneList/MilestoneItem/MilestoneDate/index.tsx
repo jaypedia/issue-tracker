@@ -8,6 +8,14 @@ const MilestoneDate = ({ dueDate }: { dueDate: string }) => {
   const today = new Date();
   const isPast = new Date(dueDate) < today;
 
+  if (!dueDate) {
+    return (
+      <S.MilestoneMetaItem>
+        <S.MetaSentence>No due date</S.MetaSentence>
+      </S.MilestoneMetaItem>
+    );
+  }
+
   if (isPast) {
     return (
       <S.MilestoneMetaItem>

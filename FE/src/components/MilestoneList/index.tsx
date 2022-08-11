@@ -6,7 +6,7 @@ import { MilestoneType, MilestoneDataType } from '@/types/milestoneTypes';
 
 type MilestoneListProps = {
   data: MilestoneDataType;
-  onEdit: () => void;
+  onEdit: (props: MilestoneType) => void;
 };
 
 const MilestoneList = ({ data, onEdit }: MilestoneListProps) => {
@@ -14,7 +14,7 @@ const MilestoneList = ({ data, onEdit }: MilestoneListProps) => {
     <>
       <MilestoneListHeader open={data.openMileStonesCount} closed={data.closedMileStonesCount} />
       {data.milestones.map((props: MilestoneType) => (
-        <MilestoneItem key={props.id} {...props} onEdit={onEdit} />
+        <MilestoneItem key={props.id} {...props} onEdit={() => onEdit(props)} />
       ))}
     </>
   );

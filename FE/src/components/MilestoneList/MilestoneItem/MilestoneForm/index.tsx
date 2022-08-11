@@ -6,8 +6,15 @@ import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import TextArea from '@/components/common/TextArea';
 import { FORM_TYPE } from '@/constants/constants';
+import { MilestoneType } from '@/types/milestoneTypes';
 
-const MilestoneForm = ({ type, onCancel }) => {
+type MilestoneFormProps = {
+  data?: MilestoneType;
+  type: 'edit' | 'create';
+  onCancel: () => void;
+};
+
+const MilestoneForm = ({ data, type, onCancel }: MilestoneFormProps) => {
   const navigate = useNavigate();
 
   const handleCancelClick = () => {
@@ -28,8 +35,14 @@ const MilestoneForm = ({ type, onCancel }) => {
         type="text"
         inputLabel="Title"
         maxLength={50}
+        defaultValue={data?.title}
       />
-      <TextArea name="description" usage="milestone" textareaLabel="Description" />
+      <TextArea
+        name="description"
+        usage="milestone"
+        textareaLabel="Description"
+        defaultValue={data?.description}
+      />
       <S.ButtonWrapper>
         <Button size="small" color="grey" text="Cancel" type="button" onClick={handleCancelClick} />
         <Button

@@ -4,9 +4,10 @@ type TextAreaProps = {
   name: string;
   usage: 'comment' | 'milestone';
   textareaLabel?: string;
+  defaultValue?: string;
 };
 
-const TextArea = ({ name, usage, textareaLabel }: TextAreaProps) => {
+const TextArea = ({ name, usage, textareaLabel, defaultValue }: TextAreaProps) => {
   switch (usage) {
     case 'comment':
       return (
@@ -25,7 +26,13 @@ const TextArea = ({ name, usage, textareaLabel }: TextAreaProps) => {
         <>
           <S.TextAreaLabel htmlFor="description">{textareaLabel}</S.TextAreaLabel>
           <S.TextAreaWrapper>
-            <S.TextArea id="description" name={name} placeholder="Description" usage={usage} />
+            <S.TextArea
+              id="description"
+              name={name}
+              placeholder="Description"
+              usage={usage}
+              defaultValue={defaultValue}
+            />
           </S.TextAreaWrapper>
         </>
       );

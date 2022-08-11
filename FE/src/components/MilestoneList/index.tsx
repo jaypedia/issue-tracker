@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import MilestoneItem from './MilestoneItem';
+import MilestoneListHeader from './MilestoneListHeader';
 
-import { ListHeader } from '@/styles/list';
 import { MilestoneType, MilestoneDataType } from '@/types/milestoneTypes';
 
 type MilestoneListProps = {
@@ -12,7 +12,7 @@ type MilestoneListProps = {
 const MilestoneList = ({ data, onEdit }: MilestoneListProps) => {
   return (
     <>
-      <ListHeader type="large">{data.allMileStonesCount} Milestones</ListHeader>
+      <MilestoneListHeader open={data.openMileStonesCount} closed={data.closedMileStonesCount} />
       {data.milestones.map((props: MilestoneType) => (
         <MilestoneItem key={props.id} {...props} onEdit={onEdit} />
       ))}

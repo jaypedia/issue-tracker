@@ -48,7 +48,13 @@ const patchMilestone = (req, res, ctx) => {
   );
   filteredMilestones.push({ ...currentMilestone, ...req.body });
   mockMilestones.milestones = filteredMilestones;
-  // TODO: patch 로직 구현 (마일스톤 열고 닫을 때 로직 )
+  if (req.body.milestoneStatus === 'closed') {
+    mockMilestones.closedMileStonesCount += 1;
+    mockMilestones.openMileStonesCount -= 1;
+  } else if (req.body.milestoneStatus === 'open') {
+    mockMilestones.closedMileStonesCount -= 1;
+    mockMilestones.openMileStonesCount += 1;
+  }
   return res(ctx.status(204));
 };
 
@@ -56,7 +62,7 @@ const milestonesHandler = [
   rest.get(`/${API.PREFIX}/${API.MILESTONES}`, getMilestones),
   rest.post(`/${API.PREFIX}/${API.MILESTONES}`, postMilestone),
   rest.delete(`/${API.PREFIX}/${API.MILESTONES}/:id`, deleteMilestone),
-  rest.patch(`/${API.PREFIX}/${API.MILESTONES}/:id`, patchMilestone),
+  rest.post(`/${API.PREFIX}/${API.MILESTONES}/:id`, patchMilestone),
 ];
 
 export default milestonesHandler;

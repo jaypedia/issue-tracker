@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { MilestoneApiData } from '@/types/milestoneTypes';
+import { MilestoneApiData, MilestoneStatusData } from '@/types/milestoneTypes';
 
 export const deleteMilestone = async (id: number) => {
   try {
@@ -18,9 +18,12 @@ export const postMilestone = async (milestoneData: MilestoneApiData) => {
   }
 };
 
-export const patchMilestone = async (id: number, milestoneData: MilestoneApiData) => {
+export const editMilestone = async (
+  id: number,
+  milestoneData: MilestoneApiData | MilestoneStatusData,
+) => {
   try {
-    axios.patch(`/api/milestones/${id}`, milestoneData);
+    axios.post(`/api/milestones/${id}`, milestoneData);
   } catch (error) {
     console.log(error);
   }

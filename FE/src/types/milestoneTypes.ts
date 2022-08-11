@@ -5,6 +5,9 @@ export interface MilestoneApiData {
   updatedAt: string;
   description: string;
 }
+export interface MilestoneStatusData {
+  milestoneStatus: MilestoneStatus;
+}
 export interface MilestoneType extends MilestoneApiData {
   id: number;
   openIssueCount: number;

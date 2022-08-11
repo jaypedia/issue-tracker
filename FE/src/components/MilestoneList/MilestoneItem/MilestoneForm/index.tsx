@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import * as S from './style';
 
-import { postMilestone, patchMilestone } from '@/apis/milestoneApi';
+import { postMilestone, editMilestone } from '@/apis/milestoneApi';
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import TextArea from '@/components/common/TextArea';
@@ -49,7 +49,7 @@ const MilestoneForm = ({ data, type, onCancel }: MilestoneFormProps) => {
     }
 
     if (type === FORM_TYPE.edit && data && onCancel) {
-      patchMilestone(data.id, milestoneData);
+      editMilestone(data.id, milestoneData);
       onCancel();
       mutate();
     }

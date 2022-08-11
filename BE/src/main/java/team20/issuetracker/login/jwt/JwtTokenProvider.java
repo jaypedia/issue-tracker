@@ -102,4 +102,26 @@ public class JwtTokenProvider {
     public long getRefreshTokenValidityInMilliseconds() {
         return refreshTokenValidityInMilliseconds;
     }
+
+    public void validateRefreshToken(String refreshToken) {
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(this.refreshSecretKey).parseClaimsJws(refreshToken);
+            claims.getBody().getExpiration().before(new Date());
+        } catch (SignatureException e) {
+            throw new MyJwtException("서명을 확인할 수 없는 토큰입니다.", HttpStatus.UNAUTHORIZED);
+        } catch (MalformedJwtException e) {
+            throw new MyJwtException("잘못 구성된 토큰이 입니다.", HttpStatus.UNAUTHORIZED);
+        } catch (ExpiredJwtException e) {
+            throw new MyJwtException("만료된 토큰 입니다.", HttpStatus.UNAUTHORIZED);
+        } catch (UnsupportedJwtException e) {
+            throw new MyJwtException("형식에 맞지 않는 토큰 입니다.", HttpStatus.UNAUTHORIZED);
+        } catch (JwtException | IllegalArgumentException e) {
+            throw new MyJwtException("유효하지 않은 토큰 입니다.", HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    public String decodingRefreshToken(String refreshToken) {
+        validateRefreshToken(refreshToken);
+        return JwtUtils.decodingToken(refreshToken, refreshSecretKey).getId();
+    }
 }

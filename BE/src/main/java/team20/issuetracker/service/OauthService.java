@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import team20.issuetracker.domain.member.Member;
 import team20.issuetracker.domain.member.MemberRepository;
+import team20.issuetracker.exception.CheckEntityException;
 import team20.issuetracker.exception.MyJwtException;
 import team20.issuetracker.login.jwt.JwtTokenProvider;
 import team20.issuetracker.login.oauth.OauthProvider;
@@ -38,7 +39,9 @@ public class OauthService {
         Member member = saveOrUpdate(requestUserDto);
         String accessToken = jwtTokenProvider.getAccessToken(member);
         String refreshToken = jwtTokenProvider.getRefreshToken(member);
-        redisTemplate.opsForValue().set(String.valueOf(member.getId()), refreshToken, jwtTokenProvider.getRefreshTokenValidityInMilliseconds(), TimeUnit.MILLISECONDS);
+
+        // 레디스에 id 가 아닌 oauthId 가 키 값으로 저장된다.
+        redisTemplate.opsForValue().set(String.valueOf(member.getOauthId()), refreshToken, jwtTokenProvider.getRefreshTokenValidityInMilliseconds(), TimeUnit.MILLISECONDS);
         // FE 쪽으로 유저 정보, JWT Token (Access, Refresh) 를 응답한다.
         return ResponseLoginDto.builder()
                 .id(member.getId())
@@ -98,6 +101,30 @@ public class OauthService {
         if (fromClientRefreshToken.equals(storedToken)) {
             return jwtTokenProvider.getAccessToken(fromClientRefreshToken);
         }
+        throw new MyJwtException("유효하지 않은 refreshToken 입니다.", HttpStatus.SEE_OTHER);
+    }
+
+    public ResponseLoginDto getMaintainUserInfo(String refreshToken) {
+        String refreshTokenOauthId = jwtTokenProvider.decodingRefreshToken(refreshToken);
+        String storedToken = redisTemplate.opsForValue().get(refreshTokenOauthId);
+
+        if (refreshToken.equals(storedToken)) {
+            Member findMember = memberRepository.findByOauthId(refreshTokenOauthId)
+                    .orElseThrow(() -> new CheckEntityException("해당 멤버는 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
+            String accessToken = jwtTokenProvider.getAccessToken(refreshToken);
+
+            return ResponseLoginDto.builder()
+                    .id(findMember.getId())
+                    .email(findMember.getEmail())
+                    .name(findMember.getName())
+                    .profileImageUrl(findMember.getProfileImageUrl())
+                    .role(findMember.getRole())
+                    .tokenType("Bearer")
+                    .accessToken(accessToken)
+                    .refreshToken(refreshToken)
+                    .build();
+        }
+
         throw new MyJwtException("유효하지 않은 refreshToken 입니다.", HttpStatus.SEE_OTHER);
     }
 }

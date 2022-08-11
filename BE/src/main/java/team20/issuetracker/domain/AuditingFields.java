@@ -2,6 +2,7 @@ package team20.issuetracker.domain;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,4 +27,9 @@ public abstract class AuditingFields {
     @CreatedBy
     @Column(nullable = false, updatable = false)
     private String authorId;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @LastModifiedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDate updatedAt;
 }

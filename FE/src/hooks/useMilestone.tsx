@@ -29,4 +29,8 @@ const useRefetchMilestone = () => {
   });
 };
 
-export { useGetMilestone, useDeleteMilestone, useRefetchMilestone };
+const useGetAllMilestone = () => {
+  return useQuery([API.MILESTONES], () => fetchAPI<MilestoneDataType>(API.MILESTONES));
+};
+
+export { useGetMilestone, useDeleteMilestone, useRefetchMilestone, useGetAllMilestone };

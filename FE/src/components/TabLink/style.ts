@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { COLOR } from '@/styles/color';
 import { FONT_MIXIN, mixins } from '@/styles/mixins';
 
 const TabLink = styled.div`
@@ -40,7 +41,13 @@ const TabItem = styled.div`
 `;
 
 const Count = styled.span`
-  ${FONT_MIXIN.small(400)}
+  ${FONT_MIXIN.xSmall(500)}
+  background: ${COLOR.transparent[100]};
+  color: ${({ theme: { color } }) => color.text};
+  min-width: 20px;
+  padding: 0 6px;
+  border-radius: 2em;
+  text-align: center;
 `;
 
 export { TabLink, Link, TabItem, Count };

@@ -113,7 +113,6 @@ class CommentServiceTest {
     private Milestone createMilestone() {
         return Milestone.of(
                 "마일스톤 타이틀",
-                LocalDate.now(),
                 LocalDate.now().plusDays(1),
                 "마일스톤 설명"
         );

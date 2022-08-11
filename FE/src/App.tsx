@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { QueryClientProvider, QueryClient } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
@@ -13,6 +14,7 @@ import Login from '@/pages/Login';
 import LoginCallback from '@/pages/LoginCallback';
 import Milestones from '@/pages/Milestones';
 import NewIssue from '@/pages/NewIssue';
+import NewMilestone from '@/pages/NewMilestone';
 import NotFound from '@/pages/NotFound';
 import GlobalStyle from '@/styles/GlobalStyle';
 import { DARK, LIGHT } from '@/styles/theme';
@@ -32,6 +34,7 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen />
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <RecoilRoot>
@@ -42,6 +45,7 @@ const App = () => {
                 <Route path="new-issue" element={<NewIssue />} />
                 <Route path="labels" element={<Labels />} />
                 <Route path="milestones" element={<Milestones />} />
+                <Route path="newMilestone" element={<NewMilestone />} />
                 <Route path="issue/:id" element={<IssueDetail />} />
               </Route>
               <Route path="callback" element={<LoginCallback />} />

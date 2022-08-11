@@ -18,3 +18,8 @@ export const FORM_TYPE = {
   create: 'create',
   edit: 'edit',
 };
+
+export const MILESTONE_STATUS = {
+  open: 'open',
+  closed: 'closed',
+} as const;

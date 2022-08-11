@@ -49,6 +49,7 @@ const Input = styled.input<InputStyleProps>`
 `;
 
 const InputLabel = styled.label`
+  width: inherit;
   ${FONT_MIXIN.xSmall(700)}
 
   &>:last-child {

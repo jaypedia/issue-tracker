@@ -1,11 +1,12 @@
 export type MilestoneStatus = 'open' | 'closed';
-
-export interface MilestoneType {
-  id: number;
+export interface MilestoneApiData {
   title: string;
   dueDate: string;
   updatedAt: string;
   description: string;
+}
+export interface MilestoneType extends MilestoneApiData {
+  id: number;
   openIssueCount: number;
   closedIssueCount: number;
   milestoneStatus: string;

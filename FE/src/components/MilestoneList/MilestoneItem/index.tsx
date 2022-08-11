@@ -3,10 +3,15 @@ import * as S from './style';
 
 import Button from '@/components/common/Button';
 import ProgressBar from '@/components/common/ProgressBar';
+import { useDeleteMilestone } from '@/hooks/useMilestone';
 import * as I from '@/icons/Milestone';
 import { Item } from '@/styles/list';
 import { MilestoneType } from '@/types/milestoneTypes';
 import { getRelativeTime } from '@/utils/issue';
+
+type MilestoneItemProps = MilestoneType & {
+  onEdit: () => void;
+};
 
 const MilestoneItem = ({
   id,
@@ -17,7 +22,13 @@ const MilestoneItem = ({
   openIssueCount,
   closedIssueCount,
   onEdit,
-}: MilestoneType) => {
+}: MilestoneItemProps) => {
+  const { mutate: deleteMilestone } = useDeleteMilestone(id);
+
+  const handleMilestoneDelete = () => {
+    deleteMilestone();
+  };
+
   return (
     <Item key={id} type="milestone">
       <S.MilestoneInfoBox>
@@ -41,7 +52,7 @@ const MilestoneItem = ({
         <S.ButtonBox>
           <Button isText textColor="primary" text="Edit" onClick={onEdit} />
           <Button isText textColor="primary" text="Close" />
-          <Button isText textColor="warning" text="Delete" />
+          <Button isText textColor="warning" text="Delete" onClick={handleMilestoneDelete} />
         </S.ButtonBox>
       </S.ProgressBarBox>
     </Item>

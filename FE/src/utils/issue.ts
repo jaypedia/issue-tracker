@@ -12,9 +12,11 @@ type getIssueDetailInfoSentenceParams = {
   commentCount: number;
 };
 
-type getIssueInfoSentenceParams = getIssueDetailInfoSentenceParams & {
+type getIssueInfoSentenceParams = {
   issueId: number;
   issueStatus: string;
+  author: string;
+  createdAt: string;
 };
 
 export const getIssueDetailInfoSentence = ({

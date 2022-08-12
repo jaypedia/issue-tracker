@@ -3,27 +3,25 @@ import { useRecoilValue } from 'recoil';
 import Loading from '@/components/common/Loading';
 import HomeHeader from '@/components/HomeHeader';
 import IssueList from '@/components/IssueList';
+import { useGetIssue } from '@/hooks/useIssue';
 import { issueStatusState } from '@/stores/atoms/issue';
 import { InnerContainer, MainWrapper } from '@/styles/common';
-import { IssueDataType } from '@/types/issueTypes';
-import { useIssueQuery } from '@/utils/query';
 
 const Home = () => {
   const issueStatus = useRecoilValue(issueStatusState);
-  const { data, isLoading } = useIssueQuery(issueStatus);
-  const { issues, OpenIssueCount, ClosedIssueCount } = data as IssueDataType;
+  const { data, isLoading } = useGetIssue(issueStatus);
 
   return (
     <MainWrapper>
       <InnerContainer>
         <HomeHeader />
-        {isLoading ? (
+        {isLoading || !data ? (
           <Loading />
         ) : (
           <IssueList
-            list={issues}
-            openIssueCount={OpenIssueCount}
-            closedIssueCount={ClosedIssueCount}
+            issues={data.issues}
+            openIssueCount={data.openIssueCount}
+            closedIssueCount={data.closedIssueCount}
           />
         )}
       </InnerContainer>

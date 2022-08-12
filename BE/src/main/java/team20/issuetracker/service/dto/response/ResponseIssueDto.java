@@ -20,6 +20,7 @@ public class ResponseIssueDto {
     private Long id;
     private String title;
     private String author;
+    private int commentCount;
     private String content;
     private LocalDate createdAt;
     private String issueStatus;
@@ -39,6 +40,7 @@ public class ResponseIssueDto {
                 issue.getId(),
                 issue.getTitle(),
                 issue.getAuthorId(),
+                issue.getComments().size(),
                 issue.getContent(),
                 issue.getCreatedAt(),
                 issue.getStatus().toString().toLowerCase(),
@@ -67,6 +69,7 @@ public class ResponseIssueDto {
                 issue.getId(),
                 issue.getTitle(),
                 issue.getAuthorId(),
+                issue.getComments().size(),
                 issue.getContent(),
                 issue.getCreatedAt(),
                 issue.getStatus().toString().toLowerCase(),

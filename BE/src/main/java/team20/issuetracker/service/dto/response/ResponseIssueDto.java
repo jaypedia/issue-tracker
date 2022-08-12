@@ -20,7 +20,8 @@ public class ResponseIssueDto {
     private Long id;
     private String title;
     private String author;
-    private LocalDate createAt;
+    private String content;
+    private LocalDate createdAt;
     private String issueStatus;
     private String milestoneTitle;
     private Set<ResponseCommentDto> comments;
@@ -38,6 +39,7 @@ public class ResponseIssueDto {
                 issue.getId(),
                 issue.getTitle(),
                 issue.getAuthorId(),
+                issue.getContent(),
                 issue.getCreatedAt(),
                 issue.getStatus().toString().toLowerCase(),
                 milestoneTitle,
@@ -65,6 +67,7 @@ public class ResponseIssueDto {
                 issue.getId(),
                 issue.getTitle(),
                 issue.getAuthorId(),
+                issue.getContent(),
                 issue.getCreatedAt(),
                 issue.getStatus().toString().toLowerCase(),
                 milestoneTitle,

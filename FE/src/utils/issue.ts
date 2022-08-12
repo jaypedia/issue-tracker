@@ -2,41 +2,46 @@ import moment from 'moment';
 
 import { ISSUE_STATUS } from '@/constants/constants';
 
-export const getRelativeTime = (issueCreateTime: string) => {
-  return moment(issueCreateTime).fromNow();
+export const getRelativeTime = (createdAt: string) => {
+  return moment(createdAt).fromNow();
 };
 
-type getIssueInfoSentenceParams = {
-  issueId: number;
+type getIssueDetailInfoSentenceParams = {
   author: string;
-  issueCreateTime: string;
+  createdAt: string;
+  commentCount: number;
+};
+
+type getIssueInfoSentenceParams = getIssueDetailInfoSentenceParams & {
+  issueId: number;
   issueStatus: string;
-  commentCount?: number;
+};
+
+export const getIssueDetailInfoSentence = ({
+  author,
+  createdAt,
+  commentCount,
+}: getIssueDetailInfoSentenceParams) => {
+  return `${author} opened this issue ${getRelativeTime(createdAt)} · ${commentCount} comments`;
 };
 
 export const getIssueInfoSentence = ({
   issueId,
   issueStatus,
   author,
-  issueCreateTime,
-  commentCount,
+  createdAt,
 }: getIssueInfoSentenceParams) => {
-  if (commentCount && commentCount >= 0) {
-    return `${author} opened this issue ${getRelativeTime(
-      issueCreateTime,
-    )} · ${commentCount} comments`;
-  }
-
   switch (issueStatus) {
     case ISSUE_STATUS.open:
-      return `#${issueId} opened ${getRelativeTime(issueCreateTime)} by ${author}`;
+      return `#${issueId} opened ${getRelativeTime(createdAt)} by ${author}`;
     case ISSUE_STATUS.closed:
-      return `#${issueId} by ${author} was closed ${getRelativeTime(issueCreateTime)} `;
+      return `#${issueId} by ${author} was closed ${getRelativeTime(createdAt)} `;
     default:
       throw new Error('Status is not correct');
   }
 };
 
-export const convertFirstLetterToUppercase = (word: string) => {
+export const convertFirstLetterToUppercase = (word: string | undefined): string => {
+  if (!word) return '';
   return word.replace(/^[a-z]/, char => char.toUpperCase());
 };

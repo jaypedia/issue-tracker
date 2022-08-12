@@ -17,7 +17,7 @@ const TextArea: React.FC<I> = React.forwardRef(
       case 'comment':
         return (
           <S.TextAreaWrapper>
-            <S.TextArea placeholder="Leave a comment" name={name} usage={usage} />
+            <S.TextArea placeholder="Leave a comment" name={name} usage={usage} ref={ref} />
             <S.InputFile
               accept=".gif,.jpeg,.jpg,.mov,.mp4,.png,.svg,.csv,.docx,.fodg,.fodp,.fods,.fodt,.gz,.log,.md,.odf,.odg,.odp,.ods,.odt,.pdf,.pptx,.txt,.xls,.xlsx,.zip"
               type="file"

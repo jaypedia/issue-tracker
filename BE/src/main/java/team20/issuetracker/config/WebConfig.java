@@ -21,10 +21,14 @@ public class WebConfig implements WebMvcConfigurer {
                 .order(1)
                 .addPathPatterns("/**")
 <<<<<<< HEAD
+<<<<<<< HEAD
                 .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**", "/index.html", "/api/login/**", "/api/refresh/**", "/api/maintain");
 =======
                 .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**", "/index.html", "/api/login/**", "/api/refresh/**");
 >>>>>>> 99ee3e151fad22af6cabe4d4695941ba3d33121d
+=======
+                .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**", "/index.html", "/api/login/**", "/api/refresh/**", "/api/maintain");
+>>>>>>> 9d68f804507acc7898c4c00fed18fd3d8e592e79
     }
 
     @Override

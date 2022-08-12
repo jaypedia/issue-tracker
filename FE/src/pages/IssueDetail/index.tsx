@@ -4,43 +4,24 @@ import * as S from './style';
 
 import Comment from '@/components/Comment';
 import CommentForm from '@/components/CommentForm';
-import Button from '@/components/common/Button';
-import CustomLink from '@/components/common/CustomLink';
 import Loading from '@/components/common/Loading';
-import IssueDetailInfo from '@/components/IssueDetailInfo';
+import IssueDetailHeader from '@/components/IssueDetailHeader';
 import SideBar from '@/components/SideBar';
 import { useGetIssueDetail } from '@/hooks/useIssue';
-import { ColumnWrapper, Heading1, FlexBetween } from '@/styles/common';
+import { ColumnWrapper } from '@/styles/common';
 
+// TODO: CommentForm onSubmit - 댓글 등록 기능
 const IssueDetail = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetIssueDetail(Number(id));
 
-  // TODO: 제목, 내용 수정 가능하도록 Form으로 변경
   return (
     <ColumnWrapper>
       {isLoading || !data ? (
         <Loading />
       ) : (
         <>
-          <S.IssueDetailHeaderWrapper>
-            <FlexBetween>
-              <Heading1>{data.issueTitle}</Heading1>
-              <S.ButtonBox>
-                <Button size="small" color="grey" text="Edit" />
-                <CustomLink
-                  path="/new-issue"
-                  component={<Button size="small" color="primary" text="New Issue" />}
-                />
-              </S.ButtonBox>
-            </FlexBetween>
-            <IssueDetailInfo
-              issueStatus={data.issueStatus}
-              author={data.author}
-              createdAt={data.createdAt}
-              commentCount={data.commentCount}
-            />
-          </S.IssueDetailHeaderWrapper>
+          <IssueDetailHeader data={data} />
           <S.ContentsWrapper>
             <S.CommentsConatiner>
               <Comment
@@ -62,7 +43,7 @@ const IssueDetail = () => {
               ))}
               <CommentForm />
             </S.CommentsConatiner>
-            <SideBar />
+            <SideBar assignees={data.assignees} labels={data.labels} milestone={data.milestone} />
           </S.ContentsWrapper>
         </>
       )}

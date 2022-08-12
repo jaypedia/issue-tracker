@@ -15,7 +15,7 @@ export type IssueItem = {
   id: number;
   issueTitle: string;
   author: string;
-  issueCreateTime: string;
+  createdAt: string;
   labels: Label[];
   mileStoneTitle: string;
   assignees: Assignees[];

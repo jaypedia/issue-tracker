@@ -1,14 +1,15 @@
 import IssueContainer from './IssueContainer';
 import IssueListHeader from './IssueListHeader';
-import * as S from './style';
 import { IssueListType } from './type';
+
+import { ListContainer } from '@/styles/list';
 
 const IssueList = ({ list, openIssueCount, closedIssueCount }: IssueListType) => {
   return (
-    <S.IssueListContainer>
+    <ListContainer>
       <IssueListHeader openIssueCount={openIssueCount} closedIssueCount={closedIssueCount} />
       <IssueContainer list={list} />
-    </S.IssueListContainer>
+    </ListContainer>
   );
 };
 

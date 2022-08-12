@@ -14,19 +14,6 @@ const Tabs = styled.div`
   ${mixins.flexBox({})}
 `;
 
-const TabItem = styled.button<{ isCurrentTab: boolean }>`
-  ${mixins.flexBox({})}
-  margin-right: 24px;
-  gap: 8px;
-  ${FONT_MIXIN.small(400)}
-  color: ${({ isCurrentTab, theme: { color } }) => isCurrentTab && color.cell.font.active};
-  font-weight: ${({ isCurrentTab }) => isCurrentTab && 600};
-
-  :hover {
-    color: ${({ theme: { color } }) => color.cell.font.active};
-  }
-`;
-
 const Flex = styled.div`
   ${mixins.flexBox({})}
 `;
@@ -40,4 +27,4 @@ const ListFilterItem = styled.div`
   margin-left: 32px;
 `;
 
-export { Flex, ListFilter, ListFilterItem, IssueListHeader, Tabs, TabItem };
+export { Flex, ListFilter, ListFilterItem, IssueListHeader, Tabs };

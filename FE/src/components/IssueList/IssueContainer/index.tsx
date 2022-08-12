@@ -1,6 +1,6 @@
 import IssueItem from '../IssueItem';
-import * as S from '../style';
 import { IssueListType } from '../type';
+import * as S from './style';
 
 const EmptyList = ({ text }: { text: string }) => {
   return <S.EmptyList>{text}</S.EmptyList>;

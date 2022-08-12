@@ -3,22 +3,9 @@ import styled from 'styled-components';
 import { COLOR } from '@/styles/color';
 import { FONT_MIXIN, mixins } from '@/styles/mixins';
 
-const Flex = styled.div`
-  ${mixins.flexBox({})}
-`;
-const IssueItem = styled.li`
-  ${mixins.flexBox({ justifyContent: 'space-between' })}
-  border-top: 1px solid ${({ theme: { color } }) => color.line};
-  padding: 5px 0;
-
-  :hover {
-    background-color: ${({ theme: { color } }) => color.cell.bg.cellHeaderBg};
-  }
-`;
-
 const IssueInfoContainer = styled.div`
   margin-top: -5px;
-  padding: 10px 3px;
+  padding: 10px 0px;
 `;
 
 const IssueInfo = styled.div`
@@ -27,6 +14,7 @@ const IssueInfo = styled.div`
 
 const IssueInfoBottom = styled(IssueInfo)`
   margin-top: 8px;
+  margin-left: 22px;
   gap: 16px;
   color: ${COLOR.grey[400]};
 `;
@@ -78,8 +66,6 @@ const IssueAssignees = styled.div`
 `;
 
 export {
-  Flex,
-  IssueItem,
   IssueInfoContainer,
   IssueInfo,
   IssueInfoBottom,

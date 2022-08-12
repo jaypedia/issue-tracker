@@ -1,14 +1,20 @@
 import Label from '../common/Label';
 import UserProfile from '../common/UserProfile';
 import * as S from './style';
-import { CommentProps } from './type';
 
 import { Emoji } from '@/icons/Emoji';
 import { getRelativeTime } from '@/utils/issue';
 
-const Comment = ({ issueAuthor, userId, imgUrl, createTime, description }: CommentProps) => {
-  const timeCalc = getRelativeTime(createTime);
-  const isIssueAuthor = issueAuthor === userId;
+export type CommentProps = {
+  issueAuthor: string | false;
+  imgUrl: string;
+  userId: string;
+  createdAt: string;
+  description: string;
+};
+
+const Comment = ({ issueAuthor, userId, imgUrl, createdAt, description }: CommentProps) => {
+  const timeCalc = getRelativeTime(createdAt);
 
   return (
     <S.CommentWrapper>
@@ -20,7 +26,7 @@ const Comment = ({ issueAuthor, userId, imgUrl, createTime, description }: Comme
             <S.Time>commented {timeCalc}</S.Time>
           </S.Flex>
           <S.Flex>
-            {isIssueAuthor && (
+            {issueAuthor && (
               <>
                 <Label size="small" title="Author" backgroundColor="none" hasLine />
                 <S.EditButton type="button">edit</S.EditButton>

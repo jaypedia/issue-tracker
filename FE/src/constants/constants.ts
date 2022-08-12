@@ -23,3 +23,9 @@ export const MILESTONE_STATUS = {
   open: 'open',
   closed: 'closed',
 } as const;
+
+export const COMMENT_FORM_TYPE = {
+  edit: 'edit',
+  newIssue: 'newIssue',
+  comment: 'comment',
+};

@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 import { mixins } from '../../styles/mixins';
 
+import { FlexEnd } from '@/styles/common';
+
 const FlexStartStyle = `
 ${mixins.flexBox({ alignItems: 'flex-start' })}
 width: 100%;
@@ -23,4 +25,10 @@ const CommentWrapper = styled.div`
   gap: 15px;
 `;
 
-export { FlexWrapper, NewIssueForm, CommentWrapper };
+const ButtonWrapper = styled(FlexEnd)`
+  & > :last-child {
+    margin-left: 10px;
+  }
+`;
+
+export { FlexWrapper, NewIssueForm, CommentWrapper, ButtonWrapper };

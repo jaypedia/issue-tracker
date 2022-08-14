@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
-import { mixins } from '../../styles/mixins';
-
 import { FlexEnd } from '@/styles/common';
+import { mixins } from '@/styles/mixins';
 
 const FlexStartStyle = `
 ${mixins.flexBox({ alignItems: 'flex-start' })}
@@ -14,7 +13,7 @@ const FlexWrapper = styled.div`
   gap: 20px;
 `;
 
-const NewIssueForm = styled.form`
+const CommentForm = styled.form`
   ${FlexStartStyle}
   gap: 40px;
 `;
@@ -31,4 +30,4 @@ const ButtonWrapper = styled(FlexEnd)`
   }
 `;
 
-export { FlexWrapper, NewIssueForm, CommentWrapper, ButtonWrapper };
+export { FlexWrapper, CommentForm, CommentWrapper, ButtonWrapper };

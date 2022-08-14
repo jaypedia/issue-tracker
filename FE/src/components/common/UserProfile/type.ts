@@ -3,6 +3,6 @@ export type UserProfileStyle = {
 };
 
 export type UserProfileProps = UserProfileStyle & {
-  imgUrl: string;
-  userId: string;
+  imgUrl?: string;
+  userId?: string;
 };

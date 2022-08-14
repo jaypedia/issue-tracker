@@ -1,5 +1,5 @@
 export const mockLabels = {
-  labelCount: 7,
+  labelCount: 9,
   labels: [
     {
       id: 1,
@@ -49,6 +49,20 @@ export const mockLabels = {
       backgroundColor: '#facfcf',
       textColor: '#0A071B',
       description: 'Web accessibility',
+    },
+    {
+      id: 8,
+      title: '📃 Documentation',
+      backgroundColor: '#1D76DB',
+      textColor: '#FFFFFF',
+      description: 'Improvements or additions to documentation',
+    },
+    {
+      id: 9,
+      title: '📬 API',
+      backgroundColor: '#D4C5F9',
+      textColor: '#000',
+      description: 'Server API',
     },
   ],
 };

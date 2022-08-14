@@ -18,8 +18,6 @@ const deleteLabel = (req, res, ctx) => {
 const postLabel = (req, res, ctx) => {
   mockLabels.labels.push({ id: Math.random(), ...req.body });
   mockLabels.labelCount += 1;
-  console.log(mockLabels);
-
   return res(ctx.status(201));
 };
 

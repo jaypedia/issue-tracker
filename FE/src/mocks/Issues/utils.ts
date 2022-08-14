@@ -1,5 +1,5 @@
-import { Assignees } from '@/components/IssueList/type';
-import { ISSUE_STATUS, QUERY_KEY, IssueStatusType } from '@/constants/constants';
+import { ISSUE_STATUS, QUERY_KEY } from '@/constants/constants';
+import { Assignee, IssueStatusType } from '@/types/issueTypes';
 
 // Reference: thanks to @happyGyu
 
@@ -16,7 +16,7 @@ const filterByQuery = (queryKey: string, queryValue: string | null, originalIssu
       return originalIssues.filter(issue => issue.mileStoneTitle === queryValue);
     case QUERY_KEY.assignees:
       return originalIssues.filter(issue =>
-        issue.assignees.some((assignees: Assignees) => assignees.id === Number(queryValue)),
+        issue.assignees.some((assignees: Assignee) => assignees.id === Number(queryValue)),
       );
     default:
       return originalIssues;
@@ -28,8 +28,8 @@ const filterByStatus = (target: IssueStatusType, originalIssues) => {
   const oppositeStatusCount = originalIssues.length - filtered.length;
   return {
     issues: filtered,
-    OpenIssueCount: target === ISSUE_STATUS.open ? filtered.length : oppositeStatusCount,
-    ClosedIssueCount: target === ISSUE_STATUS.closed ? filtered.length : oppositeStatusCount,
+    openIssueCount: target === ISSUE_STATUS.open ? filtered.length : oppositeStatusCount,
+    closedIssueCount: target === ISSUE_STATUS.closed ? filtered.length : oppositeStatusCount,
   };
 };
 
@@ -50,7 +50,7 @@ export const filterIssues = (queryString: string, issues) => {
   );
 
   const filteredByStatus =
-    searchParams.get('issueStatus') === ISSUE_STATUS.closed
+    searchParams.get('params') === ISSUE_STATUS.closed
       ? filterByStatus(ISSUE_STATUS.closed, filteredByQueries)
       : filterByStatus(ISSUE_STATUS.open, filteredByQueries);
   return filteredByStatus;

@@ -1,6 +1,6 @@
 import * as S from './style';
 
-import CommentForm from '@/components/CommentForm';
+import NewIssueForm from '@/components/NewIssueForm';
 import { ColumnWrapper, Heading1 } from '@/styles/common';
 
 const NewIssue = () => {
@@ -9,7 +9,7 @@ const NewIssue = () => {
       <S.NewIssueHeaderWrapper>
         <Heading1>Create a new issue</Heading1>
       </S.NewIssueHeaderWrapper>
-      <CommentForm newIssue />
+      <NewIssueForm />
     </ColumnWrapper>
   );
 };

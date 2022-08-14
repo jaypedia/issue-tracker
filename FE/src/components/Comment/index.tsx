@@ -8,7 +8,7 @@ import { Emoji } from '@/icons/Emoji';
 import { getRelativeTime } from '@/utils/issue';
 
 export type CommentProps = {
-  issueAuthor: string;
+  issueAuthor: string | undefined;
   imgUrl: string;
   userId: string;
   createdAt: string;

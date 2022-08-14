@@ -9,26 +9,32 @@ export type Assignee = {
   image: string;
 };
 
-type Comment = {
-  id: number;
+export type CommentDataType = {
   author: string;
   image: string;
   content: string;
   createdAt: string;
 };
 
-export type IssueType = {
+type Comment = CommentDataType & {
   id: number;
+};
+
+export type IssueEditDataType = {
   issueTitle: string;
   author: string;
   createdAt: string;
   image: string;
-  commentCount: number;
   content: string;
-  milestone: MilestoneType;
-  comments: Comment[];
-  labels: ILabel[];
-  assignees: Assignee[];
+};
+
+export type IssueType = IssueEditDataType & {
+  id: number;
+  commentCount: number;
+  milestone: MilestoneType[] | [];
+  comments: Comment[] | [];
+  labels: ILabel[] | [];
+  assignees: Assignee[] | [];
   issueStatus: IssueStatusType;
 };
 export interface IssuesDataType {

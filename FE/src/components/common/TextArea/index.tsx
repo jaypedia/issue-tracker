@@ -7,12 +7,14 @@ type TextAreaProps = {
   usage: 'comment' | 'milestone';
   textareaLabel?: string;
   defaultValue?: string;
+  onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
+  value?: string;
 };
 
 type I = React.ComponentPropsWithRef<'textarea'> & TextAreaProps;
 
 const TextArea: React.FC<I> = React.forwardRef(
-  ({ name, usage, textareaLabel, defaultValue }, ref) => {
+  ({ name, usage, textareaLabel, defaultValue, onChange, value }, ref) => {
     switch (usage) {
       case 'comment':
         return (
@@ -23,6 +25,8 @@ const TextArea: React.FC<I> = React.forwardRef(
               usage={usage}
               ref={ref}
               defaultValue={defaultValue}
+              onChange={onChange}
+              value={value}
             />
             <S.InputFile
               accept=".gif,.jpeg,.jpg,.mov,.mp4,.png,.svg,.csv,.docx,.fodg,.fodp,.fods,.fodt,.gz,.log,.md,.odf,.odg,.odp,.ods,.odt,.pdf,.pptx,.txt,.xls,.xlsx,.zip"

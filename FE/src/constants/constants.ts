@@ -26,6 +26,11 @@ export const MILESTONE_STATUS = {
 
 export const COMMENT_FORM_TYPE = {
   edit: 'edit',
-  newIssue: 'newIssue',
   comment: 'comment',
+};
+
+export const USER = {
+  name: 'Guest',
+  image:
+    'https://www.popphoto.com/uploads/2022/02/07/Craig-Sellars.jpeg?auto=webp&width=1440&height=961.171875',
 };

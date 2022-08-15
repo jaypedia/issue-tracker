@@ -6,15 +6,15 @@ const filterBoxDetailsMenu = {
   indicator: 'Filter',
   title: 'Filter Issues',
   menus: [
-    'Open issues',
-    'Closed issues',
-    'Your issues',
-    'Everything assigned to you',
-    'Everything you commented',
+    { name: 'Open issues', filter: 'open' },
+    { name: 'Closed issues', filter: 'closed' },
+    { name: 'Your issues', filter: 'created_by/me' },
+    { name: 'Everything assigned to you', filter: 'assigned_by/me' },
+    { name: 'Everything you commented', filter: 'commented_by/me' },
   ],
 };
-// TODO : 체크아이콘 추가 , 체크한 메뉴만 아이콘표시
 
+// TODO : 체크아이콘 추가 , 체크한 메뉴만 아이콘표시
 const FilterBar = () => {
   return (
     <S.FilterBar>

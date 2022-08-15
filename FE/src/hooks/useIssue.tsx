@@ -1,14 +1,16 @@
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 
 import { fetchAPI } from '@/apis/common';
-import { getIssueDetail } from '@/apis/issueApi';
+import { getFilteredIssues, getIssueDetail } from '@/apis/issueApi';
 import { API } from '@/constants/api';
-import { IssueStatusType, IssuesDataType, IssueType } from '@/types/issueTypes';
+import { IssuesDataType, IssueType } from '@/types/issueTypes';
+import { changeFilterToQueryString } from '@/utils/issue';
 
-export const useGetIssue = (issueStatus: IssueStatusType) => {
-  return useQuery([API.ISSUES, issueStatus], () =>
-    fetchAPI<IssuesDataType>(API.ISSUES, { params: issueStatus }),
-  );
+export const useGetIssue = filter => {
+  console.log(filter);
+  console.log(changeFilterToQueryString(filter));
+  // TODO: 임시 filter.is 수정
+  return useQuery([API.ISSUES, filter], () => getFilteredIssues<IssuesDataType>(filter.is));
 };
 
 export const useGetIssueDetail = (id: number) => {
@@ -31,4 +33,10 @@ export const useRefetchIssueDetail = (id: number) => {
       queryClient.invalidateQueries('issueDetail');
     },
   });
+};
+
+export const useSearchIssue = (searchWord: string) => {
+  return useQuery([API.ISSUES, searchWord], () =>
+    fetchAPI<IssuesDataType>(API.ISSUES, { title: searchWord }),
+  );
 };

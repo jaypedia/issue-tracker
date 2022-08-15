@@ -1,4 +1,4 @@
-import { useRef, FormEvent } from 'react';
+import { useRef, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
 import * as S from './style';
@@ -13,13 +13,17 @@ const SearchInput = () => {
   const [issueState, setIssueState] = useRecoilState(issueStatusState);
   const { value, setValue, onChange } = useInput(changeFilterToInputQuery(issueState));
 
-  const handleSearchSubmit = (e: FormEvent) => {
+  const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const title = inputRef.current?.value;
     const newFilter = { ...issueState, title };
     setValue(changeFilterToInputQuery(newFilter));
     setIssueState(newFilter);
   };
+
+  useEffect(() => {
+    setValue(changeFilterToInputQuery(issueState));
+  }, [issueState]);
 
   return (
     <S.SearchForm onSubmit={handleSearchSubmit}>

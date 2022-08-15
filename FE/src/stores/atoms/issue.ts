@@ -1,10 +1,19 @@
 import { atom } from 'recoil';
 
 import { ISSUE_STATUS } from '@/constants/constants';
+import { IssueFilter } from '@/types/issueTypes';
 
-type IssueStatus = 'open' | 'closed';
+export const initialIssueStatus = {
+  is: ISSUE_STATUS.open,
+  title: undefined,
+  author: undefined,
+  label: [],
+  milestone: undefined,
+  assignee: undefined,
+  commentedBy: undefined,
+};
 
-export const issueStatusState = atom<IssueStatus>({
+export const issueStatusState = atom<IssueFilter>({
   key: 'issueStatus',
-  default: ISSUE_STATUS.open,
+  default: initialIssueStatus,
 });

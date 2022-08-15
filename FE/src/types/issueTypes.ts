@@ -42,3 +42,12 @@ export interface IssuesDataType {
   closedIssueCount: number;
   issues: IssueType[] | [];
 }
+
+export interface IssueFilter {
+  is: IssueStatusType;
+  title: string | undefined;
+  author: string | undefined;
+  label: string[];
+  milestone: string | undefined;
+  assignee: string | undefined;
+}

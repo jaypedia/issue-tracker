@@ -1,6 +1,9 @@
 export const ISSUE_STATUS = {
   open: 'open',
   closed: 'closed',
+  createdByMe: 'created_by/me',
+  assignedByMe: 'assigned_by/me',
+  commentedByMe: 'commented_by/me',
 } as const;
 
 export const QUERY_KEY = {

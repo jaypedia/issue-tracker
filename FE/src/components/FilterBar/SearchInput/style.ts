@@ -11,7 +11,7 @@ const SearchForm = styled.form`
   gap: 8px;
   color: ${({ theme: { color } }) => color.text};
 
-  svg {
+  & > :first-child {
     position: absolute;
     left: 24px;
     top: 0;
@@ -20,10 +20,18 @@ const SearchForm = styled.form`
     color: ${COLOR.grey[300]};
   }
 
+  & > :last-child {
+    position: absolute;
+    right: 24px;
+    top: 0;
+    color: ${COLOR.grey[300]};
+    height: 100%;
+  }
+
   input {
     width: 100%;
     height: 100%;
-    padding: 0 24px 0 48px;
+    padding: 0 48px;
     border-radius: 0 11px 11px 0;
     color: ${({ theme: { color } }) => color.text};
 

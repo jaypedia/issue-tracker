@@ -1,11 +1,12 @@
 import { useRef, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import * as S from './style';
 
 import { useInput } from '@/hooks/useInput';
+import CloseButton from '@/icons/CloseButton';
 import { Search } from '@/icons/Search';
-import { issueStatusState } from '@/stores/atoms/issue';
+import { issueStatusState, initialIssueStatus } from '@/stores/atoms/issue';
 import { changeFilterToInputQuery } from '@/utils/issue';
 
 const SearchInput = () => {
@@ -25,8 +26,16 @@ const SearchInput = () => {
     setValue(changeFilterToInputQuery(issueState));
   }, [issueState]);
 
+  const setIssueStatus = useSetRecoilState(issueStatusState);
+
+  const clearFilter = () => {
+    setIssueStatus(initialIssueStatus);
+    setValue(changeFilterToInputQuery(initialIssueStatus));
+  };
+
   return (
     <S.SearchForm onSubmit={handleSearchSubmit}>
+      <Search />
       <input
         title="Search Input"
         placeholder="Search issues"
@@ -36,7 +45,7 @@ const SearchInput = () => {
         value={value}
         onChange={onChange}
       />
-      <Search />
+      <CloseButton onClick={clearFilter} />
     </S.SearchForm>
   );
 };

@@ -50,4 +50,5 @@ export interface IssueFilter {
   label: string[];
   milestone: string | undefined;
   assignee: string | undefined;
+  commentedBy: string | undefined;
 }

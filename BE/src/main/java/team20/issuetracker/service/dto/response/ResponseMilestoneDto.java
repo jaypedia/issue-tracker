@@ -20,7 +20,7 @@ public class ResponseMilestoneDto {
     private long openIssueCount;
     private long closeIssueCount;
 
-    public static ResponseMilestoneDto of(Milestone milestone) {
+    public static ResponseMilestoneDto from(Milestone milestone) {
         return new ResponseMilestoneDto(
                 milestone.getId(),
                 milestone.getTitle(),

@@ -12,10 +12,9 @@ public class ResponseReadAllIssueDto {
 
     private long openIssueCount;
     private long closedIssueCount;
-    private long labelCount;
     private List<ResponseIssueDto> issues;
 
-    public static ResponseReadAllIssueDto of(long openIssueCount, long closedIssueCount, long labelCount, List<ResponseIssueDto> issues) {
-        return new ResponseReadAllIssueDto(openIssueCount, closedIssueCount, labelCount, issues);
+    public static ResponseReadAllIssueDto of(long openIssueCount, long closedIssueCount, List<ResponseIssueDto> issues) {
+        return new ResponseReadAllIssueDto(openIssueCount, closedIssueCount, issues);
     }
 }

@@ -210,9 +210,8 @@ public class IssueService {
 
         long openIssueCount = getOpenIssuesCountByFindAll(findAllIssues);
         long closeIssueCount = getCloseIssuesCountByFindAll(findAllIssues);
-        long labelCount = getLabelCount();
 
-        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, labelCount, responseIssueDtos);
+        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, responseIssueDtos);
     }
 
     private ResponseReadAllIssueDto getResponseReadAllIssueDto(Set<Issue> findAllIssues) {
@@ -220,9 +219,8 @@ public class IssueService {
 
         long openIssueCount = getOpenIssuesCountByFindAll(findAllIssues);
         long closeIssueCount = getCloseIssuesCountByFindAll(findAllIssues);
-        long labelCount = getLabelCount();
 
-        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, labelCount, responseIssueDtos);
+        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, responseIssueDtos);
     }
 
     private ResponseReadAllIssueDto getResponseReadAllIssueDto(List<Issue> findAllIssueByIssueStatus, Set<Issue> findAllIssues) {
@@ -230,9 +228,8 @@ public class IssueService {
 
         long openIssueCount = getOpenIssuesCountByFindAll(findAllIssues);
         long closeIssueCount = getCloseIssuesCountByFindAll(findAllIssues);
-        long labelCount = getLabelCount();
 
-        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, labelCount, responseIssueDtos);
+        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, responseIssueDtos);
     }
 
     private ResponseReadAllIssueDto getResponseReadAllIssueDto(List<Issue> findAllIssueByIssueStatus, List<Issue> findAllIssues) {
@@ -240,9 +237,8 @@ public class IssueService {
 
         long openIssueCount = getOpenIssuesCountByFindAll(findAllIssues);
         long closeIssueCount = getCloseIssuesCountByFindAll(findAllIssues);
-        long labelCount = getLabelCount();
 
-        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, labelCount, responseIssueDtos);
+        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, responseIssueDtos);
     }
 
     private List<ResponseIssueDto> responseIssueDtos(List<Issue> findIssues) {
@@ -271,10 +267,6 @@ public class IssueService {
 
     private long getCloseIssuesCountByFindAll(Set<Issue> findIssues) {
         return findIssues.stream().filter(issue -> issue.getStatus().equals(IssueStatus.CLOSED)).count();
-    }
-
-    private long getLabelCount() {
-        return labelRepository.findAll().size();
     }
 
     private List<Issue> filterIssueStatus(List<Issue> findIssues, String issueStatus) {

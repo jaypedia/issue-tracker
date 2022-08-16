@@ -25,14 +25,11 @@ public class RequestSaveMilestoneDto {
     @Size(max = 800, message = "Milestone 의 본문은 800글자를 넘을 수 없습니다.")
     private String description;
 
-    @FutureOrPresent(message = "해당 시간은 이미 지나간 시간입니다.")
+    @FutureOrPresent(message = "과거의 시간을 설정할 수는 없습니다.")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate startDate;
+    private LocalDate dueDate;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate endDate;
-
-    public static RequestSaveMilestoneDto of(String title, String description, LocalDate startDate, LocalDate endDate) {
-        return new RequestSaveMilestoneDto(title, description, startDate, endDate);
+    public static RequestSaveMilestoneDto of(String title, String description, LocalDate dueDate) {
+        return new RequestSaveMilestoneDto(title, description, dueDate);
     }
 }

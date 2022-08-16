@@ -29,9 +29,9 @@ public class MilestoneService {
     public Long save(RequestSaveMilestoneDto requestSaveMilestoneDto) {
         String title = requestSaveMilestoneDto.getTitle();
         String description = requestSaveMilestoneDto.getDescription() == null ? "" : requestSaveMilestoneDto.getDescription();
-        LocalDate endDate = requestSaveMilestoneDto.getEndDate();
+        LocalDate dueDate = requestSaveMilestoneDto.getDueDate();
 
-        Milestone newMilestone = Milestone.of(title, endDate, description);
+        Milestone newMilestone = Milestone.of(title, dueDate, description);
 
         return milestoneRepository.save(newMilestone).getId();
     }
@@ -41,7 +41,7 @@ public class MilestoneService {
         List<Milestone> findMilestones = milestoneRepository.findAll();
 
         return findMilestones.stream()
-                .map(ResponseMilestoneDto::of).collect(Collectors.toList());
+                .map(ResponseMilestoneDto::from).collect(Collectors.toList());
     }
 
     @Transactional
@@ -67,7 +67,7 @@ public class MilestoneService {
         Milestone findMilestone = milestoneRepository.findById(id)
                 .orElseThrow(() -> new CheckEntityException("해당 Milestone 은 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
 
-        return ResponseMilestoneDto.of(findMilestone);
+        return ResponseMilestoneDto.from(findMilestone);
     }
 
     public ResponseReadAllMilestonesDto getAllMilestoneData(List<ResponseMilestoneDto> milestones) {

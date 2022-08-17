@@ -1,5 +1,4 @@
-import React from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useState, useEffect } from 'react';
 
 import * as S from './style';
 
@@ -8,10 +7,10 @@ import CustomLink from '@/components/common/CustomLink';
 import Label from '@/components/common/Label';
 import UserProfile from '@/components/common/UserProfile';
 import { ISSUE_STATUS } from '@/constants/constants';
+import useCheckBox from '@/hooks/useCheckBox';
 import ClosedIcon from '@/icons/Closed';
 import { Milestone } from '@/icons/Milestone';
 import OpenIcon from '@/icons/Open';
-import { checkBoxState } from '@/stores/atoms/checkbox';
 import { COLOR } from '@/styles/color';
 import { Flex } from '@/styles/common';
 import { Item } from '@/styles/list';
@@ -30,54 +29,78 @@ const IssueStatusIcon = ({ status }: { status: string }) => {
 };
 
 const IssueItem = ({ issue }: { issue: IssueType }) => {
-  const { id: issueId, issueStatus, author, createdAt } = issue;
-  const checkedItems = useRecoilValue(checkBoxState);
-  const setCheckedItems = useSetRecoilState(checkBoxState);
+  const {
+    id: issueId,
+    issueStatus,
+    author,
+    createdAt,
+    issueTitle,
+    labels,
+    milestone,
+    assignees,
+  } = issue;
+  const [isChecked, setIsChecked] = useState(false);
+  const { isAllChecked, toggleCheckBox, checkedItems } = useCheckBox();
 
-  const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.checked) {
-      checkedItems.add(issue.id);
-      setCheckedItems(checkedItems);
-    } else if (!e.target.checked && checkedItems.has(issue.id)) {
-      checkedItems.delete(issue.id);
-      setCheckedItems(checkedItems);
+  const handleCheck = () => {
+    toggleCheckBox(issueId);
+    if (isChecked) {
+      setIsChecked(false);
+    } else {
+      setIsChecked(true);
     }
   };
+
+  useEffect(() => {
+    if (!isAllChecked && !checkedItems.has(issueId)) {
+      setIsChecked(false);
+    } else if (checkedItems.has(issueId)) {
+      setIsChecked(true);
+    }
+  }, [isAllChecked, checkedItems]);
 
   return (
     <Item>
       <Flex>
-        <CheckBox id={issue.id.toString()} isHeader={false} onChange={handleCheck} />
+        <CheckBox
+          id={issueId.toString()}
+          isHeader={false}
+          onChange={handleCheck}
+          checked={isAllChecked || isChecked}
+        />
         <S.IssueInfoContainer>
           <S.IssueInfo>
             <IssueStatusIcon status={issueStatus} />
             <CustomLink
               path={`issue/${issueId}`}
-              component={<S.IssueTitle>{issue.issueTitle}</S.IssueTitle>}
+              component={<S.IssueTitle>{issueTitle}</S.IssueTitle>}
             />
             <S.LabelContainer>
-              {issue.labels.map(({ id, title, backgroundColor, textColor }) => (
-                <Label
-                  key={id}
-                  size="small"
-                  title={title}
-                  backgroundColor={backgroundColor}
-                  textColor={textColor}
-                />
-              ))}
+              {labels.length > 0 &&
+                labels.map(({ id, title, backgroundColor, textColor }) => (
+                  <Label
+                    key={id}
+                    size="small"
+                    title={title}
+                    backgroundColor={backgroundColor}
+                    textColor={textColor}
+                  />
+                ))}
             </S.LabelContainer>
           </S.IssueInfo>
           <S.IssueInfoBottom>
             {getIssueInfoSentence({ issueId, issueStatus, author, createdAt })}
-            <S.MilestonBox>
-              <Milestone />
-              {issue.milestone.title}
-            </S.MilestonBox>
+            {milestone.length > 0 && (
+              <S.MilestonBox>
+                <Milestone />
+                {milestone[0].title}
+              </S.MilestonBox>
+            )}
           </S.IssueInfoBottom>
         </S.IssueInfoContainer>
       </Flex>
       <S.IssueAssignees>
-        {issue.assignees.map(({ id, image }) => (
+        {assignees.map(({ id, image }) => (
           <UserProfile key={id} imgUrl={image} userId={String(id)} size="small" />
         ))}
       </S.IssueAssignees>

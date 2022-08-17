@@ -2,6 +2,7 @@
   "compilerOptions": {
     /* Language and Environment */
     "target": "ES5",
+    "downlevelIteration": true,
     "lib": ["DOM", "ESNEXT", "DOM.Iterable", "ScriptHost"],
     "jsx": "react-jsx",
 

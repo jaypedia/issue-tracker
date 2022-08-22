@@ -1,17 +1,15 @@
-type UniformMenuType = 'Author' | 'Assignee' | 'Label' | 'Milestone' | 'Filter';
+type UniformMenuType = 'author' | 'assignee' | 'label' | 'milestone';
 
-export const getUniformMenus = (type: UniformMenuType, list) => {
+export const getUniformMenus = (type: UniformMenuType, list: any) => {
   switch (type) {
-    case 'Author':
-    case 'Assignee':
-      return list.menus.map(v => ({ ...v, name: v.userId }));
-    case 'Label':
-    case 'Milestone':
-      return list.menus.map(v => ({ ...v, name: v.title }));
-    case 'Filter':
-      return list.menus.map((v, i) => ({ id: i, name: v }));
+    case 'author':
+    case 'assignee':
+      return list.map(v => ({ ...v, name: v.userId }));
+    case 'label':
+      return list.labels.map(v => ({ ...v, name: v.title }));
+    case 'milestone':
+      return list.milestones.map(v => ({ ...v, name: v.title }));
     default:
-      return list.menus;
-    // throw Error('Invaild menu type');
+      throw Error('Invaild menu type');
   }
 };

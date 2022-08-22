@@ -7,12 +7,12 @@ import { HeaderDropDownList } from '@/constants/issueDropDown';
 import useCheckBox from '@/hooks/useCheckBox';
 import { ListHeader } from '@/styles/list';
 
-type IssueListHeader = {
+type IssueListHeaderProps = {
   openIssueCount: number;
   closedIssueCount: number;
 };
 
-const IssueListHeader = ({ openIssueCount, closedIssueCount }: IssueListHeader) => {
+const IssueListHeader = ({ openIssueCount, closedIssueCount }: IssueListHeaderProps) => {
   const { isAllChecked, checkedItems, toggleAllCheckBoxes } = useCheckBox();
   const checkedItemCount = checkedItems.size;
 

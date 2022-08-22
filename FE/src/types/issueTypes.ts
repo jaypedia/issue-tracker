@@ -3,6 +3,8 @@ import { MilestoneType } from '@/types/milestoneTypes';
 
 export type IssueStatusType = 'open' | 'closed';
 
+export type ApiType = 'issues' | 'labels' | 'milestones' | 'assignees';
+
 export type Assignee = {
   id: number;
   userId: string;
@@ -31,7 +33,7 @@ export type IssueEditDataType = {
 export type IssueType = IssueEditDataType & {
   id: number;
   commentCount: number;
-  milestone: MilestoneType[] | [];
+  milestones: MilestoneType[] | [];
   comments: Comment[] | [];
   labels: ILabel[] | [];
   assignees: Assignee[] | [];

@@ -2,7 +2,6 @@ import { useRecoilState } from 'recoil';
 
 import * as S from '../style';
 
-import CustomLink from '@/components/common/CustomLink';
 import TabItem from '@/components/common/TabItem';
 import { ISSUE_STATUS } from '@/constants/constants';
 import { issueStatusState } from '@/stores/atoms/issue';
@@ -15,32 +14,22 @@ type TabBarType = {
 
 const TabBar = ({ openIssueCount, closedIssueCount }: TabBarType) => {
   const [issueStatus, setIssueStatus] = useRecoilState(issueStatusState);
-  const handleTabClick = async (currentIssueStatus: IssueStatusType) => {
-    setIssueStatus(currentIssueStatus);
+  const handleTabClick = (currentIssueStatus: IssueStatusType) => {
+    setIssueStatus({ ...issueStatus, is: currentIssueStatus });
   };
 
   return (
     <S.Tabs>
-      <CustomLink
-        path="?issueStatus=open"
-        component={
-          <TabItem
-            isOpen
-            count={openIssueCount}
-            onClick={() => handleTabClick(ISSUE_STATUS.open)}
-            isCurrentTab={issueStatus === ISSUE_STATUS.open}
-          />
-        }
+      <TabItem
+        isOpen
+        count={openIssueCount}
+        onClick={() => handleTabClick(ISSUE_STATUS.open)}
+        isCurrentTab={issueStatus.is === ISSUE_STATUS.open}
       />
-      <CustomLink
-        path="?issueStatus=closed"
-        component={
-          <TabItem
-            count={closedIssueCount}
-            onClick={() => handleTabClick(ISSUE_STATUS.closed)}
-            isCurrentTab={issueStatus === ISSUE_STATUS.closed}
-          />
-        }
+      <TabItem
+        count={closedIssueCount}
+        onClick={() => handleTabClick(ISSUE_STATUS.closed)}
+        isCurrentTab={issueStatus.is === ISSUE_STATUS.closed}
       />
     </S.Tabs>
   );

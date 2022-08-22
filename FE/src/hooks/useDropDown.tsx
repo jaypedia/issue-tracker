@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const useDropDown = () => {
+import { DropDownApi, fetchAPI } from '@/apis/common';
+
+const useDropDown = (api?: DropDownApi) => {
   const [isBackgroundClickable, setIsBackgroundClickable] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [dropdownData, setDropdownData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleDropDownClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -14,10 +18,24 @@ const useDropDown = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchFilters = async () => {
+      if (!api) return;
+      const data = await fetchAPI(api);
+      setDropdownData(data);
+      setIsLoading(false);
+    };
+    if (isOpen) {
+      fetchFilters();
+    }
+  }, [isOpen]);
+
   return {
     isBackgroundClickable,
     isOpen,
     handleDropDownClick,
+    dropdownData,
+    isLoading,
   };
 };
 

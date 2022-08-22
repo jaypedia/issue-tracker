@@ -1,8 +1,5 @@
-import { useState, useEffect } from 'react';
-
 import DetailsMenu from './DetailsMenu';
 
-import { fetchAPI } from '@/apis/common';
 import * as S from '@/components/common/DropDown/style';
 import Loading from '@/components/common/Loading';
 import useDropDown from '@/hooks/useDropDown';
@@ -17,20 +14,8 @@ type HeaderDropDownProps = {
 };
 
 const HeaderDropDown = ({ list }: HeaderDropDownProps) => {
-  const { isBackgroundClickable, isOpen, handleDropDownClick } = useDropDown();
-  const [filterData, setFilterData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchFilters = async () => {
-      const data = await fetchAPI(list.api);
-      setFilterData(data);
-      setIsLoading(false);
-    };
-    if (isOpen) {
-      fetchFilters();
-    }
-  }, [isOpen]);
+  const { isBackgroundClickable, isOpen, handleDropDownClick, dropdownData, isLoading } =
+    useDropDown(list.api);
 
   return (
     <S.DropDown open={isOpen} onClick={handleDropDownClick}>
@@ -41,7 +26,7 @@ const HeaderDropDown = ({ list }: HeaderDropDownProps) => {
       {isLoading ? (
         <Loading />
       ) : (
-        <DetailsMenu title={list.title} filter={list.filter} data={filterData} />
+        <DetailsMenu title={list.title} filter={list.filter} data={dropdownData} />
       )}
     </S.DropDown>
   );

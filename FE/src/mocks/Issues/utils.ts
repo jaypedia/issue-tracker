@@ -55,3 +55,15 @@ export const filterIssues = (queryString: string, issues) => {
       : filterByStatus(ISSUE_STATUS.open, filteredByQueries);
   return filteredByStatus;
 };
+
+export const filterBySearchWord = searchWord => {
+  console.log(searchWord);
+};
+
+export const filterOpenIssues = issues => {
+  return issues.filter(issue => issue.issueStatus === 'open');
+};
+
+export const filterClosedIssues = issues => {
+  return issues.filter(issue => issue.issueStatus === 'closed');
+};

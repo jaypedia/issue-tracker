@@ -1,16 +1,16 @@
 export const mockIssues = {
-  openIssueCount: 4,
+  openIssueCount: 5,
   closedIssueCount: 3,
   issues: [
     {
       id: 1,
-      issueTitle: 'Implement Home page',
+      title: 'Implement Home page',
       author: 'J',
       createdAt: '2022-07-29 17:55:02',
       image: 'https://avatars.githubusercontent.com/u/68211156?s=40&v=4',
       commentCount: 2,
       content: 'Build a development environment using webpack',
-      milestone: [
+      milestones: [
         {
           id: 2,
           title: '[FE] Week 2',
@@ -87,13 +87,13 @@ export const mockIssues = {
     },
     {
       id: 2,
-      issueTitle: 'Implement NewIssue page UI',
+      title: 'Implement NewIssue page UI',
       author: 'Millie',
       createdAt: '2022-06-23 02:33:02',
       image: 'https://avatars.githubusercontent.com/u/85419343?s=80&v=4',
       commentCount: 2,
       content: 'NewIssue page UI',
-      milestone: [
+      milestones: [
         {
           id: 2,
           title: '[FE] Week 2',
@@ -147,13 +147,13 @@ export const mockIssues = {
     },
     {
       id: 3,
-      issueTitle: 'Common components',
+      title: 'Common components',
       author: 'J',
       createdAt: '2022-06-23 02:33:02',
       image: 'https://avatars.githubusercontent.com/u/85419343?s=80&v=4',
       commentCount: 0,
       content: 'Common components',
-      milestone: [
+      milestones: [
         {
           id: 2,
           title: '[FE] Week 2',
@@ -193,13 +193,13 @@ export const mockIssues = {
     },
     {
       id: 4,
-      issueTitle: 'Implement Login',
+      title: 'Implement Login',
       author: 'Millie',
       createdAt: '2022-06-23 02:33:02',
       image: 'https://avatars.githubusercontent.com/u/85419343?s=80&v=4',
       commentCount: 0,
       content: 'User can login with Github account',
-      milestone: [
+      milestones: [
         {
           id: 2,
           title: '[FE] Week 2',
@@ -237,14 +237,14 @@ export const mockIssues = {
     },
     {
       id: 5,
-      issueTitle: 'Refactoring Issue List',
+      title: 'Refactoring Issue List',
       author: 'Millie',
       createdAt: '2022-06-30 02:33:02',
       image: 'https://avatars.githubusercontent.com/u/85419343?s=80&v=4',
       commentCount: 0,
       comments: [],
       content: 'Refactoring Issue List',
-      milestone: [
+      milestones: [
         {
           id: 2,
           title: '[FE] Week 2',
@@ -277,7 +277,7 @@ export const mockIssues = {
     {
       id: 6,
       author: 'Millie',
-      issueTitle: 'Webpack configuration',
+      title: 'Webpack configuration',
       issueStatus: 'open',
       createdAt: '2022-06-23 02:33:02',
       image: 'https://avatars.githubusercontent.com/u/85419343?s=80&v=4',
@@ -322,7 +322,7 @@ export const mockIssues = {
           description: 'Development environment settings',
         },
       ],
-      milestone: [
+      milestones: [
         {
           id: 2,
           title: '[FE] Week 2',
@@ -337,14 +337,14 @@ export const mockIssues = {
     },
     {
       id: 7,
-      issueTitle: 'Swagger Documentation - API Doc',
+      title: 'Swagger Documentation - API Doc',
       author: 'Tany',
       createdAt: '2022-07-30 02:33:02',
       image: 'https://avatars.githubusercontent.com/u/79444040?v=4',
       commentCount: 0,
       comments: [],
       content: 'Write a documment using Swagger',
-      milestone: [
+      milestones: [
         {
           id: 2,
           title: '[FE] Week 2',
@@ -389,14 +389,14 @@ export const mockIssues = {
     },
     {
       id: 8,
-      issueTitle: 'Swagger Documentation - API Doc',
+      title: 'Swagger Documentation - API Doc',
       author: 'Tany',
       createdAt: '2022-07-30 02:33:02',
       image: 'https://avatars.githubusercontent.com/u/79444040?v=4',
       commentCount: 0,
       comments: [],
       content: 'Write a documment using Swagger',
-      milestone: [],
+      milestones: [],
       labels: [],
       assignees: [],
       issueStatus: 'open',

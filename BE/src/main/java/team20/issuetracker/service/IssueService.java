@@ -20,6 +20,8 @@ import team20.issuetracker.domain.issue.IssueRepository;
 import team20.issuetracker.domain.issue.IssueStatus;
 import team20.issuetracker.domain.label.Label;
 import team20.issuetracker.domain.label.LabelRepository;
+import team20.issuetracker.domain.member.Member;
+import team20.issuetracker.domain.member.MemberRepository;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
 import team20.issuetracker.exception.CheckEntityException;
@@ -38,6 +40,7 @@ public class IssueService {
     private final LabelRepository labelRepository;
     private final CommentRepository commentRepository;
     private final IssueAssigneeRepository issueAssigneeRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
     public Long save(RequestSaveIssueDto requestSaveIssueDto) {
@@ -184,7 +187,10 @@ public class IssueService {
         Issue findIssue = issueRepository.findById(id)
                 .orElseThrow(() -> new CheckEntityException("해당 Issue 는 존재하지 않습니다", HttpStatus.BAD_REQUEST));
 
-        return ResponseIssueDto.from(findIssue);
+        Member findMember = memberRepository.findByOauthId(findIssue.getAuthorId())
+                .orElseThrow(() -> new CheckEntityException("해당 Member 는 존재하지 않습니다", HttpStatus.BAD_REQUEST));
+
+        return ResponseIssueDto.of(findIssue, findMember);
     }
 
     @Transactional
@@ -243,13 +249,13 @@ public class IssueService {
 
     private List<ResponseIssueDto> responseIssueDtos(List<Issue> findIssues) {
         return findIssues.stream()
-                .map(ResponseIssueDto::from)
+                .map(ResponseIssueDto::of)
                 .collect(Collectors.toList());
     }
 
     private List<ResponseIssueDto> responseIssueDtos(Set<Issue> findIssues) {
         return findIssues.stream()
-                .map(ResponseIssueDto::from)
+                .map(ResponseIssueDto::of)
                 .collect(Collectors.toList());
     }
 

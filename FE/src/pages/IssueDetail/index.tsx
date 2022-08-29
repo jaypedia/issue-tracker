@@ -10,7 +10,6 @@ import SideBar from '@/components/SideBar';
 import { useGetIssueDetail } from '@/hooks/useIssue';
 import { ColumnWrapper } from '@/styles/common';
 
-// TODO: CommentForm onSubmit - 댓글 등록 기능
 const IssueDetail = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetIssueDetail(Number(id));
@@ -38,12 +37,12 @@ const IssueDetail = () => {
                   createdAt={createdAt}
                   description={content}
                   userId={author}
-                  issueAuthor={data.author === author && author}
+                  issueAuthor={data.author === author ? author : undefined}
                 />
               ))}
-              <CommentForm />
+              <CommentForm usage="comment" />
             </S.CommentsConatiner>
-            <SideBar assignees={data.assignees} labels={data.labels} milestone={data.milestone} />
+            <SideBar assignees={data.assignees} labels={data.labels} milestone={data.milestones} />
           </S.ContentsWrapper>
         </>
       )}

@@ -5,10 +5,15 @@ import { detailsMenuListType } from '@/components/common/DropDown/type';
 import Label from '@/components/common/Label';
 import ProgressBar from '@/components/common/ProgressBar';
 import UserProfile from '@/components/common/UserProfile';
+import { Assignee } from '@/types/issueTypes';
+import { ILabel } from '@/types/labelTypes';
+import { MilestoneType } from '@/types/milestoneTypes';
+
+type ContentsType = string | Assignee[] | ILabel[] | MilestoneType[];
 
 type SideBarItemProps = {
   title: string;
-  contents: string | object;
+  contents: ContentsType;
   detailsMenuList: detailsMenuListType;
   checkType: 'radio' | 'checkBox';
 };
@@ -44,8 +49,9 @@ const SideBarContents = ({ title, contents }) => {
       return (
         <ProgressBar
           size="small"
-          openIssueCount={contents.openIssueCount}
-          closedIssueCount={contents.closedIssueCount}
+          title={contents[0].title}
+          openIssueCount={contents[0].openIssueCount}
+          closedIssueCount={contents[0].closedIssueCount}
         />
       );
     default:

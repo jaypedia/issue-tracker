@@ -4,10 +4,7 @@ import { filterIssues, filterOpenIssues, filterClosedIssues } from './utils';
 
 import { API } from '@/constants/api';
 import { USER } from '@/constants/constants';
-import { mockAssignees } from '@/mocks/Assignees/data';
 import { mockIssues } from '@/mocks/Issues/data';
-import { mockLabels } from '@/mocks/Labels/data';
-import { mockMilestones } from '@/mocks/Milestones/data';
 
 const getLastIssueId = () => {
   const lastIndex = mockIssues.issues.length - 1;
@@ -21,19 +18,19 @@ const getIssues: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
   return res(ctx.status(200), ctx.json(filteredIssues));
 };
 
-const getOpenIssues = (req, res, ctx) => {
+const getOpenIssues: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
   const openIssues = filterOpenIssues(mockIssues.issues);
   const data = { ...mockIssues, issues: openIssues };
   return res(ctx.status(200), ctx.json(data));
 };
 
-const getClosedIssues = (req, res, ctx) => {
+const getClosedIssues: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
   const closedIssues = filterClosedIssues(mockIssues.issues);
   const data = { ...mockIssues, issues: closedIssues };
   return res(ctx.status(200), ctx.json(data));
 };
 
-const getIssueDetail = (req, res, ctx) => {
+const getIssueDetail: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
   const { id } = req.params;
   const currentIssue = mockIssues.issues.find(issue => Number(id) === issue.id);
   return res(ctx.status(200), ctx.json(currentIssue));
@@ -51,9 +48,6 @@ const postIssue = (req, res, ctx) => {
     title: req.body.title,
     content: req.body.content,
     ...req.body,
-    // milestones: mockMilestones.milestones.filter(v => v.id === req.body.milestoneId),
-    // labels: req.body.labelIds.map(v => mockLabels.labels.filter(l => l.id === v)),
-    // assignees: req.body.assigneeIds.map(v => mockAssignees.filter(l => l.id === v)),
   });
   mockIssues.openIssueCount += 1;
   return res(ctx.status(201));
@@ -79,6 +73,43 @@ const postComment = (req, res, ctx) => {
   return res(ctx.status(404));
 };
 
+const postAssignees = (req, res, ctx) => {
+  const { id: issueId } = req.params;
+  const assignee = req.body;
+  const currentIssue = mockIssues.issues.find(issue => issue.id === Number(issueId));
+  if (!currentIssue) return res(ctx.status(404));
+  if (currentIssue.assignees.find(v => v.id === assignee.id)) {
+    const filtered = currentIssue.assignees.filter(v => v.id !== assignee.id);
+    currentIssue.assignees = filtered;
+  } else {
+    currentIssue.assignees.push(assignee);
+  }
+  return res(ctx.status(204));
+};
+
+const postLabels = (req, res, ctx) => {
+  const { id: issueId } = req.params;
+  const label = req.body;
+  const currentIssue = mockIssues.issues.find(issue => issue.id === Number(issueId));
+  if (!currentIssue) return res(ctx.status(404));
+  if (currentIssue.labels.find(v => v.id === label.id)) {
+    const filtered = currentIssue.labels.filter(v => v.id !== label.id);
+    currentIssue.labels = filtered;
+  } else {
+    currentIssue.labels.push(label);
+  }
+  return res(ctx.status(204));
+};
+
+const postMilestone = (req, res, ctx) => {
+  const { id: issueId } = req.params;
+  const milestone = req.body;
+  const currentIssue = mockIssues.issues.find(issue => issue.id === Number(issueId));
+  if (!currentIssue) return res(ctx.status(404));
+  currentIssue.milestones = [milestone];
+  return res(ctx.status(204));
+};
+
 const issueHandler = [
   rest.get(`/${API.PREFIX}/${API.ISSUES}`, getIssues),
   rest.get(`/${API.PREFIX}/${API.ISSUES}/open`, getOpenIssues),
@@ -87,6 +118,9 @@ const issueHandler = [
   rest.post(`/${API.PREFIX}/${API.ISSUES}`, postIssue),
   rest.post(`/${API.PREFIX}/${API.ISSUES}/:id`, patchIssue),
   rest.post(`/${API.PREFIX}/${API.ISSUES}/:id/comment`, postComment),
+  rest.post(`/${API.PREFIX}/${API.ISSUES}/:id/assignees`, postAssignees),
+  rest.post(`/${API.PREFIX}/${API.ISSUES}/:id/labels`, postLabels),
+  rest.post(`/${API.PREFIX}/${API.ISSUES}/:id/milestone`, postMilestone),
 ];
 
 export default issueHandler;

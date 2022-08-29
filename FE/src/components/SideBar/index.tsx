@@ -1,34 +1,20 @@
 import SideBarItem from './SideBarItem';
 import * as S from './style';
 
-import { mockAssignees } from '@/mocks/Assignees/data';
-import { mockLabels } from '@/mocks/Labels/data';
-import { mockMilestones } from '@/mocks/Milestones/data';
+import { getSideBarData } from '@/constants/sideBar';
+import { Assignee } from '@/types/issueTypes';
+import { ILabel } from '@/types/labelTypes';
+import { MilestoneType } from '@/types/milestoneTypes';
 
-const assingeeList = {
-  indicator: 'Assignees',
-  title: 'Assign up to 10 people to this issue',
-  menus: mockAssignees,
+type SideBarProps = {
+  assignees?: Assignee[];
+  labels?: ILabel[];
+  milestone?: MilestoneType[];
 };
 
-const labelList = {
-  indicator: 'Labels',
-  title: 'Apply labels to this issue',
-  menus: mockLabels.labels,
-};
+const SideBar = ({ assignees, labels, milestone }: SideBarProps) => {
+  const sideBarData = getSideBarData(assignees, labels, milestone);
 
-const milestoneList = {
-  indicator: 'Milestone',
-  title: 'Set milestone',
-  menus: mockMilestones.milestones,
-};
-
-const SideBar = ({ assignees, labels, milestone }) => {
-  const sideBarData = [
-    { defaultContents: 'No one', list: assingeeList, contents: assignees },
-    { defaultContents: 'None yet', list: labelList, contents: labels },
-    { defaultContents: 'No Milestone', list: milestoneList, contents: milestone },
-  ];
   return (
     <S.SideBarContainer>
       <S.SideBarList>
@@ -36,7 +22,7 @@ const SideBar = ({ assignees, labels, milestone }) => {
           <SideBarItem
             key={list.indicator}
             title={list.indicator}
-            contents={contents.length || Object.keys(contents).length ? contents : defaultContents}
+            contents={contents?.length ? contents : defaultContents}
             detailsMenuList={list}
             checkType={list.indicator === 'Milestone' ? 'radio' : 'checkBox'}
           />

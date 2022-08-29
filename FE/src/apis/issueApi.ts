@@ -45,3 +45,11 @@ export const postComment = async (id: number, commentData: CommentDataType) => {
     console.log(error);
   }
 };
+
+export const editSideBar = async (id: number, indicator: string, sideBarData) => {
+  try {
+    axios.post(`/api/issues/${id}/${indicator}`, sideBarData);
+  } catch (error) {
+    console.log(error);
+  }
+};

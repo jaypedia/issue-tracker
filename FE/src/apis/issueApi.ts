@@ -53,3 +53,11 @@ export const editSideBar = async (id: number, indicator: string, sideBarData) =>
     console.log(error);
   }
 };
+
+export const deleteIssue = async (id: number) => {
+  try {
+    axios.delete(`/api/issues/${id}`);
+  } catch (error) {
+    console.log(error);
+  }
+};

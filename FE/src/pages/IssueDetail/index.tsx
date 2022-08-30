@@ -1,7 +1,8 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import * as S from './style';
 
+import { deleteIssue } from '@/apis/issueApi';
 import Comment from '@/components/Comment';
 import CommentForm from '@/components/CommentForm';
 import Loading from '@/components/common/Loading';
@@ -13,6 +14,11 @@ import { ColumnWrapper } from '@/styles/common';
 const IssueDetail = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetIssueDetail(Number(id));
+  const navigate = useNavigate();
+  const handleDeleteClick = () => {
+    deleteIssue(Number(id));
+    navigate('/');
+  };
 
   return (
     <ColumnWrapper>
@@ -42,7 +48,12 @@ const IssueDetail = () => {
               ))}
               <CommentForm usage="comment" />
             </S.CommentsConatiner>
-            <SideBar assignees={data.assignees} labels={data.labels} milestone={data.milestones} />
+            <SideBar
+              assignees={data.assignees}
+              labels={data.labels}
+              milestone={data.milestones}
+              onClick={handleDeleteClick}
+            />
           </S.ContentsWrapper>
         </>
       )}

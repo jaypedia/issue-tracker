@@ -1,10 +1,12 @@
-import { ISSUE_STATUS, QUERY_KEY } from '@/constants/constants';
-import { Assignee, IssueStatusType } from '@/types/issueTypes';
-
 // Reference: thanks to @happyGyu
+import { ISSUE_STATUS, QUERY_KEY } from '@/constants/constants';
+import { IssueStatusType, IssueType } from '@/types/issueTypes';
 
-// TODO: Property 'author' does not exist on type 'IssueItemType'.ts(2339)
-const filterByQuery = (queryKey: string, queryValue: string | null, originalIssues) => {
+const filterByQuery = (
+  queryKey: string,
+  queryValue: string | null,
+  originalIssues: IssueType[],
+) => {
   if (queryValue === null) return originalIssues;
 
   switch (queryKey) {
@@ -13,17 +15,23 @@ const filterByQuery = (queryKey: string, queryValue: string | null, originalIssu
     case QUERY_KEY.label:
       return originalIssues.filter(issue => issue.labels.some(label => label.title === queryValue));
     case QUERY_KEY.milestone:
-      return originalIssues.filter(issue => issue.mileStoneTitle === queryValue);
-    case QUERY_KEY.assignees:
       return originalIssues.filter(issue =>
-        issue.assignees.some((assignees: Assignee) => assignees.id === Number(queryValue)),
+        issue.milestones.some(milestone => milestone.title === queryValue),
+      );
+    case QUERY_KEY.assignee:
+      return originalIssues.filter(issue =>
+        issue.assignees.some(assignee => assignee.userId === queryValue),
+      );
+    case QUERY_KEY.title:
+      return originalIssues.filter(issue =>
+        issue.title.toLowerCase().includes(queryValue.toLowerCase()),
       );
     default:
       return originalIssues;
   }
 };
 
-const filterByStatus = (target: IssueStatusType, originalIssues) => {
+const filterByStatus = (target: IssueStatusType, originalIssues: IssueType[]) => {
   const filtered = originalIssues.filter(issue => issue.issueStatus === target);
   const oppositeStatusCount = originalIssues.length - filtered.length;
   return {
@@ -33,14 +41,14 @@ const filterByStatus = (target: IssueStatusType, originalIssues) => {
   };
 };
 
-export const filterIssues = (queryString: string, issues) => {
+export const filterIssues = (queryString: string, issues: IssueType[]) => {
   const searchParams = new URLSearchParams(queryString);
-
   const queryKeyList = [
     QUERY_KEY.author,
     QUERY_KEY.label,
     QUERY_KEY.milestone,
-    QUERY_KEY.assignees,
+    QUERY_KEY.assignee,
+    QUERY_KEY.title,
   ];
 
   const filteredByQueries = queryKeyList.reduce(
@@ -56,14 +64,10 @@ export const filterIssues = (queryString: string, issues) => {
   return filteredByStatus;
 };
 
-export const filterBySearchWord = searchWord => {
-  console.log(searchWord);
-};
-
-export const filterOpenIssues = issues => {
+export const filterOpenIssues = (issues: IssueType[]) => {
   return issues.filter(issue => issue.issueStatus === 'open');
 };
 
-export const filterClosedIssues = issues => {
+export const filterClosedIssues = (issues: IssueType[]) => {
   return issues.filter(issue => issue.issueStatus === 'closed');
 };

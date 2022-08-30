@@ -10,7 +10,7 @@ export const QUERY_KEY = {
   author: 'author',
   label: 'label',
   milestone: 'milestone',
-  assignees: 'assignees',
+  assignee: 'assignee',
   title: 'title',
 };
 
@@ -38,3 +38,10 @@ export const USER = {
   image:
     'https://www.popphoto.com/uploads/2022/02/07/Craig-Sellars.jpeg?auto=webp&width=1440&height=961.171875',
 };
+
+export const FILTER = {
+  author: 'author',
+  label: 'label',
+  milestone: 'milestone',
+  assignee: 'assignee',
+} as const;

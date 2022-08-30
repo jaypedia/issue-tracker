@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react';
 
-import { DropDownApi, fetchAPI } from '@/apis/common';
+import { fetchAPI } from '@/apis/common';
+import { Assignee } from '@/types/issueTypes';
+import { LabelDataType } from '@/types/labelTypes';
+import { MilestoneDataType } from '@/types/milestoneTypes';
 
-const useDropDown = (api?: DropDownApi) => {
+type DropDownDataType = Assignee[] | MilestoneDataType | LabelDataType | undefined;
+
+const useDropDown = (api: string) => {
   const [isBackgroundClickable, setIsBackgroundClickable] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [dropdownData, setDropdownData] = useState(null);
+  const [dropdownData, setDropdownData] = useState<DropDownDataType>(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
   const handleDropDownClick = (e: React.MouseEvent) => {
@@ -21,7 +26,7 @@ const useDropDown = (api?: DropDownApi) => {
   useEffect(() => {
     const fetchFilters = async () => {
       if (!api) return;
-      const data = await fetchAPI(api);
+      const data = await fetchAPI<DropDownDataType>(api);
       setDropdownData(data);
       setIsLoading(false);
     };

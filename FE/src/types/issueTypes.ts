@@ -23,7 +23,7 @@ type Comment = CommentDataType & {
 };
 
 export type IssueEditDataType = {
-  issueTitle: string;
+  title: string;
   author: string;
   createdAt: string;
   image: string;

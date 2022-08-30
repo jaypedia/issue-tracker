@@ -4,7 +4,7 @@ import { IssueType, IssueEditDataType, CommentDataType } from '@/types/issueType
 
 export const getFilteredIssues = async <T>(filter: string): Promise<T | undefined> => {
   try {
-    const response = await axios.get(`/api/issues/${filter}`);
+    const response = await axios.get(`/api/issues${filter}`);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -49,6 +49,14 @@ export const postComment = async (id: number, commentData: CommentDataType) => {
 export const editSideBar = async (id: number, indicator: string, sideBarData) => {
   try {
     axios.post(`/api/issues/${id}/${indicator}`, sideBarData);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteIssue = async (id: number) => {
+  try {
+    axios.delete(`/api/issues/${id}`);
   } catch (error) {
     console.log(error);
   }

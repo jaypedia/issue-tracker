@@ -5,15 +5,16 @@ import Loading from '@/components/common/Loading';
 import useDropDown from '@/hooks/useDropDown';
 import ArrowIcon from '@/icons/DropDownArrow';
 import { ApiType } from '@/types/issueTypes';
+import { UniformMenuType } from '@/utils/dropdown';
 
 type HeaderDropDownProps = {
   indicator: string;
   title: string;
-  filter: string;
+  filter: UniformMenuType;
   api: ApiType;
 };
 
-const HeaderDropDown = ({ list }: HeaderDropDownProps) => {
+const HeaderDropDown = ({ list }: { list: HeaderDropDownProps }) => {
   const { isBackgroundClickable, isOpen, handleDropDownClick, dropdownData, isLoading } =
     useDropDown(list.api);
 

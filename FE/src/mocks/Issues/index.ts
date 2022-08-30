@@ -110,6 +110,13 @@ const postMilestone = (req, res, ctx) => {
   return res(ctx.status(204));
 };
 
+const deleteIssue = (req, res, ctx) => {
+  const { id: issueId } = req.params;
+  const filteredIssues = mockIssues.issues.filter(issue => issue.id !== Number(issueId));
+  mockIssues.issues = filteredIssues;
+  return res(ctx.status(204));
+};
+
 const issueHandler = [
   rest.get(`/${API.PREFIX}/${API.ISSUES}`, getIssues),
   rest.get(`/${API.PREFIX}/${API.ISSUES}/open`, getOpenIssues),
@@ -121,6 +128,7 @@ const issueHandler = [
   rest.post(`/${API.PREFIX}/${API.ISSUES}/:id/assignees`, postAssignees),
   rest.post(`/${API.PREFIX}/${API.ISSUES}/:id/labels`, postLabels),
   rest.post(`/${API.PREFIX}/${API.ISSUES}/:id/milestone`, postMilestone),
+  rest.delete(`/${API.PREFIX}/${API.ISSUES}/:id`, deleteIssue),
 ];
 
 export default issueHandler;

@@ -4,7 +4,7 @@ import { IssueType, IssueEditDataType, CommentDataType } from '@/types/issueType
 
 export const getFilteredIssues = async <T>(filter: string): Promise<T | undefined> => {
   try {
-    const response = await axios.get(`/api/issues/${filter}`);
+    const response = await axios.get(`/api/issues${filter}`);
     return response.data;
   } catch (error) {
     console.log(error);

@@ -58,7 +58,7 @@ export const filterIssues = (queryString: string, issues: IssueType[]) => {
   );
 
   const filteredByStatus =
-    searchParams.get('params') === ISSUE_STATUS.closed
+    searchParams.get('is') === ISSUE_STATUS.closed
       ? filterByStatus(ISSUE_STATUS.closed, filteredByQueries)
       : filterByStatus(ISSUE_STATUS.open, filteredByQueries);
   return filteredByStatus;

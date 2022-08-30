@@ -3,14 +3,12 @@ import { useMutation, useQueryClient, useQuery } from 'react-query';
 import { fetchAPI } from '@/apis/common';
 import { getFilteredIssues, getIssueDetail } from '@/apis/issueApi';
 import { API } from '@/constants/api';
-import { IssuesDataType, IssueType } from '@/types/issueTypes';
+import { IssuesDataType, IssueType, IssueFilter } from '@/types/issueTypes';
 import { changeFilterToQueryString } from '@/utils/issue';
 
-export const useGetIssue = filter => {
-  console.log(filter);
-  console.log(changeFilterToQueryString(filter));
-  // TODO: 임시 filter.is 수정
-  return useQuery([API.ISSUES, filter], () => getFilteredIssues<IssuesDataType>(filter.is));
+export const useGetIssue = (filter: IssueFilter) => {
+  const qs = changeFilterToQueryString(filter);
+  return useQuery([API.ISSUES, filter], () => getFilteredIssues<IssuesDataType>(qs));
 };
 
 export const useGetIssueDetail = (id: number) => {

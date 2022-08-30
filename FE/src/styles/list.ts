@@ -29,7 +29,6 @@ const ListContainer = styled.div`
   margin: 24px 0;
   border: 1px solid ${({ theme: { color } }) => color.line};
   border-radius: 16px;
-  overflow: hidden;
 `;
 
 export { ListHeader, Item, ListContainer };

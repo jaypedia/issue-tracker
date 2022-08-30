@@ -29,6 +29,12 @@ const Heading1 = styled.h1`
   margin: 0;
 `;
 
+const Heading4 = styled.h4`
+  ${FONT_MIXIN.small(400)};
+  margin: 10px;
+  margin-bottom: 20px;
+`;
+
 const FlexBetween = styled.div`
   width: 100%;
   ${mixins.flexBox({ justifyContent: 'space-between' })}
@@ -69,6 +75,7 @@ export {
   ColumnWrapper,
   headerWrapperStyle,
   Heading1,
+  Heading4,
   Flex,
   FlexBetween,
   FlexStart,

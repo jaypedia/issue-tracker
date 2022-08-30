@@ -16,6 +16,7 @@ import Milestones from '@/pages/Milestones';
 import NewIssue from '@/pages/NewIssue';
 import NewMilestone from '@/pages/NewMilestone';
 import NotFound from '@/pages/NotFound';
+import SignUp from '@/pages/SignUp';
 import GlobalStyle from '@/styles/GlobalStyle';
 import { DARK, LIGHT } from '@/styles/theme';
 import { getDefaultTheme } from '@/utils/mode';
@@ -50,6 +51,7 @@ const App = () => {
               </Route>
               <Route path="callback" element={<LoginCallback />} />
               <Route path="login" element={<Login />} />
+              <Route path="sign-up" element={<SignUp />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Router>

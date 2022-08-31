@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import * as S from './style';
 
@@ -9,6 +8,7 @@ import Input from '@/components/common/Input';
 import TextArea from '@/components/common/TextArea';
 import { FORM_TYPE } from '@/constants/constants';
 import { useRefetchMilestone } from '@/hooks/useMilestone';
+import useMovePage from '@/hooks/useMovePage';
 import { MilestoneType } from '@/types/milestoneTypes';
 
 type MilestoneFormProps = {
@@ -18,7 +18,7 @@ type MilestoneFormProps = {
 };
 
 const MilestoneForm = ({ data, type, onCancel }: MilestoneFormProps) => {
-  const navigate = useNavigate();
+  const [goMilestone] = useMovePage('/milestones');
   const titleRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const dueDateRef = useRef<HTMLInputElement>(null);
@@ -27,7 +27,7 @@ const MilestoneForm = ({ data, type, onCancel }: MilestoneFormProps) => {
 
   const handleCancelClick = () => {
     if (type === FORM_TYPE.create) {
-      navigate('/milestones');
+      goMilestone();
     } else if (onCancel) {
       onCancel();
     }
@@ -35,7 +35,6 @@ const MilestoneForm = ({ data, type, onCancel }: MilestoneFormProps) => {
 
   const handleInputChange = () => {
     if (!titleRef.current) return;
-
     if (titleRef.current.value) {
       setIsButtonDisabled(false);
     } else {
@@ -56,7 +55,7 @@ const MilestoneForm = ({ data, type, onCancel }: MilestoneFormProps) => {
     if (type === FORM_TYPE.create) {
       postMilestone(milestoneData);
       mutate();
-      navigate('/milestones');
+      goMilestone();
       return;
     }
 
@@ -65,6 +64,11 @@ const MilestoneForm = ({ data, type, onCancel }: MilestoneFormProps) => {
       onCancel();
       mutate();
     }
+  };
+
+  const getDueDateString = (dueDate: string | undefined) => {
+    if (!dueDate) return '';
+    return dueDate.slice(0, 10);
   };
 
   return (
@@ -82,14 +86,14 @@ const MilestoneForm = ({ data, type, onCancel }: MilestoneFormProps) => {
         onChange={handleInputChange}
       />
       <Input
-        name="dueDate"
+        type="date"
+        pattern="\d\d\d\d-\d\d-\d\d"
         placeholder="yyyy-mm-dd"
+        name="dueDate"
         inputStyle="medium"
         title="DueDate"
-        type="text"
         inputLabel="Due date (optional)"
-        maxLength={10}
-        defaultValue={data?.dueDate}
+        defaultValue={getDueDateString(data?.dueDate)}
         ref={dueDateRef}
       />
       <TextArea

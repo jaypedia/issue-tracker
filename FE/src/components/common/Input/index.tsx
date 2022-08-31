@@ -18,6 +18,7 @@ const Input: React.FC<I> = React.forwardRef((inputData, ref) => {
     value,
     onChange,
     maxLength,
+    pattern,
   } = inputData;
 
   return (
@@ -35,6 +36,8 @@ const Input: React.FC<I> = React.forwardRef((inputData, ref) => {
         onChange={onChange}
         maxLength={maxLength}
         ref={ref}
+        pattern={pattern}
+        autoComplete="off"
       />
     </S.InputLabel>
   );

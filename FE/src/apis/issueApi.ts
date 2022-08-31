@@ -46,6 +46,7 @@ export const postComment = async (id: number, commentData: CommentDataType) => {
   }
 };
 
+// TODO: sideBarData Type - assignees, labels, milestone
 export const editSideBar = async (id: number, indicator: string, sideBarData) => {
   try {
     axios.post(`/api/issues/${id}/${indicator}`, sideBarData);
@@ -57,6 +58,19 @@ export const editSideBar = async (id: number, indicator: string, sideBarData) =>
 export const deleteIssue = async (id: number) => {
   try {
     axios.delete(`/api/issues/${id}`);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+type ActionIssueType = {
+  ids: number[];
+  action: string;
+};
+
+export const actionIssues = async (issues: ActionIssueType) => {
+  try {
+    axios.post(`/api/issues/action`, issues);
   } catch (error) {
     console.log(error);
   }

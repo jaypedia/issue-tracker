@@ -117,12 +117,31 @@ const deleteIssue = (req, res, ctx) => {
   return res(ctx.status(204));
 };
 
+const markIssue = (req, res, ctx) => {
+  const { ids, action } = req.body;
+  ids.forEach(id => {
+    const curIssue = mockIssues.issues.find(issue => issue.id === Number(id));
+    if (curIssue) {
+      curIssue.issueStatus = action;
+    }
+  });
+  if (action === 'open') {
+    mockIssues.openIssueCount += ids.length;
+    mockIssues.closedIssueCount -= ids.length;
+  } else {
+    mockIssues.openIssueCount -= ids.length;
+    mockIssues.closedIssueCount += ids.length;
+  }
+  return res(ctx.status(204));
+};
+
 const issueHandler = [
   rest.get(`/${API.PREFIX}/${API.ISSUES}`, getIssues),
   rest.get(`/${API.PREFIX}/${API.ISSUES}/open`, getOpenIssues),
   rest.get(`/${API.PREFIX}/${API.ISSUES}/closed`, getClosedIssues),
   rest.get(`/${API.PREFIX}/${API.ISSUES}/:id`, getIssueDetail),
   rest.post(`/${API.PREFIX}/${API.ISSUES}`, postIssue),
+  rest.post(`/${API.PREFIX}/${API.ISSUES}/action`, markIssue),
   rest.post(`/${API.PREFIX}/${API.ISSUES}/:id`, patchIssue),
   rest.post(`/${API.PREFIX}/${API.ISSUES}/:id/comment`, postComment),
   rest.post(`/${API.PREFIX}/${API.ISSUES}/:id/assignees`, postAssignees),

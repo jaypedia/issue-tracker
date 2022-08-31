@@ -1,3 +1,4 @@
+import ActionDropDown from './ActionDropDown';
 import HeaderDropDown from './HeaderDropDown';
 import * as S from './style';
 import TabBar from './TabBar';
@@ -32,11 +33,15 @@ const IssueListHeader = ({ openIssueCount, closedIssueCount }: IssueListHeaderPr
         )}
       </S.Flex>
       <S.ListFilter>
-        {HeaderDropDownList.map(list => (
-          <S.ListFilterItem>
-            <HeaderDropDown list={list} />
-          </S.ListFilterItem>
-        ))}
+        {checkedItemCount > 0 ? (
+          <ActionDropDown />
+        ) : (
+          HeaderDropDownList.map(list => (
+            <S.ListFilterItem>
+              <HeaderDropDown list={list} />
+            </S.ListFilterItem>
+          ))
+        )}
       </S.ListFilter>
     </ListHeader>
   );

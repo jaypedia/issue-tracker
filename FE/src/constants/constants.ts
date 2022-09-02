@@ -34,10 +34,13 @@ export const COMMENT_FORM_TYPE = {
 };
 
 export const USER = {
-  name: 'Guest',
+  name: 'Millie',
   image:
     'https://www.popphoto.com/uploads/2022/02/07/Craig-Sellars.jpeg?auto=webp&width=1440&height=961.171875',
 };
+
+export const USER_DEFAULT_IMG =
+  'https://millingtontownship.com/wp-content/uploads/2021/01/default.jpg';
 
 export const FILTER = {
   author: 'author',

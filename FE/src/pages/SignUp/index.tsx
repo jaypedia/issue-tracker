@@ -1,16 +1,21 @@
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 
 import { createAccount } from '@/apis/loginApi';
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
+import UserProfile from '@/components/common/UserProfile';
+import { USER_DEFAULT_IMG } from '@/constants/constants';
+import useMovePage from '@/hooks/useMovePage';
 import Logo from '@/icons/Logo';
 import * as S from '@/pages/Login/style';
 import { Heading4 } from '@/styles/common';
 
 const SignUp = () => {
-  const navigate = useNavigate();
+  const [goLogin] = useMovePage('/login');
+  const [imgUrl, setImgUrl] = useState(USER_DEFAULT_IMG);
+
   const handleCancelClick = () => {
-    navigate('/login');
+    goLogin();
   };
 
   const handleCreateAccount = (e: React.FormEvent) => {
@@ -19,17 +24,35 @@ const SignUp = () => {
     const email = formData.email.value;
     const name = formData.name.value;
     const password = formData.password.value;
-    const userData = { name, password, email };
+    const profileImageUrl = formData.profileImageUrl.value;
+    if (!email || !name || !password || !profileImageUrl) {
+      alert('Please fill all required fields');
+      return;
+    }
+    const userData = { name, password, email, profileImageUrl };
     createAccount(userData);
     alert(`Hello ${name}! Now you can log in with your account.`);
-    navigate('/login');
+    goLogin();
+  };
+
+  const handleImageChange = e => {
+    setImgUrl(e.target.value);
   };
 
   return (
     <S.LoginWrapper>
       <Logo />
       <Heading4>Create your Issue Tracker Account</Heading4>
+      <UserProfile imgUrl={imgUrl} userId="new User" size="signUp" />
       <S.LoginForm onSubmit={handleCreateAccount}>
+        <Input
+          type="text"
+          placeholder="Your Profile Image Link"
+          title="User Profile Image"
+          inputStyle="large"
+          name="profileImageUrl"
+          onChange={handleImageChange}
+        />
         <Input
           type="text"
           placeholder="Your Email"

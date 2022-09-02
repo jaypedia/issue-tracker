@@ -75,10 +75,10 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({ React: 'react' }),
     isDevelopment && new ReactRefreshWebpackPlugin(),
-    new webpack.EnvironmentPlugin({
-      OAUTH_URL_GITHUB: undefined,
-      CLIENT_ID_GITHUB: undefined,
-      BASE_URL: undefined,
+    new webpack.DefinePlugin({
+      'process.env.OAUTH_URL_GITHUB': JSON.stringify(process.env.OAUTH_URL_GITHUB),
+      'process.env.CLIENT_ID_GITHUB': JSON.stringify(process.env.CLIENT_ID_GITHUB),
+      'process.env.BASE_URL': JSON.stringify(process.env.BASE_URL),
     }),
   ].filter(Boolean),
 };

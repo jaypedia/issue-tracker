@@ -31,6 +31,7 @@ jobs:
         run: |
           echo "OAUTH_URL_GITHUB=${{ secrets.OAUTH_URL_GITHUB }}" >> .env
           echo "CLIENT_ID_GITHUB=${{ secrets.CLIENT_ID_GITHUB }}" >> .env
+          echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
           cat .env
 
       - name: Build

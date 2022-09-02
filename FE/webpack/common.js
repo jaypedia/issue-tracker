@@ -11,6 +11,7 @@ dotenv.config({ path: path.resolve('src', './.env') });
 const WebpackEnvironmentPlugin = new webpack.EnvironmentPlugin([
   'OAUTH_URL_GITHUB',
   'CLIENT_ID_GITHUB',
+  'BASE_URL',
 ]);
 
 module.exports = {

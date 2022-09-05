@@ -4,9 +4,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import lombok.RequiredArgsConstructor;
 import team20.issuetracker.login.oauth.OauthProvider;
 import team20.issuetracker.login.oauth.repository.InMemoryProviderRepository;
@@ -20,12 +17,7 @@ public class OauthConfig {
 
     @Bean
     public InMemoryProviderRepository inMemoryProviderRepository() {
-        Map<String, OauthProvider> oauthProvider = new HashMap<>();
-
-        properties.getUser()
-                .forEach((key, value) -> oauthProvider.put(key, new OauthProvider(value, properties.getProvider().get(key))));
-
-        OauthProvider provider = oauthProvider.get("github");
+        OauthProvider provider = new OauthProvider(properties);
 
         return new InMemoryProviderRepository(provider);
     }

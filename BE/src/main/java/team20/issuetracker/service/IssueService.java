@@ -159,9 +159,10 @@ public class IssueService {
                 .filter(comment -> comment.getAuthorId().equals(oauthId))
                 .collect(Collectors.toList());
 
-        Set<Issue> findAllIssuesByMyComment = comments.stream()
-                .map(Comment::getIssue)
-                .collect(Collectors.toSet());
+        List<Issue> findAllIssuesByMyComment = comments.stream()
+            .map(Comment::getIssue)
+            .distinct()
+            .collect(Collectors.toList());
 
         return getResponseReadAllIssueDto(findAllIssuesByMyComment);
     }
@@ -172,9 +173,10 @@ public class IssueService {
                 .filter(comment -> comment.getAuthorId().equals(oauthId))
                 .collect(Collectors.toList());
 
-        Set<Issue> findIssues = comments.stream()
-                .map(Comment::getIssue)
-                .collect(Collectors.toSet());
+        List<Issue> findIssues = comments.stream()
+            .map(Comment::getIssue)
+            .distinct()
+            .collect(Collectors.toList());
 
         List<Issue> findIssueByIssueStatus = filterIssueStatus(findIssues, issueStatus);
 
@@ -220,24 +222,6 @@ public class IssueService {
         return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, responseIssueDtos);
     }
 
-    private ResponseReadAllIssueDto getResponseReadAllIssueDto(Set<Issue> findAllIssues) {
-        List<ResponseIssueDto> responseIssueDtos = responseIssueDtos(findAllIssues);
-
-        long openIssueCount = getOpenIssuesCountByFindAll(findAllIssues);
-        long closeIssueCount = getCloseIssuesCountByFindAll(findAllIssues);
-
-        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, responseIssueDtos);
-    }
-
-    private ResponseReadAllIssueDto getResponseReadAllIssueDto(List<Issue> findAllIssueByIssueStatus, Set<Issue> findAllIssues) {
-        List<ResponseIssueDto> responseIssueDtos = responseIssueDtos(findAllIssueByIssueStatus);
-
-        long openIssueCount = getOpenIssuesCountByFindAll(findAllIssues);
-        long closeIssueCount = getCloseIssuesCountByFindAll(findAllIssues);
-
-        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, responseIssueDtos);
-    }
-
     private ResponseReadAllIssueDto getResponseReadAllIssueDto(List<Issue> findAllIssueByIssueStatus, List<Issue> findAllIssues) {
         List<ResponseIssueDto> responseIssueDtos = responseIssueDtos(findAllIssueByIssueStatus);
 
@@ -253,12 +237,6 @@ public class IssueService {
                 .collect(Collectors.toList());
     }
 
-    private List<ResponseIssueDto> responseIssueDtos(Set<Issue> findIssues) {
-        return findIssues.stream()
-                .map(ResponseIssueDto::of)
-                .collect(Collectors.toList());
-    }
-
     private long getOpenIssuesCountByFindAll(List<Issue> findIssues) {
         return findIssues.stream().filter(issue -> issue.getStatus().equals(IssueStatus.OPEN)).count();
     }
@@ -267,21 +245,7 @@ public class IssueService {
         return findIssues.stream().filter(issue -> issue.getStatus().equals(IssueStatus.CLOSED)).count();
     }
 
-    private long getOpenIssuesCountByFindAll(Set<Issue> findIssues) {
-        return findIssues.stream().filter(issue -> issue.getStatus().equals(IssueStatus.OPEN)).count();
-    }
-
-    private long getCloseIssuesCountByFindAll(Set<Issue> findIssues) {
-        return findIssues.stream().filter(issue -> issue.getStatus().equals(IssueStatus.CLOSED)).count();
-    }
-
     private List<Issue> filterIssueStatus(List<Issue> findIssues, String issueStatus) {
-        return findIssues.stream()
-                .filter(issue -> issue.getStatus().toString().equals(issueStatus.toUpperCase()))
-                .collect(Collectors.toList());
-    }
-
-    private List<Issue> filterIssueStatus(Set<Issue> findIssues, String issueStatus) {
         return findIssues.stream()
                 .filter(issue -> issue.getStatus().toString().equals(issueStatus.toUpperCase()))
                 .collect(Collectors.toList());

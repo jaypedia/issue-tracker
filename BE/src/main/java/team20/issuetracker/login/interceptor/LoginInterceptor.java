@@ -42,7 +42,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        response.sendRedirect("/index.html");
+        response.sendRedirect("/");
         return false;
     }
 

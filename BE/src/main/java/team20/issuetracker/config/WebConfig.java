@@ -20,20 +20,19 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(loginInterceptor)
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**", "/index.html", "/api/login/**", "/api/refresh/**", "/api/maintain");
+                .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**", "/", "/api/login/**", "/api/refresh/**", "/api/maintain");
     }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:9000/")
-                .allowedMethods(
-                        HttpMethod.GET.name(),
-                        HttpMethod.POST.name(),
-                        HttpMethod.DELETE.name(),
-                        HttpMethod.OPTIONS.name()
-                )
-                .allowCredentials(true)
-                .maxAge(3600);
+            .allowedOrigins("http://localhost:9000", "http://3.34.53.135:9000/")
+            .allowedMethods(
+                HttpMethod.GET.name(),
+                HttpMethod.POST.name(),
+                HttpMethod.DELETE.name(),
+                HttpMethod.OPTIONS.name())
+            .allowCredentials(true)
+            .maxAge(3600);
     }
 }

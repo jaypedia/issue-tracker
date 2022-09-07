@@ -42,7 +42,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        response.sendRedirect("/");
+        response.sendRedirect("https://issuetracker.r-e.kr/login");
         return false;
     }
 

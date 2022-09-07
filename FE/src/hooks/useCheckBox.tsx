@@ -35,8 +35,9 @@ const useCheckBox = () => {
   };
 
   useEffect(() => {
+    if (!data?.issues) return;
     setIsAllChecked(() => {
-      return checkedItems.size === data?.issues.length;
+      return checkedItems.size === data.issues.length;
     });
   }, [checkedItems]);
 

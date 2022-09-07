@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 
 import * as S from './style';
@@ -10,18 +9,19 @@ import Input from '@/components/common/Input';
 import { LOGIN_URL } from '@/constants/login';
 import { useIsLoggedIn } from '@/hooks/useIsLoggedIn';
 import useMaintainLogin from '@/hooks/useMaintainLogin';
+import useMovePage from '@/hooks/useMovePage';
 import Logo from '@/icons/Logo';
 import { userState } from '@/stores/atoms/user';
 
 const Login = () => {
   const isLoggedIn = useIsLoggedIn();
-  const navigate = useNavigate();
   const mainTainLogin = useMaintainLogin();
   const setUserState = useSetRecoilState(userState);
+  const [goHome] = useMovePage('/');
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate('/');
+      goHome();
     } else {
       mainTainLogin();
     }
@@ -33,7 +33,7 @@ const Login = () => {
     const userData = { email: formData.email.value, password: formData.password.value };
     const user = await postLogin<MockUserDataType>(userData);
     if (user && user.name) {
-      navigate('/');
+      goHome();
       setUserState({ name: user.name, email: user.email, profileImageUrl: user.profileImageUrl });
     } else {
       alert('Please sign up first!');

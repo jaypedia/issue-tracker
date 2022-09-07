@@ -7,7 +7,7 @@ const { argv } = require('yargs');
 
 const isDevelopment = argv.env === 'development';
 
-dotenv.config({ path: path.resolve('src', './.env') });
+dotenv.config({ path: path.resolve('.env') });
 
 module.exports = {
   entry: {

@@ -6,6 +6,10 @@ const SideBarContainer = styled.div`
   ${mixins.flexBox({ direction: 'column' })}
   border-radius: 16px;
   width: 300px;
+
+  & > :last-child {
+    margin-top: 10px;
+  }
 `;
 
 const SideBarList = styled.ul`

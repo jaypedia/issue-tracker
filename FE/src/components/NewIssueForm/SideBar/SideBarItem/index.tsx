@@ -64,7 +64,6 @@ const SideBarContents = ({ title, contents }) => {
 
 const SideBarItem = ({ title, defaultContents, detailsMenuList, checkType }: SideBarItemProps) => {
   const sideBarContents = useRecoilValue(sideBarState);
-  console.log(sideBarContents);
   const contents = sideBarContents[title].length > 0 ? sideBarContents[title] : defaultContents;
 
   return (

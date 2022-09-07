@@ -8,6 +8,7 @@ import { getUniformMenus } from '@/utils/dropdown';
 
 export type IndicatorTitleType = 'Assignees' | 'Labels' | 'Milestone';
 
+// TODO: TypeScript
 const useSideBar = (indicatorTitle: IndicatorTitleType, detailsMenuList: any) => {
   const [sideBarContent, setSideBarContent] = useRecoilState(sideBarState);
   const menuList = getUniformMenus(indicatorTitle, detailsMenuList);
@@ -15,23 +16,27 @@ const useSideBar = (indicatorTitle: IndicatorTitleType, detailsMenuList: any) =>
   const issueId = Number(pathname.slice(7));
   const { mutate } = useRefetchIssueDetail(issueId);
 
+  const isSelectedMenu = (id: number) => {
+    return sideBarContent[indicatorTitle].find(v => v.id === id);
+  };
+
   const changeSideBarState = (currentMenu, id: number) => {
-    if (sideBarContent[indicatorTitle].find(v => v.id === id)) {
+    if (isSelectedMenu(id)) {
       setSideBarContent(prev => {
         const filtered = prev[indicatorTitle].filter(v => v.id !== id);
         return { ...prev, [indicatorTitle]: filtered };
       });
-    } else {
-      if (indicatorTitle === 'Milestone') {
-        setSideBarContent(prev => {
-          return { ...prev, [indicatorTitle]: [currentMenu] };
-        });
-        return;
-      }
-      setSideBarContent(prev => {
-        return { ...prev, [indicatorTitle]: [...prev[indicatorTitle], currentMenu] };
-      });
+      return;
     }
+    if (indicatorTitle === 'Milestone') {
+      setSideBarContent(prev => {
+        return { ...prev, [indicatorTitle]: [currentMenu] };
+      });
+      return;
+    }
+    setSideBarContent(prev => {
+      return { ...prev, [indicatorTitle]: [...prev[indicatorTitle], currentMenu] };
+    });
   };
 
   const handleMenuClick = (id: number) => {

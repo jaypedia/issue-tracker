@@ -1,4 +1,4 @@
-import { UniformMenuType } from '@/utils/dropdown';
+import { IndicatorTitleType } from '@/hooks/useSideBar';
 // TODO: Refactoring types
 type DropDownType = {
   menuPosition: 'left' | 'right' | 'center';
@@ -12,7 +12,7 @@ export type detailsMenuListType = { indicator: string; title: string };
 export type DetailsMenuProps = DropDownType & {
   detailsMenuList: detailsMenuListType;
   title: string;
-  indicatorTitle: UniformMenuType;
+  indicatorTitle: IndicatorTitleType;
 };
 
 export type IndicatorStyle = {

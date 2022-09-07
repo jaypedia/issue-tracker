@@ -1,6 +1,16 @@
 import { atom } from 'recoil';
 
-export const sideBarInitialState = {
+import { Assignee } from '@/types/issueTypes';
+import { LabelData } from '@/types/labelTypes';
+import { MilestoneType } from '@/types/milestoneTypes';
+
+type sideBarType = {
+  Assignees: Assignee[] | [];
+  Labels: LabelData[] | [];
+  Milestone: MilestoneType[] | [];
+};
+
+export const sideBarInitialState: sideBarType = {
   Assignees: [],
   Labels: [],
   Milestone: [],

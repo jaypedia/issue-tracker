@@ -1,21 +1,15 @@
-import { useLocation } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-
 import * as S from '../style';
 
-import { editSideBar } from '@/apis/issueApi';
 import { DetailsMenuProps } from '@/components/common/DropDown/type';
 import UserProfile from '@/components/common/UserProfile';
-import { useRefetchIssueDetail } from '@/hooks/useIssue';
-import { sideBarState } from '@/stores/atoms/sideBar';
-import { getUniformMenus } from '@/utils/dropdown';
+import useSideBar from '@/hooks/useSideBar';
 
 type DetailsCheckMenuItemProps = {
   menu: string;
   checkType?: 'checkBox' | 'radio';
   image?: string;
   backgroundColor?: string;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onClick: () => void;
 };
 
 const DetailsCheckMenuItem = ({
@@ -41,7 +35,6 @@ const DetailsCheckMenuItem = ({
   );
 };
 
-// TODO: refactor props names (title, indecatorTitle)
 const DetailsMenu = ({
   title,
   indicatorTitle,
@@ -49,40 +42,13 @@ const DetailsMenu = ({
   detailsMenuList,
   checkType,
 }: DetailsMenuProps) => {
-  const [sideBarContent, setSideBarContent] = useRecoilState(sideBarState);
-  const menuList = getUniformMenus(indicatorTitle, detailsMenuList);
-  const { pathname } = useLocation();
-  const issueId = Number(pathname.slice(7));
-  const { mutate } = useRefetchIssueDetail(issueId);
+  const { handleMenuClick, menuList } = useSideBar(indicatorTitle, detailsMenuList);
 
-  const handleMenuClick = (id: number) => {
-    const currentMenu = menuList.find(v => v.id === id);
-    const changeSideBarState = () => {
-      if (sideBarContent[indicatorTitle].find(v => v.id === id)) {
-        setSideBarContent(prev => {
-          const filtered = prev[indicatorTitle].filter(v => v.id !== id);
-          return { ...prev, [indicatorTitle]: filtered };
-        });
-      } else {
-        if (indicatorTitle === 'Milestone') {
-          setSideBarContent(prev => {
-            return { ...prev, [indicatorTitle]: [currentMenu] };
-          });
-          return;
-        }
-        setSideBarContent(prev => {
-          return { ...prev, [indicatorTitle]: [...prev[indicatorTitle], currentMenu] };
-        });
-      }
-    };
-
-    if (pathname === '/new-issue') {
-      changeSideBarState();
-    } else {
-      const indicator = indicatorTitle.toLowerCase();
-      editSideBar(issueId, indicator, currentMenu);
-      mutate();
-    }
+  type MenuListType = {
+    id: number;
+    name: string;
+    image: string;
+    backgroundColor: string;
   };
 
   return (
@@ -92,7 +58,7 @@ const DetailsMenu = ({
           <S.DetailsMenuTitle indicatorType="setting">{title}</S.DetailsMenuTitle>
         </S.DetailsMenuTitleWrapper>
         <ul>
-          {menuList.map(({ id, name, image, backgroundColor }) => (
+          {menuList.map(({ id, name, image, backgroundColor }: MenuListType) => (
             <DetailsCheckMenuItem
               key={id}
               menu={name}

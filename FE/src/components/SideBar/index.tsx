@@ -1,3 +1,4 @@
+import Button from '../common/Button';
 import SideBarItem from './SideBarItem';
 import * as S from './style';
 
@@ -10,9 +11,10 @@ type SideBarProps = {
   assignees?: Assignee[];
   labels?: ILabel[];
   milestone?: MilestoneType[];
+  onClick: () => void;
 };
 
-const SideBar = ({ assignees, labels, milestone }: SideBarProps) => {
+const SideBar = ({ assignees, labels, milestone, onClick }: SideBarProps) => {
   const sideBarData = getSideBarData(assignees, labels, milestone);
 
   return (
@@ -28,6 +30,7 @@ const SideBar = ({ assignees, labels, milestone }: SideBarProps) => {
           />
         ))}
       </S.SideBarList>
+      <Button isText text="Delete Issue" textColor="grey" onClick={onClick} />
     </S.SideBarContainer>
   );
 };

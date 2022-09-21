@@ -14,7 +14,7 @@ const IssueTitleForm = ({ id, title, onCancle }) => {
 
   const handleSaveClick = () => {
     const issueData = {
-      issueTitle: titleRef.current?.value,
+      title: titleRef.current?.value,
     };
     patchIssue(id, issueData);
     mutate();

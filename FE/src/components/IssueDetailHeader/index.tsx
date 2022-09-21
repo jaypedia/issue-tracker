@@ -8,9 +8,7 @@ import useBoolean from '@/hooks/useBoolean';
 import { Heading1, FlexBetween } from '@/styles/common';
 
 const IssueDetailHeader = ({ data }) => {
-  console.log(data);
-
-  const { id, issueTitle, issueStatus, author, createdAt, commentCount } = data;
+  const { id, title, issueStatus, author, createdAt, commentCount } = data;
   const { booleanState: isEditOpen, setTrue, setFalse } = useBoolean(false);
 
   const handleEditClick = () => {
@@ -20,10 +18,10 @@ const IssueDetailHeader = ({ data }) => {
   return (
     <S.IssueDetailHeaderWrapper>
       {isEditOpen ? (
-        <IssueTitleForm id={id} title={issueTitle} onCancle={setFalse} />
+        <IssueTitleForm id={id} title={title} onCancle={setFalse} />
       ) : (
         <FlexBetween>
-          <Heading1>{issueTitle}</Heading1>
+          <Heading1>{title}</Heading1>
           <S.ButtonBox>
             <Button size="small" color="grey" text="Edit" onClick={handleEditClick} />
             <CustomLink

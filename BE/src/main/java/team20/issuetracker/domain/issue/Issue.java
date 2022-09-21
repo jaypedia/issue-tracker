@@ -45,13 +45,13 @@ public class Issue extends AuditingFields {
     @JoinColumn(name = "milestone_id")
     private Milestone milestone;
 
-    @OneToMany(mappedBy = "issue", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "issue", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<IssueAssignee> issueAssignees = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "issue", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "issue", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comment> comments = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "issue", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "issue", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<IssueLabel> issueLabels = new LinkedHashSet<>();
 
     private Issue(String title, String content, Milestone milestone) {

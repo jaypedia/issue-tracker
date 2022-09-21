@@ -34,9 +34,9 @@ const IssueItem = ({ issue }: { issue: IssueType }) => {
     issueStatus,
     author,
     createdAt,
-    issueTitle,
+    title,
     labels,
-    milestone,
+    milestones,
     assignees,
   } = issue;
   const [isChecked, setIsChecked] = useState(false);
@@ -73,7 +73,7 @@ const IssueItem = ({ issue }: { issue: IssueType }) => {
             <IssueStatusIcon status={issueStatus} />
             <CustomLink
               path={`issue/${issueId}`}
-              component={<S.IssueTitle>{issueTitle}</S.IssueTitle>}
+              component={<S.IssueTitle>{title}</S.IssueTitle>}
             />
             <S.LabelContainer>
               {labels.length > 0 &&
@@ -90,10 +90,10 @@ const IssueItem = ({ issue }: { issue: IssueType }) => {
           </S.IssueInfo>
           <S.IssueInfoBottom>
             {getIssueInfoSentence({ issueId, issueStatus, author, createdAt })}
-            {milestone.length > 0 && (
+            {milestones.length > 0 && (
               <S.MilestonBox>
                 <Milestone />
-                {milestone[0].title}
+                {milestones[0].title}
               </S.MilestonBox>
             )}
           </S.IssueInfoBottom>

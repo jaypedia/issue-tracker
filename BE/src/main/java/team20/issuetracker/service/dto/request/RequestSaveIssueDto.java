@@ -1,6 +1,5 @@
 package team20.issuetracker.service.dto.request;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AccessLevel;

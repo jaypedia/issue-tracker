@@ -54,7 +54,7 @@ VALUES ('78953393', LOCALTIME, LOCALTIME, 'geombong', '안녕하세요 검봉 �
 ---- 기본 담당자 생성----
 */
 INSERT INTO issue.assignee
-(issue.assignee.author_id, issue.assignee.image, issue.assignee.title)
+(issue.assignee.author_id, issue.assignee.image, issue.assignee.user_id)
 VALUES ('78953393', 'https://avatars.githubusercontent.com/u/78953393?v=4', 'geombong');
 
 /*

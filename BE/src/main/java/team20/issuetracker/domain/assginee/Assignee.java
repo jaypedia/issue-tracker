@@ -24,20 +24,20 @@ public class Assignee {
     private Long id;
 
     private String image;
-    private String title;
+    private String userId;
     private String authorId;
 
     @OneToMany(mappedBy = "assignee")
     public Set<IssueAssignee> issueAssignees = new HashSet<>();
 
-    public Assignee(Long id, String image, String title, String authorId) {
+    public Assignee(Long id, String image, String userId, String authorId) {
         this.id = id;
         this.image = image;
-        this.title = title;
+        this.userId = userId;
         this.authorId = authorId;
     }
 
-    public static Assignee of(Long id, String image, String title, String authorId) {
-        return new Assignee(id, image, title, authorId);
+    public static Assignee of(Long id, String image, String userId, String authorId) {
+        return new Assignee(id, image, userId, authorId);
     }
 }

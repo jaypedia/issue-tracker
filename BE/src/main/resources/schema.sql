@@ -13,7 +13,7 @@ create table assignee
     id        bigint not null auto_increment,
     author_id varchar(255),
     image     varchar(255),
-    title     varchar(255),
+    user_id     varchar(255),
     primary key (id)
 );
 

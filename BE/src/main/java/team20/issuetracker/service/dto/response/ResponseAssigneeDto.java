@@ -15,6 +15,6 @@ public class ResponseAssigneeDto {
     private String image;
 
     public static ResponseAssigneeDto from(Assignee assignee) {
-        return new ResponseAssigneeDto(assignee.getId(), assignee.getTitle(), assignee.getImage());
+        return new ResponseAssigneeDto(assignee.getId(), assignee.getUserId(), assignee.getImage());
     }
 }

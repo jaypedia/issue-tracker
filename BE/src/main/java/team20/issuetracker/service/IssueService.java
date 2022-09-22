@@ -5,10 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
+
 import team20.issuetracker.domain.assginee.Assignee;
 import team20.issuetracker.domain.assginee.AssigneeRepository;
 import team20.issuetracker.domain.comment.Comment;
@@ -50,20 +50,21 @@ public class IssueService {
 
         List<Assignee> assignees = assigneeRepository.findAllById(requestSaveIssueDto.getAssigneeIds());
         List<Label> labels = labelRepository.findAllById(requestSaveIssueDto.getLabelIds());
-        Milestone milestone = null;
-        if (requestSaveIssueDto.getMilestoneId() != null) {
-            milestone = milestoneRepository.findById(requestSaveIssueDto.getMilestoneId())
-                    .orElseThrow(() -> new CheckEntityException("해당 Milestone 은 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
+
+        if (!requestSaveIssueDto.getMilestoneIds().isEmpty()) {
+            Milestone milestone = milestoneRepository.getReferenceById(requestSaveIssueDto.getMilestoneIds().get(0));
             Issue newIssue = Issue.of(title, content, milestone);
             milestone.updateIssue(newIssue);
             newIssue.addAssignees(assignees);
             newIssue.addLabels(labels);
             return issueRepository.save(newIssue).getId();
         }
-        Issue newIssue = Issue.of(title, content, milestone);
+
+        Issue newIssue = Issue.of(title, content, null);
         newIssue.addAssignees(assignees);
         newIssue.addLabels(labels);
         return issueRepository.save(newIssue).getId();
+
     }
 
     @Transactional(readOnly = true)

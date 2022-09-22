@@ -1,5 +1,6 @@
 package team20.issuetracker.service.dto.request;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AccessLevel;
@@ -23,5 +24,5 @@ public class RequestSaveIssueDto {
 
     private List<Long> assigneeIds;
     private List<Long> labelIds;
-    private Long milestoneId;
+    private List<Long> milestoneIds;
 }

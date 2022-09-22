@@ -58,3 +58,11 @@ export interface IssueFilter {
   assignee: string | undefined;
   commentedBy: string | undefined;
 }
+
+export type PostIssueType = {
+  title: string;
+  content: string;
+  assigneeIds: number[];
+  labelIds: number[];
+  milestoneIds: number[];
+};

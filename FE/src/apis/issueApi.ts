@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { IssueType, IssueEditDataType, CommentDataType } from '@/types/issueTypes';
+import { IssueEditDataType, CommentDataType, PostIssueType } from '@/types/issueTypes';
 
 export const getFilteredIssues = async <T>(filter: string): Promise<T | undefined> => {
   try {
@@ -22,7 +22,7 @@ export const getIssueDetail = async <T>(id: number): Promise<T | undefined> => {
   }
 };
 
-export const postIssue = async (issueData: IssueType) => {
+export const postIssue = async (issueData: PostIssueType) => {
   try {
     axios.post(`/api/issues`, issueData);
   } catch (error) {

@@ -22,14 +22,15 @@ const NewIssueForm = () => {
   const { isButtonDisabled, handleInputChange } = useButtonDisable();
   const [sideBar, setSideBar] = useRecoilState(sideBarState);
 
-  // TODO: never type
   const handleSubmit = () => {
+    if (!titleRef.current || !commentRef.current) return;
+
     const issueData = {
-      title: titleRef.current?.value,
-      content: commentRef.current?.value,
-      assignees: sideBar.Assignees,
-      labels: sideBar.Labels,
-      milestones: sideBar.Milestone,
+      title: titleRef.current.value,
+      content: commentRef.current.value,
+      assigneeIds: sideBar.Assignees.map(v => v.id),
+      labelIds: sideBar.Labels.map(v => v.id),
+      milestoneIds: sideBar.Milestone.map(v => v.id),
     };
 
     postIssue(issueData);

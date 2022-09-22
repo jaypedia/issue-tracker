@@ -4,12 +4,12 @@ import * as S from '@/components/common/DropDown/style';
 import UserProfile from '@/components/common/UserProfile';
 import { FILTER } from '@/constants/constants';
 import { issueStatusState } from '@/stores/atoms/issue';
-import { getUniformMenus, UniformMenuType } from '@/utils/dropdown';
+import { getUniformMenus, ListDataType, UniformMenuType } from '@/utils/dropdown';
 
 type DetailsMenuProps = {
   title: string;
   filter: UniformMenuType;
-  data: any;
+  data: ListDataType;
 };
 
 const DetailsMenu = ({ title, filter, data }: DetailsMenuProps) => {

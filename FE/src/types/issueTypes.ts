@@ -11,6 +11,10 @@ export type Assignee = {
   image: string;
 };
 
+export type AssigneeDataType = {
+  assignees: Assignee[];
+};
+
 export type CommentDataType = {
   author: string;
   image: string;

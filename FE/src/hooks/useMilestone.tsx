@@ -7,7 +7,7 @@ import { MilestoneDataType, MilestoneStatus } from '@/types/milestoneTypes';
 
 const useGetMilestone = (milestoneStatus: MilestoneStatus) => {
   return useQuery([API.MILESTONES, milestoneStatus], () =>
-    fetchAPI<MilestoneDataType>(API.MILESTONES, { params: milestoneStatus }),
+    fetchAPI<MilestoneDataType>(API.MILESTONES, { is: milestoneStatus }),
   );
 };
 

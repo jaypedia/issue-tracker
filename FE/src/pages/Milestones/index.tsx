@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 import Loading from '@/components/common/Loading';
@@ -8,19 +7,20 @@ import MilestoneForm from '@/components/MilestoneList/MilestoneItem/MilestoneFor
 import Navbar from '@/components/Navbar';
 import useBoolean from '@/hooks/useBoolean';
 import { useGetMilestone } from '@/hooks/useMilestone';
+import useMovePage from '@/hooks/useMovePage';
 import { milestoneStatusState } from '@/stores/atoms/milestone';
 import { MainWrapper, InnerContainer } from '@/styles/common';
 import { ListContainer } from '@/styles/list';
-import { MilestoneType } from '@/types/milestoneTypes';
+import { IMilestone } from '@/types/milestoneTypes';
 
 const Milestones = () => {
   const milestoneStatus = useRecoilValue(milestoneStatusState);
   const { data, isLoading } = useGetMilestone(milestoneStatus);
-  const navigate = useNavigate();
+  const [goNewMilestone] = useMovePage('/newMilestone');
   const { booleanState: isFormOpen, setTrue, setFalse } = useBoolean(false);
-  const [selectedMilestone, setSelectedMilestone] = useState<MilestoneType | undefined>(undefined);
+  const [selectedMilestone, setSelectedMilestone] = useState<IMilestone | undefined>(undefined);
 
-  const editMilestone = (milestone: MilestoneType) => {
+  const editMilestone = (milestone: IMilestone) => {
     setTrue();
     setSelectedMilestone(milestone);
   };
@@ -28,7 +28,7 @@ const Milestones = () => {
   return (
     <MainWrapper>
       <InnerContainer>
-        <Navbar btnText="New Milestone" onClick={() => navigate('/newMilestone')} />
+        <Navbar btnText="New Milestone" onClick={goNewMilestone} />
         {isFormOpen && data ? (
           <MilestoneForm data={selectedMilestone} type="edit" onCancel={setFalse} />
         ) : (

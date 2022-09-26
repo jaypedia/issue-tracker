@@ -2,18 +2,18 @@
 import MilestoneItem from './MilestoneItem';
 import MilestoneListHeader from './MilestoneListHeader';
 
-import { MilestoneType, MilestoneDataType } from '@/types/milestoneTypes';
+import { IMilestone, MilestoneDataType } from '@/types/milestoneTypes';
 
 type MilestoneListProps = {
   data: MilestoneDataType;
-  onEdit: (props: MilestoneType) => void;
+  onEdit: (props: IMilestone) => void;
 };
 
 const MilestoneList = ({ data, onEdit }: MilestoneListProps) => {
   return (
     <>
       <MilestoneListHeader open={data.openMilestoneCount} closed={data.closedMilestoneCount} />
-      {data.milestones.map((props: MilestoneType) => (
+      {data.milestones.map((props: IMilestone) => (
         <MilestoneItem key={props.id} {...props} onEdit={() => onEdit(props)} />
       ))}
     </>

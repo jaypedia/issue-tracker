@@ -10,9 +10,9 @@ import UserProfile from '@/components/common/UserProfile';
 import { sideBarState } from '@/stores/atoms/sideBar';
 import { Assignee } from '@/types/issueTypes';
 import { ILabel } from '@/types/labelTypes';
-import { MilestoneType } from '@/types/milestoneTypes';
+import { IMilestone } from '@/types/milestoneTypes';
 
-type ContentsType = string | Assignee[] | ILabel[] | MilestoneType[];
+type ContentsType = string | Assignee[] | ILabel[] | IMilestone[];
 
 type SideBarItemProps = {
   title: string;

@@ -8,10 +8,10 @@ import { MILESTONE_STATUS } from '@/constants/constants';
 import { useDeleteMilestone, useRefetchMilestone } from '@/hooks/useMilestone';
 import * as I from '@/icons/Milestone';
 import { Item } from '@/styles/list';
-import { MilestoneType } from '@/types/milestoneTypes';
+import { IMilestone } from '@/types/milestoneTypes';
 import { getRelativeTime } from '@/utils/issue';
 
-type MilestoneItemProps = MilestoneType & {
+type MilestoneItemProps = IMilestone & {
   onEdit: () => void;
 };
 

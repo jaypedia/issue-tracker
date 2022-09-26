@@ -8,7 +8,7 @@ export interface MilestoneApiData {
 export interface MilestoneStatusData {
   milestoneStatus: MilestoneStatus;
 }
-export interface MilestoneType extends MilestoneApiData {
+export interface IMilestone extends MilestoneApiData {
   id: number;
   openIssueCount: number;
   closedIssueCount: number;
@@ -16,8 +16,8 @@ export interface MilestoneType extends MilestoneApiData {
 }
 
 export interface MilestoneDataType {
-  allMileStonesCount: number;
-  openMileStonesCount: number;
-  closedMileStonesCount: number;
-  milestones: MilestoneType[];
+  allMilestoneCount: number;
+  openMilestoneCount: number;
+  closedMilestoneCount: number;
+  milestones: IMilestone[];
 }

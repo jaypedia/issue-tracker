@@ -5,12 +5,12 @@ import * as S from './style';
 import { getSideBarData } from '@/constants/sideBar';
 import { Assignee } from '@/types/issueTypes';
 import { ILabel } from '@/types/labelTypes';
-import { MilestoneType } from '@/types/milestoneTypes';
+import { IMilestone } from '@/types/milestoneTypes';
 
 type SideBarProps = {
   assignees?: Assignee[];
   labels?: ILabel[];
-  milestone?: MilestoneType[];
+  milestone?: IMilestone[];
   onClick: () => void;
 };
 

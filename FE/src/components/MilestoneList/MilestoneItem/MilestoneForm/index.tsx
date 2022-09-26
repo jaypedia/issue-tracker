@@ -9,10 +9,10 @@ import TextArea from '@/components/common/TextArea';
 import { FORM_TYPE } from '@/constants/constants';
 import { useRefetchMilestone } from '@/hooks/useMilestone';
 import useMovePage from '@/hooks/useMovePage';
-import { MilestoneType } from '@/types/milestoneTypes';
+import { IMilestone } from '@/types/milestoneTypes';
 
 type MilestoneFormProps = {
-  data?: MilestoneType;
+  data?: IMilestone;
   type: 'edit' | 'create';
   onCancel?: () => void;
 };

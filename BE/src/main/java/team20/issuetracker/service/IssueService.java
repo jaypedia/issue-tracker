@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
-
 import team20.issuetracker.domain.assginee.Assignee;
 import team20.issuetracker.domain.assginee.AssigneeRepository;
 import team20.issuetracker.domain.comment.Comment;
@@ -63,7 +62,11 @@ public class IssueService {
         Issue newIssue = Issue.of(title, content, null);
         newIssue.addAssignees(assignees);
         newIssue.addLabels(labels);
-        return issueRepository.save(newIssue).getId();
+        Issue savedIssue = issueRepository.save(newIssue);
+        Member findMember = memberRepository.findByOauthId(savedIssue.getAuthorId())
+                .orElseThrow(() -> new CheckEntityException("해당 Member 는 존재하지 않습니다", HttpStatus.BAD_REQUEST));
+        savedIssue.addMember(findMember);
+        return savedIssue.getId();
 
     }
 

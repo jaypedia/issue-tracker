@@ -41,6 +41,7 @@ create table issue
     `status`     varchar(255),
     title        varchar(255),
     milestone_id bigint,
+    member_id    bigint,
     primary key (id)
 );
 
@@ -113,6 +114,11 @@ alter table issue
     add constraint issueMilestoneFK
         foreign key (milestone_id)
             references milestone (id);
+
+alter table issue
+    add constraint issueMemberFK
+        foreign key (member_id)
+            references `member` (id);
 
 
 alter table issue_assignee

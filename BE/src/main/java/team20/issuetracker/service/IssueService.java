@@ -75,23 +75,11 @@ public class IssueService {
     }
 
     @Transactional(readOnly = true)
-    public ResponseReadAllIssueDto findAllOpenIssue() {
+    public ResponseReadAllIssueDto findAllOpenAndCloseIssues(String issueStatus) {
         List<Issue> findIssues = issueRepository.findAll();
-        List<Issue> findOpenIssues = findIssues.stream()
-                .filter(issue -> issue.getStatus().equals(IssueStatus.OPEN))
-                .collect(Collectors.toList());
+        List<Issue> findIssueByIssueStatus = filterIssueStatus(findIssues, issueStatus);
 
-        return getResponseReadAllIssueDto(findOpenIssues, findIssues);
-    }
-
-    @Transactional(readOnly = true)
-    public ResponseReadAllIssueDto findAllCloseIssue() {
-        List<Issue> findIssues = issueRepository.findAll();
-        List<Issue> findCloseIssues = findIssues.stream()
-                .filter(issue -> issue.getStatus().equals(IssueStatus.CLOSED))
-                .collect(Collectors.toList());
-
-        return getResponseReadAllIssueDto(findCloseIssues, findIssues);
+        return getResponseReadAllIssueDto(findIssueByIssueStatus, findIssues);
     }
 
     @Transactional(readOnly = true)

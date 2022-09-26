@@ -41,18 +41,11 @@ public class IssueController {
         return ResponseEntity.ok(responseIssueDtos);
     }
 
-    @GetMapping("/open")
-    public ResponseEntity<ResponseReadAllIssueDto> readOpenIssue() {
-        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.findAllOpenIssue();
+    @GetMapping(params = "is")
+    public ResponseEntity<ResponseReadAllIssueDto> readOpenAndClosedIssues(@RequestParam("is") String status) {
+        ResponseReadAllIssueDto findOpenAndCloseIssues = issueService.findAllOpenAndCloseIssues(status);
 
-        return ResponseEntity.ok(responseReadAllIssueDto);
-    }
-
-    @GetMapping("/close")
-    public ResponseEntity<ResponseReadAllIssueDto> readCloseIssue() {
-        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.findAllCloseIssue();
-
-        return ResponseEntity.ok(responseReadAllIssueDto);
+        return ResponseEntity.ok(findOpenAndCloseIssues);
     }
 
     @GetMapping(params = "title")

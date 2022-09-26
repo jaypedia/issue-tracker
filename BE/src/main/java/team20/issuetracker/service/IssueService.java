@@ -19,8 +19,6 @@ import team20.issuetracker.domain.issue.IssueRepository;
 import team20.issuetracker.domain.issue.IssueStatus;
 import team20.issuetracker.domain.label.Label;
 import team20.issuetracker.domain.label.LabelRepository;
-import team20.issuetracker.domain.member.Member;
-import team20.issuetracker.domain.member.MemberRepository;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
 import team20.issuetracker.exception.CheckEntityException;
@@ -39,7 +37,6 @@ public class IssueService {
     private final LabelRepository labelRepository;
     private final CommentRepository commentRepository;
     private final IssueAssigneeRepository issueAssigneeRepository;
-    private final MemberRepository memberRepository;
 
     @Transactional
     public Long save(RequestSaveIssueDto requestSaveIssueDto) {
@@ -62,11 +59,7 @@ public class IssueService {
         Issue newIssue = Issue.of(title, content, null);
         newIssue.addAssignees(assignees);
         newIssue.addLabels(labels);
-        Issue savedIssue = issueRepository.save(newIssue);
-        Member findMember = memberRepository.findByOauthId(savedIssue.getAuthorId())
-                .orElseThrow(() -> new CheckEntityException("해당 Member 는 존재하지 않습니다", HttpStatus.BAD_REQUEST));
-        savedIssue.addMember(findMember);
-        return savedIssue.getId();
+        return issueRepository.save(newIssue).getId();
 
     }
 
@@ -152,9 +145,9 @@ public class IssueService {
                 .collect(Collectors.toList());
 
         List<Issue> findAllIssuesByMyComment = comments.stream()
-            .map(Comment::getIssue)
-            .distinct()
-            .collect(Collectors.toList());
+                .map(Comment::getIssue)
+                .distinct()
+                .collect(Collectors.toList());
 
         return getResponseReadAllIssueDto(findAllIssuesByMyComment);
     }
@@ -166,13 +159,13 @@ public class IssueService {
                 .collect(Collectors.toList());
 
         List<Issue> findIssues = comments.stream()
-            .map(Comment::getIssue)
-            .distinct()
-            .collect(Collectors.toList());
+                .map(Comment::getIssue)
+                .distinct()
+                .collect(Collectors.toList());
 
         List<Issue> findIssueByIssueStatus = filterIssueStatus(findIssues, issueStatus);
 
-        return getResponseReadAllIssueDto(findIssueByIssueStatus ,findIssues);
+        return getResponseReadAllIssueDto(findIssueByIssueStatus, findIssues);
     }
 
     @Transactional(readOnly = true)
@@ -181,10 +174,7 @@ public class IssueService {
         Issue findIssue = issueRepository.findById(id)
                 .orElseThrow(() -> new CheckEntityException("해당 Issue 는 존재하지 않습니다", HttpStatus.BAD_REQUEST));
 
-        Member findMember = memberRepository.findByOauthId(findIssue.getAuthorId())
-                .orElseThrow(() -> new CheckEntityException("해당 Member 는 존재하지 않습니다", HttpStatus.BAD_REQUEST));
-
-        return ResponseIssueDto.of(findIssue, findMember);
+        return ResponseIssueDto.of(findIssue);
     }
 
     @Transactional

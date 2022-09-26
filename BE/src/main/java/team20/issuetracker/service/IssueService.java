@@ -19,6 +19,8 @@ import team20.issuetracker.domain.issue.IssueRepository;
 import team20.issuetracker.domain.issue.IssueStatus;
 import team20.issuetracker.domain.label.Label;
 import team20.issuetracker.domain.label.LabelRepository;
+import team20.issuetracker.domain.member.Member;
+import team20.issuetracker.domain.member.MemberRepository;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
 import team20.issuetracker.exception.CheckEntityException;
@@ -37,6 +39,7 @@ public class IssueService {
     private final LabelRepository labelRepository;
     private final CommentRepository commentRepository;
     private final IssueAssigneeRepository issueAssigneeRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
     public Long save(RequestSaveIssueDto requestSaveIssueDto) {
@@ -51,15 +54,12 @@ public class IssueService {
             Milestone milestone = milestoneRepository.getReferenceById(requestSaveIssueDto.getMilestoneIds().get(0));
             Issue newIssue = Issue.of(title, content, milestone);
             milestone.updateIssue(newIssue);
-            newIssue.addAssignees(assignees);
-            newIssue.addLabels(labels);
-            return issueRepository.save(newIssue).getId();
+            Issue savedIssue = memberUpdate(assignees, labels, newIssue);
+            return savedIssue.getId();
         }
-
         Issue newIssue = Issue.of(title, content, null);
-        newIssue.addAssignees(assignees);
-        newIssue.addLabels(labels);
-        return issueRepository.save(newIssue).getId();
+        Issue savedIssue = memberUpdate(assignees, labels, newIssue);
+        return savedIssue.getId();
 
     }
 
@@ -193,6 +193,16 @@ public class IssueService {
         findIssue.updateTitle(requestUpdateIssueTitleDto);
 
         return findIssue.getId();
+    }
+
+    private Issue memberUpdate(List<Assignee> assignees, List<Label> labels, Issue newIssue) {
+        newIssue.addAssignees(assignees);
+        newIssue.addLabels(labels);
+        Issue savedIssue = issueRepository.save(newIssue);
+        Member findMember = memberRepository.findByOauthId(savedIssue.getAuthorId())
+                .orElseThrow(() -> new CheckEntityException("해당 Member 는 존재하지 않습니다", HttpStatus.BAD_REQUEST));
+        savedIssue.addMember(findMember);
+        return savedIssue;
     }
 
     private ResponseReadAllIssueDto getResponseReadAllIssueDto(List<Issue> findAllIssues) {

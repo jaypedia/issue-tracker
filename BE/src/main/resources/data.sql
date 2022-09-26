@@ -1,4 +1,11 @@
 /*
+----- 기본 멤버 등록-----
+*/
+INSERT INTO issue.member
+    (email, name, oauth_id, profile_image_url, role)
+VALUES ('shoy1415@gmail.com', 'geombong', '78953393', 'https://avatars.githubusercontent.com/u/78953393?v=4', 'GUEST');
+
+/*
 ---- 기본 레이블 생성----
 */
 INSERT INTO issue.label
@@ -27,13 +34,10 @@ VALUES ('78953393', LOCALTIME, LOCALTIME, 'Make API', ADDDATE(LOCALTIME, 7), 'OP
 */
 INSERT INTO issue.issue
 (issue.issue.author_id, issue.issue.created_at, issue.issue.updated_at, issue.issue.content, issue.issue.status,
- issue.issue.title, issue.issue.milestone_id)
-VALUES ('78953393', LOCALTIME, LOCALTIME, '검봉 이슈 내용1', 'OPEN', '검봉 이슈1', 1),
-       ('78953393', LOCALTIME, LOCALTIME, '검봉 이슈 내용2', 'OPEN', '검봉 이슈2', 1),
-       ('78953393', LOCALTIME, LOCALTIME, '검봉 이슈 내용3', 'CLOSED', '검봉 이슈3', null),
-       ('85419343', LOCALTIME, LOCALTIME, '밀리 이슈 내용1', 'OPEN', '밀리 이슈 1', 2),
-       ('85419343', LOCALTIME, LOCALTIME, '밀리 이슈 내용2', 'OPEN', '밀리 이슈 2', 2),
-       ('85419343', LOCALTIME, LOCALTIME, '밀리 이슈 내용3', 'CLOSED', '밀리 이슈 3', null);
+ issue.issue.title, issue.issue.milestone_id, issue.issue.member_id)
+VALUES ('78953393', LOCALTIME, LOCALTIME, '검봉 이슈 내용1', 'OPEN', '검봉 이슈1', 1, 1),
+       ('78953393', LOCALTIME, LOCALTIME, '검봉 이슈 내용2', 'OPEN', '검봉 이슈2', 1, 1),
+       ('78953393', LOCALTIME, LOCALTIME, '검봉 이슈 내용3', 'CLOSED', '검봉 이슈3', null, 1);
 
 /*
 ---- 기본 코멘트 생성----
@@ -44,11 +48,7 @@ INSERT INTO issue.comment
 VALUES ('78953393', LOCALTIME, LOCALTIME, 'geombong', '안녕하세요 검봉 입니다. 테스트용 댓글 입니다1.',
         'https://avatars.githubusercontent.com/u/78953393?v=4', 1),
        ('78953393', LOCALTIME, LOCALTIME, 'geombong', '안녕하세요 검봉 입니다. 테스트용 댓글 입니다2.',
-        'https://avatars.githubusercontent.com/u/78953393?v=4', 2),
-       ('85419343', LOCALTIME, LOCALTIME, 'jaypedia', '안녕하세요 밀리 입니다. 테스트용 댓글 입니다1.',
-        'https://avatars.githubusercontent.com/u/85419343?v=4', 4),
-       ('85419343', LOCALTIME, LOCALTIME, 'jaypedia', '안녕하세요 밀리 입니다. 테스트용 댓글 입니다2.',
-        'https://avatars.githubusercontent.com/u/85419343?v=4', 5);
+        'https://avatars.githubusercontent.com/u/78953393?v=4', 2);
 
 /*
 ---- 기본 담당자 생성----
@@ -64,8 +64,7 @@ INSERT INTO issue.issue_assignee
     (assignee_id, issue_id)
 VALUES (1, 1),
        (1, 2),
-       (1, 3),
-       (1, 4);
+       (1, 3);
 
 /*
 ---- 기본 이슈 레이블 연결----
@@ -75,5 +74,4 @@ INSERT INTO issue.issue_label
 VALUES (1, 1),
        (1, 2),
        (2, 3),
-       (3, 4),
-       (4, 5);
+       (3, 4);

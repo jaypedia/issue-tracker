@@ -31,10 +31,9 @@ public class MilestoneController {
 
     @GetMapping
     public ResponseEntity<ResponseReadAllMilestonesDto> read() {
-        List<ResponseMilestoneDto> responseMilestoneDtos = milestoneService.findAll();
-        ResponseReadAllMilestonesDto responseReadAllMilestonesDto = milestoneService.getAllMilestoneData(responseMilestoneDtos);
+        ResponseReadAllMilestonesDto findAllMilestones = milestoneService.findAll();
 
-        return ResponseEntity.ok(responseReadAllMilestonesDto);
+        return ResponseEntity.ok(findAllMilestones);
     }
 
     @GetMapping(params = "is")

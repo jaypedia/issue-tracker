@@ -10,17 +10,14 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
-import team20.issuetracker.domain.issue.Issue;
-import team20.issuetracker.domain.issue.IssueStatus;
+
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
 import team20.issuetracker.domain.milestone.MilestoneStatus;
 import team20.issuetracker.exception.CheckEntityException;
 import team20.issuetracker.service.dto.request.RequestSaveMilestoneDto;
 import team20.issuetracker.service.dto.request.RequestUpdateMilestoneDto;
-import team20.issuetracker.service.dto.response.ResponseIssueDto;
 import team20.issuetracker.service.dto.response.ResponseMilestoneDto;
-import team20.issuetracker.service.dto.response.ResponseReadAllIssueDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllMilestonesDto;
 
 @RequiredArgsConstructor
@@ -41,11 +38,10 @@ public class MilestoneService {
     }
 
     @Transactional(readOnly = true)
-    public List<ResponseMilestoneDto> findAll() {
+    public ResponseReadAllMilestonesDto findAll() {
         List<Milestone> findMilestones = milestoneRepository.findAll();
 
-        return findMilestones.stream()
-                .map(ResponseMilestoneDto::from).collect(Collectors.toList());
+        return getResponseReadAllMilestoneDto(findMilestones);
     }
 
     @Transactional(readOnly = true)
@@ -82,26 +78,24 @@ public class MilestoneService {
         return ResponseMilestoneDto.from(findMilestone);
     }
 
-    public ResponseReadAllMilestonesDto getAllMilestoneData(List<ResponseMilestoneDto> milestones) {
-        int allMilestoneCount = milestones.size();
-        long openMilestonesCount = milestones.stream()
-                .filter(milestone -> milestone.getMilestoneStatus().equals(MilestoneStatus.OPEN.toString().toLowerCase()))
-                .count();
-        long closeMilestonesCount = milestones.stream()
-                .filter(milestone -> milestone.getMilestoneStatus().equals(MilestoneStatus.CLOSED.toString().toLowerCase()))
-                .count();
-
-        return ResponseReadAllMilestonesDto.of(allMilestoneCount, openMilestonesCount, closeMilestonesCount, milestones);
-    }
-
-    private List<Milestone> filterMilestoneStatus(List<Milestone> findMilestones, String issueStatus) {
+    private List<Milestone> filterMilestoneStatus(List<Milestone> findMilestones, String milestoneStatus) {
         return findMilestones.stream()
-            .filter(milestone -> milestone.getMilestoneStatus().toString().equals(issueStatus.toUpperCase()))
+            .filter(milestone -> milestone.getMilestoneStatus().toString().equals(milestoneStatus.toUpperCase()))
             .collect(Collectors.toList());
     }
 
-    private ResponseReadAllMilestonesDto getResponseReadAllMilestoneDto(List<Milestone> findIssueByMilestoneStatus, List<Milestone> findMilestones) {
-        List<ResponseMilestoneDto> responseMilestoneDtos = responseMilestoneDtos(findIssueByMilestoneStatus);
+    public ResponseReadAllMilestonesDto getResponseReadAllMilestoneDto(List<Milestone> findMilestones) {
+        List<ResponseMilestoneDto> responseMilestoneDtos = responseMilestoneDtos(findMilestones);
+
+        int allMilestoneCount = findMilestones.size();
+        long openMilestoneCount = getOpenMilestonesCountByFindAll(findMilestones);
+        long closeMilestoneCount = getCloseMilestonesCountByFindAll(findMilestones);
+
+        return ResponseReadAllMilestonesDto.of(allMilestoneCount, openMilestoneCount, closeMilestoneCount, responseMilestoneDtos);
+    }
+
+    private ResponseReadAllMilestonesDto getResponseReadAllMilestoneDto(List<Milestone> findByMilestoneStatus, List<Milestone> findMilestones) {
+        List<ResponseMilestoneDto> responseMilestoneDtos = responseMilestoneDtos(findByMilestoneStatus);
 
         int allMilestoneCount = findMilestones.size();
         long openMilestoneCount = getOpenMilestonesCountByFindAll(findMilestones);

@@ -12,7 +12,7 @@ public class ResponseReadAllMilestonesDto {
 
     private int allMilestoneCount;
     private long openMilestoneCount;
-    private long closeMilestoneCount;
+    private long closedMilestoneCount;
     private List<ResponseMilestoneDto> milestones;
 
     public static ResponseReadAllMilestonesDto of(int allMilestoneCount, long openMilestonesCount, long closeMilestonesCount, List<ResponseMilestoneDto> milestones) {

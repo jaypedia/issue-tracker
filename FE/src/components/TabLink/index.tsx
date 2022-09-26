@@ -24,7 +24,7 @@ const MilestoneTab = () => {
     <S.TabItem>
       <Milestone />
       <p>Milestones</p>
-      <S.Count>{data?.allMileStonesCount || 0}</S.Count>
+      <S.Count>{data?.allMilestoneCount || 0}</S.Count>
     </S.TabItem>
   );
 };

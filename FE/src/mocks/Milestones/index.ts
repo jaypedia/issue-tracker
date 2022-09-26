@@ -18,11 +18,11 @@ const deleteMilestone = (req, res, ctx) => {
     milestone => milestone.id !== Number(id),
   );
   mockMilestones.milestones = filteredMilestones;
-  mockMilestones.allMileStonesCount -= 1;
+  mockMilestones.allMilestoneCount -= 1;
   if (currentMilestone?.milestoneStatus === 'open') {
-    mockMilestones.openMileStonesCount -= 1;
+    mockMilestones.openMilestoneCount -= 1;
   } else {
-    mockMilestones.closedMileStonesCount -= 1;
+    mockMilestones.closedMilestoneCount -= 1;
   }
   return res(ctx.status(204));
 };
@@ -35,8 +35,8 @@ const postMilestone = (req, res, ctx) => {
     closedIssueCount: 0,
     milestoneStatus: 'open',
   });
-  mockMilestones.allMileStonesCount += 1;
-  mockMilestones.openMileStonesCount += 1;
+  mockMilestones.allMilestoneCount += 1;
+  mockMilestones.openMilestoneCount += 1;
   return res(ctx.status(201));
 };
 
@@ -49,11 +49,11 @@ const patchMilestone = (req, res, ctx) => {
   filteredMilestones.push({ ...currentMilestone, ...req.body });
   mockMilestones.milestones = filteredMilestones;
   if (req.body.milestoneStatus === 'closed') {
-    mockMilestones.closedMileStonesCount += 1;
-    mockMilestones.openMileStonesCount -= 1;
+    mockMilestones.closedMilestoneCount += 1;
+    mockMilestones.openMilestoneCount -= 1;
   } else if (req.body.milestoneStatus === 'open') {
-    mockMilestones.closedMileStonesCount -= 1;
-    mockMilestones.openMileStonesCount += 1;
+    mockMilestones.closedMilestoneCount -= 1;
+    mockMilestones.openMilestoneCount += 1;
   }
   return res(ctx.status(204));
 };

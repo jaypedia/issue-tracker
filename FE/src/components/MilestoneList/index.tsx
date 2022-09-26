@@ -12,7 +12,7 @@ type MilestoneListProps = {
 const MilestoneList = ({ data, onEdit }: MilestoneListProps) => {
   return (
     <>
-      <MilestoneListHeader open={data.openMileStonesCount} closed={data.closedMileStonesCount} />
+      <MilestoneListHeader open={data.openMilestoneCount} closed={data.closedMilestoneCount} />
       {data.milestones.map((props: MilestoneType) => (
         <MilestoneItem key={props.id} {...props} onEdit={() => onEdit(props)} />
       ))}

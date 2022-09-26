@@ -1,7 +1,7 @@
 export const mockMilestones = {
-  allMileStonesCount: 5,
-  openMileStonesCount: 3,
-  closedMileStonesCount: 2,
+  allMilestoneCount: 5,
+  openMilestoneCount: 3,
+  closedMilestoneCount: 2,
   milestones: [
     {
       id: 1,

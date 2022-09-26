@@ -23,6 +23,7 @@ import team20.issuetracker.domain.AuditingFields;
 import team20.issuetracker.domain.assginee.Assignee;
 import team20.issuetracker.domain.comment.Comment;
 import team20.issuetracker.domain.label.Label;
+import team20.issuetracker.domain.member.Member;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleDto;
 
@@ -40,6 +41,10 @@ public class Issue extends AuditingFields {
 
     @Enumerated(value = EnumType.STRING)
     private IssueStatus status = IssueStatus.OPEN;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "milestone_id")
@@ -89,5 +94,9 @@ public class Issue extends AuditingFields {
         for (Label label : labels) {
             this.issueLabels.add(IssueLabel.of(this, label));
         }
+    }
+
+    public void addMember(Member findMember) {
+        this.member = findMember;
     }
 }

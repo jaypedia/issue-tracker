@@ -23,6 +23,7 @@ import team20.issuetracker.domain.milestone.MilestoneStatus;
 import team20.issuetracker.service.dto.request.RequestSaveMilestoneDto;
 import team20.issuetracker.service.dto.request.RequestUpdateMilestoneDto;
 import team20.issuetracker.service.dto.response.ResponseMilestoneDto;
+import team20.issuetracker.service.dto.response.ResponseReadAllMilestonesDto;
 
 @DisplayName("비즈니스 로직 - 마일스톤")
 @ExtendWith(MockitoExtension.class)
@@ -43,13 +44,11 @@ class MilestoneServiceTest {
         given(milestoneRepository.findAll()).willReturn(List.of(milestone));
 
         //when
-        List<ResponseMilestoneDto> responseMilestoneDtos = sut.findAll();
+        ResponseReadAllMilestonesDto responseReadAllMilestonesDto = sut.findAll();
 
         //then
-        assertThat(responseMilestoneDtos)
-                .hasSize(1)
-                .first()
-                .hasFieldOrPropertyWithValue("title", responseMilestoneDtos.get(0).getTitle());
+        assertThat(responseReadAllMilestonesDto)
+                .hasFieldOrPropertyWithValue("title", responseReadAllMilestonesDto.getMilestones().get(0).getTitle());
         then(milestoneRepository).should().findAll();
     }
 

@@ -1,8 +1,7 @@
 package team20.issuetracker.domain.issue;
 
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -51,13 +50,13 @@ public class Issue extends AuditingFields {
     private Milestone milestone;
 
     @OneToMany(mappedBy = "issue", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<IssueAssignee> issueAssignees = new LinkedHashSet<>();
+    private List<IssueAssignee> issueAssignees = new ArrayList<>();
 
     @OneToMany(mappedBy = "issue", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Comment> comments = new LinkedHashSet<>();
+    private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "issue", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<IssueLabel> issueLabels = new LinkedHashSet<>();
+    private List<IssueLabel> issueLabels = new ArrayList<>();
 
     private Issue(String title, String content, Milestone milestone) {
         this.title = title;

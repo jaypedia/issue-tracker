@@ -1,8 +1,8 @@
 package team20.issuetracker.service.dto.response;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import lombok.AccessLevel;
@@ -24,16 +24,16 @@ public class ResponseIssueDto {
     private String content;
     private LocalDate createdAt;
     private String issueStatus;
-    private Set<ResponseMilestoneDto> milestones;
-    private Set<ResponseCommentDto> comments;
-    private Set<ResponseLabelDto> labels;
-    private Set<ResponseAssigneeDto> assignees;
+    private List<ResponseMilestoneDto> milestones;
+    private List<ResponseCommentDto> comments;
+    private List<ResponseLabelDto> labels;
+    private List<ResponseAssigneeDto> assignees;
 
     public static ResponseIssueDto of(Issue issue) {
-        Set<ResponseMilestoneDto> milestones = new HashSet<>();
+        List<ResponseMilestoneDto> milestones = new ArrayList<>();
 
         if (issue.getMilestone() != null) {
-            milestones = Set.of(ResponseMilestoneDto.from(issue.getMilestone()));
+            milestones = List.of(ResponseMilestoneDto.from(issue.getMilestone()));
         }
 
         return new ResponseIssueDto(
@@ -48,14 +48,14 @@ public class ResponseIssueDto {
                 milestones,
                 issue.getComments().stream()
                         .map(ResponseCommentDto::from)
-                        .collect(Collectors.toSet()),
+                        .collect(Collectors.toList()),
                 issue.getIssueLabels().stream()
                         .map(IssueLabel::getLabel)
                         .map(ResponseLabelDto::from)
-                        .collect(Collectors.toSet()),
+                        .collect(Collectors.toList()),
                 issue.getIssueAssignees().stream()
                         .map(IssueAssignee::getAssignee)
                         .map(ResponseAssigneeDto::from)
-                        .collect(Collectors.toSet()));
+                        .collect(Collectors.toList()));
     }
 }

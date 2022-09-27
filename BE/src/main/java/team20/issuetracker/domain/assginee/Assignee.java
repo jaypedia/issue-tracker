@@ -1,7 +1,7 @@
 package team20.issuetracker.domain.assginee;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,16 +19,14 @@ import team20.issuetracker.domain.issue.IssueAssignee;
 @Entity
 public class Assignee {
 
+    @OneToMany(mappedBy = "assignee")
+    public List<IssueAssignee> issueAssignees = new ArrayList<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String image;
     private String userId;
     private String authorId;
-
-    @OneToMany(mappedBy = "assignee")
-    public Set<IssueAssignee> issueAssignees = new HashSet<>();
 
     public Assignee(Long id, String image, String userId, String authorId) {
         this.id = id;

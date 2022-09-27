@@ -1,9 +1,14 @@
 package team20.issuetracker.domain.label;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,27 +27,23 @@ public class Label extends AuditingFields {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(nullable = false, length = 20)
     private String title;
     @Column(nullable = false, length = 7)
     private String textColor;
     @Column(nullable = false, length = 7)
     private String backgroundColor;
-
     @Column(length = 100)
     private String description;
-
     @OneToMany(mappedBy = "label")
-    public Set<IssueLabel> issueLabels = new HashSet<>();
-
+    public List<IssueLabel> issueLabels = new ArrayList<>();
 
     public static Label of(String title, String textColor, String backgroundColor, String description) {
-        return new Label(null, title, textColor, backgroundColor, description, Set.of());
+        return new Label(null, title, textColor, backgroundColor, description, List.of());
     }
 
     public static Label of(Long id, String title, String textColor, String backgroundColor, String description) {
-        return new Label(id, title, textColor, backgroundColor, description, Set.of());
+        return new Label(id, title, textColor, backgroundColor, description, List.of());
     }
 
     public void update(RequestLabelDto requestLabelDto) {

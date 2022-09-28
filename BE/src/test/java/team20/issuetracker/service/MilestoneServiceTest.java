@@ -2,10 +2,12 @@ package team20.issuetracker.service;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,8 +49,19 @@ class MilestoneServiceTest {
         ResponseReadAllMilestonesDto responseReadAllMilestonesDto = sut.findAll();
 
         //then
-        assertThat(responseReadAllMilestonesDto)
-                .hasFieldOrPropertyWithValue("title", responseReadAllMilestonesDto.getMilestones().get(0).getTitle());
+        assertThat(responseReadAllMilestonesDto.getMilestones())
+                .hasSize(1)
+                .first()
+                .hasFieldOrPropertyWithValue("title", requestSaveMilestoneDto.getTitle());
+
+        assertSoftly(test -> {
+                    test.assertThat(responseReadAllMilestonesDto.getMilestones())
+                            .hasSize(1)
+                            .first()
+                            .hasFieldOrPropertyWithValue("title", requestSaveMilestoneDto.getTitle());
+                    test.assertThat(responseReadAllMilestonesDto.getMilestones().get(0).getTitle())
+                            .isEqualTo(requestSaveMilestoneDto.getTitle());
+        });
         then(milestoneRepository).should().findAll();
     }
 

@@ -18,9 +18,9 @@ export const postLabel = async (labelData: LabelData) => {
   }
 };
 
-export const patchLabel = async (id: number, labelData: LabelData) => {
+export const editLabel = async (id: number, labelData: LabelData) => {
   try {
-    axios.patch(`/api/labels/${id}`, labelData);
+    axios.post(`/api/labels/${id}`, labelData);
   } catch (error) {
     console.log(error);
   }

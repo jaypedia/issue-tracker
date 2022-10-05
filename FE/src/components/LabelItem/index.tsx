@@ -3,8 +3,8 @@ import React from 'react';
 import LabelForm from './LabelForm';
 import * as S from './style';
 
-import Label from '@/components//common/Label';
 import Button from '@/components/common/Button';
+import Label from '@/components/common/Label';
 import useBoolean from '@/hooks/useBoolean';
 import { useDeleteLabel } from '@/hooks/useLabel';
 import { Item } from '@/styles/list';

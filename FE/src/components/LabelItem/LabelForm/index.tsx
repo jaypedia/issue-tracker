@@ -4,7 +4,7 @@ import ColorChangeButton from './ColorChangeButton';
 import * as S from './style';
 import { LabelFormProps } from './type';
 
-import { postLabel, patchLabel } from '@/apis/labelApi';
+import { postLabel, editLabel } from '@/apis/labelApi';
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import Label from '@/components/common/Label';
@@ -73,7 +73,7 @@ const LabelForm = ({
     }
 
     if (type === FORM_TYPE.edit && id) {
-      patchLabel(id, labelData);
+      editLabel(id, labelData);
       mutate();
       onCancel();
     }

@@ -21,7 +21,7 @@ const postLabel = (req, res, ctx) => {
   return res(ctx.status(201));
 };
 
-const patchLabel = (req, res, ctx) => {
+const editLabel = (req, res, ctx) => {
   const { id } = req.params;
   const filteredLabels = mockLabels.labels.filter(label => label.id !== Number(id));
   filteredLabels.push({ id: Number(id), ...req.body });
@@ -41,7 +41,7 @@ const labelsHandler = [
   rest.get(`/${API.PREFIX}/${API.LABELS}/:id`, getLabel),
   rest.delete(`/${API.PREFIX}/${API.LABELS}/:id`, deleteLabel),
   rest.post(`/${API.PREFIX}/${API.LABELS}`, postLabel),
-  rest.patch(`/${API.PREFIX}/${API.LABELS}/:id`, patchLabel),
+  rest.post(`/${API.PREFIX}/${API.LABELS}/:id`, editLabel),
 ];
 
 export default labelsHandler;

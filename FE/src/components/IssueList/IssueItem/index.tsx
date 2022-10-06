@@ -57,7 +57,7 @@ const IssueItem = ({ issue }: { issue: IssueType }) => {
     } else if (checkedItems.has(issueId)) {
       setIsChecked(true);
     }
-  }, [isAllChecked, checkedItems]);
+  }, [issueId, isAllChecked, checkedItems]);
 
   return (
     <Item>
@@ -77,11 +77,11 @@ const IssueItem = ({ issue }: { issue: IssueType }) => {
             />
             <S.LabelContainer>
               {labels.length > 0 &&
-                labels.map(({ id, title, backgroundColor, textColor }) => (
+                labels.map(({ id, title: labelTitle, backgroundColor, textColor }) => (
                   <Label
                     key={id}
                     size="small"
-                    title={title}
+                    title={labelTitle}
                     backgroundColor={backgroundColor}
                     textColor={textColor}
                   />

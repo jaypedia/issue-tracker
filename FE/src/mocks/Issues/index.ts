@@ -4,7 +4,10 @@ import { filterIssues, filterOpenIssues, filterClosedIssues } from './utils';
 
 import { API } from '@/constants/api';
 import { USER } from '@/constants/constants';
+import { mockAssignees } from '@/mocks/Assignees/data';
 import { mockIssues } from '@/mocks/Issues/data';
+import { mockLabels } from '@/mocks/Labels/data';
+import { mockMilestones } from '@/mocks/Milestones/data';
 
 const getLastIssueId = () => {
   const lastIndex = mockIssues.issues.length - 1;
@@ -37,6 +40,18 @@ const getIssueDetail: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
 };
 
 const postIssue = (req, res, ctx) => {
+  const labels = req.body.labelIds.map((id: number) =>
+    mockLabels.labels.find(label => label.id === id),
+  );
+
+  const assignees = req.body.assigneeIds.map((id: number) =>
+    mockAssignees.assignees.find(assignee => assignee.id === id),
+  );
+
+  const milestones = req.body.assigneeIds.map((id: number) =>
+    mockMilestones.milestones.find(milestone => milestone.id === id),
+  );
+
   mockIssues.issues.push({
     author: USER.name,
     image: USER.image,
@@ -47,7 +62,9 @@ const postIssue = (req, res, ctx) => {
     issueStatus: 'open',
     title: req.body.title,
     content: req.body.content,
-    ...req.body,
+    labels,
+    assignees,
+    milestones,
   });
   mockIssues.openIssueCount += 1;
   return res(ctx.status(201));

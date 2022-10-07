@@ -18,12 +18,17 @@ import javax.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import org.springframework.http.HttpStatus;
+
 import team20.issuetracker.domain.AuditingFields;
 import team20.issuetracker.domain.assginee.Assignee;
 import team20.issuetracker.domain.comment.Comment;
 import team20.issuetracker.domain.label.Label;
 import team20.issuetracker.domain.member.Member;
 import team20.issuetracker.domain.milestone.Milestone;
+import team20.issuetracker.exception.CheckEntityException;
+import team20.issuetracker.service.dto.request.RequestUpdateIssueContentDto;
 import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleDto;
 
 @Getter
@@ -81,6 +86,48 @@ public class Issue extends AuditingFields {
 
     public void updateTitle(RequestUpdateIssueTitleDto requestUpdateIssueTitleDto) {
         this.title = requestUpdateIssueTitleDto.getTitle();
+    }
+
+    public void updateContent(RequestUpdateIssueContentDto requestUpdateIssueContentDto) {
+        this.content = requestUpdateIssueContentDto.getContent();
+    }
+
+    public void updateMilestone(Milestone findMilestone) {
+        if (this.milestone != null && this.milestone.equals(findMilestone)) {
+            this.milestone = null;
+        } else {
+            this.milestone = findMilestone;
+        }
+    }
+
+    public void updateLabels(Label findLabel) {
+        Long labelId = findLabel.getId();
+
+        if (issueLabels.stream().anyMatch(issueLabel -> issueLabel.getLabel().getId().equals(labelId))) {
+            issueLabels.remove(
+                issueLabels.stream().filter(issueLabel -> issueLabel.getLabel().getId().equals(labelId))
+                    .findAny()
+                    .orElseThrow(() -> new CheckEntityException("해당 Label 은 존재하지 않습니다.", HttpStatus.BAD_REQUEST))
+            );
+
+        } else {
+            addLabels(List.of(findLabel));
+        }
+    }
+
+    public void updateAssignees(Assignee findAssignee) {
+        Long assigneeId = findAssignee.getId();
+
+        if (issueAssignees.stream().anyMatch(issueAssignee -> issueAssignee.getAssignee().getId().equals(assigneeId))) {
+            issueAssignees.remove(
+                issueAssignees.stream().filter(issueAssignee -> issueAssignee.getAssignee().getId().equals(assigneeId))
+                    .findAny()
+                    .orElseThrow(() -> new CheckEntityException("해당 Assignee 는 존재하지 않습니다.", HttpStatus.BAD_REQUEST))
+            );
+
+        } else {
+            addAssignees(List.of(findAssignee));
+        }
     }
 
     public void addAssignees(List<Assignee> assignees) {

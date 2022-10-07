@@ -25,9 +25,13 @@ import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
 import team20.issuetracker.exception.CheckEntityException;
 import team20.issuetracker.service.dto.request.RequestSaveIssueDto;
+import team20.issuetracker.service.dto.request.RequestUpdateIssueContentDto;
+import team20.issuetracker.service.dto.request.RequestUpdateIssueRelatedDto;
 import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleDto;
 import team20.issuetracker.service.dto.response.ResponseIssueDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllIssueDto;
+
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @Service
@@ -191,6 +195,45 @@ public class IssueService {
                 .orElseThrow(() -> new CheckEntityException("해당 Issue 는 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
 
         findIssue.updateTitle(requestUpdateIssueTitleDto);
+
+        return findIssue.getId();
+    }
+
+    @Transactional
+    public Long updateContent(Long id, RequestUpdateIssueContentDto requestUpdateIssueContentDto) {
+        Issue findIssue = issueRepository.findById(id)
+            .orElseThrow(() -> new CheckEntityException("해당 Issue 는 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
+
+        findIssue.updateContent(requestUpdateIssueContentDto);
+
+        return findIssue.getId();
+    }
+
+    @Transactional
+    public Long updateIssueRelated(Long id, String updateType, @Valid RequestUpdateIssueRelatedDto requestUpdateIssueRelatedDto) {
+        Issue findIssue = issueRepository.findById(id)
+            .orElseThrow(() -> new CheckEntityException("해당 Issue 는 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
+
+        switch(updateType) {
+            case "milestone":
+                Milestone findMilestone = milestoneRepository.findById(requestUpdateIssueRelatedDto.getId())
+                    .orElseThrow(() -> new CheckEntityException("해당 Milestone 은 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
+                findIssue.updateMilestone(findMilestone);
+                break;
+
+            case "labels":
+                Label findLabel = labelRepository.findById(requestUpdateIssueRelatedDto.getId())
+                    .orElseThrow(() -> new CheckEntityException("해당 Label 은 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
+                findIssue.updateLabels(findLabel);
+                break;
+
+            case "assignees":
+                Assignee findAssignee = assigneeRepository.findById(requestUpdateIssueRelatedDto.getId())
+                    .orElseThrow(() -> new CheckEntityException("해당 Assignee 는 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
+                findIssue.updateAssignees(findAssignee);
+                break;
+
+        }
 
         return findIssue.getId();
     }

@@ -37,7 +37,7 @@ create table issue
     author_id    varchar(255) not null,
     created_at   date         not null,
     updated_at   date         not null,
-    content      varchar(255),
+    content      varchar(10000),
     `status`     varchar(255),
     title        varchar(255),
     milestone_id bigint,

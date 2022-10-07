@@ -65,7 +65,7 @@ public class IssueService {
 
     @Transactional(readOnly = true)
     public ResponseReadAllIssueDto findAll() {
-        List<Issue> findIssues = issueRepository.findAll();
+        List<Issue> findIssues = issueRepository.findAllIssue();
 
         return getResponseReadAllIssueDto(findIssues);
     }

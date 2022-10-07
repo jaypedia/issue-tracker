@@ -29,7 +29,7 @@ import team20.issuetracker.domain.member.Member;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.exception.CheckEntityException;
 import team20.issuetracker.service.dto.request.RequestUpdateIssueContentDto;
-import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleDto;
+import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleWithContentDto;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -84,12 +84,9 @@ public class Issue extends AuditingFields {
         return new Issue(id, title, content, milestone);
     }
 
-    public void updateTitle(RequestUpdateIssueTitleDto requestUpdateIssueTitleDto) {
-        this.title = requestUpdateIssueTitleDto.getTitle();
-    }
-
-    public void updateContent(RequestUpdateIssueContentDto requestUpdateIssueContentDto) {
-        this.content = requestUpdateIssueContentDto.getContent();
+    public void updateTitleWithContent(RequestUpdateIssueTitleWithContentDto requestUpdateIssueTitleWithContentDto) {
+        this.title = requestUpdateIssueTitleWithContentDto.getTitle();
+        this.content = requestUpdateIssueTitleWithContentDto.getContent();
     }
 
     public void updateMilestone(Milestone findMilestone) {

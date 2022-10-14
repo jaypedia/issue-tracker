@@ -30,7 +30,7 @@ export const postIssue = async (issueData: PostIssueType) => {
   }
 };
 
-export const patchIssue = async (id: number, issueData: IssueEditDataType | CommentDataType) => {
+export const editIssue = async (id: number, issueData: IssueEditDataType) => {
   try {
     axios.post(`/api/issues/${id}`, issueData);
   } catch (error) {

@@ -1,4 +1,6 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 
 import * as S from './style';
 
@@ -9,16 +11,25 @@ import Loading from '@/components/common/Loading';
 import IssueDetailHeader from '@/components/IssueDetailHeader';
 import SideBar from '@/components/SideBar';
 import { useGetIssueDetail } from '@/hooks/useIssue';
+import useMovePage from '@/hooks/useMovePage';
+import { issueDetailState } from '@/stores/atoms/issueDetail';
 import { ColumnWrapper } from '@/styles/common';
 
 const IssueDetail = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetIssueDetail(Number(id));
-  const navigate = useNavigate();
+  const setIssueDetail = useSetRecoilState(issueDetailState);
+  const [goHome] = useMovePage('/');
   const handleDeleteClick = () => {
     deleteIssue(Number(id));
-    navigate('/');
+    goHome();
   };
+
+  useEffect(() => {
+    if (data) {
+      setIssueDetail({ title: data.title });
+    }
+  }, [data]);
 
   return (
     <ColumnWrapper>

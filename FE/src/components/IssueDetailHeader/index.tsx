@@ -6,9 +6,10 @@ import CustomLink from '@/components/common/CustomLink';
 import IssueDetailInfo from '@/components/IssueDetailInfo';
 import useBoolean from '@/hooks/useBoolean';
 import { Heading1, FlexBetween } from '@/styles/common';
+import { IssueType } from '@/types/issueTypes';
 
-const IssueDetailHeader = ({ data }) => {
-  const { id, title, issueStatus, author, createdAt, commentCount } = data;
+const IssueDetailHeader = ({ data }: { data: IssueType }) => {
+  const { title, issueStatus, author, createdAt, commentCount } = data;
   const { booleanState: isEditOpen, setTrue, setFalse } = useBoolean(false);
 
   const handleEditClick = () => {
@@ -18,7 +19,7 @@ const IssueDetailHeader = ({ data }) => {
   return (
     <S.IssueDetailHeaderWrapper>
       {isEditOpen ? (
-        <IssueTitleForm id={id} title={title} onCancle={setFalse} />
+        <IssueTitleForm data={data} onCancle={setFalse} />
       ) : (
         <FlexBetween>
           <Heading1>{title}</Heading1>

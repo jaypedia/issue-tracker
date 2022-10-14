@@ -2,11 +2,12 @@ import { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
-import { patchIssue, postComment } from '@/apis/issueApi';
+import { editIssue, postComment } from '@/apis/issueApi';
 import { CommentFormProps } from '@/components/CommentForm';
 import { COMMENT_FORM_TYPE, USER } from '@/constants/constants';
 import { useInput } from '@/hooks/useInput';
 import { useRefetchIssueDetail } from '@/hooks/useIssue';
+import { issueDetailState } from '@/stores/atoms/issueDetail';
 import { userState } from '@/stores/atoms/user';
 
 export const useComment = ({
@@ -18,6 +19,7 @@ export const useComment = ({
 }: CommentFormProps) => {
   const { id } = useParams();
   const userData = useRecoilValue(userState);
+  const issueDetail = useRecoilValue(issueDetailState);
   const commentRef = useRef<HTMLTextAreaElement>(null);
   const { mutate } = useRefetchIssueDetail(Number(id));
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -27,13 +29,14 @@ export const useComment = ({
     if (!commentRef.current) return;
     if (usage === COMMENT_FORM_TYPE.edit && onCancel) {
       const issueData = {
+        title: issueDetail.title,
         author,
         image,
         content: commentRef.current.value,
         createdAt: new Date().toString(),
       };
 
-      patchIssue(Number(id), issueData);
+      editIssue(Number(id), issueData);
       onCancel();
       mutate();
       return;

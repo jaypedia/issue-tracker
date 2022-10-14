@@ -2,21 +2,27 @@ import { useRef, useState } from 'react';
 
 import * as S from './style';
 
-import { patchIssue } from '@/apis/issueApi';
+import { editIssue } from '@/apis/issueApi';
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import { useRefetchIssueDetail } from '@/hooks/useIssue';
+import { IssueType } from '@/types/issueTypes';
 
-const IssueTitleForm = ({ id, title, onCancle }) => {
+const IssueTitleForm = ({ data, onCancle }: { data: IssueType; onCancle: () => void }) => {
   const titleRef = useRef<HTMLInputElement>(null);
-  const { mutate } = useRefetchIssueDetail(id);
+  const { mutate } = useRefetchIssueDetail(data.id);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const handleSaveClick = () => {
+    if (!titleRef.current) return;
     const issueData = {
       title: titleRef.current?.value,
+      author: data.author,
+      createdAt: data.createdAt,
+      image: data.image,
+      content: data.content,
     };
-    patchIssue(id, issueData);
+    editIssue(data.id, issueData);
     mutate();
     onCancle();
   };
@@ -37,7 +43,7 @@ const IssueTitleForm = ({ id, title, onCancle }) => {
         title="IssueTitle"
         type="text"
         name="Issue Title"
-        defaultValue={title}
+        defaultValue={data.title}
         ref={titleRef}
         onChange={handleInputChange}
       />

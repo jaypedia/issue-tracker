@@ -37,8 +37,8 @@ public class IssueController {
         return ResponseEntity.ok(issueId);
     }
 
-    @GetMapping(params = {"page", "is"})
-    public ResponseEntity<ResponseReadAllIssueDto> readOpenAndClosedIssues(@RequestParam("page") String page, @RequestParam("is") String status) {
+    @GetMapping(params = "is")
+    public ResponseEntity<ResponseReadAllIssueDto> readOpenAndClosedIssues(@RequestParam(value = "page", required = false, defaultValue = "1") String page, @RequestParam("is") String status) {
         PageRequest pageRequest = CustomPageable.defaultPage(page);
         ResponseReadAllIssueDto findOpenAndCloseIssues = issueService.findAllOpenAndCloseIssues(pageRequest, IssueStatus.valueOf(status.toUpperCase()));
         return ResponseEntity.ok(findOpenAndCloseIssues);

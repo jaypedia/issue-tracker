@@ -1,6 +1,7 @@
 package team20.issuetracker.domain.issue;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -15,4 +16,8 @@ public interface IssueRepository extends JpaRepository<Issue, Long> {
 
     @Query("select i from Issue i join fetch i.member m join fetch i.milestone mi")
     List<Issue> findAllIssue();
+
+    @Modifying(clearAutomatically = true)
+    @Query("update Issue i set i.milestone = null where i.milestone.id = :id")
+    void deleteMilestone(@Param("id") Long id);
 }

@@ -15,10 +15,10 @@ import javax.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
 import team20.issuetracker.service.IssueService;
+import team20.issuetracker.service.UpdateType;
 import team20.issuetracker.service.dto.request.RequestSaveIssueDto;
-import team20.issuetracker.service.dto.request.RequestUpdateIssueContentDto;
 import team20.issuetracker.service.dto.request.RequestUpdateIssueRelatedDto;
-import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleDto;
+import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleWithContentDto;
 import team20.issuetracker.service.dto.response.ResponseIssueDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllIssueDto;
 
@@ -136,20 +136,11 @@ public class IssueController {
         issueService.delete(id);
     }
 
-    // /id/title 고려
+
     @PostMapping("/{id}")
-    public ResponseEntity<Long> updateTitle(@PathVariable Long id,
-                                            @Valid @RequestBody RequestUpdateIssueTitleDto requestUpdateIssueTitleDto) {
-        Long updateIssueId = issueService.updateTitle(id, requestUpdateIssueTitleDto);
-
-        return ResponseEntity.ok(updateIssueId);
-    }
-
-    @PostMapping("/{id}/content")
-    public ResponseEntity<Long> updateContent(@PathVariable Long id,
-                                              @Valid @RequestBody RequestUpdateIssueContentDto requestUpdateIssueContentDto) {
-
-        Long updateIssueId = issueService.updateContent(id, requestUpdateIssueContentDto);
+    public ResponseEntity<Long> updateTitleWithContent(@PathVariable Long id,
+                                                       @Valid @RequestBody RequestUpdateIssueTitleWithContentDto requestUpdateIssueTitleWithContentDto) {
+        Long updateIssueId = issueService.updateTitleWithContent(id, requestUpdateIssueTitleWithContentDto);
 
         return ResponseEntity.ok(updateIssueId);
     }
@@ -157,7 +148,6 @@ public class IssueController {
     @PostMapping("/{id}/{updateType}")
     public ResponseEntity<Long> updateIssueRelated(@PathVariable Long id, @PathVariable String updateType,
                                                    @Valid @RequestBody RequestUpdateIssueRelatedDto requestUpdateIssueRelatedDto) {
-
         Long updateIssueId = issueService.updateIssueRelated(id, updateType, requestUpdateIssueRelatedDto);
 
         return ResponseEntity.ok(updateIssueId);

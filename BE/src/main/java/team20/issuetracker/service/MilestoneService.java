@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
 
+import team20.issuetracker.domain.issue.Issue;
+import team20.issuetracker.domain.issue.IssueRepository;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
 import team20.issuetracker.domain.milestone.MilestoneStatus;
@@ -25,6 +27,7 @@ import team20.issuetracker.service.dto.response.ResponseReadAllMilestonesDto;
 public class MilestoneService {
 
     public final MilestoneRepository milestoneRepository;
+    public final IssueRepository issueRepository;
 
     @Transactional
     public Long save(RequestSaveMilestoneDto requestSaveMilestoneDto) {
@@ -57,6 +60,7 @@ public class MilestoneService {
         Milestone findMilestone = milestoneRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("해당 Milestone 은 존재하지 않습니다."));
 
+        issueRepository.deleteMilestone(id);
         milestoneRepository.delete(findMilestone);
     }
 

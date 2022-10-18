@@ -38,6 +38,10 @@ const MilestoneItem = ({
       milestoneStatus === MILESTONE_STATUS.closed ? MILESTONE_STATUS.open : MILESTONE_STATUS.closed;
 
     const milestoneData = {
+      title,
+      dueDate,
+      updatedAt,
+      description,
       milestoneStatus: status,
     };
 

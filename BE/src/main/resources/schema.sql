@@ -97,7 +97,7 @@ create table milestone
     created_at       date         not null,
     updated_at       date         not null,
     `description`    varchar(800),
-    due_date         date         not null,
+    due_date         date,
     milestone_status varchar(255),
     title            varchar(50)  not null,
     primary key (id)

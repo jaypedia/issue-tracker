@@ -1435,7 +1435,9 @@ VALUES (78953393, '2022-10-14', '2022-10-16', 'geombong', 'Cras pellentesque vol
 */
 INSERT INTO issue.assignee
 (issue.assignee.author_id, issue.assignee.image, issue.assignee.user_id)
-VALUES ('78953393', 'https://avatars.githubusercontent.com/u/78953393?v=4', 'geombong');
+VALUES ('78953393', 'https://avatars.githubusercontent.com/u/78953393?v=4', 'geombong'),
+       ('79444040', 'https://avatars.githubusercontent.com/u/79444040?v=4', 'juni8453'),
+       ('85419343', 'https://avatars.githubusercontent.com/u/85419343?v=4', 'jaypedia');
 
 /*
 ---- 기본 이슈 담당자 연결----

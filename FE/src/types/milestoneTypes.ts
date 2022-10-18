@@ -5,14 +5,13 @@ export interface MilestoneApiData {
   updatedAt: string;
   description: string;
 }
-export interface MilestoneStatusData {
+export interface MilestoneEditData extends MilestoneApiData {
   milestoneStatus: MilestoneStatus;
 }
-export interface IMilestone extends MilestoneApiData {
+export interface IMilestone extends MilestoneEditData {
   id: number;
   openIssueCount: number;
   closedIssueCount: number;
-  milestoneStatus: string;
 }
 
 export interface MilestoneDataType {
@@ -20,4 +19,8 @@ export interface MilestoneDataType {
   openMilestoneCount: number;
   closedMilestoneCount: number;
   milestones: IMilestone[];
+}
+
+export interface ModifiedMilestone extends IMilestone {
+  name: string;
 }

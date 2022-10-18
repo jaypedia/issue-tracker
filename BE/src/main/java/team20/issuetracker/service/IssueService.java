@@ -31,6 +31,7 @@ import team20.issuetracker.exception.CheckEntityException;
 import team20.issuetracker.service.dto.request.RequestSaveIssueDto;
 import team20.issuetracker.service.dto.request.RequestUpdateIssueRelatedDto;
 import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleWithContentDto;
+import team20.issuetracker.service.dto.request.RequestUpdateManyIssueStatus;
 import team20.issuetracker.service.dto.response.ResponseIssueDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllIssueDto;
 
@@ -138,6 +139,13 @@ public class IssueService {
                 throw new CheckEntityException("해당 UpdateType 은 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
         return findIssue.getId();
+    }
+
+    @Transactional
+    public void updateManyIssueStatus(RequestUpdateManyIssueStatus requestUpdateManyIssueStatus) {
+        List<Long> issueIds = requestUpdateManyIssueStatus.getIds();
+        IssueStatus status = requestUpdateManyIssueStatus.getIssueStatus();
+        issueRepository.updateManyIssueStatus(issueIds, status);
     }
 
     private Issue associationMethodCall(List<Assignee> assignees, List<Label> labels, Issue newIssue) {

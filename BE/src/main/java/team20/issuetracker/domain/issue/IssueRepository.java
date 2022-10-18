@@ -26,4 +26,8 @@ public interface IssueRepository extends JpaRepository<Issue, Long> {
     @Modifying(clearAutomatically = true)
     @Query("update Issue i set i.milestone = null where i.milestone.id = :id")
     void deleteMilestone(@Param("id") Long id);
+
+    @Modifying(clearAutomatically = true)
+    @Query("update Issue i set i.status = :status where i.id IN :ids")
+    void updateManyIssueStatus(@Param("ids") List<Long> ids, @Param("status") IssueStatus status);
 }

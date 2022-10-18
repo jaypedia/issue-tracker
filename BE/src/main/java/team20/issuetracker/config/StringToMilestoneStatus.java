@@ -9,7 +9,7 @@ public class StringToMilestoneStatus implements Converter<String, MilestoneStatu
     @Override
     public MilestoneStatus convert(String status) {
         try {
-            return MilestoneStatus.valueOf(status);
+            return MilestoneStatus.valueOf(status.toUpperCase());
         } catch (IllegalArgumentException e) {
             return null;
         }

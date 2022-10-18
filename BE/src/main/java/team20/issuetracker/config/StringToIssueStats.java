@@ -9,7 +9,7 @@ public class StringToIssueStats implements Converter<String, IssueStatus> {
     @Override
     public IssueStatus convert(String status) {
         try {
-            return IssueStatus.valueOf(status);
+            return IssueStatus.valueOf(status.toUpperCase());
         } catch (IllegalArgumentException e) {
             return null;
         }

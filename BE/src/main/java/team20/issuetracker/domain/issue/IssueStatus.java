@@ -1,15 +1,12 @@
 package team20.issuetracker.domain.issue;
 
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 public enum IssueStatus {
-    OPEN("open"),
-    CLOSED("closed");
+    OPEN, CLOSED;
 
-    @Getter
-    private final String status;
-
-    IssueStatus(String status) {
-        this.status = status;
+    @JsonCreator
+    public static IssueStatus from(String status) {
+        return IssueStatus.valueOf(status.toUpperCase());
     }
 }

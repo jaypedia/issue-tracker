@@ -60,7 +60,11 @@ const MilestoneForm = ({ data, type, onCancel }: MilestoneFormProps) => {
     }
 
     if (type === FORM_TYPE.edit && data && onCancel) {
-      editMilestone(data.id, milestoneData);
+      const milestoneEditData = {
+        ...milestoneData,
+        milestoneStatus: data.milestoneStatus,
+      };
+      editMilestone(data.id, milestoneEditData);
       onCancel();
       mutate();
     }

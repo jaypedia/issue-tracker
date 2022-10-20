@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-import { IssueEditDataType, CommentDataType, PostIssueType } from '@/types/issueTypes';
+import {
+  ModifiedAssignee,
+  IssueEditDataType,
+  CommentDataType,
+  PostIssueType,
+} from '@/types/issueTypes';
 
 export const getFilteredIssues = async <T>(filter: string): Promise<T | undefined> => {
   try {
@@ -38,16 +43,24 @@ export const editIssue = async (id: number, issueData: IssueEditDataType) => {
   }
 };
 
-export const postComment = async (id: number, commentData: CommentDataType) => {
+export const postComment = async (commentData: CommentDataType, id?: number) => {
   try {
-    axios.post(`/api/issues/${id}/comment`, commentData);
+    axios.post(`/api/comments/${id}`, commentData);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteComment = async (commentId: number) => {
+  try {
+    axios.delete(`/api/comments/${commentId}`);
   } catch (error) {
     console.log(error);
   }
 };
 
 // TODO: sideBarData Type - assignees, labels, milestone
-export const editSideBar = async (id: number, indicator: string, sideBarData) => {
+export const editSideBar = async (id: number, indicator: string, sideBarData: ModifiedAssignee) => {
   try {
     axios.post(`/api/issues/${id}/${indicator}`, sideBarData);
   } catch (error) {

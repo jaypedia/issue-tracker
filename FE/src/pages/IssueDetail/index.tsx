@@ -12,13 +12,13 @@ import IssueDetailHeader from '@/components/IssueDetailHeader';
 import SideBar from '@/components/SideBar';
 import { useGetIssueDetail } from '@/hooks/useIssue';
 import useMovePage from '@/hooks/useMovePage';
-import { issueDetailState } from '@/stores/atoms/issueDetail';
+import { currentIssueState } from '@/stores/atoms/currentIssue';
 import { ColumnWrapper } from '@/styles/common';
 
 const IssueDetail = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetIssueDetail(Number(id));
-  const setIssueDetail = useSetRecoilState(issueDetailState);
+  const setCurrentIssue = useSetRecoilState(currentIssueState);
   const [goHome] = useMovePage('/');
   const handleDeleteClick = () => {
     deleteIssue(Number(id));
@@ -27,7 +27,14 @@ const IssueDetail = () => {
 
   useEffect(() => {
     if (data) {
-      setIssueDetail({ title: data.title });
+      const currentIssueData = {
+        title: data.title,
+        author: data.author,
+        createdAt: data.createdAt,
+        image: data.image,
+        content: data.content,
+      };
+      setCurrentIssue(currentIssueData);
     }
   }, [data]);
 
@@ -41,23 +48,28 @@ const IssueDetail = () => {
           <S.ContentsWrapper>
             <S.CommentsConatiner>
               <Comment
+                issueId={data.id}
                 issueAuthor={data.author}
                 imgUrl={data.image}
                 userId={data.author}
                 createdAt={data.createdAt}
                 description={data.content}
+                isIssueContent
               />
               {data.comments.map(({ id: commentId, author, image, content, createdAt }) => (
                 <Comment
                   key={commentId}
+                  issueId={data.id}
+                  commentId={commentId}
                   imgUrl={image}
                   createdAt={createdAt}
                   description={content}
                   userId={author}
-                  issueAuthor={data.author === author ? author : undefined}
+                  issueAuthor={data.author === author && author}
+                  isIssueContent={false}
                 />
               ))}
-              <CommentForm usage="comment" />
+              <CommentForm usage="comment" isIssueContent={false} />
             </S.CommentsConatiner>
             <SideBar
               assignees={data.assignees}

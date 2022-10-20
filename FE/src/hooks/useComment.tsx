@@ -3,58 +3,46 @@ import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 import { editIssue, postComment } from '@/apis/issueApi';
-import { CommentFormProps } from '@/components/CommentForm';
-import { COMMENT_FORM_TYPE, USER } from '@/constants/constants';
 import { useInput } from '@/hooks/useInput';
 import { useRefetchIssueDetail } from '@/hooks/useIssue';
-import { issueDetailState } from '@/stores/atoms/issueDetail';
+import { currentIssueState } from '@/stores/atoms/currentIssue';
 import { userState } from '@/stores/atoms/user';
 
-export const useComment = ({
-  usage,
-  onCancel,
-  content,
-  author = '',
-  image = '',
-}: CommentFormProps) => {
+export type useCommentProps = {
+  onCancel?: () => void;
+  content?: string;
+  isIssueContent: boolean;
+};
+
+export const useComment = ({ onCancel, content, isIssueContent }: useCommentProps) => {
   const { id } = useParams();
   const userData = useRecoilValue(userState);
-  const issueDetail = useRecoilValue(issueDetailState);
   const commentRef = useRef<HTMLTextAreaElement>(null);
   const { mutate } = useRefetchIssueDetail(Number(id));
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const { value: commentValue, setValue: setCommentValue } = useInput(content || '');
+  const currentIssueData = useRecoilValue(currentIssueState);
 
   const handleSubmit = () => {
     if (!commentRef.current) return;
-    if (usage === COMMENT_FORM_TYPE.edit && onCancel) {
-      const issueData = {
-        title: issueDetail.title,
-        author,
-        image,
-        content: commentRef.current.value,
-        createdAt: new Date().toString(),
-      };
 
+    if (onCancel && isIssueContent) {
+      const issueData = {
+        ...currentIssueData,
+        content: commentRef.current.value,
+      };
       editIssue(Number(id), issueData);
       onCancel();
-      mutate();
-      return;
-    }
-
-    if (usage === COMMENT_FORM_TYPE.comment) {
+    } else {
       const commentData = {
-        author: userData?.name || USER.name,
-        image: userData?.profileImageUrl || USER.image,
+        issueId: Number(id),
         content: commentRef.current.value,
-        createdAt: new Date().toString(),
       };
-
-      postComment(Number(id), commentData);
+      postComment(commentData);
       setCommentValue('');
       setIsButtonDisabled(true);
-      mutate();
     }
+    mutate();
   };
 
   const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

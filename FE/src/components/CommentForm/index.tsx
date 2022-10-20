@@ -4,13 +4,10 @@ import Button from '@/components/common/Button';
 import TextArea from '@/components/common/TextArea';
 import UserProfile from '@/components/common/UserProfile';
 import { COMMENT_FORM_TYPE } from '@/constants/constants';
-import { useComment } from '@/hooks/useComment';
+import { useComment, useCommentProps } from '@/hooks/useComment';
 
-export type CommentFormProps = {
+export type CommentFormProps = useCommentProps & {
   usage: 'edit' | 'comment';
-  onCancel?: () => void;
-  content?: string;
-  isIssueContent: boolean;
 };
 
 const CommentForm = ({ usage, onCancel, content, isIssueContent }: CommentFormProps) => {
@@ -21,7 +18,7 @@ const CommentForm = ({ usage, onCancel, content, isIssueContent }: CommentFormPr
     commentValue,
     commentRef,
     userData,
-  } = useComment({ usage, onCancel, content, isIssueContent });
+  } = useComment({ onCancel, content, isIssueContent });
   const buttonText = {
     edit: 'Update comment',
     comment: 'Comment',

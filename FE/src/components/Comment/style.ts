@@ -36,15 +36,15 @@ const Time = styled.p`
 `;
 
 const EditButton = styled.button`
-  padding: 5px;
-  margin-left: 20px;
-  ${FONT_MIXIN.xSmall(700)}
+  height: 22px;
+  line-height: 11px;
+  margin-left: 15px;
 `;
 
-const EmojiButton = styled.button`
-  padding: 5px;
+const DeleteButton = styled.button`
+  height: 22px;
+  line-height: 11px;
   margin-left: 15px;
-  font-size: 0;
 `;
 
 const CommentContents = styled.div`
@@ -59,6 +59,6 @@ export {
   UserId,
   Time,
   EditButton,
-  EmojiButton,
+  DeleteButton,
   CommentContents,
 };

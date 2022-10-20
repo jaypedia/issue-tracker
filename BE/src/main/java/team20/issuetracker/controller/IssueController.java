@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+
 import javax.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
@@ -22,9 +25,6 @@ import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleWithConten
 import team20.issuetracker.service.dto.request.RequestUpdateManyIssueStatus;
 import team20.issuetracker.service.dto.response.ResponseIssueDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllIssueDto;
-
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/issues")
@@ -79,5 +79,10 @@ public class IssueController {
         Long updateIssueId = issueService.updateIssueRelated(id, updateType, requestUpdateIssueRelatedDto);
 
         return ResponseEntity.ok(updateIssueId);
+    }
+
+    @PostMapping("/action")
+    public void updateManyIssueStatus(@RequestBody RequestUpdateManyIssueStatus requestUpdateManyIssueStatus) {
+        issueService.updateManyIssueStatus(requestUpdateManyIssueStatus);
     }
 }

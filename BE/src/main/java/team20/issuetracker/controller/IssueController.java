@@ -19,6 +19,7 @@ import team20.issuetracker.service.IssueService;
 import team20.issuetracker.service.dto.request.RequestSaveIssueDto;
 import team20.issuetracker.service.dto.request.RequestUpdateIssueRelatedDto;
 import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleWithContentDto;
+import team20.issuetracker.service.dto.request.RequestUpdateManyIssueStatus;
 import team20.issuetracker.service.dto.response.ResponseIssueDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllIssueDto;
 

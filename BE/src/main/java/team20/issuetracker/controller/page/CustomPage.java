@@ -8,13 +8,13 @@ import team20.issuetracker.service.dto.response.ResponseIssueDto;
 @Getter
 public class CustomPage {
 
-    private boolean first;
-    private boolean last;
-    private boolean hasNext;
-    private int totalPages;
-    private long totalElements;
-    private int page;
-    private int size;
+    private final boolean first;
+    private final boolean last;
+    private final boolean hasNext;
+    private final int totalPages;
+    private final long totalElements;
+    private final int page;
+    private final int size;
 
     private CustomPage(PageImpl<ResponseIssueDto> page) {
         this.first = page.isFirst();

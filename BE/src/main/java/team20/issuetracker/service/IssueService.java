@@ -7,18 +7,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
+
 import team20.issuetracker.domain.assginee.Assignee;
 import team20.issuetracker.domain.assginee.AssigneeRepository;
-import team20.issuetracker.domain.comment.CommentRepository;
 import team20.issuetracker.domain.issue.Issue;
-import team20.issuetracker.domain.issue.IssueAssigneeRepository;
 import team20.issuetracker.domain.issue.IssueRepository;
 import team20.issuetracker.domain.issue.IssueStatus;
 import team20.issuetracker.domain.label.Label;
@@ -43,8 +42,6 @@ public class IssueService {
     private final MilestoneRepository milestoneRepository;
     private final AssigneeRepository assigneeRepository;
     private final LabelRepository labelRepository;
-    private final CommentRepository commentRepository;
-    private final IssueAssigneeRepository issueAssigneeRepository;
     private final MemberRepository memberRepository;
 
     @Transactional
@@ -77,10 +74,21 @@ public class IssueService {
     }
 
     @Transactional(readOnly = true)
-    public ResponseReadAllIssueDto findAllOpenAndCloseIssues(PageRequest pageRequest, IssueStatus issueStatus) {
-        Page<Issue> findIssuesByStatus = issueRepository.findIssues(pageRequest, issueStatus);
-        Map<IssueStatus, Long> countByIssueStatusMap = countByIssueStatusCheck(findIssuesByStatus, issueStatus);
-        return getResponseReadAllIssueDto(findIssuesByStatus, countByIssueStatusMap);
+    public ResponseReadAllIssueDto findAllIssuesByCondition(String condition, PageRequest pageRequest) {
+        Map<String, String> conditionMap = new HashMap<>();
+        String[] conditionSplit = condition.split(", ");
+
+        for (int i = 0; i < conditionSplit.length; i++) {
+            String key = conditionSplit[i].split(":")[0];
+            String value = conditionSplit[i].split(":")[1];
+            conditionMap.put(key, value);
+        }
+
+        Page<Issue> allIssuesByCondition = issueRepository.findAllIssuesByCondition(conditionMap, pageRequest);
+        Page<ResponseIssueDto> responseIssueDtos = allIssuesByCondition.map(ResponseIssueDto::of);
+        Map<IssueStatus, Long> count = countByIssueStatusCheck(allIssuesByCondition, IssueStatus.valueOf(conditionMap.get("is").toUpperCase()));
+
+        return ResponseReadAllIssueDto.of(count.get(IssueStatus.OPEN),count.get(IssueStatus.CLOSED), responseIssueDtos);
     }
 
     private Map<IssueStatus, Long> countByIssueStatusCheck(Page<Issue> findIssueByStatus, IssueStatus issueStatus) {
@@ -158,118 +166,4 @@ public class IssueService {
         savedIssue.addMember(findMember);
         return savedIssue;
     }
-
-    private ResponseReadAllIssueDto getResponseReadAllIssueDto(Page<Issue> findAllIssueByIssueStatus, Map<IssueStatus, Long> countByIssueStatusMap) {
-        Page<ResponseIssueDto> responseIssueDtos = responseIssueDtos(findAllIssueByIssueStatus);
-        return ResponseReadAllIssueDto.of(countByIssueStatusMap.get(IssueStatus.OPEN), countByIssueStatusMap.get(IssueStatus.CLOSED), responseIssueDtos);
-    }
-
-    private Page<ResponseIssueDto> responseIssueDtos(Page<Issue> findIssues) {
-        return findIssues.map(ResponseIssueDto::of);
-    }
-
-//    private List<Issue> filterIssueStatus(List<Issue> findIssues, String issueStatus) {
-//        return findIssues.stream()
-//                .filter(issue -> issue.getStatus().toString().equals(issueStatus.toUpperCase()))
-//                .collect(Collectors.toList());
-//    }
-
-//    @Transactional(readOnly = true)
-//    public ResponseReadAllIssueDto findAssigneeByMeIssues(String oauthId) {
-//        List<IssueAssignee> findIssueAssignees = issueAssigneeRepository.findAllAssignees().stream()
-//                .filter(issueAssignee -> issueAssignee.getAssignee().getAuthorId().equals(oauthId))
-//                .collect(Collectors.toList());
-//
-//        List<Issue> findIssues = findIssueAssignees.stream()
-//                .map(IssueAssignee::getIssue)
-//                .collect(Collectors.toList());
-//
-//        return getResponseReadAllIssueDto(findIssues);
-//    }
-
-//    @Transactional(readOnly = true)
-//    public ResponseReadAllIssueDto findAssigneeByMeStatusIssues(String oauthId, String issueStatus) {
-//        List<IssueAssignee> findIssueAssignees = issueAssigneeRepository.findAllAssignees().stream()
-//                .filter(issueAssignee -> issueAssignee.getAssignee().getAuthorId().equals(oauthId))
-//                .collect(Collectors.toList());
-//
-//        List<Issue> findIssues = findIssueAssignees.stream()
-//                .map(IssueAssignee::getIssue)
-//                .collect(Collectors.toList());
-//
-//        List<Issue> findIssueByIssueStatus = filterIssueStatus(findIssues, issueStatus);
-//
-//        return getResponseReadAllIssueDto(findIssueByIssueStatus, findIssues);
-//    }
-
-//    @Transactional(readOnly = true)
-//    public ResponseReadAllIssueDto findAllMyIssues(String oauthId) {
-//        List<Issue> findAllMyIssues = issueRepository.findAllMyIssues(oauthId);
-//
-//        return getResponseReadAllIssueDto(findAllMyIssues);
-//    }
-
-//    @Transactional(readOnly = true)
-//    public ResponseReadAllIssueDto findAllMyStatusIssues(String oauthId, String issueStatus) {
-//        List<Issue> findAllMyIssues = issueRepository.findAllMyIssues(oauthId);
-//        List<Issue> findAllMyIssueByIssueStatus = filterIssueStatus(findAllMyIssues, issueStatus);
-//
-//        return getResponseReadAllIssueDto(findAllMyIssueByIssueStatus, findAllMyIssues);
-//    }
-
-//    @Transactional(readOnly = true)
-//    public ResponseReadAllIssueDto findAllSearchIssues(String title) {
-//        List<Issue> findSearchIssues = issueRepository.findAllIssuesByTitle(title);
-//
-//        return getResponseReadAllIssueDto(findSearchIssues);
-//    }
-
-//    @Transactional(readOnly = true)
-//    public ResponseReadAllIssueDto findAllSearchStatusIssues(String title, String issueStatus) {
-//        List<Issue> findSearchIssues = issueRepository.findAllIssuesByTitle(title);
-//        List<Issue> findAllIssuesByStatus = findSearchIssues.stream()
-//                .filter(issue -> issue.getStatus().toString().equals(issueStatus.toUpperCase()))
-//                .collect(Collectors.toList());
-//
-//        return getResponseReadAllIssueDto(findAllIssuesByStatus, findSearchIssues);
-//    }
-
-//    @Transactional(readOnly = true)
-//    public ResponseReadAllIssueDto filterCommentByMeIssue(String oauthId) {
-//        List<Comment> comments = commentRepository.findAll().stream()
-//                .filter(comment -> comment.getAuthorId().equals(oauthId))
-//                .collect(Collectors.toList());
-//
-//        List<Issue> findAllIssuesByMyComment = comments.stream()
-//                .map(Comment::getIssue)
-//                .distinct()
-//                .collect(Collectors.toList());
-//
-//        return getResponseReadAllIssueDto(findAllIssuesByMyComment);
-//    }
-
-//    @Transactional(readOnly = true)
-//    public ResponseReadAllIssueDto filterCommentByMeStatusIssue(String oauthId, String issueStatus) {
-//        List<Comment> comments = commentRepository.findAll().stream()
-//                .filter(comment -> comment.getAuthorId().equals(oauthId))
-//                .collect(Collectors.toList());
-//
-//        List<Issue> findIssues = comments.stream()
-//                .map(Comment::getIssue)
-//                .distinct()
-//                .collect(Collectors.toList());
-//
-//        List<Issue> findIssueByIssueStatus = filterIssueStatus(findIssues, issueStatus);
-//
-//        return getResponseReadAllIssueDto(findIssueByIssueStatus, findIssues);
-//    }
-
-//    private ResponseReadAllIssueDto getResponseReadAllIssueDto(List<Issue> findAllIssues) {
-//        List<ResponseIssueDto> responseIssueDtos = responseIssueDtos(findAllIssues);
-//
-//        long openIssueCount = getOpenIssuesCountByFindAll(findAllIssues);
-//        long closeIssueCount = getCloseIssuesCountByFindAll(findAllIssues);
-//
-//        return ResponseReadAllIssueDto.of(openIssueCount, closeIssueCount, responseIssueDtos);
-//    }
 }

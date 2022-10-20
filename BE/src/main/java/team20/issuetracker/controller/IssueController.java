@@ -15,7 +15,6 @@ import javax.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
 import team20.issuetracker.controller.page.CustomPageable;
-import team20.issuetracker.domain.issue.IssueStatus;
 import team20.issuetracker.service.IssueService;
 import team20.issuetracker.service.dto.request.RequestSaveIssueDto;
 import team20.issuetracker.service.dto.request.RequestUpdateIssueRelatedDto;
@@ -23,6 +22,9 @@ import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleWithConten
 import team20.issuetracker.service.dto.request.RequestUpdateManyIssueStatus;
 import team20.issuetracker.service.dto.response.ResponseIssueDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllIssueDto;
+
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/issues")
@@ -38,11 +40,16 @@ public class IssueController {
         return ResponseEntity.ok(issueId);
     }
 
-    @GetMapping(params = "is")
-    public ResponseEntity<ResponseReadAllIssueDto> readOpenAndClosedIssues(@RequestParam(value = "page", required = false, defaultValue = "1") String page, @RequestParam("is") IssueStatus status) {
+    @GetMapping(params = "q")
+    public ResponseEntity<ResponseReadAllIssueDto> readIssuesByCondition(
+        @RequestParam(value = "page", required = false, defaultValue = "1") String page,
+        @RequestParam("q") String condition){
+
         PageRequest pageRequest = CustomPageable.defaultPage(page);
-        ResponseReadAllIssueDto findOpenAndCloseIssues = issueService.findAllOpenAndCloseIssues(pageRequest, status);
-        return ResponseEntity.ok(findOpenAndCloseIssues);
+        String decode = URLDecoder.decode(condition, StandardCharsets.UTF_8);
+        ResponseReadAllIssueDto responseIssueDto = issueService.findAllIssuesByCondition(decode, pageRequest);
+
+        return ResponseEntity.ok(responseIssueDto);
     }
 
     @GetMapping("/{id}")
@@ -73,83 +80,4 @@ public class IssueController {
 
         return ResponseEntity.ok(updateIssueId);
     }
-
-    @PostMapping("/action")
-    public void updateManyIssueStatus(@RequestBody RequestUpdateManyIssueStatus requestUpdateManyIssueStatus) {
-        issueService.updateManyIssueStatus(requestUpdateManyIssueStatus);
-    }
-
-//    @GetMapping(params = "title")
-//    public ResponseEntity<ResponseReadAllIssueDto> searchIssuesByTitle(@RequestParam String title) {
-//        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.findAllSearchIssues(title);
-//
-//        return ResponseEntity.ok(responseReadAllIssueDto);
-//    }
-
-//    @GetMapping(params = {"title", "status"})
-//    public ResponseEntity<ResponseReadAllIssueDto> searchStatusIssuesByTitle(
-//            @RequestParam String title,
-//            @RequestParam String status) {
-//        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.findAllSearchStatusIssues(title, status);
-//
-//        return ResponseEntity.ok(responseReadAllIssueDto);
-//    }
-
-//    @GetMapping("/commented_by/me")
-//    public ResponseEntity<ResponseReadAllIssueDto> filterCommentByIssues(HttpServletRequest request) {
-//        String oauthId = request.getAttribute("oauthId").toString();
-//        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.filterCommentByMeIssue(oauthId);
-//
-//        return ResponseEntity.ok(responseReadAllIssueDto);
-//    }
-
-//    @GetMapping(value = "/commented_by/me", params = "status")
-//    public ResponseEntity<ResponseReadAllIssueDto> filterCommentByStatusIssues(
-//            HttpServletRequest request,
-//            @RequestParam String status) {
-//        String oauthId = request.getAttribute("oauthId").toString();
-//        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.filterCommentByMeStatusIssue(oauthId, status);
-//
-//        return ResponseEntity.ok(responseReadAllIssueDto);
-//    }
-
-//    @GetMapping("/created_by/me")
-//    public ResponseEntity<ResponseReadAllIssueDto> filterMyAllIssues(HttpServletRequest request) {
-//        String oauthId = request.getAttribute("oauthId").toString();
-//        ResponseReadAllIssueDto responseIssueDtos = issueService.findAllMyIssues(oauthId);
-//
-//        return ResponseEntity.ok(responseIssueDtos);
-//    }
-
-//    @GetMapping(value = "/created_by/me", params = "status")
-//    public ResponseEntity<ResponseReadAllIssueDto> filterMyAllStatusIssues(
-//            HttpServletRequest request,
-//            @RequestParam String status) {
-//
-//        String oauthId = request.getAttribute("oauthId").toString();
-//
-//        ResponseReadAllIssueDto responseIssueDtos = issueService.findAllMyStatusIssues(oauthId, status);
-//
-//        return ResponseEntity.ok(responseIssueDtos);
-//    }
-
-//    @GetMapping("assignee_by/me")
-//    public ResponseEntity<ResponseReadAllIssueDto> filterAssigneeByMeIssues(
-//            HttpServletRequest request) {
-//        String oauthId = request.getAttribute("oauthId").toString();
-//        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.findAssigneeByMeIssues(oauthId);
-//
-//        return ResponseEntity.ok(responseReadAllIssueDto);
-//    }
-
-//    @GetMapping(value = "assignee_by/me", params = "status")
-//    public ResponseEntity<ResponseReadAllIssueDto> filterAssigneeByMeStatusIssue(
-//            HttpServletRequest request,
-//            @RequestParam String status) {
-//
-//        String oauthId = request.getAttribute("oauthId").toString();
-//        ResponseReadAllIssueDto responseReadAllIssueDto = issueService.findAssigneeByMeStatusIssues(oauthId, status);
-//
-//        return ResponseEntity.ok(responseReadAllIssueDto);
-//    }
 }

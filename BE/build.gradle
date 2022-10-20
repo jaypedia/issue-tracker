@@ -73,7 +73,6 @@ jar {
     manifest {
         attributes('Main-Class': 'team20.issuetracker.IssuetrackerApplication')
     }
-    enabled = false
 }
 
 bootJar {

@@ -1,12 +1,16 @@
 package team20.issuetracker.domain.issue;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+
+import team20.issuetracker.controller.page.CustomPage;
 import team20.issuetracker.domain.assginee.QAssignee;
 import team20.issuetracker.domain.comment.QComment;
 import team20.issuetracker.domain.label.QLabel;
@@ -100,7 +104,25 @@ public class IssueRepositoryImpl implements IssueRepositoryCustom {
             .limit(pageRequest.getPageSize())
             .fetch();
 
-        return new PageImpl<>(findAllIssues);
+        Long count = queryFactory.
+                select(issue.count())
+                .from(issue)
+                .leftJoin(issue.member, member)
+                .leftJoin(issue.milestone, milestone)
+                .where(eqIssueStatus(conditionMap.get("is")))
+                .fetchOne();
+
+        count = count == null ? 0L : count;
+
+        return new PageImpl<>(findAllIssues, pageRequest, count);
+    }
+
+    private BooleanExpression eqIssueStatus(String status) {
+        if (!hasText(status)) {
+            return null;
+        }
+
+        return issue.status.eq(IssueStatus.valueOf(status.toUpperCase()));
     }
 }
 

@@ -12,9 +12,10 @@ export type useCommentProps = {
   onCancel?: () => void;
   content?: string;
   isIssueContent: boolean;
+  commentId?: number;
 };
 
-export const useComment = ({ onCancel, content, isIssueContent }: useCommentProps) => {
+export const useComment = ({ onCancel, content, isIssueContent, commentId }: useCommentProps) => {
   const { id } = useParams();
   const userData = useRecoilValue(userState);
   const commentRef = useRef<HTMLTextAreaElement>(null);
@@ -38,7 +39,7 @@ export const useComment = ({ onCancel, content, isIssueContent }: useCommentProp
         issueId: Number(id),
         content: commentRef.current.value,
       };
-      postComment(commentData);
+      postComment(commentData, commentId);
       setCommentValue('');
       setIsButtonDisabled(true);
     }

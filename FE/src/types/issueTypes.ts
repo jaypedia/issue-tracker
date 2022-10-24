@@ -1,5 +1,5 @@
 import { ILabel } from '@/types/labelTypes';
-import { MilestoneType } from '@/types/milestoneTypes';
+import { IMilestone } from '@/types/milestoneTypes';
 
 export type IssueStatusType = 'open' | 'closed';
 
@@ -11,15 +11,17 @@ export type Assignee = {
   image: string;
 };
 
+export type ModifiedAssignee = Assignee & {
+  name: string;
+};
+
 export type AssigneeDataType = {
   assignees: Assignee[];
 };
 
 export type CommentDataType = {
-  author: string;
-  image: string;
+  issueId: number;
   content: string;
-  createdAt: string;
 };
 
 type Comment = CommentDataType & {
@@ -37,7 +39,7 @@ export type IssueEditDataType = {
 export type IssueType = IssueEditDataType & {
   id: number;
   commentCount: number;
-  milestones: MilestoneType[] | [];
+  milestones: IMilestone[] | [];
   comments: Comment[] | [];
   labels: ILabel[] | [];
   assignees: Assignee[] | [];

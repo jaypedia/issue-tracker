@@ -10,7 +10,7 @@ export type CommentFormProps = useCommentProps & {
   usage: 'edit' | 'comment';
 };
 
-const CommentForm = ({ usage, onCancel, content, isIssueContent }: CommentFormProps) => {
+const CommentForm = ({ usage, onCancel, content, isIssueContent, commentId }: CommentFormProps) => {
   const {
     handleSubmit,
     handleTextAreaChange,
@@ -18,7 +18,7 @@ const CommentForm = ({ usage, onCancel, content, isIssueContent }: CommentFormPr
     commentValue,
     commentRef,
     userData,
-  } = useComment({ onCancel, content, isIssueContent });
+  } = useComment({ onCancel, content, isIssueContent, commentId });
   const buttonText = {
     edit: 'Update comment',
     comment: 'Comment',

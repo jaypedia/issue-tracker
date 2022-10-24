@@ -45,7 +45,11 @@ export const editIssue = async (id: number, issueData: IssueEditDataType) => {
 
 export const postComment = async (commentData: CommentDataType, id?: number) => {
   try {
-    axios.post(`/api/comments/${id}`, commentData);
+    if (id) {
+      axios.post(`/api/comments/${id}`, commentData);
+    } else {
+      axios.post(`/api/comments`, commentData);
+    }
   } catch (error) {
     console.log(error);
   }

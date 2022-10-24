@@ -54,6 +54,7 @@ const Comment = ({
           onCancel={setFalse}
           content={description}
           isIssueContent={isIssueContent}
+          commentId={commentId}
         />
       ) : (
         <S.CommentContainer>

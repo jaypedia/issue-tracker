@@ -67,7 +67,7 @@ export const changeFilterToInputQuery = (filter: IssueFilter, separator = ' ') =
     }
   }
 
-  return query;
+  return query.slice(0, -separator.length);
 };
 
 export const changeFilterToQueryString = (filter: IssueFilter) => {

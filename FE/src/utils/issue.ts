@@ -52,18 +52,18 @@ export const convertFirstLetterToUppercase = (word: string | undefined): string 
   return word.replace(/^[a-z]/, char => char.toUpperCase());
 };
 
-export const changeFilterToInputQuery = (filter: IssueFilter) => {
+export const changeFilterToInputQuery = (filter: IssueFilter, separator = ' ') => {
   let query = '';
   for (const [key, value] of Object.entries(filter)) {
     if (!value || !value.length) continue;
     if (key === QUERY_KEY.title) {
-      query += `${value} `;
+      query += `${value}${separator}`;
     } else if (key === QUERY_KEY.label) {
       value.forEach((v: string) => {
-        query += `${key}:${v} `;
+        query += `${key}:${v}${separator}`;
       });
     } else {
-      query += `${key}:${value} `;
+      query += `${key}:${value}${separator}`;
     }
   }
 
@@ -72,6 +72,7 @@ export const changeFilterToInputQuery = (filter: IssueFilter) => {
 
 export const changeFilterToQueryString = (filter: IssueFilter) => {
   let qs = '?q=';
-  qs += changeFilterToInputQuery(filter);
+  const separator = '|^&';
+  qs += changeFilterToInputQuery(filter, separator);
   return qs;
 };

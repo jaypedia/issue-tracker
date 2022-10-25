@@ -76,7 +76,7 @@ public class IssueService {
     @Transactional(readOnly = true)
     public ResponseReadAllIssueDto findAllIssuesByCondition(String condition, PageRequest pageRequest) {
         Map<String, String> conditionMap = new HashMap<>();
-        String[] conditionSplit = condition.split(", ");
+        String[] conditionSplit = condition.split("\\|\\^&");
 
         for (int i = 0; i < conditionSplit.length; i++) {
             String key = conditionSplit[i].split(":")[0];

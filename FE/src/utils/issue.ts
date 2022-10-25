@@ -74,5 +74,5 @@ export const changeFilterToQueryString = (filter: IssueFilter) => {
   let qs = '?q=';
   const separator = '|^&';
   qs += changeFilterToInputQuery(filter, separator);
-  return qs;
+  return encodeURI(qs);
 };

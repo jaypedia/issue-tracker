@@ -5,16 +5,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
-
 import team20.issuetracker.domain.assginee.Assignee;
 import team20.issuetracker.domain.assginee.AssigneeRepository;
 import team20.issuetracker.domain.issue.Issue;
@@ -75,18 +75,18 @@ public class IssueService {
 
     @Transactional(readOnly = true)
     public ResponseReadAllIssueDto findAllIssuesByCondition(String condition, PageRequest pageRequest) {
-        Map<String, String> conditionMap = new HashMap<>();
+        MultiValueMap<String, String> conditionMap = new LinkedMultiValueMap<>();
         String[] conditionSplit = condition.split("\\|\\^&");
 
         for (int i = 0; i < conditionSplit.length; i++) {
             String key = conditionSplit[i].split(":")[0];
             String value = conditionSplit[i].split(":")[1];
-            conditionMap.put(key, value);
+            conditionMap.add(key, value);
         }
 
         Page<Issue> allIssuesByCondition = issueRepository.findAllIssuesByCondition(conditionMap, pageRequest);
         Page<ResponseIssueDto> responseIssueDtos = allIssuesByCondition.map(ResponseIssueDto::of);
-        Map<IssueStatus, Long> count = countByIssueStatusCheck(allIssuesByCondition, IssueStatus.valueOf(conditionMap.get("is").toUpperCase()));
+        Map<IssueStatus, Long> count = countByIssueStatusCheck(allIssuesByCondition, IssueStatus.valueOf(conditionMap.get("is").get(0).toUpperCase()));
 
         return ResponseReadAllIssueDto.of(count.get(IssueStatus.OPEN),count.get(IssueStatus.CLOSED), responseIssueDtos);
     }

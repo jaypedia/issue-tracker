@@ -16,9 +16,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.util.MultiValueMap;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.EntityManager;
 
@@ -32,7 +32,7 @@ public class IssueRepositoryImpl implements IssueRepositoryCustom {
 
     // 정리
     @Override
-    public Page<Issue> findAllIssuesByCondition(Map<String, String> conditionMap, PageRequest pageRequest) {
+    public Page<Issue> findAllIssuesByCondition(MultiValueMap<String, String> conditionMap, PageRequest pageRequest) {
         QIssue issueSub = new QIssue("issueSub");
 
         List<Issue> findAllIssues = queryFactory
@@ -113,54 +113,54 @@ public class IssueRepositoryImpl implements IssueRepositoryCustom {
 //        }
     }
 
-    private BooleanExpression statusEq(Map<String, String> conditionMap) {
+    private BooleanExpression statusEq(MultiValueMap<String, String> conditionMap) {
         return conditionMap.get("is") != null ? issue.status.eq(
-                IssueStatus.valueOf(conditionMap.get("is").toUpperCase())
+                IssueStatus.valueOf(conditionMap.get("is").get(0).toUpperCase())
         ) : null;
     }
 
-    private BooleanExpression milestoneEq(Map<String, String> conditionMap) {
+    private BooleanExpression milestoneEq(MultiValueMap<String, String> conditionMap) {
         return conditionMap.get("milestone") != null ? issue.milestone.title.eq(
-                conditionMap.get("milestone")
+                conditionMap.get("milestone").get(0)
         ) : null;
     }
 
-    private BooleanExpression authorEq(Map<String, String> conditionMap) {
+    private BooleanExpression authorEq(MultiValueMap<String, String> conditionMap) {
         return conditionMap.get("author") != null ? member.name.eq(
-                conditionMap.get("author")
+                conditionMap.get("author").get(0)
         ) : null;
     }
 
-    private BooleanExpression labelEq(Map<String, String> conditionMap, QIssue issueSub) {
+    private BooleanExpression labelEq(MultiValueMap<String, String> conditionMap, QIssue issueSub) {
         return conditionMap.get("label") != null ? issue.id.in(
                 select(issueSub.id)
                         .from(issueSub)
                         .innerJoin(issueLabel).on(issueLabel.issue.id.eq(issueSub.id))
                         .innerJoin(label).on(issueLabel.label.id.eq(label.id))
-                        .where(label.title.eq(conditionMap.get("label")))
+                        .where(label.title.in(conditionMap.get("label")))
         ) : null;
     }
 
-    private BooleanExpression assigneeEq(Map<String, String> conditionMap, QIssue issueSub) {
+    private BooleanExpression assigneeEq(MultiValueMap<String, String> conditionMap, QIssue issueSub) {
         return conditionMap.get("assignee") != null ? issue.id.in(
                 select(issueSub.id)
                         .from(issueSub)
                         .innerJoin(issueAssignee).on(issueAssignee.issue.id.eq(issueSub.id))
                         .innerJoin(assignee).on(issueAssignee.assignee.id.eq(assignee.id))
-                        .where(assignee.userId.eq(conditionMap.get("assignee")))
+                        .where(assignee.userId.in(conditionMap.get("assignee")))
         ) : null;
     }
 
-    private BooleanExpression commentedEq(Map<String, String> conditionMap, QIssue issueSub) {
+    private BooleanExpression commentedEq(MultiValueMap<String, String> conditionMap, QIssue issueSub) {
         return conditionMap.get("commented") != null ? issue.id.in(
                 select(issueSub.id)
                         .from(issueSub)
                         .innerJoin(comment).on(issueSub.id.eq(comment.issue.id))
-                        .where(comment.author.eq(conditionMap.get("commented")))
+                        .where(comment.author.in(conditionMap.get("commented")))
         ) : null;
     }
 
-    private Long countQuery(Map<String, String> conditionMap) {
+    private Long countQuery(MultiValueMap<String, String> conditionMap) {
         Long count = queryFactory.
                 select(issue.count())
                 .from(issue)

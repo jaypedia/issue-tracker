@@ -10,12 +10,15 @@ import static team20.issuetracker.domain.label.QLabel.label;
 import static team20.issuetracker.domain.member.QMember.member;
 import static team20.issuetracker.domain.milestone.QMilestone.milestone;
 
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.util.MultiValueMap;
 
 import java.util.List;
@@ -52,6 +55,7 @@ public class IssueRepositoryImpl implements IssueRepositoryCustom {
                 )
                 .offset(pageRequest.getOffset())
                 .limit(pageRequest.getPageSize())
+                .orderBy(sort(pageRequest))
                 .fetch();
 
         Long count = countQuery(conditionMap);
@@ -111,6 +115,20 @@ public class IssueRepositoryImpl implements IssueRepositoryCustom {
 //                    .where(commentSub.author.eq(conditionMap.get("commented")))
 //            ));
 //        }
+    }
+
+    private OrderSpecifier<?> sort(PageRequest pageRequest) {
+        if (!pageRequest.getSort().isEmpty()) {
+            for (Sort.Order order : pageRequest.getSort()) {
+                Order direction = order.getDirection().isAscending() ? Order.ASC : Order.DESC;
+
+                if (order.getProperty().equals("id")) {
+                    return new OrderSpecifier<>(direction, issue.id);
+                }
+            }
+        }
+
+        return null;
     }
 
     private BooleanExpression statusEq(MultiValueMap<String, String> conditionMap) {

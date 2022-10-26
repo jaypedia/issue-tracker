@@ -10,8 +10,8 @@ import { getCookie, setCookie } from '@/utils/cookie';
 
 const getUserToken = async () => {
   const refreshToken = getCookie(REFRESH_TOKEN);
-  const response = await axios.get(`${process.env.OAUTH_URL_GITHUB}/maintain`, {
-    headers: { Authorization: `Bearer ${refreshToken}` },
+  const response = await axios.post(`${process.env.OAUTH_URL_GITHUB}/maintain`, {
+    refreshToken,
   });
   const data = await response.data;
 

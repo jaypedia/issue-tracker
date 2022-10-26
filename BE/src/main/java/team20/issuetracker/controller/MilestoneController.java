@@ -28,7 +28,7 @@ public class MilestoneController {
     private final MilestoneService milestoneService;
 
     @PostMapping
-    public ResponseEntity<Long> save(@RequestBody @Valid RequestSaveMilestoneDto requestSaveMilestoneDto, HttpServletRequest request) {
+    public ResponseEntity<Long> save(@RequestBody @Valid RequestSaveMilestoneDto requestSaveMilestoneDto) {
         Long milestoneId = milestoneService.save(requestSaveMilestoneDto);
 
         return ResponseEntity.ok(milestoneId);

@@ -25,13 +25,13 @@ public class OauthController {
         return ResponseEntity.ok().body(responseLoginDto);
     }
 
-    @GetMapping("/login/oauth/github/refresh")
+    @PostMapping("/login/oauth/github/refresh")
     public ResponseEntity<String> requestRefresh(@RequestBody RequestRefreshDto requestRefreshDto) {
         String newAccessToken = oauthService.checkRefreshToken(requestRefreshDto);
         return ResponseEntity.ok().body(newAccessToken);
     }
 
-    @GetMapping("/login/oauth/github/maintain")
+    @PostMapping("/login/oauth/github/maintain")
     public ResponseEntity<ResponseLoginDto> maintain(@RequestBody RequestMaintainDto requestMaintainDto) {
         String refreshToken = requestMaintainDto.getRefreshToken();
         ResponseLoginDto maintainUserInfo = oauthService.getMaintainUserInfo(refreshToken);

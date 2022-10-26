@@ -6,7 +6,7 @@ import org.springframework.data.domain.Sort.Direction;
 public class CustomPageable {
 
     private final int page;
-    private final int size = 25;
+    private final int size = 10;
     private final Direction direction = Direction.DESC;
     private final String sortType = "id";
 

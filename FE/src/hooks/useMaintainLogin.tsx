@@ -28,6 +28,7 @@ const useMaintainLogin = () => {
       setUserState({ name, email, profileImageUrl });
       setCookie(REFRESH_TOKEN, refreshToken, REFRESH_TOKEN_OPTIONS);
       axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+      navigate('/');
     } catch (error) {
       console.log(error);
       navigate('/login');

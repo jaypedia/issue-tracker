@@ -18,7 +18,7 @@ const getUserToken = async () => {
   return data;
 };
 
-const useMaintainLogin = () => {
+const useMaintainLogin = (path = '/login') => {
   const navigate = useNavigate();
   const setUserState = useSetRecoilState(userState);
 
@@ -28,6 +28,7 @@ const useMaintainLogin = () => {
       setUserState({ name, email, profileImageUrl });
       setCookie(REFRESH_TOKEN, refreshToken, REFRESH_TOKEN_OPTIONS);
       axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+      navigate(path);
     } catch (error) {
       console.log(error);
       navigate('/login');

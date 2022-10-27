@@ -21,7 +21,7 @@ export const Router = () => {
         <Route
           index
           element={
-            <PrivateRoute>
+            <PrivateRoute path="/">
               <Home />
             </PrivateRoute>
           }
@@ -29,7 +29,7 @@ export const Router = () => {
         <Route
           path="new-issue"
           element={
-            <PrivateRoute>
+            <PrivateRoute path="/new-issue">
               <NewIssue />
             </PrivateRoute>
           }
@@ -37,7 +37,7 @@ export const Router = () => {
         <Route
           path="labels"
           element={
-            <PrivateRoute>
+            <PrivateRoute path="/labels">
               <Labels />
             </PrivateRoute>
           }
@@ -45,7 +45,7 @@ export const Router = () => {
         <Route
           path="milestones"
           element={
-            <PrivateRoute>
+            <PrivateRoute path="/milestones">
               <Milestones />
             </PrivateRoute>
           }
@@ -53,23 +53,16 @@ export const Router = () => {
         <Route
           path="newMilestone"
           element={
-            <PrivateRoute>
+            <PrivateRoute path="/newMilestone">
               <NewMilestone />
             </PrivateRoute>
           }
         />
-        <Route
-          path="issue/:id"
-          element={
-            <PrivateRoute>
-              <IssueDetail />
-            </PrivateRoute>
-          }
-        />
+        <Route path="issue/:id" element={<IssueDetail />} />
         <Route
           path="my"
           element={
-            <PrivateRoute>
+            <PrivateRoute path="/my">
               <My />
             </PrivateRoute>
           }

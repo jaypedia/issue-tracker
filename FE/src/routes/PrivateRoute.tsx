@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 
 import { useIsLoggedIn } from '@/hooks/useIsLoggedIn';
-import useMovePage from '@/hooks/useMovePage';
+import useMaintainLogin from '@/hooks/useMaintainLogin';
 
-export const PrivateRoute = ({ children }: { children: JSX.Element }) => {
+export const PrivateRoute = ({ children, path }: { children: JSX.Element; path: string }) => {
   const isLoggedIn = useIsLoggedIn();
-  const [goLogin] = useMovePage('/login');
+  const mainTainLogin = useMaintainLogin(path);
 
   useEffect(() => {
     if (!isLoggedIn) {
-      goLogin();
+      mainTainLogin();
     }
   }, [useIsLoggedIn]);
 

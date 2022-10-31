@@ -1,6 +1,6 @@
 package team20.issuetracker.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -33,73 +33,104 @@ class LabelServiceTest {
 
     @DisplayName("레이블을 조회하면, 모든 레이블 리스트를 반환한다.")
     @Test
-    void givenFindAll_whenSearchingAllLabel_thenReturnsLabel() throws Exception {
-        //given
+    void 레이블_조회() throws Exception {
+        // given
         Label expected = createLabel(1L, "labelTitle1");
         given(labelRepository.findAll()).willReturn(List.of(expected));
 
-        //when
+        // when
         List<ResponseLabelDto> actual = sut.findAll().getLabels();
 
-        //then
+        // then
         assertThat(actual)
                 .hasSize(1)
                 .first()
                 .hasFieldOrPropertyWithValue("title", expected.getTitle());
+
         then(labelRepository).should().findAll();
     }
 
-    @DisplayName("레이블 정보를 입력하면, 해당 레이블을 수정한다.")
+    @DisplayName("수정할 레이블을 찾고 레이블 정보를 입력하면, 입력한 정보대로 해당 레이블을 수정한다.")
     @Test
-    void givenLabelInfo_whenUpdatingLabel_thenUpdatedLabel() throws Exception {
-        //given
-        Long labelId = 1L;
-        String oldTitle = "labelTitle1";
-        String updateTitle = "labelTitle2";
+    void 레이블_수정() throws Exception {
+        // given
+        Long labelId= 1L;
+        String oldTitle = "Old Title";
+        String updateTitle = "Update Title";
         Label label = createLabel(labelId, oldTitle);
-        RequestLabelDto dto = createRequestLabelDto(updateTitle);
-        given(labelRepository.findById(labelId)).willReturn(Optional.of(label));
+        RequestLabelDto updateData = createRequestLabelDto(updateTitle);
+        given(labelRepository.findById(label.getId())).willReturn(Optional.of(label));
 
-        //when
-        labelRepository.findById(labelId).orElseThrow(() -> {
-            throw new IllegalArgumentException("존재하지 않는 Label 입니다.");
-        }).update(dto);
+        // when
+        sut.update(label.getId(), updateData);
 
-        //then
+        // then
         assertThat(label.getTitle())
-                .isNotEqualTo(oldTitle)
-                .isEqualTo(updateTitle);
+            .isNotEqualTo(oldTitle)
+            .isEqualTo(updateTitle);
 
-        then(labelRepository).should().findById(labelId);
+        then(labelRepository).should().findById(label.getId());
     }
 
-    @DisplayName("레이블 정보를 입력하면, 레이블을 저장한다.")
+    @DisplayName("수정할 레이블을 찾을 수 없다면 예외를 발생시킨다.")
     @Test
-    void givenLabelInfo_whenSavingLabel_thenSavesLabel() throws Exception {
-        //given
-        Label tmpLabel = createLabel(1L, "1번 레이블");
-        RequestLabelDto requestLabelDto = createRequestLabelDto("1번 레이블");
-        given(labelRepository.save(any(Label.class))).willReturn(tmpLabel);
+    void 레이블_수정_실패() throws Exception {
+        // given
+        Long wrongLabelId = 2L;
+        String title = "Label Title";
+        RequestLabelDto dto = createRequestLabelDto(title);
+        given(labelRepository.findById(wrongLabelId)).willThrow(new IllegalArgumentException("존재하지 않는 Label 입니다."));
 
-        //when
-        sut.save(requestLabelDto);
+        // when
+        assertThatThrownBy(() -> sut.update(wrongLabelId, dto)).isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("존재하지 않는 Label 입니다.");
 
-        //then
+        // then
+        then(labelRepository).should().findById(wrongLabelId);
+    }
+
+    @DisplayName("RequestLabelDto 필드를 토대로 레이블 Entity 를 만들고, 레이블을 저장한다.")
+    @Test
+    void 레이블_저장() throws Exception {
+        // given
+        Label label = createLabel(1L, "1번 레이블");
+        RequestLabelDto dto = createRequestLabelDto("1번 레이블");
+        given(labelRepository.save(any(Label.class))).willReturn(label);
+
+        // when
+        sut.save(dto);
+
+        // then
         then(labelRepository).should().save(any(Label.class));
     }
 
     @DisplayName("레이블의 Id를 입력하면, 해당 레이블은 삭제된다.")
     @Test
-    void givenLabelId_whenDeletingLabel_thenDeletesLabel() throws Exception {
-        //given
+    void 레이블_삭제() throws Exception {
+        // given
         Long labelId = 1L;
         willDoNothing().given(labelRepository).deleteById(labelId);
 
-        //when
+        // when
         labelRepository.deleteById(labelId);
 
-        //then
+        // then
         then(labelRepository).should().deleteById(labelId);
+    }
+
+    @DisplayName("삭제할 레이블을 찾을 수 없다면 예외를 발생시킨다.")
+    @Test
+    void 레이블_삭제_실패() throws Exception {
+        // given
+        Long wrongLabelId = 2L;
+        given(labelRepository.findById(wrongLabelId)).willThrow(new IllegalArgumentException("존재하지 않는 Label 입니다."));
+
+        // when
+        assertThatThrownBy(() -> sut.delete(wrongLabelId)).isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("존재하지 않는 Label 입니다.");
+
+        // then
+        then(labelRepository).should().findById(wrongLabelId);
     }
 
     private RequestLabelDto createRequestLabelDto(String title) {

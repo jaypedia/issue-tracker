@@ -50,7 +50,16 @@ public class LabelService {
 
     @Transactional
     public void delete(Long id) {
+        labelRepository.findById(id).orElseThrow(() -> {
+            throw new IllegalArgumentException("존재하지 않는 Label 입니다.");
+        });
+
         labelRepository.deleteById(id);
     }
+
+//    @Transactional
+//    public void delete(Long id) {
+//        labelRepository.deleteById(id);
+//    }
 }
 

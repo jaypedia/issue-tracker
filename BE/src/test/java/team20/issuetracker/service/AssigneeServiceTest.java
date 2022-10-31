@@ -29,15 +29,15 @@ class AssigneeServiceTest {
 
     @DisplayName("담당자를 조회하면, 모든 담당자를 출력한다.")
     @Test
-    void givenFindAll_whenSearchingAssignees_thenReturnAssignees() throws Exception {
-        //given
+    void 담당자_조회() throws Exception {
+        // given
         Assignee assignee = createAssignee();
         given(assigneeRepository.findAll()).willReturn(List.of(assignee));
 
-        //when
+        // when
         ResponseAssigneesDto assigneesDto = sut.findAll();
 
-        //then
+        // then
         assertThat(assigneesDto.getAssignees())
                 .hasSize(1)
                 .first()

@@ -1,7 +1,6 @@
 package team20.issuetracker.service;
 
-
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
 
@@ -14,12 +13,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import team20.issuetracker.domain.issue.IssueRepository;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
 import team20.issuetracker.domain.milestone.MilestoneStatus;
+import team20.issuetracker.exception.CheckEntityException;
 import team20.issuetracker.service.dto.request.RequestSaveMilestoneDto;
 import team20.issuetracker.service.dto.request.RequestUpdateMilestoneDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllMilestonesDto;
@@ -90,6 +92,38 @@ class MilestoneServiceTest {
                 .isEqualTo(MilestoneStatus.CLOSED);
 
         then(milestoneRepository).should().findById(milestone.getId());
+    }
+
+    @DisplayName("수정할 마일스톤을 찾을 수 없다면 예외를 발생시킨다.")
+    @Test
+    void 마일스톤_수정_실패() throws Exception {
+        // given
+        Long wrongMilestoneId = 2L;
+        RequestUpdateMilestoneDto updateRequestDto = createRequestUpdateMilestoneDto();
+
+        given(milestoneRepository.findById(wrongMilestoneId)).willThrow(new CheckEntityException("해당 Milestone 은 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
+
+        // when
+        assertThatThrownBy(() -> sut.update(wrongMilestoneId, updateRequestDto)).isInstanceOf(CheckEntityException.class)
+            .hasMessageContaining("해당 Milestone 은 존재하지 않습니다.");
+
+        // then
+        then(milestoneRepository).should().findById(wrongMilestoneId);
+    }
+
+    @DisplayName("삭제할 마일스톤을 찾을 수 없다면 예외를 발생시킨다.")
+    @Test
+    void 마일스톤_삭제_실패() throws Exception {
+        // given
+        Long wrongMilestoneId = 2L;
+        given(milestoneRepository.findById(wrongMilestoneId)).willThrow(new CheckEntityException("해당 Milestone 은 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
+
+        // when
+        assertThatThrownBy(() -> sut.delete(wrongMilestoneId)).isInstanceOf(CheckEntityException.class)
+            .hasMessageContaining("해당 Milestone 은 존재하지 않습니다.");
+
+        // then
+        then(milestoneRepository).should().findById(wrongMilestoneId);
     }
 
     @DisplayName("마일스톤 아이디를 입력하면, 해당 마일스톤을 삭제한다.")

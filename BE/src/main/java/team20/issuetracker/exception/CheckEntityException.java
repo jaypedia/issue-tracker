@@ -10,4 +10,9 @@ public class CheckEntityException extends RuntimeException {
 
     private final String errorMessage;
     private final HttpStatus httpStatus;
+
+    @Override
+    public String getMessage() {
+        return errorMessage;
+    }
 }

@@ -2,10 +2,8 @@ package team20.issuetracker.service;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,6 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import team20.issuetracker.domain.issue.IssueRepository;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
 import team20.issuetracker.domain.milestone.MilestoneStatus;
@@ -35,9 +34,12 @@ class MilestoneServiceTest {
     @Mock
     private MilestoneRepository milestoneRepository;
 
+    @Mock
+    private IssueRepository issueRepository;
+
     @DisplayName("마일스톤을 조회하면, 모든 마일스톤을 출력한다.")
     @Test
-    void given_when_then() throws Exception {
+    void 마일스톤_전체조회() throws Exception {
         //given
         RequestSaveMilestoneDto requestSaveMilestoneDto = createRequestSaveMilestoneDto();
         Milestone milestone = createMilestone(requestSaveMilestoneDto);
@@ -52,25 +54,17 @@ class MilestoneServiceTest {
                 .first()
                 .hasFieldOrPropertyWithValue("title", requestSaveMilestoneDto.getTitle());
 
-        assertSoftly(test -> {
-                    test.assertThat(responseReadAllMilestonesDto.getMilestones())
-                            .hasSize(1)
-                            .first()
-                            .hasFieldOrPropertyWithValue("title", requestSaveMilestoneDto.getTitle());
-                    test.assertThat(responseReadAllMilestonesDto.getMilestones().get(0).getTitle())
-                            .isEqualTo(requestSaveMilestoneDto.getTitle());
-        });
         then(milestoneRepository).should().findAll();
     }
 
     @DisplayName("마일스톤 정보를 입력하면, 마일스톤을 저장한다.")
     @Test
-    void givenMilestoneInfo_whenSavingMilestone_thenSavedMilestone() throws Exception {
+    void 마일스톤_저장() throws Exception {
         //given
         RequestSaveMilestoneDto requestMilestoneDto = createRequestSaveMilestoneDto();
         Milestone milestone = createMilestone(requestMilestoneDto);
-
         given(milestoneRepository.save(any(Milestone.class))).willReturn(milestone);
+
         //when
         sut.save(requestMilestoneDto);
 
@@ -80,7 +74,7 @@ class MilestoneServiceTest {
 
     @DisplayName("마일스톤 정보를 입력하면, 해당 마일스톤을 수정한다.")
     @Test
-    void givenMilestoneInfo_whenUpdatingMilestone_thenUpdatedMilestone() throws Exception {
+    void 마일스톤_수정() throws Exception {
         //given
         RequestSaveMilestoneDto requestSaveMilestoneDto = createRequestSaveMilestoneDto();
         Milestone milestone = createMilestone(requestSaveMilestoneDto);
@@ -94,16 +88,18 @@ class MilestoneServiceTest {
         assertThat(requestUpdateMilestoneDto.getMilestoneStatus())
                 .isNotEqualTo(MilestoneStatus.OPEN)
                 .isEqualTo(MilestoneStatus.CLOSED);
+
         then(milestoneRepository).should().findById(milestone.getId());
     }
 
     @DisplayName("마일스톤 아이디를 입력하면, 해당 마일스톤을 삭제한다.")
     @Test
-    void givenMilestoneId_whenDeletingMilestone_thenDeletedMilestone() throws Exception {
+    void 마일스톤_삭제() throws Exception {
         //given
         RequestSaveMilestoneDto requestSaveMilestoneDto = createRequestSaveMilestoneDto();
         Milestone milestone = createMilestone(requestSaveMilestoneDto);
         given(milestoneRepository.findById(milestone.getId())).willReturn(Optional.of(milestone));
+        willDoNothing().given(issueRepository).deleteMilestone(milestone.getId());
 
         //when
         sut.delete(milestone.getId());
@@ -111,11 +107,12 @@ class MilestoneServiceTest {
         //then
         then(milestoneRepository).should().findById(milestone.getId());
         then(milestoneRepository).should().delete(milestone);
+        then(issueRepository).should().deleteMilestone(milestone.getId());
     }
 
     @DisplayName("마일스톤 아이디를 입력하면, 해당 마일스톤을 데이터를 출력한다.")
     @Test
-    void givenMilestoneId_whenSearchingMilestone_thenReturnMilestone() throws Exception {
+    void 마일스톤_상세조회() throws Exception {
         //given
         RequestSaveMilestoneDto requestSaveMilestoneDto = createRequestSaveMilestoneDto();
         Milestone milestone = createMilestone(requestSaveMilestoneDto);

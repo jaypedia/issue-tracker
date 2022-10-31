@@ -45,6 +45,10 @@ public class CommentService {
 
     @Transactional
     public void delete(Long id) {
+        commentRepository.findById(id).orElseThrow((() -> {
+            throw new NoSuchElementException("존재하지 않는 댓글 아이디입니다.");
+        }));
+
         commentRepository.deleteById(id);
     }
 }

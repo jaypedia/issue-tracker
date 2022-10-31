@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
 
-import team20.issuetracker.domain.issue.Issue;
 import team20.issuetracker.domain.issue.IssueRepository;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;

@@ -11,6 +11,7 @@ export const initialIssueStatus = {
   milestone: undefined,
   assignee: undefined,
   commentedBy: undefined,
+  page: 0,
 };
 
 export const issueStatusState = atom<IssueFilter>({

@@ -55,7 +55,7 @@ export const convertFirstLetterToUppercase = (word: string | undefined): string 
 export const changeFilterToInputQuery = (filter: IssueFilter, separator = ' ') => {
   let query = '';
   for (const [key, value] of Object.entries(filter)) {
-    if (!value || !value.length) continue;
+    if (!value || !value.length || key === 'page') continue;
     if (key === QUERY_KEY.title) {
       query += `${value}${separator}`;
     } else if (key === QUERY_KEY.label) {
@@ -73,5 +73,14 @@ export const changeFilterToInputQuery = (filter: IssueFilter, separator = ' ') =
 export const changeFilterToQueryString = (filter: IssueFilter) => {
   const separator = '|^&';
   const qs = changeFilterToInputQuery(filter, separator);
-  return `?q=${encodeURIComponent(qs)}`;
+  const filterQuery = `q=${encodeURIComponent(qs)}`;
+  const pageQuery = `page=${filter.page}`;
+
+  if (filter.page && qs) {
+    return `?${pageQuery}&${filterQuery}`;
+  }
+  if (filter.page) {
+    return `?${pageQuery}`;
+  }
+  return `?${filterQuery}`;
 };

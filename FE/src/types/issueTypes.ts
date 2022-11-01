@@ -45,10 +45,21 @@ export type IssueType = IssueEditDataType & {
   assignees: Assignee[] | [];
   issueStatus: IssueStatusType;
 };
+
+interface Pageable {
+  first: boolean;
+  hasNext: boolean;
+  last: boolean;
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+}
 export interface IssuesDataType {
   openIssueCount: number;
   closedIssueCount: number;
   issues: IssueType[] | [];
+  pageable: Pageable;
 }
 
 export interface IssueFilter {
@@ -59,6 +70,7 @@ export interface IssueFilter {
   milestone: string | undefined;
   assignee: string | undefined;
   commentedBy: string | undefined;
+  page: number;
 }
 
 export type PostIssueType = {

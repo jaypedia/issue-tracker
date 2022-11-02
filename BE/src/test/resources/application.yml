@@ -1,0 +1,13 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+  sql:
+    init:
+      mode: never
+
+jwt:
+  secretKey: key
+  refreshSecretKey: key
+  accessTokenExpiry: 10
+  refreshTokenExpiry: 10

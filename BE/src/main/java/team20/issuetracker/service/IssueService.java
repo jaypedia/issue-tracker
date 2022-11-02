@@ -38,8 +38,8 @@ import team20.issuetracker.service.dto.response.ResponseReadAllIssueDto;
 @RequiredArgsConstructor
 @Service
 public class IssueService {
-
     private final IssueRepository issueRepository;
+
     private final MilestoneRepository milestoneRepository;
     private final AssigneeRepository assigneeRepository;
     private final LabelRepository labelRepository;
@@ -52,18 +52,27 @@ public class IssueService {
         List<Assignee> assignees = assigneeRepository.findAllById(requestSaveIssueDto.getAssigneeIds());
         List<Label> labels = labelRepository.findAllById(requestSaveIssueDto.getLabelIds());
 
-        if (!requestSaveIssueDto.getMilestoneIds().isEmpty()) {
-            Milestone milestone = milestoneRepository.getReferenceById(requestSaveIssueDto.getMilestoneIds().get(0));
-            Issue newIssue = Issue.of(title, content, milestone);
-            milestone.updateIssue(newIssue);
-            Issue savedIssue = associationMethodCall(assignees, labels, newIssue);
+        if (requestSaveIssueDto.getMilestoneIds().isEmpty()) {
+            Issue newIssue = Issue.of(title, content, null);
+            Issue savedIssue = issueRepository.save(newIssue);
+            associationMethodCall(assignees, labels, savedIssue);
             return savedIssue.getId();
         }
 
-        Issue newIssue = Issue.of(title, content, null);
-        Issue savedIssue = associationMethodCall(assignees, labels, newIssue);
+        Milestone milestone = milestoneRepository.getReferenceById(requestSaveIssueDto.getMilestoneIds().get(0));
+        Issue newIssue = Issue.of(title, content, milestone);
+        milestone.updateIssue(newIssue);
+        Issue savedIssue = issueRepository.save(newIssue);
+        associationMethodCall(assignees, labels, savedIssue);
         return savedIssue.getId();
+    }
 
+    private void associationMethodCall(List<Assignee> assignees, List<Label> labels, Issue savedIssue) {
+        Member findMember = memberRepository.findByOauthId(savedIssue.getAuthorId())
+                .orElseThrow(() -> new CheckEntityException("해당 Member 는 존재하지 않습니다", HttpStatus.BAD_REQUEST));
+        savedIssue.addAssignees(assignees);
+        savedIssue.addLabels(labels);
+        savedIssue.addMember(findMember);
     }
 
     @Transactional(readOnly = true)
@@ -89,7 +98,7 @@ public class IssueService {
         Page<ResponseIssueDto> responseIssueDtos = allIssuesByCondition.map(ResponseIssueDto::of);
         Map<IssueStatus, Long> count = countByIssueCheck(allIssuesByCondition, conditionMap);
 
-        return ResponseReadAllIssueDto.of(count.get(IssueStatus.OPEN),count.get(IssueStatus.CLOSED), responseIssueDtos);
+        return ResponseReadAllIssueDto.of(count.get(IssueStatus.OPEN), count.get(IssueStatus.CLOSED), responseIssueDtos);
     }
 
     private Map<IssueStatus, Long> countByIssueCheck(Page<Issue> findIssueByCondition, MultiValueMap<String, String> conditionMap) {
@@ -166,16 +175,5 @@ public class IssueService {
         List<Long> issueIds = requestUpdateManyIssueStatus.getIds();
         IssueStatus status = requestUpdateManyIssueStatus.getIssueStatus();
         issueRepository.updateManyIssueStatus(issueIds, status);
-    }
-
-    private Issue associationMethodCall(List<Assignee> assignees, List<Label> labels, Issue newIssue) {
-        Issue savedIssue = issueRepository.save(newIssue);
-        Member findMember = memberRepository.findByOauthId(savedIssue.getAuthorId())
-                .orElseThrow(() -> new CheckEntityException("해당 Member 는 존재하지 않습니다", HttpStatus.BAD_REQUEST));
-
-        newIssue.addAssignees(assignees);
-        newIssue.addLabels(labels);
-        savedIssue.addMember(findMember);
-        return savedIssue;
     }
 }

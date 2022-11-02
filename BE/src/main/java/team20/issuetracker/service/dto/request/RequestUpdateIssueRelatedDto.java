@@ -2,6 +2,7 @@ package team20.issuetracker.service.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +15,12 @@ public class RequestUpdateIssueRelatedDto {
 
     @JsonCreator
     public RequestUpdateIssueRelatedDto(
-        @JsonProperty("id") Long id) {
+            @JsonProperty("id") Long id) {
 
         this.id = id;
+    }
+
+    public static RequestUpdateIssueRelatedDto from(Long id) {
+        return new RequestUpdateIssueRelatedDto(id);
     }
 }

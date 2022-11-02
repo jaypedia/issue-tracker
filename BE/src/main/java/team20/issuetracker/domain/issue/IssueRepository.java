@@ -9,9 +9,6 @@ import java.util.List;
 
 public interface IssueRepository extends JpaRepository<Issue, Long>, IssueRepositoryCustom {
 
-    @Query("select count(i) from Issue i")
-    long findByIssueCount();
-
     @Modifying(clearAutomatically = true)
     @Query("update Issue i set i.milestone = null where i.milestone.id = :id")
     void deleteMilestone(@Param("id") Long id);

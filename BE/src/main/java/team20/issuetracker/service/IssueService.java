@@ -15,6 +15,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
+
 import team20.issuetracker.domain.assginee.Assignee;
 import team20.issuetracker.domain.assginee.AssigneeRepository;
 import team20.issuetracker.domain.issue.Issue;
@@ -86,24 +87,35 @@ public class IssueService {
 
         Page<Issue> allIssuesByCondition = issueRepository.findAllIssuesByCondition(conditionMap, pageRequest);
         Page<ResponseIssueDto> responseIssueDtos = allIssuesByCondition.map(ResponseIssueDto::of);
-        Map<IssueStatus, Long> count = countByIssueStatusCheck(allIssuesByCondition, IssueStatus.valueOf(conditionMap.get("is").get(0).toUpperCase()));
+        Map<IssueStatus, Long> count = countByIssueCheck(allIssuesByCondition, conditionMap);
 
         return ResponseReadAllIssueDto.of(count.get(IssueStatus.OPEN),count.get(IssueStatus.CLOSED), responseIssueDtos);
     }
 
-    private Map<IssueStatus, Long> countByIssueStatusCheck(Page<Issue> findIssueByStatus, IssueStatus issueStatus) {
-        EnumMap<IssueStatus, Long> countByIssueStatusMap = new EnumMap<>(IssueStatus.class);
-        long totalIssueCount = issueRepository.findByIssueCount();
+    private Map<IssueStatus, Long> countByIssueCheck(Page<Issue> findIssueByCondition, MultiValueMap<String, String> conditionMap) {
+        EnumMap<IssueStatus, Long> countByIssueMap = new EnumMap<>(IssueStatus.class);
+        Long allIssueCount = issueRepository.allIssueCountQuery(conditionMap);
 
-        if (issueStatus.equals(IssueStatus.OPEN)) {
-            countByIssueStatusMap.put(IssueStatus.OPEN, findIssueByStatus.getTotalElements());
-            countByIssueStatusMap.put(IssueStatus.CLOSED, totalIssueCount - findIssueByStatus.getTotalElements());
-            return countByIssueStatusMap;
+        long openIssueCount;
+        long closedIssueCount;
+
+        if (conditionMap.get("is").get(0).toUpperCase().equals(IssueStatus.OPEN.name())) {
+            openIssueCount = findIssueByCondition.getTotalElements();
+            closedIssueCount = allIssueCount - openIssueCount;
+
+            countByIssueMap.put(IssueStatus.OPEN, openIssueCount);
+            countByIssueMap.put(IssueStatus.CLOSED, closedIssueCount);
+
+            return countByIssueMap;
         }
 
-        countByIssueStatusMap.put(IssueStatus.OPEN, totalIssueCount - findIssueByStatus.getTotalElements());
-        countByIssueStatusMap.put(IssueStatus.CLOSED, findIssueByStatus.getTotalElements());
-        return countByIssueStatusMap;
+        closedIssueCount = findIssueByCondition.getTotalElements();
+        openIssueCount = allIssueCount - closedIssueCount;
+
+        countByIssueMap.put(IssueStatus.OPEN, openIssueCount);
+        countByIssueMap.put(IssueStatus.CLOSED, closedIssueCount);
+
+        return countByIssueMap;
     }
 
     @Transactional

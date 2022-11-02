@@ -33,7 +33,6 @@ public class IssueRepositoryImpl implements IssueRepositoryCustom {
         this.queryFactory = new JPAQueryFactory(entityManager);
     }
 
-    // 정리
     @Override
     public Page<Issue> findAllIssuesByCondition(MultiValueMap<String, String> conditionMap, PageRequest pageRequest) {
         QIssue issueSub = new QIssue("issueSub");
@@ -58,77 +57,52 @@ public class IssueRepositoryImpl implements IssueRepositoryCustom {
                 .orderBy(sort(pageRequest))
                 .fetch();
 
-        Long count = countQuery(conditionMap);
+        Long count = countQueryByIssueStatus(conditionMap);
 
         return new PageImpl<>(findAllIssues, pageRequest, count);
-
-
-//        QIssueLabel issueLabelSub = new QIssueLabel("issueLabelSub");
-//        QIssueAssignee issueAssigneeSub = new QIssueAssignee("issueAssigneeSub");
-//
-//        QLabel labelSub = new QLabel("labelSub");
-//        QAssignee assigneeSub = new QAssignee("assignee");
-//        QComment commentSub = new QComment("commentSub");
-//
-//        BooleanBuilder builder = new BooleanBuilder();
-//
-//        if (hasText(conditionMap.get("is"))) {
-//            builder.and(issue.status.eq(IssueStatus.valueOf(conditionMap.get("is").toUpperCase())));
-//        }
-//
-//        if (hasText(conditionMap.get("milestone"))) {
-//            builder.and(issue.milestone.title.eq(conditionMap.get("milestone")));
-//        }
-//
-//        if (hasText(conditionMap.get("me"))) {
-//            builder.and(issue.member.name.eq(conditionMap.get("me")));
-//        }
-//
-//        if (hasText(conditionMap.get("label"))) {
-//            builder.and(issue.id.in(
-//                JPAExpressions
-//                    .select(issueSub.id)
-//                    .from(issueSub)
-//                    .innerJoin(issueLabelSub).on(issueLabelSub.issue.id.eq(issueSub.id))
-//                    .innerJoin(labelSub).on(issueLabelSub.label.id.eq(labelSub.id))
-//                    .where(labelSub.title.eq(conditionMap.get("label")))
-//            ));
-//        }
-//
-//        if (hasText(conditionMap.get("assignee"))) {
-//            builder.and(issue.id.in(
-//                JPAExpressions
-//                    .select(issueSub.id)
-//                    .from(issueSub)
-//                    .innerJoin(issueAssigneeSub).on(issueAssigneeSub.issue.id.eq(issueSub.id))
-//                    .innerJoin(assigneeSub).on(issueAssigneeSub.assignee.id.eq(assigneeSub.id))
-//                    .where(assigneeSub.userId.eq(conditionMap.get("assignee")))
-//            ));
-//        }
-//
-//        if (hasText(conditionMap.get("commented"))) {
-//            builder.and(issue.id.in(
-//                JPAExpressions
-//                    .select(issueSub.id)
-//                    .from(issueSub)
-//                    .innerJoin(commentSub).on(issueSub.id.eq(commentSub.issue.id))
-//                    .where(commentSub.author.eq(conditionMap.get("commented")))
-//            ));
-//        }
     }
 
-    private OrderSpecifier<?> sort(PageRequest pageRequest) {
-        if (!pageRequest.getSort().isEmpty()) {
-            for (Sort.Order order : pageRequest.getSort()) {
-                Order direction = order.getDirection().isAscending() ? Order.ASC : Order.DESC;
+    @Override
+    public Long countQueryByIssueStatus(MultiValueMap<String, String> conditionMap) {
+        QIssue issueSub = new QIssue("issueSub");
+        Long count = queryFactory.
+            select(issue.count())
+            .from(issue)
+            .leftJoin(issue.member, member)
+            .leftJoin(issue.milestone, milestone)
+            .where(
+                statusEq(conditionMap),
+                milestoneEq(conditionMap),
+                authorEq(conditionMap),
+                labelEq(conditionMap, issueSub),
+                assigneeEq(conditionMap, issueSub),
+                commentedEq(conditionMap, issueSub)
+            )
+            .fetchOne();
 
-                if (order.getProperty().equals("id")) {
-                    return new OrderSpecifier<>(direction, issue.id);
-                }
-            }
-        }
+        count = count == null ? 0L : count;
+        return count;
+    }
 
-        return null;
+    @Override
+    public Long allIssueCountQuery(MultiValueMap<String, String> conditionMap) {
+        QIssue issueSub = new QIssue("issueSub");
+        Long count = queryFactory.
+            select(issue.count())
+            .from(issue)
+            .leftJoin(issue.member, member)
+            .leftJoin(issue.milestone, milestone)
+            .where(
+                milestoneEq(conditionMap),
+                authorEq(conditionMap),
+                labelEq(conditionMap, issueSub),
+                assigneeEq(conditionMap, issueSub),
+                commentedEq(conditionMap, issueSub)
+            )
+            .fetchOne();
+
+        count = count == null ? 0L : count;
+        return count;
     }
 
     private BooleanExpression statusEq(MultiValueMap<String, String> conditionMap) {
@@ -178,97 +152,17 @@ public class IssueRepositoryImpl implements IssueRepositoryCustom {
         ) : null;
     }
 
-    private Long countQuery(MultiValueMap<String, String> conditionMap) {
-        Long count = queryFactory.
-                select(issue.count())
-                .from(issue)
-                .leftJoin(issue.member, member)
-                .leftJoin(issue.milestone, milestone)
-                .where(statusEq(conditionMap))
-                .fetchOne();
+    private OrderSpecifier<?> sort(PageRequest pageRequest) {
+        if (!pageRequest.getSort().isEmpty()) {
+            for (Sort.Order order : pageRequest.getSort()) {
+                Order direction = order.getDirection().isAscending() ? Order.ASC : Order.DESC;
 
-        count = count == null ? 0L : count;
-        return count;
+                if (order.getProperty().equals("id")) {
+                    return new OrderSpecifier<>(direction, issue.id);
+                }
+            }
+        }
+
+        return null;
     }
 }
-
-//    private BooleanExpression status(String status) {
-//        if (!hasText(status)) {
-//            return null;
-//        }
-//
-//        return issue.status.eq(IssueStatus.valueOf(status.toUpperCase()));
-//    }
-//
-//    private BooleanExpression milestone(String milestone) {
-//        if (!hasText(milestone)) {
-//            return null;
-//        }
-//
-//        return issue.milestone.title.eq(milestone);
-//    }
-//
-//    private BooleanExpression member(String me) {
-//        if (!hasText(me)) {
-//            return null;
-//        }
-//
-//        return member.name.eq(me);
-//    }
-//
-//    private BooleanExpression label(QLabel labelSub, String label) {
-//        if (!hasText(label)) {
-//            return null;
-//        }
-//
-//        return labelSub.title.eq(label);
-//    }
-//
-//    private BooleanExpression assignee(QAssignee assigneeSub, String assignee) {
-//        if (!hasText(assignee)) {
-//            return null;
-//        }
-//
-//        return assigneeSub.userId.eq(assignee);
-//    }
-//
-//    private BooleanExpression comment(QComment commentSub, String comment) {
-//        if (!hasText(comment)) {
-//            return null;
-//        }
-//
-//        return commentSub.author.eq(comment);
-//    }
-//}
-
-// status(conditionMap.get("is")),
-//                milestone(conditionMap.get("milestone")),
-//                member(conditionMap.get("me")),
-//                issue.id.in(
-//                    JPAExpressions
-//                        .select(issueSub.id)
-//                        .from(issueSub)
-//                        .innerJoin(issueLabelSub).on(issueLabelSub.issue.id.eq(issueSub.id))
-//                        .innerJoin(labelSub).on(issueLabelSub.label.id.eq(labelSub.id))
-//                        .where(labelSub.title.eq(conditionMap.get("label")))
-//                        .where(label(labelSub, conditionMap.get("label")))
-//                ),
-//
-//                issue.id.in(
-//                    JPAExpressions
-//                        .select(issueSub.id)
-//                        .from(issueSub)
-//                        .innerJoin(issueAssigneeSub).on(issueAssigneeSub.issue.id.eq(issueSub.id))
-//                        .innerJoin(assigneeSub).on(issueAssigneeSub.assignee.id.eq(assigneeSub.id))
-//                        .where(assigneeSub.userId.eq(conditionMap.get("assignee")))
-//                        .where(assignee(assigneeSub, conditionMap.get("assignee")))
-//                ),
-//
-//                issue.id.in(
-//                    JPAExpressions
-//                        .select(issueSub.id)
-//                        .from(issueSub)
-//                        .innerJoin(commentSub).on(issueSub.id.eq(commentSub.issue.id))
-//                        .where(commentSub.author.eq(conditionMap.get("commented")))
-//                        .where(comment(commentSub, conditionMap.get("commented")))
-//                )

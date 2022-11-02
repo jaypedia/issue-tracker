@@ -28,7 +28,6 @@ import team20.issuetracker.domain.label.Label;
 import team20.issuetracker.domain.member.Member;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.exception.CheckEntityException;
-import team20.issuetracker.service.dto.request.RequestUpdateIssueContentDto;
 import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleWithContentDto;
 
 @Getter

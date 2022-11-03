@@ -52,6 +52,14 @@ public class Milestone extends AuditingFields {
         this.milestoneStatus = MilestoneStatus.OPEN;
     }
 
+    private Milestone(Long id, String title, LocalDate dueDate, String description, MilestoneStatus milestoneStatus) {
+        this.id = id;
+        this.title = title;
+        this.dueDate = dueDate;
+        this.description = description;
+        this.milestoneStatus = milestoneStatus;
+    }
+
     private Milestone(String title, LocalDate dueDate, String description) {
         this.title = title;
         this.dueDate = dueDate;
@@ -61,6 +69,10 @@ public class Milestone extends AuditingFields {
 
     public static Milestone of(String title, LocalDate dueDate, String description) {
         return new Milestone(title, dueDate, description);
+    }
+
+    public static Milestone of(Long id, String title, LocalDate dueDate, String description, MilestoneStatus milestoneStatus) {
+        return new Milestone(id, title, dueDate, description, milestoneStatus);
     }
 
     public static Milestone of(Long id, String title, LocalDate dueDate, String description) {

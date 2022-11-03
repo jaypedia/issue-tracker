@@ -47,9 +47,9 @@ public class MilestoneService {
     }
 
     @Transactional(readOnly = true)
-    public ResponseReadAllMilestonesDto findAllOpenAndCloseMilestones(String issueStatus) {
+    public ResponseReadAllMilestonesDto findAllOpenAndCloseMilestones(String milestoneStatus) {
         List<Milestone> findMilestones = milestoneRepository.findAll();
-        List<Milestone> findIssueByMilestoneStatus = filterMilestoneStatus(findMilestones, issueStatus);
+        List<Milestone> findIssueByMilestoneStatus = filterMilestoneStatus(findMilestones, milestoneStatus);
 
         return getResponseReadAllMilestoneDto(findIssueByMilestoneStatus, findMilestones);
     }

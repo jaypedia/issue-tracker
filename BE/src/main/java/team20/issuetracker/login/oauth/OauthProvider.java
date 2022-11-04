@@ -1,10 +1,11 @@
 package team20.issuetracker.login.oauth;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import team20.issuetracker.login.oauth.config.OauthProperties;
 
-import lombok.Getter;
-
 @Getter
+@AllArgsConstructor
 public class OauthProvider {
     private final String clientId;
     private final String clientSecret;
@@ -20,5 +21,9 @@ public class OauthProvider {
         this.tokenUrl = properties.getTokenUri();
         this.userInfoUrl = properties.getUserInfoUri();
         this.loginUri = properties.getLoginUri();
+    }
+
+    public static OauthProvider of(String clientId, String clientSecret, String redirectUrl, String tokenUrl, String userInfoUrl, String loginUri) {
+        return new OauthProvider(clientId, clientSecret, redirectUrl, tokenUrl, userInfoUrl, loginUri);
     }
 }

@@ -1,5 +1,6 @@
 package team20.issuetracker.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import lombok.RequiredArgsConstructor;
 import team20.issuetracker.domain.member.Member;
 import team20.issuetracker.domain.member.MemberRepository;
 import team20.issuetracker.exception.CheckEntityException;
@@ -18,12 +18,11 @@ import team20.issuetracker.exception.MyJwtException;
 import team20.issuetracker.login.jwt.JwtTokenProvider;
 import team20.issuetracker.login.oauth.OauthProvider;
 import team20.issuetracker.login.oauth.dto.request.RequestRefreshDto;
-import team20.issuetracker.login.oauth.dto.request.RequestUserDto;
+import team20.issuetracker.login.oauth.dto.request.ResponseUserDto;
 import team20.issuetracker.login.oauth.dto.response.ResponseLoginDto;
 import team20.issuetracker.login.oauth.dto.response.ResponseOauthTokenDto;
 import team20.issuetracker.login.oauth.repository.InMemoryProviderRepository;
 
-@RequiredArgsConstructor
 @Service
 public class OauthService {
 
@@ -31,17 +30,52 @@ public class OauthService {
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate<String, String> redisTemplate;
+    private WebClient webClient;
+
+    private OauthService(InMemoryProviderRepository inMemoryProviderRepository,
+                         MemberRepository memberRepository,
+                         JwtTokenProvider jwtTokenProvider,
+                         RedisTemplate<String, String> redisTemplate,
+                         String baseUrl) {
+        this.inMemoryProviderRepository = inMemoryProviderRepository;
+        this.memberRepository = memberRepository;
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.redisTemplate = redisTemplate;
+        this.webClient = WebClient.create(baseUrl);
+    }
+
+    @Autowired
+    public OauthService(InMemoryProviderRepository inMemoryProviderRepository,
+                        MemberRepository memberRepository,
+                        JwtTokenProvider jwtTokenProvider,
+                        RedisTemplate<String, String> redisTemplate) {
+        this.inMemoryProviderRepository = inMemoryProviderRepository;
+        this.memberRepository = memberRepository;
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.redisTemplate = redisTemplate;
+        this.webClient = WebClient.create();
+    }
+
+    public static OauthService byTest(InMemoryProviderRepository inMemoryProviderRepository,
+                                      MemberRepository memberRepository,
+                                      JwtTokenProvider jwtTokenProvider,
+                                      RedisTemplate<String, String> redisTemplate,
+                                      String baseUrl) {
+        return new OauthService(inMemoryProviderRepository, memberRepository, jwtTokenProvider, redisTemplate, baseUrl);
+    }
 
     public ResponseLoginDto signup(String code) {
         OauthProvider provider = inMemoryProviderRepository.getProvider();
         ResponseOauthTokenDto tokenResponse = requestToken(code, provider);
-        RequestUserDto requestUserDto = getUserProfile(provider, tokenResponse);
-        Member member = saveOrUpdate(requestUserDto);
+        ResponseUserDto responseUserDto = getUserProfile(provider, tokenResponse);
+        Member member = saveOrUpdate(responseUserDto);
         String accessToken = jwtTokenProvider.getAccessToken(member);
         String refreshToken = jwtTokenProvider.getRefreshToken(member);
 
         // 레디스에 id 가 아닌 oauthId 가 키 값으로 저장된다.
-        redisTemplate.opsForValue().set(String.valueOf(member.getOauthId()), refreshToken, jwtTokenProvider.getRefreshTokenValidityInMilliseconds(), TimeUnit.MILLISECONDS);
+        redisTemplate
+                .opsForValue()
+                .set(String.valueOf(member.getOauthId()), refreshToken, jwtTokenProvider.getRefreshTokenValidityInMilliseconds(), TimeUnit.MILLISECONDS);
         // FE 쪽으로 유저 정보, JWT Token (Access, Refresh) 를 응답한다.
         return ResponseLoginDto.builder()
                 .id(member.getId())
@@ -55,27 +89,27 @@ public class OauthService {
                 .build();
     }
 
-    private Member saveOrUpdate(RequestUserDto requestUserDto) {
-        Member findMember = memberRepository.findByOauthId(requestUserDto.getOauthId())
-                .map(member -> member.update(requestUserDto.getName(), requestUserDto.getEmail(), requestUserDto.getProfileImageUrl()))
-                .orElseGet(requestUserDto::toMember);
+    private Member saveOrUpdate(ResponseUserDto responseUserDto) {
+        Member findMember = memberRepository.findByOauthId(responseUserDto.getOauthId())
+                .map(member -> member.update(responseUserDto.getName(), responseUserDto.getEmail(), responseUserDto.getProfileImageUrl()))
+                .orElseGet(responseUserDto::toMember);
 
         return memberRepository.save(findMember);
     }
 
-    private RequestUserDto getUserProfile(OauthProvider provider, ResponseOauthTokenDto tokenResponse) {
+    private ResponseUserDto getUserProfile(OauthProvider provider, ResponseOauthTokenDto tokenResponse) {
 
-        return WebClient.create().get()
+        return webClient.get()
                 .uri(provider.getUserInfoUrl())
                 .header("Authorization", "token " + tokenResponse.getAccessToken())
                 .retrieve()
-                .bodyToMono(RequestUserDto.class)
+                .bodyToMono(ResponseUserDto.class)
                 .block();
     }
 
     private ResponseOauthTokenDto requestToken(String code, OauthProvider provider) {
 
-        return WebClient.create().post()
+        return webClient.post()
                 .uri(provider.getTokenUrl())
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(tokenRequest(code, provider))

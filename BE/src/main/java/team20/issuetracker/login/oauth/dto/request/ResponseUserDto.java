@@ -10,7 +10,7 @@ import team20.issuetracker.login.oauth.Role;
 
 @NoArgsConstructor
 @Getter
-public class RequestUserDto {
+public class ResponseUserDto {
     @JsonProperty("id")
     private String oauthId;
     @JsonProperty("email")
@@ -21,7 +21,7 @@ public class RequestUserDto {
     private String profileImageUrl;
 
     @Builder
-    public RequestUserDto(String oauthId, String email, String name, String profileImageUrl) {
+    public ResponseUserDto(String oauthId, String email, String name, String profileImageUrl) {
         this.oauthId = oauthId;
         this.email = email;
         this.name = name;
@@ -30,6 +30,17 @@ public class RequestUserDto {
 
     public Member toMember() {
         return Member.builder()
+                .oauthId(oauthId)
+                .email(email)
+                .name(name)
+                .profileImageUrl(profileImageUrl)
+                .role(Role.GUEST)
+                .build();
+    }
+
+    public Member toMemberByTest() {
+        return Member.builder()
+                .id(1L)
                 .oauthId(oauthId)
                 .email(email)
                 .name(name)

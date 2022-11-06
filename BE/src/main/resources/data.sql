@@ -3,7 +3,9 @@
 */
 INSERT INTO issue.member
     (email, name, oauth_id, profile_image_url, role)
-VALUES ('shoy1415@gmail.com', 'geombong', '78953393', 'https://avatars.githubusercontent.com/u/78953393?v=4', 'GUEST');
+VALUES ('shoy1415@gmail.com', 'geombong', '78953393', 'https://avatars.githubusercontent.com/u/78953393?v=4', 'GUEST'),
+       ('null', 'juni8453', '79444040', 'https://avatars.githubusercontent.com/u/79444040?v=4', 'GUEST'),
+       ('null', 'jaypedia', '85419343', 'https://avatars.githubusercontent.com/u/85419343?v=4', 'GUEST');
 
 /*
 ---- 기본 레이블 생성----

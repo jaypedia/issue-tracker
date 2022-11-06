@@ -12,8 +12,6 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.Valid;
-
 import lombok.RequiredArgsConstructor;
 
 import team20.issuetracker.domain.assginee.Assignee;
@@ -39,7 +37,6 @@ import team20.issuetracker.service.dto.response.ResponseReadAllIssueDto;
 @Service
 public class IssueService {
     private final IssueRepository issueRepository;
-
     private final MilestoneRepository milestoneRepository;
     private final AssigneeRepository assigneeRepository;
     private final LabelRepository labelRepository;
@@ -146,28 +143,17 @@ public class IssueService {
     public Long updateIssueRelated(Long id, String type, RequestUpdateIssueRelatedDto requestUpdateIssueRelatedDto) {
         UpdateType updateType = UpdateType.valueOf(type.toUpperCase());
         Issue findIssue = issueRepository.findById(id)
-                .orElseThrow(() -> new CheckEntityException("해당 Issue 는 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
+            .orElseThrow(() -> new CheckEntityException("해당 Issue 는 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
 
-        switch (updateType) {
-            case MILESTONE:
-                Milestone findMilestone = milestoneRepository.findById(requestUpdateIssueRelatedDto.getId())
-                        .orElseThrow(() -> new CheckEntityException("해당 Milestone 은 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
-                findIssue.updateMilestone(findMilestone);
-                break;
-            case LABELS:
-                Label findLabel = labelRepository.findById(requestUpdateIssueRelatedDto.getId())
-                        .orElseThrow(() -> new CheckEntityException("해당 Label 은 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
-                findIssue.updateLabels(findLabel);
-                break;
-            case ASSIGNEES:
-                Assignee findAssignee = assigneeRepository.findById(requestUpdateIssueRelatedDto.getId())
-                        .orElseThrow(() -> new CheckEntityException("해당 Assignee 는 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
-                findIssue.updateAssignees(findAssignee);
-                break;
-            default:
-                throw new CheckEntityException("해당 UpdateType 은 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
-        }
+        RelatedUpdatable relatedType = checkUpdateType(updateType);
+        relatedType.updateRelatedType(requestUpdateIssueRelatedDto, updateType, findIssue);
+
         return findIssue.getId();
+    }
+
+    private RelatedUpdatable checkUpdateType(UpdateType updateType) {
+        return new SimpleRelatedUpdateFactory(milestoneRepository, labelRepository, assigneeRepository)
+            .getRelatedType(updateType);
     }
 
     @Transactional

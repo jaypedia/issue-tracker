@@ -141,7 +141,7 @@ public class IssueService {
 
     @Transactional
     public Long updateIssueRelated(Long id, String type, RequestUpdateIssueRelatedDto requestUpdateIssueRelatedDto) {
-        UpdateType updateType = UpdateType.checkUpdateType(type.toUpperCase());
+        UpdateType updateType = UpdateType.checkUpdateType(type);
         Issue findIssue = issueRepository.findById(id)
             .orElseThrow(() -> new CheckEntityException("해당 Issue 는 존재하지 않습니다.", HttpStatus.BAD_REQUEST));
 

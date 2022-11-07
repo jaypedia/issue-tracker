@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import team20.issuetracker.domain.assginee.AssigneeRepository;
 import team20.issuetracker.domain.label.LabelRepository;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
-import team20.issuetracker.exception.CheckEntityException;
+import team20.issuetracker.exception.CheckUpdateTypeException;
 
 public interface RelatedUpdateFactory {
     RelatedUpdatable getRelatedType(UpdateType updateType);
@@ -20,17 +20,17 @@ class SimpleRelatedUpdateFactory implements RelatedUpdateFactory {
 
     @Override
     public RelatedUpdatable getRelatedType(UpdateType updateType) {
-        if (updateType.equals(UpdateType.MILESTONE)) {
-            return new RelatedMilestone(milestoneRepository);
+        switch(updateType) {
+            case MILESTONE:
+                return new RelatedMilestone(milestoneRepository);
 
-        } else if (updateType.equals(UpdateType.LABELS)) {
-            return new RelatedLabel(labelRepository);
+            case LABELS:
+                return new RelatedLabel(labelRepository);
 
-        } else if (updateType.equals(UpdateType.ASSIGNEES)) {
-            return new RelatedAssignee(assigneeRepository);
-
-        } else {
-            throw new CheckEntityException("해당 UpdateType 은 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
+            case ASSIGNEES:
+                return new RelatedAssignee(assigneeRepository);
         }
+
+        throw new CheckUpdateTypeException("해당 UpdateType 은 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
     }
 }

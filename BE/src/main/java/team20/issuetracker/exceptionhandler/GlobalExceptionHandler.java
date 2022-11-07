@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
+import team20.issuetracker.exception.CheckUpdateTypeException;
 import team20.issuetracker.exception.MyJwtException;
 import team20.issuetracker.exception.CheckEntityException;
 
@@ -48,5 +49,13 @@ public class GlobalExceptionHandler {
         log.error("errorMessage : {}", checkEntityException.getErrorMessage());
 
         return new ResponseEntity<>(ResponseErrorMassage.create(checkEntityException.getErrorMessage()), checkEntityException.getHttpStatus());
+    }
+
+    @ExceptionHandler(CheckUpdateTypeException.class)
+    public ResponseEntity<ResponseErrorMassage> CheckUpdateTypeException(CheckUpdateTypeException checkUpdateTypeException) {
+
+        log.error("errorMessage : {}", checkUpdateTypeException.getErrorMessage());
+
+        return new ResponseEntity<>(ResponseErrorMassage.create(checkUpdateTypeException.getErrorMessage()), checkUpdateTypeException.getHttpStatus());
     }
 }

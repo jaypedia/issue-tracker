@@ -21,7 +21,7 @@ public enum UpdateType {
     public static UpdateType checkUpdateType(String updateType) {
         UpdateType[] values = UpdateType.values();
         for (UpdateType value : values) {
-            if (value.getType().equals(updateType.toUpperCase())) {
+            if (value.getType().equals(updateType.toLowerCase())) {
                 return value;
             }
         }

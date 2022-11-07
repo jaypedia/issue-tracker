@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class RequestSaveMilestoneDto {
 
-    @NotEmpty
+    @NotEmpty(message = "Milestone 의 제목은 공백일 수 없습니다.")
     @Size(max = 50, message = "Milestone 의 제목은 50글자를 넘을 수 없습니다.")
     private String title;
 

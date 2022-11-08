@@ -6,13 +6,14 @@ import { ISSUE_STATUS } from '@/constants/constants';
 import { useRefetchIssue } from '@/hooks/useIssue';
 import { checkBoxState } from '@/stores/atoms/checkbox';
 import { issueStatusState } from '@/stores/atoms/issue';
+import { IssueStatusType } from '@/types/issueTypes';
 
 const DetailsMenu = () => {
   const issueStatus = useRecoilValue(issueStatusState);
   const [checkBox, setCheckBox] = useRecoilState(checkBoxState);
   const { mutate } = useRefetchIssue();
 
-  const handleMenuClick = (action: string) => {
+  const handleMenuClick = (action: IssueStatusType) => {
     if (issueStatus.is === ISSUE_STATUS.open && action === ISSUE_STATUS.open) {
       return;
     }
@@ -20,7 +21,7 @@ const DetailsMenu = () => {
       return;
     }
     const ids = [...checkBox];
-    actionIssues({ ids, action });
+    actionIssues({ ids, issueStatus: action });
     setCheckBox(new Set());
     mutate();
   };

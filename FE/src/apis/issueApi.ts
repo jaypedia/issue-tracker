@@ -82,7 +82,7 @@ export const deleteIssue = async (id: number) => {
 
 type ActionIssueType = {
   ids: number[];
-  action: string;
+  issueStatus: string;
 };
 
 export const actionIssues = async (issues: ActionIssueType) => {

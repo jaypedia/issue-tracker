@@ -60,6 +60,13 @@ public class Milestone extends AuditingFields {
         this.milestoneStatus = milestoneStatus;
     }
 
+    private Milestone(String title, LocalDate dueDate, String description, MilestoneStatus milestoneStatus) {
+        this.title = title;
+        this.dueDate = dueDate;
+        this.description = description;
+        this.milestoneStatus = milestoneStatus;
+    }
+
     private Milestone(String title, LocalDate dueDate, String description) {
         this.title = title;
         this.dueDate = dueDate;
@@ -71,12 +78,16 @@ public class Milestone extends AuditingFields {
         return new Milestone(title, dueDate, description);
     }
 
-    public static Milestone of(Long id, String title, LocalDate dueDate, String description, MilestoneStatus milestoneStatus) {
-        return new Milestone(id, title, dueDate, description, milestoneStatus);
+    public static Milestone of(String title, LocalDate dueDate, String description, MilestoneStatus milestoneStatus) {
+        return new Milestone(title, dueDate, description, milestoneStatus);
     }
 
     public static Milestone of(Long id, String title, LocalDate dueDate, String description) {
         return new Milestone(id, title, dueDate, description);
+    }
+
+    public static Milestone of(Long id, String title, LocalDate dueDate, String description, MilestoneStatus milestoneStatus) {
+        return new Milestone(id, title, dueDate, description, milestoneStatus);
     }
 
     public void updateIssue(Issue issue) {

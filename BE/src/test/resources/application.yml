@@ -1,7 +1,8 @@
 spring:
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
+
   sql:
     init:
       mode: never

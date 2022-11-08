@@ -1,5 +1,6 @@
 package team20.issuetracker.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,6 +10,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import team20.issuetracker.domain.label.Label;
 import team20.issuetracker.domain.label.LabelRepository;
+import team20.issuetracker.exception.CheckEntityException;
 import team20.issuetracker.service.dto.request.RequestLabelDto;
 import team20.issuetracker.service.dto.response.ResponseLabelDto;
 import team20.issuetracker.service.dto.response.ResponseLabelsDto;
@@ -42,7 +44,7 @@ public class LabelService {
     @Transactional
     public Long update(Long id, RequestLabelDto requestLabelDto) {
         Label label = labelRepository.findById(id).orElseThrow(() -> {
-            throw new IllegalArgumentException("존재하지 않는 Label 입니다.");
+            throw new CheckEntityException("존재하지 않는 Label 입니다.", HttpStatus.BAD_REQUEST);
         });
         label.update(requestLabelDto);
         return label.getId();
@@ -51,7 +53,7 @@ public class LabelService {
     @Transactional
     public void delete(Long id) {
         labelRepository.findById(id).orElseThrow(() -> {
-            throw new IllegalArgumentException("존재하지 않는 Label 입니다.");
+            throw new CheckEntityException("존재하지 않는 Label 입니다.", HttpStatus.BAD_REQUEST);
         });
 
         labelRepository.deleteById(id);

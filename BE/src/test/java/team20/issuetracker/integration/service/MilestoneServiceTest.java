@@ -1,5 +1,6 @@
 package team20.issuetracker.integration.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 
+import team20.issuetracker.config.DatabaseCleanup;
 import team20.issuetracker.domain.issue.IssueRepository;
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneRepository;
@@ -33,6 +35,14 @@ public class MilestoneServiceTest {
 
     @Autowired
     private IssueRepository issueRepository;
+
+    @Autowired
+    private DatabaseCleanup databaseCleanup;
+
+    @BeforeEach
+    public void setUp() {
+        databaseCleanup.execute();
+    }
 
     @DisplayName("마일스톤 정보를 입력하면, 마일스톤을 저장한다.")
     @Test

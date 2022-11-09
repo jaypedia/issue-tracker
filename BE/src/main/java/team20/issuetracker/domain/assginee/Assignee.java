@@ -35,7 +35,17 @@ public class Assignee {
         this.authorId = authorId;
     }
 
+    public Assignee(String image, String userId, String authorId) {
+        this.image = image;
+        this.userId = userId;
+        this.authorId = authorId;
+    }
+
     public static Assignee of(Long id, String image, String userId, String authorId) {
         return new Assignee(id, image, userId, authorId);
+    }
+
+    public static Assignee of(String image, String userId, String authorId) {
+        return new Assignee(null, image, userId, authorId);
     }
 }

@@ -1,11 +1,13 @@
 package team20.issuetracker.integration.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
+import team20.issuetracker.config.DatabaseCleanup;
 import team20.issuetracker.domain.label.Label;
 import team20.issuetracker.domain.label.LabelRepository;
 import team20.issuetracker.exception.CheckEntityException;
@@ -22,6 +24,14 @@ public class LabelServiceTest {
 
     @Autowired
     private LabelRepository labelRepository;
+
+    @Autowired
+    private DatabaseCleanup databaseCleanup;
+
+    @BeforeEach
+    public void setUp() {
+        databaseCleanup.execute();
+    }
 
     @DisplayName("레이블 정보를 입력하면, 레이블을 저장한다.")
     @Test

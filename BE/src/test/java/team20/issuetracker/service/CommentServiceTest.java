@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.time.LocalDate;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import team20.issuetracker.domain.comment.Comment;
@@ -27,6 +26,7 @@ import team20.issuetracker.domain.issue.IssueRepository;
 import team20.issuetracker.domain.member.Member;
 import team20.issuetracker.domain.member.MemberRepository;
 import team20.issuetracker.domain.milestone.Milestone;
+import team20.issuetracker.exception.CheckEntityException;
 import team20.issuetracker.login.oauth.Role;
 import team20.issuetracker.service.dto.request.RequestCommentDto;
 
@@ -68,6 +68,24 @@ class CommentServiceTest {
                 .isEqualTo(comment.getContent());
     }
 
+    @DisplayName("존재하지 않는 회원이 댓글을 작성한다면, 예외를 발생시킨다.")
+    @Test
+    void 댓글_저장_실패() throws Exception {
+        // given
+        String wrongOauthId = "000000";
+        RequestCommentDto newRequestDto = createRequestCommentDto(1L, "댓글 내용");
+
+        given(memberRepository.findByOauthId(wrongOauthId)).willReturn(Optional.empty());
+
+        //when
+        assertThatThrownBy(() -> sut.save(newRequestDto, wrongOauthId))
+            .isInstanceOf(CheckEntityException.class)
+            .hasMessageContaining("존재하지 않는 회원 입니다.");
+
+        // then
+        then(memberRepository).should().findByOauthId(wrongOauthId);
+    }
+
     @DisplayName("댓글 정보를 입력하고 수정하는 댓글의 ID 가 존재한다면, 해당 댓글을 수정한다.")
     @Test
     void 댓글_수정() throws Exception {
@@ -99,11 +117,11 @@ class CommentServiceTest {
         String newContent = "새로운 댓글 내용";
 
         RequestCommentDto updateRequestDto = createRequestCommentDto(wrongCommentId, newContent);
-        given(commentRepository.findById(wrongCommentId)).willThrow(new IllegalArgumentException("존재하지 않는 댓글 아이디입니다."));
+        given(commentRepository.findById(wrongCommentId)).willReturn(Optional.empty());
 
         // when
-        assertThatThrownBy(() -> sut.update(updateRequestDto, wrongCommentId)).isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("존재하지 않는 댓글 아이디입니다.");
+        assertThatThrownBy(() -> sut.update(updateRequestDto, wrongCommentId)).isInstanceOf(CheckEntityException.class)
+            .hasMessageContaining("존재하지 않는 댓글 아이디 입니다.");
 
         // then
         then(commentRepository).should().findById(wrongCommentId);
@@ -134,10 +152,10 @@ class CommentServiceTest {
         Long wrongCommentId = 2L;
         String newContent = "새로운 댓글 내용";
         createRequestCommentDto(wrongCommentId, newContent);
-        given(commentRepository.findById(wrongCommentId)).willThrow(new NoSuchElementException("존재하지 않는 댓글 아이디입니다."));
+        given(commentRepository.findById(wrongCommentId)).willReturn(Optional.empty());
 
         // when
-        assertThatThrownBy(() -> sut.delete(wrongCommentId)).isInstanceOf(NoSuchElementException.class)
+        assertThatThrownBy(() -> sut.delete(wrongCommentId)).isInstanceOf(CheckEntityException.class)
             .hasMessageContaining("존재하지 않는 댓글 아이디입니다.");
 
         // then

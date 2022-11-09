@@ -40,7 +40,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
-@DisplayName("비즈니스 로직 - 이")
+@DisplayName("비즈니스 로직 - 이슈")
 @ExtendWith(MockitoExtension.class)
 class IssueServiceTest {
 
@@ -188,7 +188,7 @@ class IssueServiceTest {
     @Test
     void Assignee_List가_존재하지_않는_이슈_저장() {
         // given
-        RequestSaveIssueDto newRequestDto = getFreeOfContentRequestSaveIssueDto();
+        RequestSaveIssueDto newRequestDto = getRequestSaveIssueDto();
         Milestone newMilestone = getMilestone();
         Member newMember = getMember();
         List<Assignee> assignees = new ArrayList<>();

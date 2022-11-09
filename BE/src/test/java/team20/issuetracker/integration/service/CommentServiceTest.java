@@ -1,11 +1,13 @@
 package team20.issuetracker.integration.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
+import team20.issuetracker.config.DatabaseCleanup;
 import team20.issuetracker.domain.comment.Comment;
 import team20.issuetracker.domain.comment.CommentRepository;
 import team20.issuetracker.domain.issue.Issue;
@@ -31,6 +33,14 @@ public class CommentServiceTest {
 
     @Autowired
     private IssueRepository issueRepository;
+
+    @Autowired
+    private DatabaseCleanup databaseCleanup;
+
+    @BeforeEach
+    public void setUp() {
+        databaseCleanup.execute();
+    }
 
     @DisplayName("현재 멤버가 하나의 이슈에 코멘트 정보를 입력하면, 코멘트를 저장한다.")
     @Test

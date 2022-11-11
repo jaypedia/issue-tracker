@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import team20.issuetracker.login.jwt.JwtTokenProvider;
-import team20.issuetracker.util.JwtUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

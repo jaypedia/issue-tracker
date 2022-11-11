@@ -8,10 +8,13 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @TestConfiguration
-@RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
     private final TestLoginInterceptor testLoginInterceptor;
+
+    public WebConfig(TestLoginInterceptor testLoginInterceptor) {
+        this.testLoginInterceptor = testLoginInterceptor;
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

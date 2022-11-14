@@ -1,5 +1,7 @@
 package team20.issuetracker.domain.issue;
 
+import org.springframework.http.HttpStatus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +20,6 @@ import javax.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import org.springframework.http.HttpStatus;
-
 import team20.issuetracker.domain.AuditingFields;
 import team20.issuetracker.domain.assginee.Assignee;
 import team20.issuetracker.domain.comment.Comment;

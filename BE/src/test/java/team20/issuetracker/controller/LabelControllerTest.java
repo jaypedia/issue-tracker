@@ -52,7 +52,7 @@ class LabelControllerTest {
 
     @DisplayName("[Controller][GET] 레이블 리스트 전체 조회 - 정상 호출")
     @Test
-    void givenNothing_whenRequestingLabels_thenReturnLabels() throws Exception {
+    void 레이블_전체_조회_성공() throws Exception {
         //given
         Label label = createLabel();
         ResponseLabelDto responseLabelDto = createResponseLabelDto(label);

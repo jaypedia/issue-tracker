@@ -33,6 +33,7 @@ public class TestLoginInterceptor implements HandlerInterceptor {
         if (isPreFlightRequest(request)) return true;
 
         if (jwtAccessToken != null && jwtAccessToken.equals("Test Access Token")) {
+            request.setAttribute("oauthId", "oauthId");
             return true;
         }
 

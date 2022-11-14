@@ -23,6 +23,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import team20.issuetracker.login.oauth.Role;
+import team20.issuetracker.login.oauth.dto.request.RequestMaintainDto;
 import team20.issuetracker.login.oauth.dto.request.RequestRefreshDto;
 import team20.issuetracker.login.oauth.dto.response.ResponseLoginDto;
 import team20.issuetracker.service.OauthService;
@@ -89,13 +90,13 @@ class OauthControllerTest {
     void Maintain_동작_성공() throws Exception {
         //given
         String refreshToken = "rfToken";
-        RequestRefreshDto requestRefreshDto = createRequestRefreshDto();
+        RequestMaintainDto requestMaintainDto = createMaintainDto();
         ResponseLoginDto responseLoginDto = createResponseLoginDto();
         given(oauthService.getMaintainUserInfo(refreshToken)).willReturn(responseLoginDto);
 
         //when & then
         mvc.perform(post("/api/login/oauth/github/maintain")
-                        .content(mapper.writeValueAsString(requestRefreshDto))
+                        .content(mapper.writeValueAsString(requestMaintainDto))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -104,6 +105,12 @@ class OauthControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
         then(oauthService).should().getMaintainUserInfo(refreshToken);
+    }
+
+    private RequestMaintainDto createMaintainDto() {
+        return RequestMaintainDto.builder()
+                .refreshToken("rfToken")
+                .build();
     }
 
     private RequestRefreshDto createRequestRefreshDto() {

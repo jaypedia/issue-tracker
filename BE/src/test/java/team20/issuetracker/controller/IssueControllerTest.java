@@ -1,11 +1,23 @@
 package team20.issuetracker.controller;
 
+import static org.mockito.BDDMockito.any;
+import static org.mockito.BDDMockito.anyLong;
+import static org.mockito.BDDMockito.eq;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -13,6 +25,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.util.List;
 
 import team20.issuetracker.controller.page.CustomPageable;
 import team20.issuetracker.domain.assginee.Assignee;
@@ -29,17 +46,6 @@ import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleWithConten
 import team20.issuetracker.service.dto.request.RequestUpdateManyIssueStatus;
 import team20.issuetracker.service.dto.response.ResponseIssueDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllIssueDto;
-
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.util.List;
-
-import static org.mockito.BDDMockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("컨트롤러 - 이슈")
 @WebMvcTest(IssueController.class)
@@ -66,13 +72,13 @@ class IssueControllerTest {
 
         // when & then
         mvc.perform(post("/api/issues")
-                .content(mapper.writeValueAsString(requestSaveIssueDto))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
+                        .content(mapper.writeValueAsString(requestSaveIssueDto))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
 
-            .andDo(print())
-            .andExpect(status().isOk())
-            .andExpect(content().string(String.valueOf(1L)));
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(String.valueOf(1L)));
 
         then(issueService).should().save(any(RequestSaveIssueDto.class));
     }
@@ -86,15 +92,15 @@ class IssueControllerTest {
 
         // when & then
         mvc.perform(delete("/api/issues/" + issueId))
-            .andDo(print())
-            .andExpect(status().isOk());
+                .andDo(print())
+                .andExpect(status().isOk());
 
         then(issueService).should().delete(anyLong());
     }
 
     @DisplayName("[Controller][POST] 이슈 제목 및 내용 수정 - 정상 호출")
     @Test
-    void updateTitleWithContent() throws Exception {
+    void 이슈_제목_내용_수정_성공() throws Exception {
         // given
         Long issueId = 1L;
         RequestUpdateIssueTitleWithContentDto requestUpdateIssueTitleWithContentDto = createRequestUpdateIssueTitleWithContentDto();
@@ -102,11 +108,11 @@ class IssueControllerTest {
 
         // when & then
         mvc.perform(post("/api/issues/" + issueId)
-                .content(mapper.writeValueAsString(requestUpdateIssueTitleWithContentDto))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-            .andDo(print())
-            .andExpect(status().isOk());
+                        .content(mapper.writeValueAsString(requestUpdateIssueTitleWithContentDto))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
 
         then(issueService).should().updateTitleWithContent(eq(issueId), any(RequestUpdateIssueTitleWithContentDto.class));
     }
@@ -123,11 +129,11 @@ class IssueControllerTest {
 
         // when & then
         mvc.perform(post("/api/issues/" + issueId + "/" + updateType)
-                .content(mapper.writeValueAsString(requestUpdateIssueRelatedDto))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-            .andDo(print())
-            .andExpect(status().isOk());
+                        .content(mapper.writeValueAsString(requestUpdateIssueRelatedDto))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
 
         then(issueService).should().updateIssueRelated(eq(issueId), eq(updateType), any(RequestUpdateIssueRelatedDto.class));
     }
@@ -144,11 +150,11 @@ class IssueControllerTest {
 
         // when & then
         mvc.perform(post("/api/issues/" + issueId + "/" + updateType)
-                .content(mapper.writeValueAsString(requestUpdateIssueRelatedDto))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-            .andDo(print())
-            .andExpect(status().isOk());
+                        .content(mapper.writeValueAsString(requestUpdateIssueRelatedDto))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
 
         then(issueService).should().updateIssueRelated(eq(issueId), eq(updateType), any(RequestUpdateIssueRelatedDto.class));
     }
@@ -165,11 +171,11 @@ class IssueControllerTest {
 
         // when & then
         mvc.perform(post("/api/issues/" + issueId + "/" + updateType)
-                .content(mapper.writeValueAsString(requestUpdateIssueRelatedDto))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-            .andDo(print())
-            .andExpect(status().isOk());
+                        .content(mapper.writeValueAsString(requestUpdateIssueRelatedDto))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
 
         then(issueService).should().updateIssueRelated(eq(issueId), eq(updateType), any(RequestUpdateIssueRelatedDto.class));
     }
@@ -183,21 +189,21 @@ class IssueControllerTest {
 
         // when & then
         mvc.perform(post("/api/issues/action")
-                .content(mapper.writeValueAsString(requestUpdateManyIssueStatusDto))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-            .andDo(print())
-            .andExpect(status().isOk());
+                        .content(mapper.writeValueAsString(requestUpdateManyIssueStatusDto))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
 
         then(issueService).should().updateManyIssueStatus(any(RequestUpdateManyIssueStatus.class));
     }
 
     @DisplayName("[Controller][GET] 이슈 상세조회 - 정상 호출")
     @Test
-    void 이슈_상세조회() throws Exception {
+    void 이슈_상세_조회() throws Exception {
         // given
         Long issueId = 1L;
-        RequestSaveIssueDto newRequestDto = getRequestSaveIssueDto();
+        RequestSaveIssueDto newRequestDto = createRequestSaveIssueDto();
         Milestone newMilestone = getMilestone();
         Member newMember = getMember();
         List<Assignee> assignees = getAssignees();
@@ -215,18 +221,18 @@ class IssueControllerTest {
         // when & then
         mapper.registerModule(new JavaTimeModule());
         mvc.perform(get("/api/issues/" + issueId)
-                .content(mapper.writeValueAsString(responseIssueDto))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-            .andDo(print())
-            .andExpect(status().isOk());
+                        .content(mapper.writeValueAsString(responseIssueDto))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
 
         then(issueService).should().detail(issueId);
     }
 
     @DisplayName("[Controller][GET] 이슈 필터조회 - 정상 호출")
     @Test
-    void readIssuesByCondition() throws Exception {
+    void 이슈_필터_조회() throws Exception {
         // given
         String page = "1";
         String condition = "is%3Aopen";
@@ -236,8 +242,8 @@ class IssueControllerTest {
 
         // when & then
         mvc.perform(get("/api/issues").queryParam("q", condition))
-            .andDo(print())
-            .andExpect(status().isOk());
+                .andDo(print())
+                .andExpect(status().isOk());
 
         then(issueService).should().findAllIssuesByCondition(eq(decode), eq(pageRequest));
     }
@@ -272,16 +278,6 @@ class IssueControllerTest {
         return RequestUpdateIssueRelatedDto.from(relatedTypeId);
     }
 
-    private RequestSaveIssueDto getRequestSaveIssueDto() {
-        String issueTitle = "Issue Title";
-        String content = "Issue Content";
-        List<Long> assigneeIds = List.of(1L);
-        List<Long> labelIds = List.of(1L);
-        List<Long> milestoneIds = List.of(1L);
-
-        return RequestSaveIssueDto.of(issueTitle, content, assigneeIds, labelIds, milestoneIds);
-    }
-
     private Milestone getMilestone() {
         String milestoneTitle = "Milestone Title";
         LocalDate dueDate = LocalDate.now();
@@ -292,25 +288,25 @@ class IssueControllerTest {
 
     private Member getMember() {
         return Member.builder()
-            .id(1L)
-            .oauthId("78953393")
-            .email("shoy1415@gmail.com")
-            .name("geombong")
-            .profileImageUrl("https://avatars.githubusercontent.com/u/78953393?v=4")
-            .role(Role.GUEST)
-            .build();
+                .id(1L)
+                .oauthId("oauthId")
+                .email("member@email.com")
+                .name("memberName")
+                .profileImageUrl("profileUrl")
+                .role(Role.GUEST)
+                .build();
     }
 
     private List<Label> getLabels() {
         Label newLabel =
-            Label.of(1L, "Label Title", "Label TextColor", "Label backColor", "Label Description");
+                Label.of(1L, "Label Title", "Label TextColor", "Label backColor", "Label Description");
 
         return List.of(newLabel);
     }
 
     private List<Assignee> getAssignees() {
         Assignee newAssignee =
-            Assignee.of(1L, "https://avatars.githubusercontent.com/u/78953393?v=4", "geombong", "78953393");
+                Assignee.of(1L, "profileUrl", "userId", "authorId");
 
         return List.of(newAssignee);
     }

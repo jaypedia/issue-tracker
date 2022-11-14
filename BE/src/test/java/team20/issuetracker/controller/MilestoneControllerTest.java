@@ -1,7 +1,22 @@
 package team20.issuetracker.controller;
 
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.eq;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +26,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+
+import java.time.LocalDate;
+import java.util.List;
+
 import team20.issuetracker.domain.milestone.Milestone;
 import team20.issuetracker.domain.milestone.MilestoneStatus;
 import team20.issuetracker.service.MilestoneService;
@@ -19,20 +38,10 @@ import team20.issuetracker.service.dto.request.RequestUpdateMilestoneDto;
 import team20.issuetracker.service.dto.response.ResponseMilestoneDto;
 import team20.issuetracker.service.dto.response.ResponseReadAllMilestonesDto;
 
-import java.time.LocalDate;
-import java.util.List;
-
-import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 @DisplayName("컨트롤러 - 마일스톤")
 @WebMvcTest(MilestoneController.class)
 @ContextConfiguration(classes = MilestoneController.class)
-public class MilestoneControllerTest {
+class MilestoneControllerTest {
 
     private final MockMvc mvc;
 

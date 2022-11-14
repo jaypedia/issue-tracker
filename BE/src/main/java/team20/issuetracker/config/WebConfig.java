@@ -21,7 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(loginInterceptor)
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**", "/api/login/**", "/index.html");
+                .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**", "/api/login/**", "/index.html", "/docs/**");
     }
 
     @Override

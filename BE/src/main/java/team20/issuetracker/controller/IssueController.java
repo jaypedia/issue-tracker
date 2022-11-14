@@ -64,7 +64,6 @@ public class IssueController {
         issueService.delete(id);
     }
 
-
     @PostMapping("/{id}")
     public ResponseEntity<Long> updateTitleWithContent(@PathVariable Long id,
                                                        @Valid @RequestBody RequestUpdateIssueTitleWithContentDto requestUpdateIssueTitleWithContentDto) {

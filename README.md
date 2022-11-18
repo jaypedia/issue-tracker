@@ -48,6 +48,34 @@
 
 ### BE
 
+<div align=left>
+<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
+<img src="https://img.shields.io/badge/spring data jpa-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
+<img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white">
+<img src="https://img.shields.io/badge/junit5-25A162?style=for-the-badge&logo=junit5&logoColor=white">
+<img src="https://img.shields.io/badge/testcontainers-2496ED?style=for-the-badge&logo=docker&logoColor=white">
+
+
+<div>
+  <h3 align="center">🍳 Back Tech Stack 🍳</h3>
+  <p align="center">
+    <img src="https://img.shields.io/badge/JAVA-F53916?style=flat-square&logo=JAVA&logoColor=white"/></a>&nbsp
+    <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=Spring&logoColor=white"/></a>&nbsp
+    <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat-square&logo=Spring Boot&logoColor=white"/></a>&nbsp
+    </br>
+    <img src="https://img.shields.io/badge/MySql-E6B91E?style=flat-square&logo=MySql&logoColor=white"/></a>&nbsp
+    <img src="https://img.shields.io/badge/Maria-00599C?style=flat-square&logo=mariadb&logoColor=white"/></a>&nbsp
+    </br>
+    <img src="https://img.shields.io/badge/Docker-DB3552?style=flat-square&logo=Docker&logoColor=white"/></a>&nbsp
+    <img src="https://img.shields.io/badge/Amazon_Aws-333664?style=flat-square&logo=amazon-aws&logoColor=white"/></a>&nbsp
+    <img src="https://img.shields.io/badge/Git-C71D23?style=flat-square&logo=Git&logoColor=white"/></a>&nbsp
+    </br>
+    <img src="https://img.shields.io/badge/IntelliJ IDEA-161A36?style=flat-square&logo=IntelliJ IDEA&logoColor=white"/></a>&nbsp
+    <img src="https://img.shields.io/badge/GitHub-333664?style=flat-square&logo=GitHub&logoColor=white"/></a>&nbsp
+  </p>
+</div>
+
 ### FE
 
 ## <img height="20px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> Repository

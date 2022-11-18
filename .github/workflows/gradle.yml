@@ -27,24 +27,30 @@ jobs:
           sed -i "s|datasource_url|$DATASOURCE_URL|g" ./src/main/resources/application-deploy.yml
           sed -i "s|datasource_username|$DATASOURCE_USERNAME|g" ./src/main/resources/application-deploy.yml
           sed -i "s|datasource_password|$DATASOURCE_PASSWORD|g" ./src/main/resources/application-deploy.yml
+          sed -i "s|redis_host|$REDIS_HOST|g" ./src/main/resources/application-deploy.yml
         env:
           DATASOURCE_URL : ${{ secrets.DATASOURCE_URL }}
           DATASOURCE_USERNAME : ${{ secrets.DATASOURCE_USERNAME }}
           DATASOURCE_PASSWORD : ${{ secrets.DATASOURCE_PASSWORD }}
+          REDIS_HOST : ${{ secrets.REDIS_HOST }}
 
       - name: Insert oauth information into application-oauth2.yml
         run: |
           cd BE
+          sed -i "s|client_id|$CLIENT_ID_GITHUB|g" ./src/main/resources/application-oauth2.yml
           sed -i "s|client_secret|$CLIENT_SECRET|g" ./src/main/resources/application-oauth2.yml
           sed -i "s|redirect_uri|$REDIRECT_URI|g" ./src/main/resources/application-oauth2.yml
           sed -i "s|secret_key|$SECRET_KEY|g" ./src/main/resources/application-oauth2.yml
+          sed -i "s|refresh_secret_key|$REFRESH_SECRET_KEY|g" ./src/main/resources/application-oauth2.yml
           sed -i "s|access_token_expiry|$ACCESS_TOKEN_EXPIRY|g" ./src/main/resources/application-oauth2.yml
           sed -i "s|refresh_token_expiry|$REFRESH_TOKEN_EXPIRY|g" ./src/main/resources/application-oauth2.yml
 
         env:
+          CLIENT_ID_GITHUB: ${{ secrets.CLIENT_ID_GITHUB }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           REDIRECT_URI: ${{ secrets.REDIRECT_URI }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          REFRESH_SECRET_KEY: ${{ secrets.REFRESH_SECRET_KEY }}
           ACCESS_TOKEN_EXPIRY: ${{ secrets.ACCESS_TOKEN_EXPIRY }}
           REFRESH_TOKEN_EXPIRY: ${{ secrets.REFRESH_TOKEN_EXPIRY }}
 

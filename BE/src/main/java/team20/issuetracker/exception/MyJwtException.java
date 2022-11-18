@@ -14,4 +14,9 @@ public class MyJwtException extends RuntimeException {
         this.errorMessage = errorMessage;
         this.httpStatus = httpStatus;
     }
+
+    @Override
+    public String getMessage() {
+        return errorMessage;
+    }
 }

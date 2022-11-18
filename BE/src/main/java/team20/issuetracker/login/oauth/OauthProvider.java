@@ -1,9 +1,11 @@
 package team20.issuetracker.login.oauth;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import team20.issuetracker.login.oauth.config.OauthProperties;
 
 @Getter
+@AllArgsConstructor
 public class OauthProvider {
     private final String clientId;
     private final String clientSecret;
@@ -12,17 +14,16 @@ public class OauthProvider {
     private final String userInfoUrl;
     private final String loginUri;
 
-    public OauthProvider(OauthProperties.User user, OauthProperties.Provider provider) {
-        this(user.getClientId(), user.getClientSecret(), user.getRedirectUri(), provider.getTokenUri(), provider.getUserInfoUri(), provider.getLoginUri());
+    public OauthProvider(OauthProperties properties) {
+        this.clientId = properties.getClientId();
+        this.clientSecret = properties.getClientSecret();
+        this.redirectUrl = properties.getRedirectUri();
+        this.tokenUrl = properties.getTokenUri();
+        this.userInfoUrl = properties.getUserInfoUri();
+        this.loginUri = properties.getLoginUri();
     }
 
-    @Builder
-    public OauthProvider(String clientId, String clientSecret, String redirectUrl, String tokenUrl, String userInfoUrl, String loginUri) {
-        this.clientId = clientId;
-        this.clientSecret = clientSecret;
-        this.redirectUrl = redirectUrl;
-        this.tokenUrl = tokenUrl;
-        this.userInfoUrl = userInfoUrl;
-        this.loginUri = loginUri;
+    public static OauthProvider of(String clientId, String clientSecret, String redirectUrl, String tokenUrl, String userInfoUrl, String loginUri) {
+        return new OauthProvider(clientId, clientSecret, redirectUrl, tokenUrl, userInfoUrl, loginUri);
     }
 }

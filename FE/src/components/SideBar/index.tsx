@@ -1,66 +1,36 @@
+import Button from '../common/Button';
+import SideBarItem from './SideBarItem';
 import * as S from './style';
 
-import DropDown from '@/components/common/DropDown';
-import { detailsMenuListType } from '@/components/common/DropDown/type';
+import { getSideBarData } from '@/constants/sideBar';
+import { Assignee } from '@/types/issueTypes';
+import { ILabel } from '@/types/labelTypes';
+import { IMilestone } from '@/types/milestoneTypes';
 
-const ASSIGNEES = {
-  title: 'Assign up to 10 people to this pull request',
-  menus: ['Millie', 'J'],
+type SideBarProps = {
+  assignees?: Assignee[];
+  labels?: ILabel[];
+  milestone?: IMilestone[];
+  onClick: () => void;
 };
 
-const LABELS = {
-  title: 'Apply labels to this pull request',
-  menus: ['Design', 'Feature'],
-};
+const SideBar = ({ assignees, labels, milestone, onClick }: SideBarProps) => {
+  const sideBarData = getSideBarData(assignees, labels, milestone);
 
-const MILESTONE = {
-  title: 'Set milestone',
-  menus: ['Week1', 'Week2'],
-};
-
-const SIDE_BAR = [
-  { title: 'Assignees', defaultContents: 'No one', detailsMenuList: ASSIGNEES },
-  { title: 'Labels', defaultContents: 'None yet', detailsMenuList: LABELS },
-  { title: 'Milestone', defaultContents: 'No Milestone', detailsMenuList: MILESTONE },
-];
-
-type SideBarItemProps = {
-  title: string;
-  defaultContents: string;
-  detailsMenuList: detailsMenuListType;
-  checkType: 'radio' | 'checkBox';
-};
-
-const SideBarItem = ({ title, defaultContents, detailsMenuList, checkType }: SideBarItemProps) => {
-  return (
-    <S.SideBarItemContainer>
-      <DropDown
-        indicatorType="setting"
-        indicatorTitle={title}
-        menuPosition="right"
-        detailsMenuList={detailsMenuList}
-        hasCheckBox
-        checkType={checkType}
-      />
-      <S.Contents>{defaultContents}</S.Contents>
-    </S.SideBarItemContainer>
-  );
-};
-
-const SideBar = () => {
   return (
     <S.SideBarContainer>
       <S.SideBarList>
-        {SIDE_BAR.map(({ title, defaultContents, detailsMenuList }) => (
+        {sideBarData.map(({ contents, defaultContents, list }) => (
           <SideBarItem
-            key={title}
-            title={title}
-            defaultContents={defaultContents}
-            detailsMenuList={detailsMenuList}
-            checkType={title === 'Milestone' ? 'radio' : 'checkBox'}
+            key={list.indicator}
+            title={list.indicator}
+            contents={contents?.length ? contents : defaultContents}
+            detailsMenuList={list}
+            checkType={list.indicator === 'Milestone' ? 'radio' : 'checkBox'}
           />
         ))}
       </S.SideBarList>
+      <Button isText text="Delete Issue" textColor="grey" onClick={onClick} />
     </S.SideBarContainer>
   );
 };

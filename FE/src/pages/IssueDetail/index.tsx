@@ -1,74 +1,82 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 
 import * as S from './style';
 
+import { deleteIssue } from '@/apis/issueApi';
 import Comment from '@/components/Comment';
 import CommentForm from '@/components/CommentForm';
-import Button from '@/components/common/Button';
-import CustomLink from '@/components/common/CustomLink';
-import IssueDetailInfo from '@/components/IssueDetailInfo';
+import Loading from '@/components/common/Loading';
+import IssueDetailHeader from '@/components/IssueDetailHeader';
 import SideBar from '@/components/SideBar';
-import { ColumnWrapper, Heading1, FlexBetween } from '@/styles/common';
+import { useGetIssueDetail } from '@/hooks/useIssue';
+import useMovePage from '@/hooks/useMovePage';
+import { currentIssueState } from '@/stores/atoms/currentIssue';
+import { ColumnWrapper } from '@/styles/common';
 
 const IssueDetail = () => {
   const { id } = useParams();
-
-  const [issue, setIssue] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const getIssue = async () => {
-    setIsLoading(true);
-    const response = await axios.get(`/api/issues/${id}`);
-    if (response.data) {
-      setIssue(response.data);
-    }
-    setIsLoading(false);
+  const { data, isLoading } = useGetIssueDetail(Number(id));
+  const setCurrentIssue = useSetRecoilState(currentIssueState);
+  const [goHome] = useMovePage('/');
+  const handleDeleteClick = () => {
+    deleteIssue(Number(id));
+    goHome();
   };
 
   useEffect(() => {
-    getIssue();
-  }, []);
+    if (data) {
+      const currentIssueData = {
+        title: data.title,
+        author: data.author,
+        createdAt: data.createdAt,
+        image: data.image,
+        content: data.content,
+      };
+      setCurrentIssue(currentIssueData);
+    }
+  }, [data]);
 
-  const { issueId, author, issueCreateTime, issueStatus, commentCount, issueTitle } = issue;
-
-  // TODO: new-issue 버튼 클릭해서 새로운 이슈 페이지 이동 시 path가 누적되는 문제 해결하기
   return (
     <ColumnWrapper>
-      {!isLoading && (
+      {isLoading || !data ? (
+        <Loading />
+      ) : (
         <>
-          <S.IssueDetailHeaderWrapper>
-            <FlexBetween>
-              <Heading1>{issueTitle}</Heading1>
-              <S.ButtonBox>
-                <Button btnSize="small" btnColor="grey" text="Edit" />
-                <CustomLink
-                  path="new-issue"
-                  component={<Button btnSize="small" btnColor="primary" text="New Issue" />}
-                />
-              </S.ButtonBox>
-            </FlexBetween>
-            <IssueDetailInfo
-              issueId={issueId}
-              issueStatus={issueStatus}
-              author={author}
-              issueCreateTime={issueCreateTime}
-              commentCount={commentCount}
-            />
-          </S.IssueDetailHeaderWrapper>
+          <IssueDetailHeader data={data} />
           <S.ContentsWrapper>
             <S.CommentsConatiner>
               <Comment
-                issueAuthor={author}
-                imgUrl="https://avatars.githubusercontent.com/u/85419343?s=80&v=4"
-                userId={author}
-                createTime={issueCreateTime}
-                description=""
+                issueId={data.id}
+                issueAuthor={data.author}
+                imgUrl={data.image}
+                userId={data.author}
+                createdAt={data.createdAt}
+                description={data.content}
+                isIssueContent
               />
-              <CommentForm />
+              {data.comments.map(({ id: commentId, author, image, content, createdAt }) => (
+                <Comment
+                  key={commentId}
+                  issueId={data.id}
+                  commentId={commentId}
+                  imgUrl={image}
+                  createdAt={createdAt}
+                  description={content}
+                  userId={author}
+                  issueAuthor={data.author === author && author}
+                  isIssueContent={false}
+                />
+              ))}
+              <CommentForm usage="comment" isIssueContent={false} />
             </S.CommentsConatiner>
-            <SideBar />
+            <SideBar
+              assignees={data.assignees}
+              labels={data.labels}
+              milestone={data.milestones}
+              onClick={handleDeleteClick}
+            />
           </S.ContentsWrapper>
         </>
       )}

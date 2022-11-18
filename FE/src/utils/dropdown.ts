@@ -1,17 +1,31 @@
-type UniformMenuType = 'Author' | 'Assignee' | 'Label' | 'Milestone' | 'Filter';
+import { AssigneeDataType } from '@/types/issueTypes';
+import { LabelDataType } from '@/types/labelTypes';
+import { MilestoneDataType } from '@/types/milestoneTypes';
 
-export const getUniformMenus = (type: UniformMenuType, list) => {
+export type UniformMenuType =
+  | 'author'
+  | 'assignee'
+  | 'label'
+  | 'milestone'
+  | 'Assignees'
+  | 'Labels'
+  | 'Milestone';
+
+export type ListDataType = AssigneeDataType | LabelDataType | MilestoneDataType;
+
+export const getUniformMenus = (type: UniformMenuType, list: ListDataType) => {
   switch (type) {
-    case 'Author':
-    case 'Assignee':
-      return list.menus.map(v => ({ ...v, name: v.userId }));
-    case 'Label':
+    case 'author':
+    case 'assignee':
+    case 'Assignees':
+      return list.assignees.map(v => ({ ...v, name: v.userId }));
+    case 'label':
+    case 'Labels':
+      return list.labels.map(v => ({ ...v, name: v.title }));
+    case 'milestone':
     case 'Milestone':
-      return list.menus.map(v => ({ ...v, name: v.title }));
-    case 'Filter':
-      return list.menus.map((v, i) => ({ id: i, name: v }));
+      return list.milestones.map(v => ({ ...v, name: v.title }));
     default:
-      return list.menus;
-    // throw Error('Invaild menu type');
+      throw Error('Invaild menu type');
   }
 };

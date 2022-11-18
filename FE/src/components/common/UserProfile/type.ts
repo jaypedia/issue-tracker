@@ -1,8 +1,9 @@
 export type UserProfileStyle = {
-  size: 'large' | 'small';
+  size: 'signUp' | 'large' | 'small';
 };
 
 export type UserProfileProps = UserProfileStyle & {
-  imgUrl: string;
-  userId: string;
+  imgUrl?: string;
+  userId?: string;
+  onClick?: () => void;
 };

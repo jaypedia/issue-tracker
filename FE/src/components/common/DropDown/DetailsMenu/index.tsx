@@ -2,39 +2,29 @@ import * as S from '../style';
 
 import { DetailsMenuProps } from '@/components/common/DropDown/type';
 import UserProfile from '@/components/common/UserProfile';
-import { getUniformMenus } from '@/utils/dropdown';
+import useSideBar from '@/hooks/useSideBar';
 
-type DetailsMenuItemProps = {
+type DetailsCheckMenuItemProps = {
   menu: string;
-  indicatorType?: 'large' | 'small' | 'setting';
-};
-
-type DetailsCheckMenuItem = DetailsMenuItemProps & {
   checkType?: 'checkBox' | 'radio';
   image?: string;
   backgroundColor?: string;
-};
-
-const DetailsMenuItem = ({ menu, indicatorType }: DetailsMenuItemProps) => {
-  return (
-    <S.DetailsMenuItem indicatorType={indicatorType}>
-      <button type="button">{menu}</button>
-    </S.DetailsMenuItem>
-  );
+  onClick: () => void;
 };
 
 const DetailsCheckMenuItem = ({
   menu,
-  indicatorType,
   checkType,
   image,
   backgroundColor,
-}: DetailsCheckMenuItem) => {
+  onClick,
+}: DetailsCheckMenuItemProps) => {
   const randomId = Math.random().toString();
+
   return (
-    <S.DetailsMenuItem indicatorType={indicatorType}>
+    <S.DetailsMenuItem indicatorType="setting">
       <input type={checkType} id={randomId} name={checkType} />
-      <S.CheckLabel htmlFor={randomId}>
+      <S.CheckLabel htmlFor={randomId} onClick={onClick}>
         <S.Menu>
           {image && <UserProfile imgUrl={image} userId={menu} size="small" />}
           {backgroundColor && <S.LabelColorCircle backgroundColor={backgroundColor} />}
@@ -46,37 +36,38 @@ const DetailsCheckMenuItem = ({
 };
 
 const DetailsMenu = ({
+  title,
+  indicatorTitle,
   menuPosition,
   detailsMenuList,
-  indicatorType,
-  hasCheckBox,
   checkType,
 }: DetailsMenuProps) => {
-  const menuList = getUniformMenus(detailsMenuList.indicator, detailsMenuList);
+  const { handleMenuClick, menuList } = useSideBar(indicatorTitle, detailsMenuList);
+
+  type MenuListType = {
+    id: number;
+    name: string;
+    image: string;
+    backgroundColor: string;
+  };
 
   return (
-    <S.DetailsMenu menuPosition={menuPosition} indicatorType={indicatorType}>
+    <S.DetailsMenu menuPosition={menuPosition} indicatorType="setting">
       <div>
         <S.DetailsMenuTitleWrapper>
-          <S.DetailsMenuTitle indicatorType={indicatorType}>
-            {detailsMenuList.title}
-          </S.DetailsMenuTitle>
+          <S.DetailsMenuTitle indicatorType="setting">{title}</S.DetailsMenuTitle>
         </S.DetailsMenuTitleWrapper>
         <ul>
-          {menuList.map(({ id, name, image, backgroundColor }) =>
-            hasCheckBox ? (
-              <DetailsCheckMenuItem
-                key={id}
-                menu={name}
-                image={image}
-                backgroundColor={backgroundColor}
-                indicatorType={indicatorType}
-                checkType={checkType}
-              />
-            ) : (
-              <DetailsMenuItem key={id} menu={name} indicatorType={indicatorType} />
-            ),
-          )}
+          {menuList.map(({ id, name, image, backgroundColor }: MenuListType) => (
+            <DetailsCheckMenuItem
+              key={id}
+              menu={name}
+              image={image}
+              backgroundColor={backgroundColor}
+              checkType={checkType}
+              onClick={() => handleMenuClick(id)}
+            />
+          ))}
         </ul>
       </div>
     </S.DetailsMenu>

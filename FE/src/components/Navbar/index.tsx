@@ -5,13 +5,14 @@ import TabLink from '@/components/TabLink';
 
 type NavbarPropsType = {
   btnText: string;
+  onClick: () => void;
 };
 
-const Navbar = ({ btnText }: NavbarPropsType) => {
+const Navbar = ({ btnText, onClick }: NavbarPropsType) => {
   return (
     <S.NavbarContainer>
       <TabLink />
-      <Button btnSize="small" btnColor="primary" text={btnText} />
+      <Button size="small" color="primary" text={btnText} onClick={onClick} />
     </S.NavbarContainer>
   );
 };

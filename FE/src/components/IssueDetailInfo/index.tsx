@@ -5,9 +5,22 @@ import { ISSUE_STATUS } from '@/constants/constants';
 import ClosedIcon from '@/icons/Closed';
 import OpenIcon from '@/icons/Open';
 import { COLOR } from '@/styles/color';
-import { convertFirstLetterToUppercase, getIssueInfoSentence } from '@/utils/issue';
+import { IssueStatusType } from '@/types/issueTypes';
+import { convertFirstLetterToUppercase, getIssueDetailInfoSentence } from '@/utils/issue';
 
-const IssueDetailInfo = ({ issueId, issueStatus, author, issueCreateTime, commentCount }) => {
+type IssueDetailInfoProps = {
+  issueStatus: IssueStatusType;
+  author: string;
+  createdAt: string;
+  commentCount: number;
+};
+
+const IssueDetailInfo = ({
+  issueStatus,
+  author,
+  createdAt,
+  commentCount,
+}: IssueDetailInfoProps) => {
   return (
     <S.IssueInfoBox>
       <Label
@@ -20,11 +33,9 @@ const IssueDetailInfo = ({ issueId, issueStatus, author, issueCreateTime, commen
         icon={issueStatus === ISSUE_STATUS.open ? <OpenIcon /> : <ClosedIcon />}
       />
       <p>
-        {getIssueInfoSentence({
-          issueId,
-          issueStatus,
+        {getIssueDetailInfoSentence({
           author,
-          issueCreateTime,
+          createdAt,
           commentCount,
         })}
       </p>

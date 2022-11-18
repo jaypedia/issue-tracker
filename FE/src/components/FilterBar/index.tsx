@@ -1,29 +1,11 @@
-import DropDown from '../common/DropDown';
+import FilterDropDown from './FilterDropDown';
 import SearchInput from './SearchInput';
 import * as S from './style';
-
-const filterBoxDetailsMenu = {
-  indicator: 'Filter',
-  title: 'Filter Issues',
-  menus: [
-    'Open issues',
-    'Closed issues',
-    'Your issues',
-    'Everything assigned to you',
-    'Everything you commented',
-  ],
-};
-// TODO : 체크아이콘 추가 , 체크한 메뉴만 아이콘표시
 
 const FilterBar = () => {
   return (
     <S.FilterBar>
-      <DropDown
-        indicatorType="large"
-        indicatorTitle="Filter"
-        menuPosition="left"
-        detailsMenuList={filterBoxDetailsMenu}
-      />
+      <FilterDropDown />
       <SearchInput />
     </S.FilterBar>
   );

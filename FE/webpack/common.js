@@ -7,11 +7,7 @@ const { argv } = require('yargs');
 
 const isDevelopment = argv.env === 'development';
 
-dotenv.config({ path: path.resolve('src', './.env') });
-const WebpackEnvironmentPlugin = new webpack.EnvironmentPlugin([
-  'OAUTH_URL_GITHUB',
-  'CLIENT_ID_GITHUB',
-]);
+dotenv.config({ path: path.resolve('.env') });
 
 module.exports = {
   entry: {
@@ -79,6 +75,10 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({ React: 'react' }),
     isDevelopment && new ReactRefreshWebpackPlugin(),
-    WebpackEnvironmentPlugin,
+    new webpack.DefinePlugin({
+      'process.env.OAUTH_URL_GITHUB': JSON.stringify(process.env.OAUTH_URL_GITHUB),
+      'process.env.CLIENT_ID_GITHUB': JSON.stringify(process.env.CLIENT_ID_GITHUB),
+      'process.env.BASE_URL': JSON.stringify(process.env.BASE_URL),
+    }),
   ].filter(Boolean),
 };

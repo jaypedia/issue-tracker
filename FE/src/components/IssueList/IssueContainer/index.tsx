@@ -1,23 +1,24 @@
 import IssueItem from '../IssueItem';
-import * as S from '../style';
-import { IssueListType } from '../type';
+import * as S from './style';
+
+import { IssueType } from '@/types/issueTypes';
 
 const EmptyList = ({ text }: { text: string }) => {
   return <S.EmptyList>{text}</S.EmptyList>;
 };
 
-const IssueItems = ({ list }: IssueListType) => {
+const IssueItems = ({ issues }: { issues: IssueType[] }) => {
   return (
     <ul>
-      {list.map(issue => (
+      {issues.map(issue => (
         <IssueItem key={issue.id} issue={issue} />
       ))}
     </ul>
   );
 };
 
-const IssueContainer = ({ list }: IssueListType) => {
-  return list?.length ? <IssueItems list={list} /> : <EmptyList text="Welcome to issues!" />;
+const IssueContainer = ({ issues }: { issues: IssueType[] }) => {
+  return issues?.length ? <IssueItems issues={issues} /> : <EmptyList text="Welcome to issues!" />;
 };
 
 export default IssueContainer;

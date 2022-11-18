@@ -24,14 +24,20 @@ jobs:
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
 
+      - name: Setting .env
+        env:
+          OAUTH_URL_GITHUB: ${{ secrets.OAUTH_URL_GITHUB }}
+          CLIENT_ID_GITHUB: ${{ secrets.CLIENT_ID_GITHUB }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+
+        run: |
+          echo "OAUTH_URL_GITHUB=$OAUTH_URL_GITHUB" >> .env
+          echo "CLIENT_ID_GITHUB=$CLIENT_ID_GITHUB" >> .env
+          echo "BASE_URL=$BASE_URL" >> .env
+          cat .env
+
       - name: Install Dependencies
         run: npm install
-
-      - name: Setting .env
-        run: |
-          echo "OAUTH_URL_GITHUB=${{ secrets.OAUTH_URL_GITHUB }}" >> .env
-          echo "CLIENT_ID_GITHUB=${{ secrets.CLIENT_ID_GITHUB }}" >> .env
-          cat .env
 
       - name: Build
         run: npm run build

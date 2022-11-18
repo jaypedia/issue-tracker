@@ -1,24 +1,30 @@
 import * as S from './style';
 
+import { useGetLabel } from '@/hooks/useLabel';
+import { useGetAllMilestone } from '@/hooks/useMilestone';
 import { Label } from '@/icons/Label';
 import { Milestone } from '@/icons/Milestone';
 
 const LabelTab = () => {
+  const { data } = useGetLabel();
+
   return (
     <S.TabItem>
       <Label />
-      <p>Label</p>
-      <S.Count>(3)</S.Count>
+      <p>Labels</p>
+      <S.Count>{data?.labelCount || 0}</S.Count>
     </S.TabItem>
   );
 };
 
 const MilestoneTab = () => {
+  const { data } = useGetAllMilestone();
+
   return (
     <S.TabItem>
       <Milestone />
       <p>Milestones</p>
-      <S.Count>(1)</S.Count>
+      <S.Count>{data?.allMilestoneCount || 0}</S.Count>
     </S.TabItem>
   );
 };
@@ -26,7 +32,7 @@ const MilestoneTab = () => {
 const TabLink = () => {
   return (
     <S.TabLink>
-      <S.Link to="/label">
+      <S.Link to="/labels">
         <LabelTab />
       </S.Link>
       <S.Link to="/milestones">

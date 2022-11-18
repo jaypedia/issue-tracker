@@ -12,6 +12,8 @@ const ListHeader = styled.div<ListStyleType>`
   padding: ${({ type }) => (type ? '15px 20px' : '15px')};
   color: ${({ theme: { color }, type }) => (type ? color.text : color.cell.font.initial)};
   background: ${({ theme: { color } }) => color.cell.bg.cellHeaderBg};
+  border-top-right-radius: 16px;
+  border-top-left-radius: 16px;
 `;
 
 const Item = styled.li<ListStyleType>`
@@ -29,7 +31,6 @@ const ListContainer = styled.div`
   margin: 24px 0;
   border: 1px solid ${({ theme: { color } }) => color.line};
   border-radius: 16px;
-  overflow: hidden;
 `;
 
 export { ListHeader, Item, ListContainer };

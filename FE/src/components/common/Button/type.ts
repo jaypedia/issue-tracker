@@ -5,6 +5,7 @@ type ButtonType = {
   type?: 'button' | 'submit' | 'reset';
   isText?: boolean;
   onClick?: () => void;
+  disabled?: boolean;
 };
 
 export type ButtonStyleProps = ButtonType & {

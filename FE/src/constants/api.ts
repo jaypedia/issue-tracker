@@ -4,4 +4,4 @@ export const API = {
   LABELS: 'labels',
   MILESTONES: 'milestones',
   ASSIGNEES: 'assignees',
-};
+} as const;

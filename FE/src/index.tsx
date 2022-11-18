@@ -1,4 +1,4 @@
-import React from 'react';
+import axios from 'axios';
 import { createRoot } from 'react-dom/client';
 
 import App from '@/App';
@@ -10,8 +10,8 @@ if (process.env.NODE_ENV === 'development') {
   worker.start();
 }
 
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-);
+if (process.env.NODE_ENV === 'production') {
+  axios.defaults.baseURL = process.env.BASE_URL;
+}
+
+root.render(<App />);

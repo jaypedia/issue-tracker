@@ -1,12 +1,12 @@
 import * as S from './style';
 import { ProgressBarProps, ProgressBarInfoProps } from './type';
 
-// TODO: Milestone Link to 해당하는 Milestone으로 이동되도록 변경
 const ProgressBarInfo = ({
   size,
   openIssueCount,
   closedIssueCount,
   percent,
+  title,
 }: ProgressBarInfoProps): JSX.Element => {
   switch (size) {
     case 'large':
@@ -20,14 +20,14 @@ const ProgressBarInfo = ({
         </S.MilestoneStats>
       );
     case 'small':
-      return <S.MilestoneLink to="/">Week 4</S.MilestoneLink>;
+      return <S.MilestoneLink to="/milestones">{title}</S.MilestoneLink>;
     default:
       throw new Error('Unknown size');
   }
 };
 
-const ProgressBar = ({ size, openIssueCount, closedIssueCount }: ProgressBarProps) => {
-  const percent = Math.floor((closedIssueCount / (openIssueCount + closedIssueCount)) * 100);
+const ProgressBar = ({ size, openIssueCount, closedIssueCount, title }: ProgressBarProps) => {
+  const percent = Math.floor((closedIssueCount / (openIssueCount + closedIssueCount)) * 100) || 0;
 
   return (
     <S.ProgressBarWrapper size={size}>
@@ -39,6 +39,7 @@ const ProgressBar = ({ size, openIssueCount, closedIssueCount }: ProgressBarProp
         openIssueCount={openIssueCount}
         closedIssueCount={closedIssueCount}
         percent={percent}
+        title={title}
       />
     </S.ProgressBarWrapper>
   );

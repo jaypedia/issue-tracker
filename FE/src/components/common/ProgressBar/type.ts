@@ -2,6 +2,7 @@ export type ProgressBarProps = {
   size: 'large' | 'small';
   openIssueCount: number;
   closedIssueCount: number;
+  title?: string;
 };
 
 export type ProgressBarInfoProps = ProgressBarProps & {

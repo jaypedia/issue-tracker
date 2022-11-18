@@ -1,7 +1,6 @@
-# 이슈 관리 시스템
+# <img height="30px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" />  이슈 관리 시스템
 
-##  <img height="25px" src="https://user-images.githubusercontent.com/78953393/202719860-09d6187f-fbdb-4a25-9227-79ad905faa26.jpeg" /> Issue-Tracker
-
+## <img height="20px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> [Issue-Tracker](https://issuetracker.r-e.kr/login)
 <table>
   <tr>
     <td>
@@ -39,13 +38,19 @@
   </tr>
 </table>
 
-## 프로젝트 소개
+## <img height="20px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> 프로젝트 소개
 
 ### 프로젝트 기간
 
 ### 프로젝트 기획 및 설명
 
-## Repository
+## <img height="20px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> 기술 스택
+
+### BE
+
+### FE
+
+## <img height="20px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> Repository
 
 ### BE
 [Dev-BE](https://github.com/crispindeity/issue-tracker/tree/dev-BE)
@@ -53,11 +58,7 @@
 ### FE
 [Dev-FE](https://github.com/crispindeity/issue-tracker/tree/dev-FE)
 
-## 💻 Wiki
-### [Wiki Home](https://github.com/crispindeity/issue-tracker/wiki)
-### [Wiki API](https://github.com/crispindeity/issue-tracker/wiki/Issue-Tracker-API-명세-📝)
+## <img height="20px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> ERD
 
-## ERD
-
-## Rest Doc
+## <img height="20px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> Rest Doc
 ### [Rest Doc](https://api.rarus-be.com/docs/api/index.html)

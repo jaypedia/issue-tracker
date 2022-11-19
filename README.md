@@ -58,18 +58,15 @@
 
 
 <div>
-  <h3 align="center">🍳 Back Tech Stack 🍳</h3>
-  <p align="center">
+  <p align="left">
     <img src="https://img.shields.io/badge/JAVA-F53916?style=flat-square&logo=JAVA&logoColor=white"/></a>&nbsp
-    <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=Spring&logoColor=white"/></a>&nbsp
     <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat-square&logo=Spring Boot&logoColor=white"/></a>&nbsp
     </br>
     <img src="https://img.shields.io/badge/MySql-E6B91E?style=flat-square&logo=MySql&logoColor=white"/></a>&nbsp
-    <img src="https://img.shields.io/badge/Maria-00599C?style=flat-square&logo=mariadb&logoColor=white"/></a>&nbsp
+    <img src="https://img.shields.io/badge/H2-00599C?style=flat-square&logo=mariadb&logoColor=white"/></a>&nbsp
     </br>
     <img src="https://img.shields.io/badge/Docker-DB3552?style=flat-square&logo=Docker&logoColor=white"/></a>&nbsp
     <img src="https://img.shields.io/badge/Amazon_Aws-333664?style=flat-square&logo=amazon-aws&logoColor=white"/></a>&nbsp
-    <img src="https://img.shields.io/badge/Git-C71D23?style=flat-square&logo=Git&logoColor=white"/></a>&nbsp
     </br>
     <img src="https://img.shields.io/badge/IntelliJ IDEA-161A36?style=flat-square&logo=IntelliJ IDEA&logoColor=white"/></a>&nbsp
     <img src="https://img.shields.io/badge/GitHub-333664?style=flat-square&logo=GitHub&logoColor=white"/></a>&nbsp

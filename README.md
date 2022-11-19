@@ -48,30 +48,29 @@
 
 ### BE
 
-<div align=left>
-<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
-<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
-<img src="https://img.shields.io/badge/spring data jpa-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
-<img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white">
-<img src="https://img.shields.io/badge/junit5-25A162?style=for-the-badge&logo=junit5&logoColor=white">
-<img src="https://img.shields.io/badge/testcontainers-2496ED?style=for-the-badge&logo=docker&logoColor=white">
-
-
-<div>
-  <p align="left">
-    <img src="https://img.shields.io/badge/JAVA-F53916?style=flat-square&logo=JAVA&logoColor=white"/></a>&nbsp
-    <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat-square&logo=Spring Boot&logoColor=white"/></a>&nbsp
-    </br>
-    <img src="https://img.shields.io/badge/MySql-E6B91E?style=flat-square&logo=MySql&logoColor=white"/></a>&nbsp
-    <img src="https://img.shields.io/badge/H2-00599C?style=flat-square&logo=mariadb&logoColor=white"/></a>&nbsp
-    </br>
-    <img src="https://img.shields.io/badge/Docker-DB3552?style=flat-square&logo=Docker&logoColor=white"/></a>&nbsp
-    <img src="https://img.shields.io/badge/Amazon_Aws-333664?style=flat-square&logo=amazon-aws&logoColor=white"/></a>&nbsp
-    </br>
-    <img src="https://img.shields.io/badge/IntelliJ IDEA-161A36?style=flat-square&logo=IntelliJ IDEA&logoColor=white"/></a>&nbsp
-    <img src="https://img.shields.io/badge/GitHub-333664?style=flat-square&logo=GitHub&logoColor=white"/></a>&nbsp
-  </p>
-</div>
+<img src="https://img.shields.io/badge/JAVA 11-F53916?style=for-the-badge&logo=JAVA&logoColor=white"/></a>
+</br>
+<img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/JUnit5-25A162?style=for-the-badge&logo=JUnit5&logoColor=white"/></a>
+</br>
+<img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=Gradle&logoColor=white"/></a>
+</br>
+<img src="https://img.shields.io/badge/MySql-E6B91E?style=for-the-badge&logo=MySql&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/H2-00599C?style=for-the-badge&logoColor=white"/></a>
+</br>
+<img src="https://img.shields.io/badge/GitHub-333664?style=for-the-badge&logo=GitHub&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white"/></a>
+</br>
+<img src="https://img.shields.io/badge/GitHub Actions-2088FF?style=for-the-badge&logo=GitHub Actions&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white"/></a>
+</br>
+<img src="https://img.shields.io/badge/Amazon_Aws-333664?style=for-the-badge&logo=amazon-aws&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/Amazon_EC2-FF9900?style=for-the-badge&logo=amazon-ec2&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/Amazon_S3-569A31?style=for-the-badge&logo=amazon-s3&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/Amazon_Cloud_Front-569A31?style=for-the-badge&logo=Amazon_Cloud_Front&logoColor=white"/></a>
+</br>
+<img src="https://img.shields.io/badge/IntelliJ IDEA-000000?style=for-the-badge&logo=IntelliJ IDEA&logoColor=white"/></a>
+</br>
 
 ### FE
 

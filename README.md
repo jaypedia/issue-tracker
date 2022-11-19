@@ -1,6 +1,6 @@
-# <img height="30px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" />  이슈 관리 시스템
+# <img height="30px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> [Issue-Tracker](https://issuetracker.r-e.kr/login)
 
-## <img height="20px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> [Issue-Tracker](https://issuetracker.r-e.kr/login)
+## 구성원
 <table>
   <tr>
     <td>
@@ -36,6 +36,7 @@
     <td><b>Front-End</b></td>
     <td><b>Front-End</b></td>
   </tr>
+
 </table>
 
 ## <img height="20px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> 프로젝트 소개
@@ -46,7 +47,7 @@
 
 ## <img height="20px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> 기술 스택
 
-### BE
+### <img height="25px" src="https://user-images.githubusercontent.com/78953393/202858081-856ac9dd-6d18-43f3-acb8-73cb130dbfe3.png" /> BE 
 
 <img src="https://img.shields.io/badge/JAVA 11-F53916?style=for-the-badge&logo=JAVA&logoColor=white"/></a>
 </br>

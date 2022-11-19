@@ -1,6 +1,7 @@
 # <img height="30px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> [Issue-Tracker](https://issuetracker.r-e.kr/login)
 
-## 구성원
+## <img height="25px" src="https://user-images.githubusercontent.com/78953393/202858325-2895d601-1043-4921-91b6-6238eefa7f84.png" /> 구성원
+
 <table>
   <tr>
     <td>

@@ -84,7 +84,10 @@
 ### FE
 [Dev-FE](https://github.com/crispindeity/issue-tracker/tree/dev-FE)
 
+---
+
 ## <img height="20px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> ERD
+<img width="927" alt="스크린샷 2022-11-21 오후 3 33 00" src="https://user-images.githubusercontent.com/79444040/202981176-f5dc75c3-631a-4ecd-8eaa-2ac382a6723d.png">
 
 ## <img height="20px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> Rest Doc
 ### [Rest Doc](https://api.rarus-be.com/docs/api/index.html)

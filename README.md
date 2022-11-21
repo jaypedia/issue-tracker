@@ -139,10 +139,6 @@
  ┃ ┃ ┃   ┗ 📂 service
  ┃ ┗ 📂resources
  ┗ 📜README.md
- 
- 📦src
-  ┣ 📂main
-  ┗ 📜Token.java
 ```
 
 ### FE

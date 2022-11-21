@@ -43,6 +43,7 @@
 ## <img height="20px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> 프로젝트 소개
 
 ### 프로젝트 기간
+- ***2022.06 ~ 2022.11***
 
 ### 프로젝트 기획 및 설명
 
@@ -75,15 +76,82 @@
 </br>
 
 ### FE
+- FE 기술스택 채우기
 
-## <img height="20px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> Repository
+## <img height="20px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> Repository 및 폴더구조
 
 ### BE
 [Dev-BE](https://github.com/crispindeity/issue-tracker/tree/dev-BE)
 
+### 🗂 BE 폴더구조
+```directory
+📦 src
+ ┣ 📂 docs
+ ┣ 📂 main
+ ┃ ┣ 📂 generated
+ ┃ ┃
+ ┃ ┣ 📂 java
+ ┃ ┃ ┣ 📂 config
+ ┃ ┃ ┣ 📂 controller
+ ┃ ┃ ┃ ┗ 📂 page
+ ┃ ┃ ┃
+ ┃ ┃ ┣ 📂 domain
+ ┃ ┃ ┃ ┣ 📂 assignee
+ ┃ ┃ ┃ ┣ 📂 comment
+ ┃ ┃ ┃ ┣ 📂 issue
+ ┃ ┃ ┃ ┣ 📂 label
+ ┃ ┃ ┃ ┣ 📂 member
+ ┃ ┃ ┃ ┗ 📂 milestone
+ ┃ ┃ ┃
+ ┃ ┃ ┣ 📂 exception
+ ┃ ┃ ┣ 📂 exceptionhandler
+ ┃ ┃ ┣ 📂 login
+ ┃ ┃ ┃ ┣ 📂 interceptor
+ ┃ ┃ ┃ ┣ 📂 jwt
+ ┃ ┃ ┃ ┗ 📂 oauth
+ ┃ ┃ ┃   ┣ 📂 config
+ ┃ ┃ ┃   ┣ 📂 dto
+ ┃ ┃ ┃   ┗ 📂 repository
+ ┃ ┃ ┃
+ ┃ ┃ ┣ 📂 service
+ ┃ ┃ ┃ ┗ 📂 dto
+ ┃ ┃ ┃   ┣ 📂 request
+ ┃ ┃ ┃   ┗ 📂 response
+ ┃ ┃ ┃
+ ┃ ┃ ┗ 📂 util
+ ┃ ┗ 📂 resources
+ ┃
+ ┣ 📂 test
+ ┃ ┣ 📂 java
+ ┃ ┃ ┗ 📂 team20
+ ┃ ┃ ┃ ┗ 📂 issuetracker
+ ┃ ┃ ┃   ┣ 📂 config
+ ┃ ┃ ┃   ┣ 📂 controller
+ ┃ ┃ ┃   ┃
+ ┃ ┃ ┃   ┣ 📂 docs
+ ┃ ┃ ┃   ┃ ┣ 📂 config
+ ┃ ┃ ┃   ┃ ┗ 📂 util
+ ┃ ┃ ┃   ┃
+ ┃ ┃ ┃   ┣ 📂 integration
+ ┃ ┃ ┃   ┃ ┣ 📂 controller
+ ┃ ┃ ┃   ┃ ┗ 📂 service
+ ┃ ┃ ┃   ┃
+ ┃ ┃ ┃   ┗ 📂 service
+ ┃ ┗ 📂resources
+ ┗ 📜README.md
+ 
+ 📦src
+  ┣ 📂main
+  ┗ 📜Token.java
+```
+
 ### FE
 [Dev-FE](https://github.com/crispindeity/issue-tracker/tree/dev-FE)
 
+### FE 폴더구조
+```directory
+채워주세요 !
+```
 ---
 
 ## <img height="20px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> ERD

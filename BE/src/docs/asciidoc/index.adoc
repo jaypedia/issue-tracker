@@ -350,6 +350,268 @@ include::{snippets}/issue-controller-doc-test/이슈_필터_조회/httpie-reques
 
 === 마일스톤 저장 API
 
+==== Request
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_저장/http-request.adoc[]
+
+==== Request Body
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_저장/request-body.adoc[]
+
+==== Request Fields
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_저장/request-fields.adoc[]
+
+==== Response
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_저장/http-response.adoc[]
+
+==== Response Body
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_저장/response-body.adoc[]
+
+==== Response Fields
+
+[cols="1, 1"]
+|===
+|Value|Description
+
+|1
+|저장된 마일스톤 아이디
+|===
+
+==== Curl And Httpie
+
+===== Curl
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_저장/curl-request.adoc[]
+
+===== Httpie
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_저장/httpie-request.adoc[]
+
+'''
+
+=== 마일스톤 삭제 API
+
+==== Request
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_삭제/http-request.adoc[]
+
+==== Path Parameter
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_삭제/path-parameters.adoc[]
+
+==== Response
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_삭제/http-response.adoc[]
+
+==== Response Body
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_삭제/response-body.adoc[]
+
+==== Response Fields
+
+[cols="1, 1"]
+|===
+|Value|Description
+
+|1
+|삭제된 마일스톤 아이디
+|===
+
+==== Curl And Httpie
+
+===== Curl
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_삭제/curl-request.adoc[]
+
+===== Httpie
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_삭제/httpie-request.adoc[]
+
+'''
+
+=== 마일스톤 수정 API
+
+==== Request
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_수정/http-request.adoc[]
+
+==== Path Parameter
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_수정/path-parameters.adoc[]
+
+==== Request Body
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_수정/request-body.adoc[]
+
+==== Request Fields
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_수정/request-fields.adoc[]
+
+==== Response
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_수정/http-response.adoc[]
+
+==== Response Body
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_수정/response-body.adoc[]
+
+==== Response Fields
+
+[cols="1, 1"]
+|===
+|Value|Description
+
+|1
+|수정된 마일스톤 아이디
+|===
+
+==== Curl And Httpie
+
+===== Curl
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_수정/curl-request.adoc[]
+
+===== Httpie
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_수정/httpie-request.adoc[]
+
+'''
+
+=== 마일스톤 전체 조회 API
+
+==== Request
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_전체조회/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_전체조회/http-response.adoc[]
+
+==== Response Body
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_전체조회/response-body.adoc[]
+
+==== Response Fields
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_전체조회/response-fields.adoc[]
+
+==== Curl And Httpie
+
+===== Curl
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_전체조회/curl-request.adoc[]
+
+===== Httpie
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_전체조회/httpie-request.adoc[]
+
+'''
+
+=== 마일스톤 단일 조회 API
+
+==== Request
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_단일조회/http-request.adoc[]
+
+==== Path Parameters
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_단일조회/path-parameters.adoc[]
+
+==== Response
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_단일조회/http-response.adoc[]
+
+==== Response Body
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_단일조회/response-body.adoc[]
+
+==== Response Fields
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_단일조회/response-fields.adoc[]
+
+==== Curl And Httpie
+
+===== Curl
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_단일조회/curl-request.adoc[]
+
+===== Httpie
+
+include::{snippets}/milestone-controller-doc-test/마일스톤_단일조회/httpie-request.adoc[]
+
+'''
+
+=== 열려있는 마일스톤 조회 API
+
+==== Request
+
+include::{snippets}/milestone-controller-doc-test/열려있는_마일스톤_조회/http-request.adoc[]
+
+==== Path Parameters
+
+include::{snippets}/milestone-controller-doc-test/열려있는_마일스톤_조회/request-parameters.adoc[]
+
+==== Response
+
+include::{snippets}/milestone-controller-doc-test/열려있는_마일스톤_조회/http-response.adoc[]
+
+==== Response Body
+
+include::{snippets}/milestone-controller-doc-test/열려있는_마일스톤_조회/response-body.adoc[]
+
+==== Response Fields
+
+include::{snippets}/milestone-controller-doc-test/열려있는_마일스톤_조회/response-fields.adoc[]
+
+==== Curl And Httpie
+
+===== Curl
+
+include::{snippets}/milestone-controller-doc-test/열려있는_마일스톤_조회/curl-request.adoc[]
+
+===== Httpie
+
+include::{snippets}/milestone-controller-doc-test/열려있는_마일스톤_조회/httpie-request.adoc[]
+
+'''
+
+=== 닫혀있는 마일스톤 조회 API
+
+==== Request
+
+include::{snippets}/milestone-controller-doc-test/닫혀있는_마일스톤_조회/http-request.adoc[]
+
+==== Path Parameters
+
+include::{snippets}/milestone-controller-doc-test/닫혀있는_마일스톤_조회/request-parameters.adoc[]
+
+==== Response
+
+include::{snippets}/milestone-controller-doc-test/닫혀있는_마일스톤_조회/http-response.adoc[]
+
+==== Response Body
+
+include::{snippets}/milestone-controller-doc-test/닫혀있는_마일스톤_조회/response-body.adoc[]
+
+==== Response Fields
+
+include::{snippets}/milestone-controller-doc-test/닫혀있는_마일스톤_조회/response-fields.adoc[]
+
+==== Curl And Httpie
+
+===== Curl
+
+include::{snippets}/milestone-controller-doc-test/닫혀있는_마일스톤_조회/curl-request.adoc[]
+
+===== Httpie
+
+include::{snippets}/milestone-controller-doc-test/닫혀있는_마일스톤_조회/httpie-request.adoc[]
+
+'''
+
 == 레이블 API
 
 === 레이블 저장 API
@@ -742,268 +1004,3 @@ include::{snippets}/o-auth-controller-doc-test/maintain_동작_성공/curl-reque
 
 include::{snippets}/o-auth-controller-doc-test/maintain_동작_성공/httpie-request.adoc[]
 
-'''
-
-== 마일스톤 API
-
-=== 마일스톤 저장 API
-
-==== Request
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_저장/http-request.adoc[]
-
-==== Request Body
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_저장/request-body.adoc[]
-
-==== Request Fields
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_저장/request-fields.adoc[]
-
-==== Response
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_저장/http-response.adoc[]
-
-==== Response Body
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_저장/response-body.adoc[]
-
-==== Response Fields
-
-[cols="1, 1"]
-|===
-|Value|Description
-
-|1
-|저장된 마일스톤 아이디
-|===
-
-==== Curl And Httpie
-
-===== Curl
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_저장/curl-request.adoc[]
-
-===== Httpie
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_저장/httpie-request.adoc[]
-
-'''
-
-=== 마일스톤 삭제 API
-
-==== Request
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_삭제/http-request.adoc[]
-
-==== Path Parameter
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_삭제/path-parameters.adoc[]
-
-==== Response
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_삭제/http-response.adoc[]
-
-==== Response Body
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_삭제/response-body.adoc[]
-
-==== Response Fields
-
-[cols="1, 1"]
-|===
-|Value|Description
-
-|1
-|삭제된 마일스톤 아이디
-|===
-
-==== Curl And Httpie
-
-===== Curl
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_삭제/curl-request.adoc[]
-
-===== Httpie
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_삭제/httpie-request.adoc[]
-
-'''
-
-=== 마일스톤 수정 API
-
-==== Request
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_수정/http-request.adoc[]
-
-==== Path Parameter
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_수정/path-parameters.adoc[]
-
-==== Request Body
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_수정/request-body.adoc[]
-
-==== Request Fields
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_수정/request-fields.adoc[]
-
-==== Response
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_수정/http-response.adoc[]
-
-==== Response Body
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_수정/response-body.adoc[]
-
-==== Response Fields
-
-[cols="1, 1"]
-|===
-|Value|Description
-
-|1
-|수정된 마일스톤 아이디
-|===
-
-==== Curl And Httpie
-
-===== Curl
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_수정/curl-request.adoc[]
-
-===== Httpie
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_수정/httpie-request.adoc[]
-
-'''
-
-=== 마일스톤 전체 조회 API
-
-==== Request
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_전체조회/http-request.adoc[]
-
-==== Response
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_전체조회/http-response.adoc[]
-
-==== Response Body
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_전체조회/response-body.adoc[]
-
-==== Response Fields
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_전체조회/response-fields.adoc[]
-
-==== Curl And Httpie
-
-===== Curl
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_전체조회/curl-request.adoc[]
-
-===== Httpie
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_전체조회/httpie-request.adoc[]
-
-'''
-
-=== 마일스톤 단일 조회 API
-
-==== Request
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_단일조회/http-request.adoc[]
-
-==== Path Parameters
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_단일조회/path-parameters.adoc[]
-
-==== Response
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_단일조회/http-response.adoc[]
-
-==== Response Body
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_단일조회/response-body.adoc[]
-
-==== Response Fields
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_단일조회/response-fields.adoc[]
-
-==== Curl And Httpie
-
-===== Curl
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_단일조회/curl-request.adoc[]
-
-===== Httpie
-
-include::{snippets}/milestone-controller-doc-test/마일스톤_단일조회/httpie-request.adoc[]
-
-'''
-
-=== 열려있는 마일스톤 조회 API
-
-==== Request
-
-include::{snippets}/milestone-controller-doc-test/열려있는_마일스톤_조회/http-request.adoc[]
-
-==== Path Parameters
-
-include::{snippets}/milestone-controller-doc-test/열려있는_마일스톤_조회/request-parameters.adoc[]
-
-==== Response
-
-include::{snippets}/milestone-controller-doc-test/열려있는_마일스톤_조회/http-response.adoc[]
-
-==== Response Body
-
-include::{snippets}/milestone-controller-doc-test/열려있는_마일스톤_조회/response-body.adoc[]
-
-==== Response Fields
-
-include::{snippets}/milestone-controller-doc-test/열려있는_마일스톤_조회/response-fields.adoc[]
-
-==== Curl And Httpie
-
-===== Curl
-
-include::{snippets}/milestone-controller-doc-test/열려있는_마일스톤_조회/curl-request.adoc[]
-
-===== Httpie
-
-include::{snippets}/milestone-controller-doc-test/열려있는_마일스톤_조회/httpie-request.adoc[]
-
-'''
-
-=== 닫혀있는 마일스톤 조회 API
-
-==== Request
-
-include::{snippets}/milestone-controller-doc-test/닫혀있는_마일스톤_조회/http-request.adoc[]
-
-==== Path Parameters
-
-include::{snippets}/milestone-controller-doc-test/닫혀있는_마일스톤_조회/request-parameters.adoc[]
-
-==== Response
-
-include::{snippets}/milestone-controller-doc-test/닫혀있는_마일스톤_조회/http-response.adoc[]
-
-==== Response Body
-
-include::{snippets}/milestone-controller-doc-test/닫혀있는_마일스톤_조회/response-body.adoc[]
-
-==== Response Fields
-
-include::{snippets}/milestone-controller-doc-test/닫혀있는_마일스톤_조회/response-fields.adoc[]
-
-==== Curl And Httpie
-
-===== Curl
-
-include::{snippets}/milestone-controller-doc-test/닫혀있는_마일스톤_조회/curl-request.adoc[]
-
-===== Httpie
-
-include::{snippets}/milestone-controller-doc-test/닫혀있는_마일스톤_조회/httpie-request.adoc[]

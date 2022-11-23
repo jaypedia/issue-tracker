@@ -1,7 +1,14 @@
 package team20.issuetracker.integration.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +18,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import team20.issuetracker.config.DatabaseCleanup;
 import team20.issuetracker.domain.issue.IssueStatus;
 import team20.issuetracker.domain.member.Member;
@@ -20,21 +32,18 @@ import team20.issuetracker.service.AssigneeService;
 import team20.issuetracker.service.IssueService;
 import team20.issuetracker.service.LabelService;
 import team20.issuetracker.service.MilestoneService;
-import team20.issuetracker.service.dto.request.*;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import team20.issuetracker.service.dto.request.RequestLabelDto;
+import team20.issuetracker.service.dto.request.RequestSaveIssueDto;
+import team20.issuetracker.service.dto.request.RequestSaveMilestoneDto;
+import team20.issuetracker.service.dto.request.RequestUpdateIssueRelatedDto;
+import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleWithContentDto;
+import team20.issuetracker.service.dto.request.RequestUpdateManyIssueStatus;
 
 @DisplayName("컨트롤러 - 레이블 통합 테스트")
 @Transactional
 @AutoConfigureMockMvc
 @SpringBootTest
-public class IssueControllerTest {
+class IssueControllerTest {
 
     private final MockMvc mvc;
     private final ObjectMapper mapper = new ObjectMapper();

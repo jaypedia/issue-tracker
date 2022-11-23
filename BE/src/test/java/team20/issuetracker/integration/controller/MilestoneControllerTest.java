@@ -1,7 +1,14 @@
 package team20.issuetracker.integration.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +18,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+
 import team20.issuetracker.config.DatabaseCleanup;
 import team20.issuetracker.domain.milestone.MilestoneStatus;
 import team20.issuetracker.login.jwt.JwtTokenProvider;
@@ -19,17 +29,11 @@ import team20.issuetracker.service.OauthService;
 import team20.issuetracker.service.dto.request.RequestSaveMilestoneDto;
 import team20.issuetracker.service.dto.request.RequestUpdateMilestoneDto;
 
-import java.time.LocalDate;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @DisplayName("컨트롤러 - 마일스톤 통합 테스트")
 @Transactional
 @AutoConfigureMockMvc
 @SpringBootTest
-public class MilestoneControllerTest {
+class MilestoneControllerTest {
 
     private final MockMvc mvc;
     private final ObjectMapper mapper = new ObjectMapper();

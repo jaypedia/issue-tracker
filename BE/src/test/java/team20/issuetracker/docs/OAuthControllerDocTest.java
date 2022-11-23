@@ -133,7 +133,7 @@ class OAuthControllerDocTest {
                 .andDo(
                         restDoc.document(
                                 requestFields(
-                                        fieldWithPath("id").type(JsonFieldType.NUMBER).description("토큰을 재발급 받으려는 유저의 아이디"),
+                                        fieldWithPath("oauthId").type(JsonFieldType.STRING).description("토큰을 재발급 받으려는 유저의 아이디"),
                                         fieldWithPath("refreshToken").type(JsonFieldType.STRING).description("액세스 토큰 만료 시 재발행을 위한 리프레시 토큰")
                                 )
                         )
@@ -187,7 +187,7 @@ class OAuthControllerDocTest {
 
     private RequestRefreshDto createRequestRefreshDto() {
         return RequestRefreshDto.builder()
-                .id(1L)
+                .oauthId("1")
                 .refreshToken("rfToken")
                 .build();
     }

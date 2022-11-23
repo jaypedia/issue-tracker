@@ -72,7 +72,6 @@ public class OauthService {
         String accessToken = jwtTokenProvider.getAccessToken(member);
         String refreshToken = jwtTokenProvider.getRefreshToken(member);
 
-        // 레디스에 id 가 아닌 oauthId 가 키 값으로 저장된다.
         redisTemplate
                 .opsForValue()
                 .set(String.valueOf(member.getOauthId()), refreshToken, jwtTokenProvider.getRefreshTokenValidityInMilliseconds(), TimeUnit.MILLISECONDS);
@@ -129,9 +128,9 @@ public class OauthService {
     }
 
     public String checkRefreshToken(RequestRefreshDto requestRefreshDto) {
-        Long id = requestRefreshDto.getId();
+        String id = requestRefreshDto.getOauthId();
         String fromClientRefreshToken = requestRefreshDto.getRefreshToken();
-        String storedToken = redisTemplate.opsForValue().get(String.valueOf(id));
+        String storedToken = redisTemplate.opsForValue().get(id);
         if (fromClientRefreshToken.equals(storedToken)) {
             return jwtTokenProvider.getAccessToken(fromClientRefreshToken);
         }

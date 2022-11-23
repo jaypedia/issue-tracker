@@ -115,7 +115,7 @@ class OauthControllerTest {
 
     private RequestRefreshDto createRequestRefreshDto() {
         return RequestRefreshDto.builder()
-                .id(1L)
+                .oauthId("1")
                 .refreshToken("rfToken")
                 .build();
     }

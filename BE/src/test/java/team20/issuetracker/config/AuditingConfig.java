@@ -10,7 +10,6 @@ public class AuditingConfig implements AuditorAware<String> {
 
     @Override
     public Optional<String> getCurrentAuditor() {
-        Optional<String> s = Optional.of("oauthId");
         return Optional.of("oauthId");
     }
 }

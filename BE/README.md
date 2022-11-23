@@ -76,7 +76,7 @@ Jenkins 등 다양한 툴이 있었지만 GitHub 자체에서 제공하는 툴�
 #### 페이징 처리 시 Count Query를 따로 작성하지 않아 발생했던 문제 해결
 - [Crispin 포스팅](https://crispindeity.github.io/posts/(PROJECT)페이징-처리-시-발생한-문제/)
 
-#### Controller 와 Request DTO 에서 Enum 을 사용했을때 발생하 문제 해결
+#### Controller 와 Request DTO 에서 Enum 을 사용했을때 발생했던 문제 해결
 - [Crispin 포스팅](https://crispindeity.github.io/posts/(PROJETC)Enum-Converter/)
 
 #### Swith - Case -> 인터페이스 분리 리팩토링

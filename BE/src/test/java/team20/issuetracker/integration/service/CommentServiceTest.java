@@ -1,5 +1,8 @@
 package team20.issuetracker.integration.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
+
 import team20.issuetracker.config.DatabaseCleanup;
 import team20.issuetracker.domain.comment.Comment;
 import team20.issuetracker.domain.comment.CommentRepository;
@@ -18,12 +22,10 @@ import team20.issuetracker.exception.CheckEntityException;
 import team20.issuetracker.login.oauth.Role;
 import team20.issuetracker.service.dto.request.RequestCommentDto;
 
-import static org.assertj.core.api.Assertions.*;
-
 @DisplayName("[통합 테스트] 코맨트 테스트")
 @Transactional
 @SpringBootTest
-public class CommentServiceTest {
+class CommentServiceTest {
 
     @Autowired
     private CommentRepository commentRepository;

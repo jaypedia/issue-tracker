@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @Getter
 public class RequestRefreshDto {
 
-    private Long id;
+    private String oauthId;
     private String refreshToken;
 
     @Builder
-    public RequestRefreshDto(Long id, String refreshToken) {
-        this.id = id;
+    public RequestRefreshDto(String oauthId, String refreshToken) {
+        this.oauthId = oauthId;
         this.refreshToken = refreshToken;
     }
 }

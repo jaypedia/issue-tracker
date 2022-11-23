@@ -1,11 +1,11 @@
 package team20.issuetracker.integration.service;
 
-import java.time.LocalDate;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -15,6 +15,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import team20.issuetracker.config.DatabaseCleanup;
 import team20.issuetracker.domain.assginee.Assignee;
@@ -37,14 +41,9 @@ import team20.issuetracker.service.dto.request.RequestUpdateIssueRelatedDto;
 import team20.issuetracker.service.dto.request.RequestUpdateIssueTitleWithContentDto;
 import team20.issuetracker.service.dto.request.RequestUpdateManyIssueStatus;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
-
 @Transactional
 @SpringBootTest
-public class IssueServiceTest {
+class IssueServiceTest {
 
     @Autowired
     private IssueRepository issueRepository;

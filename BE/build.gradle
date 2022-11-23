@@ -44,7 +44,8 @@ dependencies {
 
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
     testImplementation 'com.squareup.okhttp3:mockwebserver:4.10.0'
-
+    testImplementation 'org.testcontainers:testcontainers:1.17.6'
+    testImplementation "org.testcontainers:junit-jupiter:1.17.5"
     implementation "com.querydsl:querydsl-jpa"
     implementation "com.querydsl:querydsl-core"
     implementation "com.querydsl:querydsl-collections"
@@ -57,10 +58,10 @@ dependencies {
 
     asciidoctorExt "org.springframework.restdocs:spring-restdocs-asciidoctor:${assciidocVersion}"
     testImplementation "org.springframework.restdocs:spring-restdocs-mockmvc:${assciidocVersion}"
-
-    testRuntimeOnly 'com.h2database:h2'
+    runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

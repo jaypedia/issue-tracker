@@ -1,6 +1,13 @@
 package team20.issuetracker.integration.controller;
 
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,25 +17,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
 import team20.issuetracker.config.DatabaseCleanup;
 import team20.issuetracker.domain.assginee.Assignee;
 import team20.issuetracker.service.AssigneeService;
 import team20.issuetracker.service.dto.response.ResponseAssigneeDto;
 import team20.issuetracker.service.dto.response.ResponseAssigneesDto;
 
-import java.util.List;
-
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @DisplayName("컨트롤러 - 마일스톤 통합 테스트")
 @Transactional
 @AutoConfigureMockMvc
 @SpringBootTest
-public class AssigneeControllerTest {
+class AssigneeControllerTest {
 
     private final MockMvc mvc;
     private final ObjectMapper mapper = new ObjectMapper();

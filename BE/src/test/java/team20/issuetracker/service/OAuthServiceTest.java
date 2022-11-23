@@ -1,23 +1,20 @@
 package team20.issuetracker.service;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.assertj.core.api.SoftAssertions;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.MediaType;
@@ -27,7 +24,6 @@ import java.util.Optional;
 
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
-
 import team20.issuetracker.domain.member.Member;
 import team20.issuetracker.domain.member.MemberRepository;
 import team20.issuetracker.exception.MyJwtException;
@@ -143,12 +139,12 @@ class OAuthServiceTest {
         String refreshToken = "This is 1L User Refresh Token";
 
         RequestRefreshDto requestRefreshDto = RequestRefreshDto.builder()
-            .id(1L)
+                .oauthId("1")
             .refreshToken(refreshToken)
             .build();
 
         given(redisTemplate.opsForValue()).willReturn(valueOperations);
-        given(valueOperations.get(String.valueOf(requestRefreshDto.getId()))).willReturn(refreshToken);
+        given(valueOperations.get(String.valueOf(requestRefreshDto.getOauthId()))).willReturn(refreshToken);
         given(jwtTokenProvider.getAccessToken(requestRefreshDto.getRefreshToken())).willReturn(storedToken);
 
         // when
@@ -156,7 +152,7 @@ class OAuthServiceTest {
 
         // then
         then(redisTemplate).should().opsForValue();
-        then(valueOperations).should().get(String.valueOf(requestRefreshDto.getId()));
+        then(valueOperations).should().get(String.valueOf(requestRefreshDto.getOauthId()));
         then(jwtTokenProvider).should().getAccessToken(requestRefreshDto.getRefreshToken());
 
     }

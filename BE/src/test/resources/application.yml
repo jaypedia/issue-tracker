@@ -7,8 +7,15 @@ spring:
     init:
       mode: never
 
+oauth2:
+  client-id: clientId
+  client-secret: clientSecret
+  redirect-uri: redirectUrl
+  token-uri: tokenUrl
+  user-info-uri: userInfoUrl
+
 jwt:
-  secretKey: key
-  refreshSecretKey: key
+  secretKey: HRlELXqpSB
+  refreshSecretKey: HRlELXqpSB
   accessTokenExpiry: 10
   refreshTokenExpiry: 10

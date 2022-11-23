@@ -1,7 +1,5 @@
 package team20.issuetracker.config;
 
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -22,7 +20,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .order(1)
                 .addPathPatterns("/**");
     }
-
 
     @Override
     public void addFormatters(FormatterRegistry registry) {

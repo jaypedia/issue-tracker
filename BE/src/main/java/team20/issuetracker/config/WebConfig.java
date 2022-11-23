@@ -28,13 +28,13 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:9000", "https://issuetracker.r-e.kr")
-            .allowedMethods(
-                HttpMethod.GET.name(),
-                HttpMethod.POST.name(),
-                HttpMethod.DELETE.name(),
-                HttpMethod.OPTIONS.name())
-            .allowCredentials(true)
-            .maxAge(3600);
+                .allowedMethods(
+                        HttpMethod.GET.name(),
+                        HttpMethod.POST.name(),
+                        HttpMethod.DELETE.name(),
+                        HttpMethod.OPTIONS.name())
+                .allowCredentials(true)
+                .maxAge(3600);
     }
 
     @Override

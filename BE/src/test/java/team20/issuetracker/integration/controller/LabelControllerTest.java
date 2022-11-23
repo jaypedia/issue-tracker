@@ -1,6 +1,13 @@
 package team20.issuetracker.integration.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,19 +17,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
 import team20.issuetracker.config.DatabaseCleanup;
 import team20.issuetracker.service.LabelService;
 import team20.issuetracker.service.dto.request.RequestLabelDto;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("컨트롤러 - 레이블 통합 테스트")
 @Transactional
 @AutoConfigureMockMvc
 @SpringBootTest
-public class LabelControllerTest {
+class LabelControllerTest {
 
     private final MockMvc mvc;
     private final ObjectMapper mapper = new ObjectMapper();

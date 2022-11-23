@@ -1,13 +1,20 @@
 package team20.issuetracker.integration.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import team20.issuetracker.config.DatabaseCleanup;
 import team20.issuetracker.domain.issue.IssueRepository;
@@ -18,17 +25,10 @@ import team20.issuetracker.exception.CheckEntityException;
 import team20.issuetracker.service.dto.request.RequestSaveMilestoneDto;
 import team20.issuetracker.service.dto.request.RequestUpdateMilestoneDto;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
-
-import static org.assertj.core.api.Assertions.*;
-
 @DisplayName("[통합 테스트] 마일스톤 테스트")
 @Transactional
 @SpringBootTest
-public class MilestoneServiceTest {
+class MilestoneServiceTest {
 
     @Autowired
     private MilestoneRepository milestoneRepository;

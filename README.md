@@ -40,12 +40,19 @@
 
 </table>
 
+</br>
+
 ## <img height="20px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> 프로젝트 소개
 
 ### 프로젝트 기간
 - ***2022.06 ~ 2022.11***
 
-### 프로젝트 기획 및 설명
+### 프로젝트 설명
+- GitHub Repository의 Issue 관리 시스템 구현
+
+### User story
+![image](https://user-images.githubusercontent.com/85419343/203717124-c54d070c-5621-42dd-b1fc-5715bce327f0.png)
+
 
 ## <img height="20px" src="https://user-images.githubusercontent.com/78953393/202724902-5c0e2787-eb17-45e0-9faa-a119d4eeaa5b.png" /> 기술 스택
 

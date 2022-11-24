@@ -154,7 +154,60 @@
 
 ### FE 폴더구조
 ```directory
-채워주세요 !
+📦src
+ ┣ 📂apis
+ ┣ 📂assets
+ ┣ 📂components
+ ┃ ┣ 📂Comment
+ ┃ ┣ 📂CommentForm
+ ┃ ┣ 📂FilterBar
+ ┃ ┣ 📂Header
+ ┃ ┣ 📂HomeHeader
+ ┃ ┣ 📂IssueDetailHeader
+ ┃ ┣ 📂IssueDetailInfo
+ ┃ ┣ 📂IssueList
+ ┃ ┣ 📂LabelItem
+ ┃ ┣ 📂MilestoneList
+ ┃ ┣ 📂Navbar
+ ┃ ┣ 📂NewIssueForm
+ ┃ ┣ 📂SideBar
+ ┃ ┣ 📂TabLink
+ ┃ ┣ 📂ThemeSwitch
+ ┃ ┗ 📂common
+ ┃ ┃ ┣ 📂Button
+ ┃ ┃ ┣ 📂CheckBox
+ ┃ ┃ ┣ 📂CustomLink
+ ┃ ┃ ┣ 📂DropDown
+ ┃ ┃ ┣ 📂Input
+ ┃ ┃ ┣ 📂Label
+ ┃ ┃ ┣ 📂Loading
+ ┃ ┃ ┣ 📂ProgressBar
+ ┃ ┃ ┣ 📂TabItem
+ ┃ ┃ ┣ 📂TextArea
+ ┃ ┃ ┗ 📂UserProfile
+ ┣ 📂constants
+ ┣ 📂hooks
+ ┣ 📂icons
+ ┣ 📂layout
+ ┣ 📂mocks
+ ┣ 📂pages
+ ┃ ┣ 📂Home
+ ┃ ┣ 📂IssueDetail
+ ┃ ┣ 📂Labels
+ ┃ ┣ 📂Login
+ ┃ ┣ 📂LoginCallback
+ ┃ ┣ 📂Milestones
+ ┃ ┣ 📂NewIssue
+ ┃ ┣ 📂NewMilestone
+ ┃ ┣ 📂NotFound
+ ┣ 📂routes
+ ┣ 📂stores
+ ┣ 📂styles
+ ┣ 📂types
+ ┣ 📂utils
+ ┣ 📜App.tsx
+ ┣ 📜custom.d.ts
+ ┗ 📜index.tsx
 ```
 ---
 

@@ -66,10 +66,6 @@ Jenkins 등 다양한 툴이 있었지만 GitHub 자체에서 제공하는 툴�
 - [Tany 포스팅](https://jeonboard.tistory.com/129)
 - [Crispin 포스팅](https://crispindeity.github.io/posts/(PROJECT)API-최적화/)
 
-#### 이슈 내 연관된 Entity 수정 시 N + 1 문제 발생
-- [Tany 포스팅] (채워주세요!)
-- [Crispin 포스팅) (채워주세요!) 
-
 #### OAuth 관련 단위 테스트 작성 시 외부 라이브러리 테스트
 - [Crispin 포스팅](https://crispindeity.github.io/posts/(TEST)외부-API-테스트/)
 

@@ -60,12 +60,14 @@
 
 <img src="https://img.shields.io/badge/JAVA 11-F53916?style=for-the-badge&logo=JAVA&logoColor=white"/></a>
 </br>
-<img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white"/></a>
 <img src="https://img.shields.io/badge/JUnit5-25A162?style=for-the-badge&logo=JUnit5&logoColor=white"/></a>
 </br>
+<img src="https://img.shields.io/badge/SpringBoot:2.7.0-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white"/></a>
 <img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=Gradle&logoColor=white"/></a>
 </br>
 <img src="https://img.shields.io/badge/MySql-E6B91E?style=for-the-badge&logo=MySql&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/Redis-F53916?style=for-the-badge&logo=Redis&logoColor=white"/></a>
 <img src="https://img.shields.io/badge/H2-00599C?style=for-the-badge&logoColor=white"/></a>
 </br>
 <img src="https://img.shields.io/badge/GitHub-333664?style=for-the-badge&logo=GitHub&logoColor=white"/></a>
